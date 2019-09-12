@@ -1,0 +1,12 @@
+name: SavageSkyblock
+main: net.savagellc.savageskyblock.SavageSkyblock
+version: ${project.version}
+api-version: '1.13'
+load: POSTWORLD
+commands:
+  savageskyblock:
+    description: 'base skyblock command'
+    aliases: [skyblock, sskyblock, sb, sblock]
+  is:
+    description: 'base savageskyblock command'
+    aliases: [island]

@@ -1,0 +1,63 @@
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version '1.3.50'
+    id 'com.github.johnrengelman.shadow' version '5.1.0'
+}
+
+group 'net.savagellc'
+version '1.0'
+
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    maven {
+        url "https://hub.spigotmc.org/nexus/content/repositories/snapshots"
+    }
+    maven {
+        url 'https://nexus.savagellc.net/repository/maven-public/'
+    }
+    maven {
+        url 'https://rayzr.dev/repo/'
+    }
+}
+
+
+dependencies {
+    implementation 'com.github.stefvanschie.inventoryframework:IF:0.5.8'
+    compileOnly ("org.spigotmc:spigot-api:1.14.2-R0.1-SNAPSHOT") {
+        exclude group: 'net.md-5', module: 'bungeecord-chat'
+        exclude group: 'javax.persistence', module: 'persistence-api'
+        exclude group: 'junit', module: 'junit'
+        exclude group: 'com.google.guava', module: 'guava'
+        exclude group: 'com.google.code.gson', module: 'gson'
+    }
+    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+    implementation 'net.prosavage:BasePlugin:1.1.1'
+    compile 'me.rayzr522:jsonmessage:1.2.0'
+}
+
+processResources {
+    filter{
+        String line -> line.replaceAll('\\$\\{project.version\\}', version)
+    }
+}
+
+
+compileKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+compileTestKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+
+shadowJar {
+    mergeServiceFiles()
+    exclude 'META-INF/*.DSA'
+    exclude 'META-INF/*.RSA'
+    relocate 'com.github.stefvanschie.inventoryframework', 'net.savagellc.savageskyblock.shade.stefvanschie.inventoryframework'
+    relocate 'com.google.gson', 'net.savagellc.savageskyblock.shade.com.google.gson'
+    relocate 'net.prosavage.baseplugin', 'net.savagellc.savagecore.shade.baseplugin'
+    archiveName 'SavageSkyblock-' + version + ".jar"
+}
