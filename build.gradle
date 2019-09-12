@@ -37,10 +37,13 @@ dependencies {
     implementation 'net.prosavage:BasePlugin:1.1.1'
     compile 'me.rayzr522:jsonmessage:1.2.0'
 }
-
 processResources {
-    filter{
-        String line -> line.replaceAll('\\$\\{project.version\\}', version)
+    eachFile { details ->
+        if (details.name.endsWith('.yml')) { // or whatever pattern/criteria is appropriate
+            filter{
+                String line -> line.replaceAll('\\$\\{project.version\\}', version)
+            }
+        }
     }
 }
 

@@ -80,18 +80,11 @@ class SkyblockEdit {
         var file = File(File(Globals.savageSkyblock.dataFolder, "structures"), "$name.structure")
         if (!file.exists()) {
             // TODO using saveresource fucks the gzip
-            val resource = Globals.savageSkyblock.getResource("island.structure")
+            val resource = Globals.savageSkyblock.javaClass.classLoader.getResourceAsStream("island.structure")
             val file1 = File(Globals.savageSkyblock.dataFolder, "island.structure")
             resource!!.copyTo(file1.outputStream())
+            file1.copyTo(file)
 
-            file1.copyTo(File(File(Globals.savageSkyblock.dataFolder, "structures"), "island.structure"))
-            file1.delete()
-            val structuresDir = File(Globals.savageSkyblock.dataFolder, "structures")
-            structuresDir.mkdirs()
-            println(javaClass.getResource("/island.structure").path)
-            Files.copy(javaClass.getResourceAsStream("/urmom.txt"), File(structuresDir, "urmom.txt").toPath())
-            Files.copy(javaClass.getResourceAsStream("/island.structure"), File(structuresDir, "island.structure").toPath())
-            file = File(File(Globals.savageSkyblock.dataFolder, "structures"), "island.structure")
         }
         val reader = SbfReader().read(file)
         for (block in reader.blocks) {
