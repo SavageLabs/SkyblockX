@@ -23,9 +23,7 @@ class CmdCreate : SCommand() {
             return
         }
         commandInfo.message("Creating island and filling it.")
-        val island = createIsland(commandInfo.player!!)
-
-        island.fillIsland(Material.GREEN_WOOL)
+        val island = createIsland(commandInfo.player!!, "island")
         commandInfo.message("Success.")
 
     }

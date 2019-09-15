@@ -15,6 +15,11 @@ class CommandInfo(val commandSender: CommandSender, val args: ArrayList<String>,
     var iPlayer: IPlayer? = if (commandSender is Player) getIPlayer(commandSender) else null
 
 
+    fun isBypassing(): Boolean {
+        return iPlayer!!.inBypass
+    }
+
+
     fun getArgAsInt(index: Int, informIfNot: Boolean = true): Int? {
         try {
             return args[index].toInt()

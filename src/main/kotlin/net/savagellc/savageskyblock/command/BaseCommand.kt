@@ -1,5 +1,7 @@
 package net.savagellc.savageskyblock.command
 
+import me.lucko.commodore.CommodoreProvider
+import net.savagellc.savageskyblock.Globals
 import net.savagellc.savageskyblock.command.cmd.*
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
@@ -15,6 +17,7 @@ class BaseCommand : SCommand(), CommandExecutor {
 
 
 
+
     init {
         this.commandRequirements = CommandRequirementsBuilder().build()
         subCommands.add(CmdCreate())
@@ -23,6 +26,8 @@ class BaseCommand : SCommand(), CommandExecutor {
         subCommands.add(CmdSEPosition())
         subCommands.add(CmdSESaveStructure())
         subCommands.add(CmdSEPasteStructure())
+        subCommands.add(CmdBypass())
+
     }
 
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {

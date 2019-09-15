@@ -40,8 +40,14 @@ object Message {
 
     var commandSEPasteStructurePasted = "Structure pasted successfully"
 
+    var commandBypassToggle = "You are now %1\$s bypass mode"
+    var commandBypassHelp = "This command allows you to bypass island checks (For Server Administrators)"
 
 
+
+
+
+    var listenerBlockPlacementDenied = "You can only place blocks inside of your island."
 
     var skyblockEditPositionSet = "You have set position %1\$s to %2\$s"
     var skyblockEditStructureSaved = "You have saved a structure to a file called %1\$s"

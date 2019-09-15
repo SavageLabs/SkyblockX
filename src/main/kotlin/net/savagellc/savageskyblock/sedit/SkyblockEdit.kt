@@ -10,7 +10,6 @@ import org.bukkit.Location
 import org.bukkit.block.Chest
 import org.bukkit.entity.Player
 import java.io.File
-import java.nio.file.Files
 import java.util.*
 
 class SkyblockEdit {
@@ -76,29 +75,33 @@ class SkyblockEdit {
         player.sendMessage(String.format(Message.skyblockEditStructureSaved, "${name}.structure"))
     }
 
-    fun pasteStructure(name: String, location: Location, player: Player) {
+    fun pasteIsland(name: String, location: Location, player: Player?) {
         var file = File(File(Globals.savageSkyblock.dataFolder, "structures"), "$name.structure")
         if (!file.exists()) {
-            // TODO using saveresource fucks the gzip
-            val resource = Globals.savageSkyblock.javaClass.classLoader.getResourceAsStream("island.structure")
+            player?.sendMessage("$name does not exist, using default file: island.structure")
             val file1 = File(Globals.savageSkyblock.dataFolder, "island.structure")
-            resource!!.copyTo(file1.outputStream())
-            file1.copyTo(file)
-
+            Globals.savageSkyblock.saveResource("island.structure", false)
+            file1.copyTo(File(File(Globals.savageSkyblock.dataFolder, "structures"), "island.structure"))
+            file1.delete()
         }
+        pasteStructure(file, location, player)
+    }
+
+
+    fun pasteStructure(file: File, relativeLocation: Location, player: Player?) {
         val reader = SbfReader().read(file)
         for (block in reader.blocks) {
-            location.world!!.getBlockAt(
-                block.x.toInt() + location.x.toInt() + reader.offsetx,
-                block.y.toInt() + location.y.toInt() + reader.offsety,
-                block.z.toInt() + location.z.toInt() + reader.offsetz
+            relativeLocation.world!!.getBlockAt(
+                block.x.toInt() + relativeLocation.x.toInt() + reader.offsetx,
+                block.y.toInt() + relativeLocation.y.toInt() + reader.offsety,
+                block.z.toInt() + relativeLocation.z.toInt() + reader.offsetz
             ).type = XMaterial.valueOf(block.type).parseMaterial()
         }
         for (chest in reader.chests) {
-            val blockAt = location.world!!.getBlockAt(
-                chest.x.toInt() + location.x.toInt() + reader.offsetx,
-                chest.y.toInt() + location.y.toInt() + reader.offsety,
-                chest.z.toInt() + location.z.toInt() + reader.offsetz
+            val blockAt = relativeLocation.world!!.getBlockAt(
+                chest.x.toInt() + relativeLocation.x.toInt() + reader.offsetx,
+                chest.y.toInt() + relativeLocation.y.toInt() + reader.offsety,
+                chest.z.toInt() + relativeLocation.z.toInt() + reader.offsetz
             )
             blockAt.type = XMaterial.CHEST.parseMaterial()
             blockAt.state.update(true)
@@ -120,14 +123,7 @@ class SkyblockEdit {
                 )
             }
         }
-        player.sendMessage(Message.commandSEPasteStructurePasted)
-
-
+        player?.sendMessage(Message.commandSEPasteStructurePasted)
     }
-
-    fun pasteStructure(name: String, location: Location) {
-
-    }
-
 
 }

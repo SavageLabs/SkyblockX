@@ -2,7 +2,9 @@ package net.savagellc.savageskyblock
 
 import net.prosavage.baseplugin.BasePlugin
 import net.savagellc.savageskyblock.command.BaseCommand
+import net.savagellc.savageskyblock.listener.BlockListener
 import net.savagellc.savageskyblock.listener.DataListener
+import net.savagellc.savageskyblock.listener.InteractListener
 import net.savagellc.savageskyblock.listener.SEditListener
 import net.savagellc.savageskyblock.persist.Config
 import net.savagellc.savageskyblock.persist.Data
@@ -22,7 +24,7 @@ class SavageSkyblock : BasePlugin() {
         Config.load()
         Data.load()
         Message.load()
-        registerListeners(DataListener(), SEditListener())
+        registerListeners(DataListener(), SEditListener(), BlockListener(), InteractListener())
     }
 
     override fun onDisable() {

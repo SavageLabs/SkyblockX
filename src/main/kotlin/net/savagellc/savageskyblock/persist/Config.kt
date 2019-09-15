@@ -13,10 +13,7 @@ object Config {
 
     var islandMaxSizeInBlocks = 100
 
-    var islandPaddingSizeInBlocks = 20
-
-
-
+    var islandPaddingSizeInBlocks = 0
 
     var skyblockWorldName = "savageskyblock"
 

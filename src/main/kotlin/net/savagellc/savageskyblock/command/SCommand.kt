@@ -33,9 +33,12 @@ abstract class SCommand {
             return
         }
 
-        if (!checkInput(commandInfo)) {
-            return
+        if (this !is BaseCommand) {
+            if (!checkInput(commandInfo)) {
+                return
+            }
         }
+
 
         perform(commandInfo)
     }

@@ -7,6 +7,9 @@ enum class Permission(val node: String) {
     CREATE("create"),
     GO("go"),
     DELETE("delete"),
+    BYPASS("bypass"),
+    SE_SAVESTUCT("se.savestructure"),
+    SE_PASTESTRUCT("se.pastestructure"),
     SE_REGIONS("se.regions")
 
 }

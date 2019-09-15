@@ -3,6 +3,7 @@ package net.savagellc.savageskyblock.command.cmd
 import net.savagellc.savageskyblock.command.CommandInfo
 import net.savagellc.savageskyblock.command.CommandRequirementsBuilder
 import net.savagellc.savageskyblock.command.SCommand
+import net.savagellc.savageskyblock.core.Permission
 import net.savagellc.savageskyblock.persist.Message
 import net.savagellc.savageskyblock.sedit.SkyblockEdit
 
@@ -14,7 +15,7 @@ class CmdSESaveStructure : SCommand() {
 
         requiredArgs.add("filename")
 
-        commandRequirements = CommandRequirementsBuilder().asPlayer(true).build()
+        commandRequirements = CommandRequirementsBuilder().asPlayer(true).withPermission(Permission.SE_SAVESTUCT).build()
     }
 
 
