@@ -13,9 +13,13 @@ object Config {
 
     var islandMaxSizeInBlocks = 100
 
-    var islandPaddingSizeInBlocks = 0
+    var islandPaddingSizeInBlocks = 20
 
     var skyblockWorldName = "savageskyblock"
+
+
+    var preventFallingDeaths = true
+
 
     fun save() {
         Serializer().save(instance)

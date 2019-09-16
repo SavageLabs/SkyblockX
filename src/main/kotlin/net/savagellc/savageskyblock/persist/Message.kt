@@ -1,26 +1,28 @@
 package net.savagellc.savageskyblock.persist
 
 import net.prosavage.baseplugin.serializer.Serializer
+import org.bukkit.ChatColor
 
 object Message {
 
     @Transient
     private val instance = this
 
-    var commandRequirementsNotAPlayer = "This command requires the executor to be a player."
-    var commandRequirementsNotAnIslandMember = "This command requires the executor to be a island member, create one using \"/is create\"."
-    var commandRequirementsPlayerDoesNotHavePermission = "This command requires the permission %1\$s"
+    var commandRequirementsNotAPlayer = "&cThis command requires the executor to be a player."
+    var commandRequirementsNotAnIslandMember = "&cThis command requires the executor to be a island member, create one using \"/is create\"."
+    var commandRequirementsPlayerDoesNotHavePermission = "&cThis command requires the permission %1\$s"
 
 
-    var commandParsingArgIsNotInt = "This argument is not an integer, please make it one."
+    var commandParsingArgIsNotInt = "&cThis argument is not an integer, please make it one."
 
 
-    var genericCommandsTooFewArgs = "This command requires more arguments."
-    var genericCommandsTooManyArgs = "This command requires less arguments."
+    var genericCommandsTooFewArgs = "&cThis command requires more arguments."
+    var genericCommandsTooManyArgs = "&cThis command requires less arguments."
+    var genericActionRequiresPermission = "&cThis action requires the permission %1\$s"
 
 
     var commandBaseHelp = "The base command for skyblock."
-    var commandBaseHelpMessage = "Please execute /is help."
+    var commandBaseHelpMessage = "&aPlease execute /is help."
 
     var commandCreateHelp = "Creates a skyblock island."
     var commandCreateAlreadyHaveAnIsland = "You already have an island, use /is delete to delete your island."
@@ -45,9 +47,10 @@ object Message {
 
 
 
-
+    var preventIslandDeathMessage = "You fell into the void, teleporting you back."
 
     var listenerBlockPlacementDenied = "You can only place blocks inside of your island."
+    var listenerObsidianBucketLava = "The obsidian has been turned back to lava, be careful!"
 
     var skyblockEditPositionSet = "You have set position %1\$s to %2\$s"
     var skyblockEditStructureSaved = "You have saved a structure to a file called %1\$s"
@@ -65,3 +68,5 @@ object Message {
 
 
 }
+
+

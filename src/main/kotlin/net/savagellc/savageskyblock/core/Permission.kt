@@ -8,13 +8,19 @@ enum class Permission(val node: String) {
     GO("go"),
     DELETE("delete"),
     BYPASS("bypass"),
+    OBSIDIANTOLAVA("obsidiantolava"),
     SE_SAVESTUCT("se.savestructure"),
     SE_PASTESTRUCT("se.pastestructure"),
-    SE_REGIONS("se.regions")
+    SE_REGIONS("se.regions");
+
+
+    fun getFullPermissionNode(): String {
+        return "${Config.skyblockPermissionPrefix}.${this.node}"
+    }
 
 }
 
 
 fun hasPermission(humanEntity: HumanEntity, permission: Permission): Boolean {
-    return humanEntity.hasPermission("${Config.skyblockPermissionPrefix}.${permission.node}")
+    return humanEntity.hasPermission(permission.getFullPermissionNode())
 }

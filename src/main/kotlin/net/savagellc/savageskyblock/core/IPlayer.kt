@@ -11,6 +11,8 @@ data class IPlayer(val uuid: String) {
 
     var inBypass = false
 
+    var falling = false
+
     var islandID = -1
     var tag = Bukkit.getOfflinePlayer(uuid).name
 
