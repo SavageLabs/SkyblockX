@@ -19,9 +19,7 @@ class SEditListener : Listener {
             return
         }
 
-        if (event.clickedBlock!!.type == Material.CHEST) {
-
-        }
+   
 
         val iPlayer = getIPlayer(event.player)
         if (!iPlayer.choosingPosition) {
