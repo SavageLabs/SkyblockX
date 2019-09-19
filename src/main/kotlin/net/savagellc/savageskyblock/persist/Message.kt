@@ -47,10 +47,10 @@ object Message {
 
 
 
-    var preventIslandDeathMessage = "You fell into the void, teleporting you back."
-
+    var listenerVoidDeathPrevented = "You fell into the void, teleporting you back."
     var listenerBlockPlacementDenied = "You can only place blocks inside of your island."
     var listenerObsidianBucketLava = "The obsidian has been turned back to lava, be careful!"
+    var listenerPlayerDamageCancelled = "Damage cancelled due to you not being on your island."
 
     var skyblockEditPositionSet = "You have set position %1\$s to %2\$s"
     var skyblockEditStructureSaved = "You have saved a structure to a file called %1\$s"

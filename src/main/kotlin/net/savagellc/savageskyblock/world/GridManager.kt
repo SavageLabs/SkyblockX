@@ -1,5 +1,6 @@
 package net.savagellc.savageskyblock.world
 
+import net.savagellc.savageskyblock.core.Island
 import net.savagellc.savageskyblock.persist.Config
 import org.bukkit.Bukkit
 import org.bukkit.Location
@@ -8,11 +9,14 @@ import org.bukkit.Location
 data class Point(val x:Int, val z:Int) {
 
     fun getLocation(): Location {
-        return Location(Bukkit.getWorld(Config.skyblockWorldName), (Config.islandMaxSizeInBlocks + Config.islandPaddingSizeInBlocks+ 1) * x.toDouble(), 0.toDouble(), (Config.islandMaxSizeInBlocks + Config.islandPaddingSizeInBlocks + 1) * z.toDouble())
+        return Location(Bukkit.getWorld(Config.skyblockWorldName),
+            (Config.islandMaxSizeInBlocks + Config.islandPaddingSizeInBlocks+ 1) * x.toDouble(), 0.toDouble(),
+            (Config.islandMaxSizeInBlocks + Config.islandPaddingSizeInBlocks + 1) * z.toDouble())
     }
 
-
 }
+
+
 
 fun spiral(origin: Int): Point {
     var n = origin

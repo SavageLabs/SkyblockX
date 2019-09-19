@@ -19,10 +19,25 @@ data class IPlayer(val uuid: String) {
     var choosingPosition = false
     var chosenPosition = Position.POSITION1
 
+
+
+
     @Transient
     var pos1: Location? = null
     @Transient
     var pos2: Location? = null
+
+    fun getPlayer(): Player {
+        return Bukkit.getPlayer(uuid)!!
+    }
+
+    fun isOnOwnIsland(): Boolean {
+        return this.hasIsland() && this.getIsland()!!.containsBlock(getPlayer().location)
+    }
+
+    fun message(message: String) {
+        getPlayer().sendMessage(color(message))
+    }
 
     fun hasIsland(): Boolean {
         return islandID != -1 && Data.islands.containsKey(islandID)

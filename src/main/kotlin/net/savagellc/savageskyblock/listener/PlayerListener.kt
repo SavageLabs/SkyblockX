@@ -11,12 +11,28 @@ import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
+import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.event.player.PlayerInteractEvent
 
 class PlayerListener : Listener {
 
 
+
+    @EventHandler
+    fun onPlayerTakingDamage(event: EntityDamageByEntityEvent) {
+        // If they're not a player or if the entity is not in the skyblock world, we do not care.
+        if (event.entity !is Player || event.entity.location.world?.name != Config.skyblockWorldName) {
+            return
+        }
+        val iPlayer = getIPlayer(event.entity as Player)
+        if (iPlayer.isOnOwnIsland()) {
+            iPlayer.message(String.format(Message.listenerPlayerDamageCancelled))
+            event.isCancelled = true
+        }
+
+
+    }
 
 
     @EventHandler
@@ -39,11 +55,14 @@ class PlayerListener : Listener {
         if (!Config.preventFallingDeaths || event.cause != EntityDamageEvent.DamageCause.VOID || event.entity !is Player) {
             return
         }
+
         val player = event.entity as Player
         val iPlayer = getIPlayer(player)
         if (iPlayer.hasIsland()) {
             iPlayer.falling = true
+            player.sendMessage(Message.listenerVoidDeathPrevented)
             player.teleport(iPlayer.getIsland()!!.getIslandSpawn())
+
         }
         event.isCancelled = true
     }

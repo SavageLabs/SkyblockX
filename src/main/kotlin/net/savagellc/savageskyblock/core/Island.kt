@@ -34,7 +34,6 @@ data class Island(val islandID: Int, val point: Point, val playerUUID: String) {
     }
 
     fun containsBlock(v: Location): Boolean {
-
         if (v.world !== minLocation.world) return false
         val x = v.x
         val y = v.y
@@ -42,8 +41,25 @@ data class Island(val islandID: Int, val point: Point, val playerUUID: String) {
         return x >= minLocation.blockX && x < maxLocation.blockX + 1 && y >= minLocation.blockY && y < maxLocation.blockY + 1 && z >= minLocation.blockZ && z < maxLocation.blockZ + 1
     }
 
+    /**
+     * This is built for checking bounds without checking the Y axis as it is not needed.
+     */
+    fun locationInIsland(v: Location): Boolean {
+        val x = v.x
+        val z = v.z
+        return x >= minLocation.blockX && x < maxLocation.blockX + 1 && z >= minLocation.blockZ && z < maxLocation.blockZ + 1
+    }
+
 }
 
+fun getIslandFromLocation(location: Location): Island? {
+    for (island in Data.islands.values) {
+        if (island.locationInIsland(location)) {
+            return island
+        }
+    }
+    return null
+}
 
 fun createIsland(player: Player?, schematic: String): Island {
     val island = Island(Data.nextIslandID, spiral(Data.nextIslandID), player?.uniqueId.toString())
