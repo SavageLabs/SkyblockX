@@ -26,12 +26,10 @@ class PlayerListener : Listener {
             return
         }
         val iPlayer = getIPlayer(event.entity as Player)
-        if (iPlayer.isOnOwnIsland()) {
+        if (!iPlayer.isOnOwnIsland()) {
             iPlayer.message(String.format(Message.listenerPlayerDamageCancelled))
             event.isCancelled = true
         }
-
-
     }
 
 
@@ -58,12 +56,9 @@ class PlayerListener : Listener {
 
         val player = event.entity as Player
         val iPlayer = getIPlayer(player)
-        if (iPlayer.hasIsland()) {
-            iPlayer.falling = true
-            player.sendMessage(Message.listenerVoidDeathPrevented)
-            player.teleport(iPlayer.getIsland()!!.getIslandSpawn())
-
-        }
+        iPlayer.falling = true
+        player.sendMessage(Message.listenerVoidDeathPrevented)
+        player.teleport(iPlayer.getIsland()!!.getIslandSpawn())
         event.isCancelled = true
     }
 

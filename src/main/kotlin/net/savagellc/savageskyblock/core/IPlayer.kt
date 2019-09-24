@@ -34,7 +34,7 @@ data class IPlayer(val uuid: String) {
 
 
     fun isOnOwnIsland(): Boolean {
-        return this.hasIsland() && this.getIsland()!!.containsBlock(getPlayer().location)
+        return !(this.hasIsland() && this.getIsland()!!.containsBlock(getPlayer().location))
     }
 
     fun message(message: String) {
