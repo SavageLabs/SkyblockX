@@ -3,6 +3,7 @@ package net.savagellc.savageskyblock.command
 import net.savagellc.savageskyblock.core.IPlayer
 import net.savagellc.savageskyblock.core.getIPlayer
 import net.savagellc.savageskyblock.persist.Message
+import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import java.lang.NumberFormatException
@@ -17,6 +18,28 @@ class CommandInfo(val commandSender: CommandSender, val args: ArrayList<String>,
 
     fun isBypassing(): Boolean {
         return iPlayer!!.inBypass
+    }
+
+    fun getArgAsPlayer(index: Int, informIfNot: Boolean = true): Player? {
+        val player = Bukkit.getPlayer(args[index])
+        if (player == null) {
+            if (informIfNot) {
+                message(Message.commandParsingPlayerDoesNotExist)
+            }
+            return null
+        }
+        return player
+    }
+
+    fun getArgAsIPlayer(index: Int, informIfNot: Boolean = true): IPlayer? {
+        val player = Bukkit.getPlayer(args[index])
+        if (player == null) {
+            if (informIfNot) {
+                message(Message.commandParsingPlayerDoesNotExist)
+            }
+            return null
+        }
+        return getIPlayer(player)
     }
 
 

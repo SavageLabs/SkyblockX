@@ -14,6 +14,7 @@ object Message {
 
 
     var commandParsingArgIsNotInt = "&cThis argument is not an integer, please make it one."
+    var commandParsingPlayerDoesNotExist = "&cThis player does not exist."
 
 
     var genericCommandsTooFewArgs = "&cThis command requires more arguments."
@@ -46,9 +47,20 @@ object Message {
     var commandBypassHelp = "This command allows you to bypass island checks (For Server Administrators)"
 
 
+    var commandCoopInvokerSuccess = "You have added %1\$s to your island as co-op"
+    var commandCoopMessageRecipient = "You have been added as a co-op player to %1\$s's island."
+    var commandCoopHelp = "This command allows you to set another player to co-op mode."
+
+
+    var commandRemoveInvokerSuccess = "You have removed %1\$s from your island."
+    var commandRemoveInvokerCoopRemoved = "%1\$s's co-op status has been removed."
+    var commandRemovedCoopStatus = "Your co-op status has been removed due to you being removed from the island."
+    var commandRemoveHelp = "This command removes someone from your island, also removes co-op status if they have it."
+
 
     var listenerVoidDeathPrevented = "You fell into the void, teleporting you back."
     var listenerBlockPlacementDenied = "You can only place blocks inside of your island."
+    var listenerActionDeniedCreateAnIslandFirst = "This action has been denied, please create an island first."
     var listenerObsidianBucketLava = "The obsidian has been turned back to lava, be careful!"
     var listenerPlayerDamageCancelled = "Damage cancelled due to you not being on your island."
 

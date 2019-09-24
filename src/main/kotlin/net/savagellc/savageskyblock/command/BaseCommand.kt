@@ -27,7 +27,8 @@ class BaseCommand : SCommand(), CommandExecutor {
         subCommands.add(CmdSESaveStructure())
         subCommands.add(CmdSEPasteStructure())
         subCommands.add(CmdBypass())
-
+        subCommands.add(CmdCoop())
+        subCommands.add(CmdRemove())
     }
 
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
