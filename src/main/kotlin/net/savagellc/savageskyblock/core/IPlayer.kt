@@ -21,7 +21,7 @@ data class IPlayer(val uuid: String) {
     var chosenPosition = Position.POSITION1
 
 
-    var coopedIslandIds = ArrayList<Int>()
+    var coopedIslandIds = HashSet<Int>()
 
     @Transient
     var pos1: Location? = null
@@ -92,7 +92,7 @@ data class IPlayer(val uuid: String) {
     fun coopPlayer(iPlayer: IPlayer) {
         // the iplayer needs an island for this.
         if (iPlayer.coopedIslandIds == null) {
-            iPlayer.coopedIslandIds = ArrayList<Int>()
+            iPlayer.coopedIslandIds = HashSet<Int>()
         }
         iPlayer.coopedIslandIds.add(getIsland()!!.islandID)
     }
