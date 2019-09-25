@@ -61,7 +61,8 @@ data class IPlayer(val uuid: String) {
     }
 
     fun hasCoopIsland(): Boolean {
-        return coopedIslandIds.isNotEmpty()
+        // It's not supposed to be null, but fuckin gson man.
+        return coopedIslandIds != null && coopedIslandIds.isNotEmpty()
     }
 
     fun hasIsland(): Boolean {
@@ -86,6 +87,9 @@ data class IPlayer(val uuid: String) {
 
     fun coopPlayer(iPlayer: IPlayer) {
         // the iplayer needs an island for this.
+        if (iPlayer.coopedIslandIds == null) {
+            iPlayer.coopedIslandIds = ArrayList<Int>()
+        }
         iPlayer.coopedIslandIds.add(getIsland()!!.islandID)
     }
 
@@ -116,7 +120,7 @@ fun getIPlayer(player: Player): IPlayer {
 
 fun canUseBlockAtLocation(iPlayer: IPlayer, location: Location): Boolean {
     // If the world is not the skyblock world, we will not interfere.
-    if (location.world!!.name.equals(Config.skyblockWorldName)) return true
+    if (!location.world!!.name.equals(Config.skyblockWorldName)) return true
     // If they dont have any co-op island or an island of their own, then they cannot do anything.
     if (!iPlayer.hasIsland() && !iPlayer.hasCoopIsland()) return false
     // Check our own island.
