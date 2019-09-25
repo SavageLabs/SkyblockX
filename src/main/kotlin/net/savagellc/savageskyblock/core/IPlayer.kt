@@ -22,7 +22,7 @@ data class IPlayer(val uuid: String) {
     var chosenPosition = Position.POSITION1
 
 
-    var coopedIslandIds = arrayListOf<Int>()
+    var coopedIslandIds = ArrayList<Int>()
 
     @Transient
     var pos1: Location? = null
