@@ -1,6 +1,7 @@
 package net.savagellc.savageskyblock.command
 
 import net.savagellc.savageskyblock.core.IPlayer
+import net.savagellc.savageskyblock.core.color
 import net.savagellc.savageskyblock.core.getIPlayer
 import net.savagellc.savageskyblock.persist.Message
 import org.bukkit.Bukkit
@@ -39,6 +40,12 @@ class CommandInfo(val commandSender: CommandSender, val args: ArrayList<String>,
             }
             return null
         }
+        if (player == this.player) {
+            if (informIfNot) {
+                message(Message.commandParsingPlayerIsYou)
+            }
+            return null
+        }
         return getIPlayer(player)
     }
 
@@ -49,7 +56,6 @@ class CommandInfo(val commandSender: CommandSender, val args: ArrayList<String>,
         } catch (exception: NumberFormatException) {
             if (informIfNot) {
                 message(Message.commandParsingArgIsNotInt)
-
             }
         }
         return null
@@ -60,7 +66,7 @@ class CommandInfo(val commandSender: CommandSender, val args: ArrayList<String>,
     }
 
     fun message(message: String) {
-        commandSender.sendMessage(message)
+        commandSender.sendMessage(color(message))
     }
 
 

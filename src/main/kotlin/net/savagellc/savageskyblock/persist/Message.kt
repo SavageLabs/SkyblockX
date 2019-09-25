@@ -15,6 +15,7 @@ object Message {
 
     var commandParsingArgIsNotInt = "&cThis argument is not an integer, please make it one."
     var commandParsingPlayerDoesNotExist = "&cThis player does not exist."
+    var commandParsingPlayerIsYou = "&cYou cannot reference yourself."
 
 
     var genericCommandsTooFewArgs = "&cThis command requires more arguments."
