@@ -11,6 +11,7 @@ class CmdRemove : SCommand() {
 
     init {
         aliases.add("remove")
+        aliases.add("expel")
 
         requiredArgs.add("player")
 
@@ -20,8 +21,8 @@ class CmdRemove : SCommand() {
     override fun perform(commandInfo: CommandInfo) {
         val target = commandInfo.getArgAsIPlayer(0) ?: return
         // TODO: Remove target even if they're not co-op ( Was not implemented because we do not have a default spawn mechanic set yet. )
-        if (target.hasCoopIsland() && target.coopedIslandID == commandInfo.iPlayer!!.coopedIslandID) {
-            target.removeCoopIsland()
+        if (target.hasCoopIsland() && target.coopedIslandIds.contains(commandInfo.iPlayer!!.islandID)) {
+            target.removeCoopIsland(commandInfo.iPlayer!!.islandID)
             target.message(Message.commandRemovedCoopStatus)
             commandInfo.message(String.format(Message.commandRemoveInvokerCoopRemoved, target.getPlayer().name))
         }
