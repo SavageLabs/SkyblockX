@@ -55,6 +55,7 @@ object Message {
 
     var commandRemoveInvokerSuccess = "You have removed %1\$s from your island."
     var commandRemoveInvokerCoopRemoved = "%1\$s's co-op status has been removed."
+    var commandRemoveInvokerPlayerNotOnIsland = "The specified player's location is currently not on your island."
     var commandRemovedCoopStatus = "Your co-op status has been removed due to you being removed from the island."
     var commandRemoveHelp = "This command removes someone from your island, also removes co-op status if they have it."
 
