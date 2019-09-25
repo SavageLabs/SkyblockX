@@ -58,6 +58,9 @@ object Message {
     var commandRemovedCoopStatus = "Your co-op status has been removed due to you being removed from the island."
     var commandRemoveHelp = "This command removes someone from your island, also removes co-op status if they have it."
 
+    var commandTpHelp = "This command allows you to teleport to islands of other players."
+
+
 
     var listenerVoidDeathPrevented = "You fell into the void, teleporting you back."
     var listenerBlockPlacementDenied = "You can only place blocks inside of your island."

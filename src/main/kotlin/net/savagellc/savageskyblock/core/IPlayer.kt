@@ -56,7 +56,7 @@ data class IPlayer(val uuid: String) {
 
     fun getCoopIslands(): List<Island> {
         val islands = arrayListOf<Island>()
-        coopedIslandIds.forEach { id -> islands.add(Data.islands[id]!!) }
+        coopedIslandIds.forEach { id -> islands.add(getIslandById(id)!!) }
         return islands
     }
 
@@ -82,7 +82,7 @@ data class IPlayer(val uuid: String) {
     }
 
     fun getIsland(): Island? {
-        return Data.islands[islandID]
+        return getIslandById(islandID)
     }
 
     fun coopPlayer(iPlayer: IPlayer) {
@@ -96,7 +96,7 @@ data class IPlayer(val uuid: String) {
     fun coopIslandsContainBlock(location: Location): Boolean {
         for (id in coopedIslandIds) {
             // Island was not found, continue to next island.
-            val island = Data.islands[id] ?: continue
+            val island = getIslandById(id) ?: continue
             if (!island.containsBlock(location)) {
                 return false
             }

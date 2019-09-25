@@ -52,6 +52,10 @@ data class Island(val islandID: Int, val point: Point, val playerUUID: String) {
 
 }
 
+fun getIslandById(id: Int): Island? {
+    return Data.islands[id]
+}
+
 fun getIslandFromLocation(location: Location): Island? {
     for (island in Data.islands.values) {
         if (island.locationInIsland(location)) {
