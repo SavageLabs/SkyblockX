@@ -1,6 +1,6 @@
 package net.savagellc.savageskyblock.command.cmd
 
-import net.savagellc.savageskyblock.command.info
+import net.savagellc.savageskyblock.command.CommandInfo
 import net.savagellc.savageskyblock.command.CommandRequirementsBuilder
 import net.savagellc.savageskyblock.command.SCommand
 import net.savagellc.savageskyblock.core.Permission
@@ -21,7 +21,7 @@ class CmdSESaveStructure : SCommand() {
 
 
 
-    override fun perform(info: info) {
+    override fun perform(info: CommandInfo) {
         if (info.iPlayer!!.pos1 == null || info.iPlayer!!.pos2 == null) {
             info.message(Message.commandSESaveStructurePositionsNotSet)
             return

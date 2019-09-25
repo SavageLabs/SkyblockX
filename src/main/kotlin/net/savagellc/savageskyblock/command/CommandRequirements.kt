@@ -11,7 +11,7 @@ class CommandRequirements(val permission: Permission?, var asPlayer: Boolean, va
 
 
 
-    fun computeRequirements(info: info, informIfNot: Boolean = true): Boolean {
+    fun computeRequirements(info: CommandInfo, informIfNot: Boolean = true): Boolean {
         // Check if the commandSender is a player
         if (asPlayer && !info.isPlayer()) {
             if (informIfNot) {

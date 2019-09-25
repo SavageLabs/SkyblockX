@@ -1,6 +1,6 @@
 package net.savagellc.savageskyblock.command.cmd
 
-import net.savagellc.savageskyblock.command.info
+import net.savagellc.savageskyblock.command.CommandInfo
 import net.savagellc.savageskyblock.command.CommandRequirementsBuilder
 import net.savagellc.savageskyblock.command.SCommand
 import net.savagellc.savageskyblock.core.Permission
@@ -18,7 +18,7 @@ class CmdCoop : SCommand() {
     }
 
 
-    override fun perform(info: info) {
+    override fun perform(info: CommandInfo) {
         val target = info.getArgAsIPlayer(0) ?: return
         info.iPlayer!!.coopPlayer(target)
         target.message(String.format(Message.commandCoopMessageRecipient, info.player!!.name))

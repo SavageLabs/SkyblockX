@@ -30,7 +30,7 @@ class BaseCommand : SCommand(), CommandExecutor {
     }
 
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
-        execute(info(sender, ArrayList(args.toList()), label))
+        execute(CommandInfo(sender, ArrayList(args.toList()), label))
         return true
     }
 
@@ -38,7 +38,7 @@ class BaseCommand : SCommand(), CommandExecutor {
         return Message.commandBaseHelp
     }
 
-    override fun perform(info: info) {
+    override fun perform(info: CommandInfo) {
         info.commandSender.sendMessage(Message.commandBaseHelpMessage)
     }
 

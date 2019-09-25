@@ -1,6 +1,6 @@
 package net.savagellc.savageskyblock.command.cmd
 
-import net.savagellc.savageskyblock.command.info
+import net.savagellc.savageskyblock.command.CommandInfo
 import net.savagellc.savageskyblock.command.CommandRequirementsBuilder
 import net.savagellc.savageskyblock.command.SCommand
 import net.savagellc.savageskyblock.core.Permission
@@ -18,7 +18,7 @@ class CmdRemove : SCommand() {
         commandRequirements = CommandRequirementsBuilder().asIslandMember(true).asPlayer(true).withPermission(Permission.REMOVE).build()
     }
 
-    override fun perform(info: info) {
+    override fun perform(info: CommandInfo) {
         val target = info.getArgAsIPlayer(0) ?: return
         // TODO: Remove target even if they're not co-op ( Was not implemented because we do not have a default spawn mechanic set yet. )
         if (target.hasCoopIsland() && target.coopedIslandIds.contains(info.iPlayer!!.islandID)) {

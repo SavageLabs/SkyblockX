@@ -15,13 +15,13 @@ abstract class SCommand {
     val subCommands = LinkedList<SCommand>()
 
 
-    abstract fun perform(info: info)
+    abstract fun perform(info: CommandInfo)
 
-    fun execute(info: info) {
+    fun execute(info: CommandInfo) {
         if (info.args.size > 0) {
             for (command in subCommands) {
                 if (command.aliases.contains(info.args[0].toLowerCase())) {
-                    // Remove the first arg so when the info is passed to subcommand, first arg is relative.
+                    // Remove the first arg so when the CommandInfo is passed to subcommand, first arg is relative.
                     info.args.removeAt(0)
                     command.execute(info)
                     return
@@ -44,11 +44,11 @@ abstract class SCommand {
     }
 
 
-    private fun checkRequirements(info: info): Boolean {
+    private fun checkRequirements(info: CommandInfo): Boolean {
         return commandRequirements.computeRequirements(info)
     }
 
-    private fun checkInput(info: info): Boolean {
+    private fun checkInput(info: CommandInfo): Boolean {
         if (info.args.size < requiredArgs.size) {
             info.message(Message.genericCommandsTooFewArgs)
             handleCommandFormat(info)
@@ -63,7 +63,7 @@ abstract class SCommand {
         return true
     }
 
-    private fun handleCommandFormat(info: info) {
+    private fun handleCommandFormat(info: CommandInfo) {
         if (info.isPlayer()) {
             sendCommandFormat(info)
         } else {
@@ -71,7 +71,7 @@ abstract class SCommand {
         }
     }
 
-    private fun sendCommandFormat(info: info, useJSON: Boolean = true) {
+    private fun sendCommandFormat(info: CommandInfo, useJSON: Boolean = true) {
         if (useJSON) {
             var commandFormatJSON = JSONMessage.create(color("&7&o((Hoverable))&r")).then(" /is ").then(this.aliases[0]).then(" ")
             for (requiredArg in requiredArgs) {

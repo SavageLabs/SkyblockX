@@ -1,6 +1,6 @@
 package net.savagellc.savageskyblock.command.cmd
 
-import net.savagellc.savageskyblock.command.info
+import net.savagellc.savageskyblock.command.CommandInfo
 import net.savagellc.savageskyblock.command.CommandRequirementsBuilder
 import net.savagellc.savageskyblock.command.SCommand
 import net.savagellc.savageskyblock.core.Permission
@@ -16,7 +16,7 @@ class CmdCreate : SCommand() {
         commandRequirements = CommandRequirementsBuilder().asIslandMember(false).asPlayer(true).withPermission(Permission.CREATE).build()
     }
 
-    override fun perform(info: info) {
+    override fun perform(info: CommandInfo) {
         if (info.iPlayer!!.hasIsland()) {
             info.message(Message.commandCreateAlreadyHaveAnIsland)
             return

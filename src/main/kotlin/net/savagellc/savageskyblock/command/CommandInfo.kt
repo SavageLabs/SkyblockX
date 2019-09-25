@@ -10,7 +10,7 @@ import org.bukkit.entity.Player
 import java.lang.NumberFormatException
 import java.util.*
 
-class info(val commandSender: CommandSender, val args: ArrayList<String>, val aliasUsed: String) {
+class CommandInfo(val commandSender: CommandSender, val args: ArrayList<String>, val aliasUsed: String) {
 
 
     var player: Player? = if (commandSender is Player) commandSender else null
