@@ -59,8 +59,9 @@ data class IPlayer(val uuid: String) {
 
     fun getCoopIslands(): List<Island> {
         val islands = arrayListOf<Island>()
-        // TODO: Make this a foreach and null check the island we got ( Just in case :) ).
-        coopedIslandIds.forEach { id -> islands.add(getIslandById(id)!!) }
+        for (id in coopedIslandIds) {
+            islands.add(getIslandById(id) ?: continue)
+        }
         return islands
     }
 
