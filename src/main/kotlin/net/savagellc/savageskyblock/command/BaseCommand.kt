@@ -27,6 +27,7 @@ class BaseCommand : SCommand(), CommandExecutor {
         subCommands.add(CmdBypass())
         subCommands.add(CmdCoop())
         subCommands.add(CmdRemove())
+        subCommands.add(CmdTeleport())
     }
 
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {

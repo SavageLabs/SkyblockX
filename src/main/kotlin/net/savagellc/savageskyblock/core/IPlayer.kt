@@ -16,7 +16,6 @@ data class IPlayer(val uuid: String) {
     var falling = false
 
     var islandID = -1
-    var tag = Bukkit.getOfflinePlayer(UUID.fromString(uuid)).name
 
     var choosingPosition = false
     var chosenPosition = Position.POSITION1
@@ -42,6 +41,10 @@ data class IPlayer(val uuid: String) {
         getPlayer().sendMessage(color(message))
     }
 
+    fun isCoopedIsland(id: Int): Boolean {
+        return coopedIslandIds != null && coopedIslandIds.contains(id)
+    }
+
     fun removeCoopIsland(id: Int) {
         coopedIslandIds.remove(id)
     }
@@ -56,6 +59,7 @@ data class IPlayer(val uuid: String) {
 
     fun getCoopIslands(): List<Island> {
         val islands = arrayListOf<Island>()
+        // TODO: Make this a foreach and null check the island we got ( Just in case :) ).
         coopedIslandIds.forEach { id -> islands.add(getIslandById(id)!!) }
         return islands
     }

@@ -63,6 +63,15 @@ fun getIslandFromLocation(location: Location): Island? {
     return null
 }
 
+fun getIslandByOwnerTag(ownerTag: String): Island? {
+    for (island in Data.islands.values) {
+        if (island.ownerTag == ownerTag) {
+            return island
+        }
+    }
+    return null
+}
+
 fun createIsland(player: Player?, schematic: String): Island {
     val island = Island(Data.nextIslandID, spiral(Data.nextIslandID), player?.uniqueId.toString(), player?.name ?: "player name was null :shrug:")
     Data.islands[Data.nextIslandID] = island

@@ -59,8 +59,11 @@ object Message {
     var commandRemoveHelp = "This command removes someone from your island, also removes co-op status if they have it."
 
     var commandTpHelp = "This command allows you to teleport to islands of other players."
-
-
+    var commandTpPossibleLocationsHeader = "You can teleport to the following locations..."
+    var commandTpPossibleLocationsFormat = "%1\$s. %2\$s's island."
+    var commandTpThisIslandIsNotValid = "The player %1\$s does not own an island. Type &c/is tp &rto list possible locations."
+    var commandTpTeleporting = "Teleporting you to %1\$s's island."
+    var commandTpNoPermission = "The specified island does not have you as co-op or as a island member, "
 
     var listenerVoidDeathPrevented = "You fell into the void, teleporting you back."
     var listenerBlockPlacementDenied = "You can only place blocks inside of your island."
