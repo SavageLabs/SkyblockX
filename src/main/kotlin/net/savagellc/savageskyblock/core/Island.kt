@@ -5,19 +5,17 @@ import net.savagellc.savageskyblock.persist.Data
 import net.savagellc.savageskyblock.sedit.SkyblockEdit
 import net.savagellc.savageskyblock.world.Point
 import net.savagellc.savageskyblock.world.spiral
-import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.entity.Player
 
-data class Island(val islandID: Int, val point: Point, val playerUUID: String) {
+data class Island(val islandID: Int, val point: Point, val ownerUUID: String, var ownerTag: String) {
 
     val minLocation = point.getLocation()
     val maxLocation = point.getLocation().add(Config.islandMaxSizeInBlocks.toDouble(), 256.toDouble(), Config.islandMaxSizeInBlocks.toDouble())
 
-
     fun getOwnerIPlayer(): IPlayer? {
-        return Data.IPlayers[playerUUID]
+        return Data.IPlayers[ownerUUID]
     }
 
     fun getIslandSpawn(): Location {
@@ -66,7 +64,7 @@ fun getIslandFromLocation(location: Location): Island? {
 }
 
 fun createIsland(player: Player?, schematic: String): Island {
-    val island = Island(Data.nextIslandID, spiral(Data.nextIslandID), player?.uniqueId.toString())
+    val island = Island(Data.nextIslandID, spiral(Data.nextIslandID), player?.uniqueId.toString(), player?.name ?: "player name was null :shrug:")
     Data.islands[Data.nextIslandID] = island
     Data.nextIslandID++
     // Make player null because we dont want to send them the SkyblockEdit Engine's success upon pasting the island.

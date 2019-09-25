@@ -1,6 +1,8 @@
 package net.savagellc.savageskyblock.listener
 
+import net.savagellc.savageskyblock.Globals
 import net.savagellc.savageskyblock.core.IPlayer
+import net.savagellc.savageskyblock.core.getIslandById
 import net.savagellc.savageskyblock.persist.Data
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
@@ -12,11 +14,20 @@ class DataListener : Listener {
     @EventHandler
     fun onPlayerConnect(event: PlayerJoinEvent) {
         if (Data.IPlayers.containsKey(event.player.uniqueId.toString())) {
-            println("${event.player.name} joined and his IPlayer instance already exists")
+            // Update owner tag changes :)
+            val island = getIslandById(Data.IPlayers[event.player.uniqueId.toString()]!!.islandID)
+            // Check if the player is an island owner.
+            if (island!!.ownerUUID == event.player.uniqueId.toString()) {
+                // Update tag if not equal.
+                if (island.ownerTag != event.player.name) {
+                    island.ownerTag = event.player.name
+                    Globals.savageSkyblock.logger.info("Updated ${event.player.name}'s tag since they changed their name.")
+                }
+            }
             return
         }
         Data.IPlayers[event.player.uniqueId.toString()] = IPlayer(event.player.uniqueId.toString())
-        println("${event.player.name}'s IPlayer instance was created")
+        Globals.savageSkyblock.logger.info("${event.player.name}'s IPlayer instance was created")
 
     }
 
