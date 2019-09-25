@@ -15,63 +15,63 @@ abstract class SCommand {
     val subCommands = LinkedList<SCommand>()
 
 
-    abstract fun perform(commandInfo: CommandInfo)
+    abstract fun perform(info: info)
 
-    fun execute(commandInfo: CommandInfo) {
-        if (commandInfo.args.size > 0) {
+    fun execute(info: info) {
+        if (info.args.size > 0) {
             for (command in subCommands) {
-                if (command.aliases.contains(commandInfo.args[0].toLowerCase())) {
-                    // Remove the first arg so when the commandInfo is passed to subcommand, first arg is relative.
-                    commandInfo.args.removeAt(0)
-                    command.execute(commandInfo)
+                if (command.aliases.contains(info.args[0].toLowerCase())) {
+                    // Remove the first arg so when the info is passed to subcommand, first arg is relative.
+                    info.args.removeAt(0)
+                    command.execute(info)
                     return
                 }
             }
         }
 
-        if (!checkRequirements(commandInfo)) {
+        if (!checkRequirements(info)) {
             return
         }
 
         if (this !is BaseCommand) {
-            if (!checkInput(commandInfo)) {
+            if (!checkInput(info)) {
                 return
             }
         }
 
 
-        perform(commandInfo)
+        perform(info)
     }
 
 
-    private fun checkRequirements(commandInfo: CommandInfo): Boolean {
-        return commandRequirements.computeRequirements(commandInfo)
+    private fun checkRequirements(info: info): Boolean {
+        return commandRequirements.computeRequirements(info)
     }
 
-    private fun checkInput(commandInfo: CommandInfo): Boolean {
-        if (commandInfo.args.size < requiredArgs.size) {
-            commandInfo.message(Message.genericCommandsTooFewArgs)
-            handleCommandFormat(commandInfo)
+    private fun checkInput(info: info): Boolean {
+        if (info.args.size < requiredArgs.size) {
+            info.message(Message.genericCommandsTooFewArgs)
+            handleCommandFormat(info)
             return false
         }
 
-        if (commandInfo.args.size > requiredArgs.size + optionalArgs.size) {
-            commandInfo.message(Message.genericCommandsTooManyArgs)
-            handleCommandFormat(commandInfo)
+        if (info.args.size > requiredArgs.size + optionalArgs.size) {
+            info.message(Message.genericCommandsTooManyArgs)
+            handleCommandFormat(info)
             return false
         }
         return true
     }
 
-    private fun handleCommandFormat(commandInfo: CommandInfo) {
-        if (commandInfo.isPlayer()) {
-            sendCommandFormat(commandInfo)
+    private fun handleCommandFormat(info: info) {
+        if (info.isPlayer()) {
+            sendCommandFormat(info)
         } else {
-            sendCommandFormat(commandInfo, false)
+            sendCommandFormat(info, false)
         }
     }
 
-    private fun sendCommandFormat(commandInfo: CommandInfo, useJSON: Boolean = true) {
+    private fun sendCommandFormat(info: info, useJSON: Boolean = true) {
         if (useJSON) {
             var commandFormatJSON = JSONMessage.create(color("&7&o((Hoverable))&r")).then(" /is ").then(this.aliases[0]).then(" ")
             for (requiredArg in requiredArgs) {
@@ -81,7 +81,7 @@ abstract class SCommand {
                 commandFormatJSON = commandFormatJSON.then("($optionalArg)").tooltip("The argument is optional").then(" ")
             }
 
-            commandFormatJSON.send(commandInfo.player)
+            commandFormatJSON.send(info.player)
         } else {
             var commandFormat = "/is "
             for (requiredArg in requiredArgs) {
@@ -90,7 +90,7 @@ abstract class SCommand {
             for (optionalArg in optionalArgs) {
                 commandFormat += "($optionalArg) "
             }
-            commandInfo.message(commandFormat)
+            info.message(commandFormat)
         }
 
 

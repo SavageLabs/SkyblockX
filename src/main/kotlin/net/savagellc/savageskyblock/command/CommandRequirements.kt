@@ -11,11 +11,11 @@ class CommandRequirements(val permission: Permission?, var asPlayer: Boolean, va
 
 
 
-    fun computeRequirements(commandInfo: CommandInfo, informIfNot: Boolean = true): Boolean {
+    fun computeRequirements(info: info, informIfNot: Boolean = true): Boolean {
         // Check if the commandSender is a player
-        if (asPlayer && !commandInfo.isPlayer()) {
+        if (asPlayer && !info.isPlayer()) {
             if (informIfNot) {
-                commandInfo.message(Message.commandRequirementsNotAPlayer)
+                info.message(Message.commandRequirementsNotAPlayer)
             }
             return false
         }
@@ -26,15 +26,15 @@ class CommandRequirements(val permission: Permission?, var asPlayer: Boolean, va
         }
 
         // If the console sends it then its OP
-        if (commandInfo.commandSender is ConsoleCommandSender) {
+        if (info.commandSender is ConsoleCommandSender) {
             return true
         }
 
         // Assume executor is player since we checked if they're ConsoleCommandSender above.
-        commandInfo.commandSender as Player
-        if (!hasPermission(commandInfo.commandSender, permission)) {
+        info.commandSender as Player
+        if (!hasPermission(info.commandSender, permission)) {
             if (informIfNot) {
-                commandInfo.message(String.format(Message.commandRequirementsPlayerDoesNotHavePermission))
+                info.message(String.format(Message.commandRequirementsPlayerDoesNotHavePermission))
             }
             return false
         }
@@ -42,9 +42,9 @@ class CommandRequirements(val permission: Permission?, var asPlayer: Boolean, va
         // Check if the player's got an island
 
         if (asIslandMember) {
-            if (commandInfo.iPlayer == null || !commandInfo.iPlayer!!.hasIsland()) {
+            if (info.iPlayer == null || !info.iPlayer!!.hasIsland()) {
                 if (informIfNot) {
-                    commandInfo.message(Message.commandRequirementsNotAnIslandMember)
+                    info.message(Message.commandRequirementsNotAnIslandMember)
                 }
                 return false
             }

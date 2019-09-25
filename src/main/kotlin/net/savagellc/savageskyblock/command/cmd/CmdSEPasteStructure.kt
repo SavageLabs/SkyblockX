@@ -1,6 +1,6 @@
 package net.savagellc.savageskyblock.command.cmd
 
-import net.savagellc.savageskyblock.command.CommandInfo
+import net.savagellc.savageskyblock.command.info
 import net.savagellc.savageskyblock.command.CommandRequirementsBuilder
 import net.savagellc.savageskyblock.command.SCommand
 import net.savagellc.savageskyblock.core.Permission
@@ -21,8 +21,8 @@ class CmdSEPasteStructure : SCommand() {
 
 
 
-    override fun perform(commandInfo: CommandInfo) {
-        SkyblockEdit().pasteIsland(commandInfo.args[0], commandInfo.player!!.location, commandInfo.player!!)
+    override fun perform(info: info) {
+        SkyblockEdit().pasteIsland(info.args[0], info.player!!.location, info.player!!)
     }
 
 

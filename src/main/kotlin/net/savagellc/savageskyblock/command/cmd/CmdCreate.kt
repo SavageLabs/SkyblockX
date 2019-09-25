@@ -1,12 +1,11 @@
 package net.savagellc.savageskyblock.command.cmd
 
-import net.savagellc.savageskyblock.command.CommandInfo
+import net.savagellc.savageskyblock.command.info
 import net.savagellc.savageskyblock.command.CommandRequirementsBuilder
 import net.savagellc.savageskyblock.command.SCommand
 import net.savagellc.savageskyblock.core.Permission
 import net.savagellc.savageskyblock.core.createIsland
 import net.savagellc.savageskyblock.persist.Message
-import org.bukkit.Material
 
 
 class CmdCreate : SCommand() {
@@ -17,14 +16,14 @@ class CmdCreate : SCommand() {
         commandRequirements = CommandRequirementsBuilder().asIslandMember(false).asPlayer(true).withPermission(Permission.CREATE).build()
     }
 
-    override fun perform(commandInfo: CommandInfo) {
-        if (commandInfo.iPlayer!!.hasIsland()) {
-            commandInfo.message(Message.commandCreateAlreadyHaveAnIsland)
+    override fun perform(info: info) {
+        if (info.iPlayer!!.hasIsland()) {
+            info.message(Message.commandCreateAlreadyHaveAnIsland)
             return
         }
-        commandInfo.message("Creating island and filling it.")
-        val island = createIsland(commandInfo.player!!, "island")
-        commandInfo.message("Success.")
+        info.message("Creating island and filling it.")
+        val island = createIsland(info.player!!, "island")
+        info.message("Success.")
 
     }
 

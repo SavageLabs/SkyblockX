@@ -1,6 +1,6 @@
 package net.savagellc.savageskyblock.command.cmd
 
-import net.savagellc.savageskyblock.command.CommandInfo
+import net.savagellc.savageskyblock.command.info
 import net.savagellc.savageskyblock.command.CommandRequirementsBuilder
 import net.savagellc.savageskyblock.command.SCommand
 import net.savagellc.savageskyblock.core.Permission
@@ -16,9 +16,9 @@ class CmdDelete : SCommand() {
     }
 
 
-    override fun perform(commandInfo: CommandInfo) {
-        deleteIsland(commandInfo.player!!)
-        commandInfo.message(Message.commandDeleteDeletedIsland)
+    override fun perform(info: info) {
+        deleteIsland(info.player!!)
+        info.message(Message.commandDeleteDeletedIsland)
 
     }
 

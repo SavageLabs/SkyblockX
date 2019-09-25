@@ -1,7 +1,5 @@
 package net.savagellc.savageskyblock.command
 
-import me.lucko.commodore.CommodoreProvider
-import net.savagellc.savageskyblock.Globals
 import net.savagellc.savageskyblock.command.cmd.*
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
@@ -32,7 +30,7 @@ class BaseCommand : SCommand(), CommandExecutor {
     }
 
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
-        execute(CommandInfo(sender, ArrayList(args.toList()), label))
+        execute(info(sender, ArrayList(args.toList()), label))
         return true
     }
 
@@ -40,8 +38,8 @@ class BaseCommand : SCommand(), CommandExecutor {
         return Message.commandBaseHelp
     }
 
-    override fun perform(commandInfo: CommandInfo) {
-        commandInfo.commandSender.sendMessage(Message.commandBaseHelpMessage)
+    override fun perform(info: info) {
+        info.commandSender.sendMessage(Message.commandBaseHelpMessage)
     }
 
 

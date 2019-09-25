@@ -1,6 +1,6 @@
 package net.savagellc.savageskyblock.command.cmd
 
-import net.savagellc.savageskyblock.command.CommandInfo
+import net.savagellc.savageskyblock.command.info
 import net.savagellc.savageskyblock.command.CommandRequirementsBuilder
 import net.savagellc.savageskyblock.command.SCommand
 import net.savagellc.savageskyblock.core.Permission
@@ -19,16 +19,16 @@ class CmdSEPosition : SCommand() {
     }
 
 
-    override fun perform(commandInfo: CommandInfo) {
-        val index = commandInfo.getArgAsInt(0) ?: return
+    override fun perform(info: info) {
+        val index = info.getArgAsInt(0) ?: return
         if (index < 0 || index > 2) {
-            commandInfo.message(Message.commandSEPositionInvalidIndex)
+            info.message(Message.commandSEPositionInvalidIndex)
             return
         }
         val positionChosen = if (index == 1) Position.POSITION1 else Position.POSITION2
-        commandInfo.iPlayer!!.chosenPosition = positionChosen
-        commandInfo.iPlayer!!.choosingPosition = true
-        commandInfo.message(String.format(Message.commandSEPosition, if (positionChosen == Position.POSITION1) "1" else "2"))
+        info.iPlayer!!.chosenPosition = positionChosen
+        info.iPlayer!!.choosingPosition = true
+        info.message(String.format(Message.commandSEPosition, if (positionChosen == Position.POSITION1) "1" else "2"))
     }
 
 

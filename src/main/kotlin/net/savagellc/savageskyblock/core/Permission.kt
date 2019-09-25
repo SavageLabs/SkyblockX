@@ -10,6 +10,7 @@ enum class Permission(val node: String) {
     BYPASS("bypass"),
     COOP("coop"),
     REMOVE("remove"),
+    TELEPORT("teleport"),
     OBSIDIANTOLAVA("obsidiantolava"),
     SE_SAVESTUCT("se.savestructure"),
     SE_PASTESTRUCT("se.pastestructure"),
