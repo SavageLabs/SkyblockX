@@ -21,7 +21,8 @@ data class IPlayer(val uuid: String) {
     var choosingPosition = false
     var chosenPosition = Position.POSITION1
 
-    var coopedIslandID = -1
+
+    var coopedIslandIds = arrayListOf<Int>()
 
     @Transient
     var pos1: Location? = null
@@ -42,16 +43,22 @@ data class IPlayer(val uuid: String) {
     }
 
 
-    fun removeCoopIsland() {
-        coopedIslandID = -1
+    fun removeCoopIsland(island: Island) {
+        coopedIslandIds.remove(island.islandID)
     }
 
-    fun getCoopIsland(): Island? {
-        return Data.islands[coopedIslandID]
+    fun addCoopIsland(island: Island) {
+        coopedIslandIds.add(island.islandID)
+    }
+
+    fun getCoopIslands(): List<Island> {
+        val islands = arrayListOf<Island>()
+        coopedIslandIds.forEach { id -> islands.add(Data.islands[id]!!) }
+        return islands
     }
 
     fun hasCoopIsland(): Boolean {
-        return coopedIslandID != -1 && Data.islands.containsKey(coopedIslandID)
+        return coopedIslandIds.isNotEmpty()
     }
 
     fun hasIsland(): Boolean {
@@ -73,6 +80,23 @@ data class IPlayer(val uuid: String) {
     fun getIsland(): Island? {
         return Data.islands[islandID]
     }
+
+    fun coopPlayer(iPlayer: IPlayer) {
+        // the iplayer needs an island for this.
+        iPlayer.coopedIslandIds.add(getIsland()!!.islandID)
+    }
+
+    fun coopIslandsContainBlock(location: Location): Boolean {
+        for (id in coopedIslandIds) {
+            // Island was not found, continue to next island.
+            val island = Data.islands[id] ?: continue
+            if (!island.containsBlock(location)) {
+                return false
+            }
+        }
+        return true
+    }
+
 
 }
 
@@ -96,7 +120,7 @@ fun canUseBlockAtLocation(iPlayer: IPlayer, location: Location): Boolean {
     var cancelEvent = (iPlayer.hasIsland() && !iPlayer.getIsland()!!.containsBlock(location))
     // Check the co-op island's permission if our own island's permission have failed.
     if (cancelEvent && iPlayer.hasCoopIsland()) {
-        cancelEvent = (iPlayer.hasCoopIsland() && !iPlayer.getCoopIsland()!!.containsBlock(location))
+        cancelEvent = (iPlayer.hasCoopIsland() && !iPlayer.coopIslandsContainBlock(location))
     }
     return !cancelEvent
 }

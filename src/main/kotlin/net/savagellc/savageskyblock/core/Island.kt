@@ -78,5 +78,6 @@ fun deleteIsland(player: Player) {
     val iPlayer = getIPlayer(player)
     if (iPlayer.hasIsland()) {
         Data.islands.remove(iPlayer.getIsland()!!.islandID)
+        iPlayer.unassignIsland()
     }
 }

@@ -8,7 +8,6 @@ import net.savagellc.savageskyblock.persist.Message
 
 class CmdCoop : SCommand() {
 
-
     init {
         aliases.add("co-op")
         aliases.add("coop")
@@ -21,7 +20,7 @@ class CmdCoop : SCommand() {
 
     override fun perform(commandInfo: CommandInfo) {
         val target = commandInfo.getArgAsIPlayer(0) ?: return
-        target.coopedIslandID = commandInfo.iPlayer!!.islandID
+        commandInfo.iPlayer!!.coopPlayer(target)
         target.message(String.format(Message.commandCoopMessageRecipient, commandInfo.player!!.name))
         commandInfo.iPlayer!!.message(String.format(Message.commandCoopInvokerSuccess, target.getPlayer().name))
     }
