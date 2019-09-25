@@ -42,6 +42,9 @@ data class IPlayer(val uuid: String) {
         getPlayer().sendMessage(color(message))
     }
 
+    fun removeCoopIsland(id: Int) {
+        coopedIslandIds.remove(id)
+    }
 
     fun removeCoopIsland(island: Island) {
         coopedIslandIds.remove(island.islandID)
