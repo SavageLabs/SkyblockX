@@ -2,31 +2,64 @@ package net.savagellc.savageskyblock.core
 
 import net.savagellc.savageskyblock.persist.Config
 import net.savagellc.savageskyblock.persist.Data
+import net.savagellc.savageskyblock.persist.data.SLocation
 import net.savagellc.savageskyblock.sedit.SkyblockEdit
 import net.savagellc.savageskyblock.world.Point
 import net.savagellc.savageskyblock.world.spiral
 import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.entity.Player
+import java.util.*
 
 data class Island(val islandID: Int, val point: Point, val ownerUUID: String, var ownerTag: String) {
 
     val minLocation = point.getLocation()
-    val maxLocation = point.getLocation().add(Config.islandMaxSizeInBlocks.toDouble(), 256.toDouble(), Config.islandMaxSizeInBlocks.toDouble())
+    val maxLocation = point.getLocation()
+        .add(Config.islandMaxSizeInBlocks.toDouble(), 256.toDouble(), Config.islandMaxSizeInBlocks.toDouble())
+
+    var homes = HashMap<String, SLocation>()
+
+    fun resetAllHomes() {
+        homes.clear()
+    }
+
+    fun addHome(name: String, sLocation: SLocation) {
+        // TODO: Check permissions and implement max homes feature.
+        homes[name] = sLocation
+    }
+
+    fun removeHome(name: String) {
+        homes.remove(name)
+    }
+
+    fun getHome(name: String): SLocation? {
+        return homes[name]
+    }
+
+    fun hasHome(name: String): Boolean {
+        return homes.containsKey(name)
+    }
+
 
     fun getOwnerIPlayer(): IPlayer? {
         return Data.IPlayers[ownerUUID]
     }
 
     fun getIslandSpawn(): Location {
-        return Location(minLocation.world, minLocation.x + (Config.islandMaxSizeInBlocks / 2), 101.toDouble(), minLocation.z + (Config.islandMaxSizeInBlocks / 2))
+        return Location(
+            minLocation.world,
+            minLocation.x + (Config.islandMaxSizeInBlocks / 2),
+            101.toDouble(),
+            minLocation.z + (Config.islandMaxSizeInBlocks / 2)
+        )
     }
 
     fun fillIsland(material: Material = Material.BONE_BLOCK) {
         val origin = point.getLocation()
-        for(x in origin.x.toInt()..(origin.x + Config.islandMaxSizeInBlocks).toInt()) {
-            for(z in origin.z.toInt()..(origin.z + Config.islandMaxSizeInBlocks).toInt()) {
-                origin.world!!.getBlockAt(Location(origin.world, x.toDouble(), 100.toDouble(), z.toDouble())).type = material
+        for (x in origin.x.toInt()..(origin.x + Config.islandMaxSizeInBlocks).toInt()) {
+            for (z in origin.z.toInt()..(origin.z + Config.islandMaxSizeInBlocks).toInt()) {
+                origin.world!!.getBlockAt(Location(origin.world, x.toDouble(), 100.toDouble(), z.toDouble())).type =
+                    material
             }
         }
     }
@@ -73,7 +106,12 @@ fun getIslandByOwnerTag(ownerTag: String): Island? {
 }
 
 fun createIsland(player: Player?, schematic: String): Island {
-    val island = Island(Data.nextIslandID, spiral(Data.nextIslandID), player?.uniqueId.toString(), player?.name ?: "player name was null :shrug:")
+    val island = Island(
+        Data.nextIslandID,
+        spiral(Data.nextIslandID),
+        player?.uniqueId.toString(),
+        player?.name ?: "player name was null :shrug:"
+    )
     Data.islands[Data.nextIslandID] = island
     Data.nextIslandID++
     // Make player null because we dont want to send them the SkyblockEdit Engine's success upon pasting the island.

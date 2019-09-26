@@ -2,6 +2,7 @@ package net.savagellc.savageskyblock.core
 
 import net.savagellc.savageskyblock.persist.Config
 import net.savagellc.savageskyblock.persist.Data
+import net.savagellc.savageskyblock.persist.data.SLocation
 import net.savagellc.savageskyblock.sedit.Position
 import org.bukkit.Bukkit
 import org.bukkit.Location
@@ -20,8 +21,9 @@ data class IPlayer(val uuid: String) {
     var choosingPosition = false
     var chosenPosition = Position.POSITION1
 
-
     var coopedIslandIds = HashSet<Int>()
+
+
 
     @Transient
     var pos1: Location? = null
@@ -31,6 +33,7 @@ data class IPlayer(val uuid: String) {
     fun getPlayer(): Player {
         return Bukkit.getPlayer(UUID.fromString(uuid))!!
     }
+
 
 
     fun isOnOwnIsland(): Boolean {
