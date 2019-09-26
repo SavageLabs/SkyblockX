@@ -2,7 +2,6 @@ package net.savagellc.savageskyblock.core
 
 import net.savagellc.savageskyblock.persist.Config
 import net.savagellc.savageskyblock.persist.Data
-import net.savagellc.savageskyblock.persist.data.SLocation
 import net.savagellc.savageskyblock.sedit.Position
 import org.bukkit.Bukkit
 import org.bukkit.Location
@@ -21,9 +20,8 @@ data class IPlayer(val uuid: String) {
     var choosingPosition = false
     var chosenPosition = Position.POSITION1
 
+
     var coopedIslandIds = HashSet<Int>()
-
-
 
     @Transient
     var pos1: Location? = null
@@ -33,7 +31,6 @@ data class IPlayer(val uuid: String) {
     fun getPlayer(): Player {
         return Bukkit.getPlayer(UUID.fromString(uuid))!!
     }
-
 
 
     fun isOnOwnIsland(): Boolean {
@@ -48,12 +45,9 @@ data class IPlayer(val uuid: String) {
         return coopedIslandIds != null && coopedIslandIds.contains(id)
     }
 
-    fun removeCoopIsland(id: Int) {
-        coopedIslandIds.remove(id)
-    }
-
     fun removeCoopIsland(island: Island) {
         coopedIslandIds.remove(island.islandID)
+        island.currentCoopPlayers.remove(UUID.fromString(uuid))
     }
 
     fun addCoopIsland(island: Island) {
@@ -93,13 +87,6 @@ data class IPlayer(val uuid: String) {
         return getIslandById(islandID)
     }
 
-    fun coopPlayer(iPlayer: IPlayer) {
-        // the iplayer needs an island for this.
-        if (iPlayer.coopedIslandIds == null) {
-            iPlayer.coopedIslandIds = HashSet<Int>()
-        }
-        iPlayer.coopedIslandIds.add(getIsland()!!.islandID)
-    }
 
     fun coopIslandsContainBlock(location: Location): Boolean {
         for (id in coopedIslandIds) {

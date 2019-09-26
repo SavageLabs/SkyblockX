@@ -13,9 +13,6 @@ import java.util.ArrayList
 
 class BaseCommand : SCommand(), CommandExecutor {
 
-
-
-
     init {
         this.commandRequirements = CommandRequirementsBuilder().build()
         subCommands.add(CmdCreate())

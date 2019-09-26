@@ -21,10 +21,9 @@ class CmdRemove : SCommand() {
 
     override fun perform(info: CommandInfo) {
         val target = info.getArgAsIPlayer(0) ?: return
-
         // Remove the target's co-op status if theyre co-op.
         if (target.hasCoopIsland() && target.coopedIslandIds.contains(info.iPlayer!!.islandID)) {
-            target.removeCoopIsland(info.iPlayer!!.islandID)
+            target.removeCoopIsland(info.iPlayer!!.getIsland()!!)
             target.message(Message.commandRemovedCoopStatus)
             info.message(String.format(Message.commandRemoveInvokerCoopRemoved, target.getPlayer().name))
         }

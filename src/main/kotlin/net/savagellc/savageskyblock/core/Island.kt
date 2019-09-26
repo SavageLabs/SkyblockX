@@ -6,16 +6,63 @@ import net.savagellc.savageskyblock.persist.data.SLocation
 import net.savagellc.savageskyblock.sedit.SkyblockEdit
 import net.savagellc.savageskyblock.world.Point
 import net.savagellc.savageskyblock.world.spiral
+import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import java.util.*
+
+import kotlin.collections.HashSet
+
 
 data class Island(val islandID: Int, val point: Point, val ownerUUID: String, var ownerTag: String) {
 
     val minLocation = point.getLocation()
     val maxLocation = point.getLocation()
         .add(Config.islandMaxSizeInBlocks.toDouble(), 256.toDouble(), Config.islandMaxSizeInBlocks.toDouble())
+
+    var maxCoopPlayers = Config.defaultMaxCoopPlayers
+    var maxIslandHomes = Config.defaultMaxIslandHomes
+
+
+    /**
+     * This set does not have methods on purpose to discourage developers from modifying it, as we need a player to authorize the co-op procedure and because it won't actually affect the co-op status of a player.
+     */
+    var currentCoopPlayers = HashSet<UUID>()
+
+    /**
+     * The whole point of this function is because we cache coop players on the side of the player.
+     */
+    fun canHaveMoreCoopPlayers(): Boolean {
+        // Check the owner's permission for it.
+        // Can only check if they online tho :/, so we gotta cache it in maxCoopPlayers
+
+        // If the instance is null, the player is offline.
+        val owner = Bukkit.getOfflinePlayer(UUID.fromString(ownerUUID)).player
+        if (owner != null) {
+            maxCoopPlayers = getMaxPermission(owner, "savageskyblock.limits.coop-players")
+            if (maxCoopPlayers == 0) {
+                maxCoopPlayers = 3
+            }
+        }
+
+        if (maxCoopPlayers == -1) {
+            return true
+        }
+        // Return if the current size is less than the max, if so we gucci.
+        return currentCoopPlayers.size < maxCoopPlayers
+    }
+
+    fun canHaveMoreHomes(): Boolean {
+        // If the instance is null, the player is offline.
+        val owner = Bukkit.getOfflinePlayer(UUID.fromString(ownerUUID)).player
+        if (owner != null) {
+            maxIslandHomes = getMaxPermission(owner, "savageskyblock.limits.island-homes")
+        }
+
+        // Return if the current size is less than the max, if so we gucci.
+        return currentCoopPlayers.size < maxIslandHomes
+    }
 
     var homes = HashMap<String, SLocation>()
 
@@ -24,7 +71,7 @@ data class Island(val islandID: Int, val point: Point, val ownerUUID: String, va
     }
 
     fun addHome(name: String, sLocation: SLocation) {
-        // TODO: Check permissions and implement max homes feature.
+
         homes[name] = sLocation
     }
 
@@ -40,10 +87,20 @@ data class Island(val islandID: Int, val point: Point, val ownerUUID: String, va
         return homes.containsKey(name)
     }
 
+    fun coopPlayer(iPlayer: IPlayer) {
+        // the iplayer needs an island for this.
+        if (iPlayer.coopedIslandIds == null) {
+            iPlayer.coopedIslandIds = java.util.HashSet<Int>()
+        }
+        currentCoopPlayers.add(UUID.fromString(iPlayer.uuid))
+        iPlayer.coopedIslandIds.add(islandID)
+    }
+
 
     fun getOwnerIPlayer(): IPlayer? {
         return Data.IPlayers[ownerUUID]
     }
+
 
     fun getIslandSpawn(): Location {
         return Location(

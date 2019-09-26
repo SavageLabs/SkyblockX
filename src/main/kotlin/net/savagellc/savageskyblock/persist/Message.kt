@@ -50,7 +50,14 @@ object Message {
 
     var commandCoopInvokerSuccess = "You have added %1\$s to your island as co-op"
     var commandCoopMessageRecipient = "You have been added as a co-op player to %1\$s's island."
+    var commandCoopCannotHaveMoreCoopPlayers = "You cannot have more co-op players, run &c/is coop&r to view current co-op players, and remove them using &c/is remove <player>"
     var commandCoopHelp = "This command allows you to set another player to co-op mode."
+
+
+
+    var commandHomeHomeSet = "You have set this location to your %1\$s home."
+    var commandHomeCannotHaveMoreHomes = "You cannot have more homes set."
+    var commandHomeHelp = "This command allows you to go to a set island home."
 
 
     var commandRemoveInvokerSuccess = "You have removed %1\$s from your island."

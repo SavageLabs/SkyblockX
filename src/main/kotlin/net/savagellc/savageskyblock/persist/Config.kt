@@ -22,6 +22,10 @@ object Config {
 
     var preventFallingDeaths = true
 
+    var defaultMaxCoopPlayers = 3
+
+    var defaultMaxIslandHomes = 3
+
 
     // TODO: Actually use GUI, also create island structure requirements.
     var islandCreateGUITitle = "Choose an island!"
