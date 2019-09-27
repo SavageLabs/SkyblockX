@@ -26,6 +26,8 @@ object Config {
 
     var defaultMaxIslandHomes = 3
 
+    var helpGeneratorPageEntries = 4
+
 
     // TODO: Actually use GUI, also create island structure requirements.
     var islandCreateGUITitle = "Choose an island!"

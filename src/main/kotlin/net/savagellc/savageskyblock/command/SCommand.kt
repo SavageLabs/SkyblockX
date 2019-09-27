@@ -2,7 +2,9 @@ package net.savagellc.savageskyblock.command
 
 import me.rayzr522.jsonmessage.JSONMessage
 import net.savagellc.savageskyblock.core.color
+import net.savagellc.savageskyblock.persist.Config
 import net.savagellc.savageskyblock.persist.Message
+import org.bukkit.entity.Player
 import java.util.*
 
 abstract class SCommand {
@@ -68,6 +70,27 @@ abstract class SCommand {
             sendCommandFormat(info)
         } else {
             sendCommandFormat(info, false)
+        }
+    }
+
+    fun generateHelp(page: Int, player: Player) {
+        val pageStartEntry = Config.helpGeneratorPageEntries * (page - 1)
+        if (page <= 0 || pageStartEntry >= subCommands.size) {
+            player.sendMessage(color(String.format(Message.commandHelpGeneratorPageInvalid, page)))
+            return
+        }
+
+
+
+        for (i in pageStartEntry..pageStartEntry + Config.helpGeneratorPageEntries) {
+            if (subCommands.size <= i) {
+                continue
+            }
+            val command = subCommands[i]
+            val base = (if (aliases.size > 0) aliases[0] + " " else "") + command.aliases[0]
+            val tooltip = String.format(Message.commandHelpGeneratorIslandRequired, (if (command.commandRequirements.asIslandMember) Message.commandHelpGeneratorRequires else Message.commandHelpGeneratorNotRequired)) + "\n" + String.format(Message.commandHelpGeneratorClickMeToPaste, "/is $base")
+
+            JSONMessage.create(color(String.format(Message.commandHelpGeneratorFormat, base, command.getHelpInfo()))).tooltip(color(tooltip)).suggestCommand("/is $base").send(player)
         }
     }
 

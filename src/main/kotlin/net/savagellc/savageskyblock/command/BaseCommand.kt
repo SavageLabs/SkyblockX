@@ -1,6 +1,8 @@
 package net.savagellc.savageskyblock.command
 
+import net.savagellc.savageskyblock.Globals
 import net.savagellc.savageskyblock.command.cmd.*
+import net.savagellc.savageskyblock.command.cmd.home.CmdHome
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
@@ -25,6 +27,11 @@ class BaseCommand : SCommand(), CommandExecutor {
         subCommands.add(CmdCoop())
         subCommands.add(CmdRemove())
         subCommands.add(CmdTeleport())
+        subCommands.add(CmdHome())
+        subCommands.add(CmdHelp())
+
+
+        Globals.baseCommand = this
     }
 
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
@@ -38,6 +45,7 @@ class BaseCommand : SCommand(), CommandExecutor {
 
     override fun perform(info: CommandInfo) {
         info.commandSender.sendMessage(Message.commandBaseHelpMessage)
+        generateHelp(1, info.player!!)
     }
 
 

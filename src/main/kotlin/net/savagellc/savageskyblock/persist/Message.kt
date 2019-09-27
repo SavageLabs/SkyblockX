@@ -1,6 +1,7 @@
 package net.savagellc.savageskyblock.persist
 
 import net.prosavage.baseplugin.serializer.Serializer
+import net.savagellc.savageskyblock.core.color
 import org.bukkit.ChatColor
 
 object Message {
@@ -11,6 +12,13 @@ object Message {
     var commandRequirementsNotAPlayer = "&cThis command requires the executor to be a player."
     var commandRequirementsNotAnIslandMember = "&cThis command requires the executor to be a island member, create one using \"/is create\"."
     var commandRequirementsPlayerDoesNotHavePermission = "&cThis command requires the permission %1\$s"
+
+    var commandHelpGeneratorPageInvalid = "&cThe page %1\$s is invalid."
+    var commandHelpGeneratorFormat = "&b/is %1\$s &8> &7 %2\$s"
+    var commandHelpGeneratorNotRequired = "&c✗&r"
+    var commandHelpGeneratorRequires = "&a✔&r"
+    var commandHelpGeneratorIslandRequired = "Island member requirement: %1\$s"
+    var commandHelpGeneratorClickMeToPaste = "&7Click me to paste \"%1\$s\" in chat bar."
 
 
     var commandParsingArgIsNotInt = "&cThis argument is not an integer, please make it one."
@@ -57,8 +65,11 @@ object Message {
 
     var commandHomeHomeSet = "You have set this location to your %1\$s home."
     var commandHomeCannotHaveMoreHomes = "You cannot have more homes set."
-    var commandHomeHelp = "This command allows you to go to a set island home."
+    var commandHomeHelp = "This command allows you to go to a use island homes."
+    var commandHomeSetHelp = "This command allows you to set island homes."
+    var commandHomeList = "This command allows you to list island homes."
 
+    var commandHelpHelp = "This command allows you to view information about other commands."
 
     var commandRemoveInvokerSuccess = "You have removed %1\$s from your island."
     var commandRemoveInvokerCoopRemoved = "%1\$s's co-op status has been removed."
@@ -83,6 +94,9 @@ object Message {
     var skyblockEditStructureSaved = "You have saved a structure to a file called %1\$s"
     var skyblockEditErrorPositionsNotInSameWorld = "Position 1 and position 2 are no in the same world."
 
+    override fun toString(): String {
+        return color(super.toString())
+    }
 
     fun save() {
         Serializer().save(instance)
