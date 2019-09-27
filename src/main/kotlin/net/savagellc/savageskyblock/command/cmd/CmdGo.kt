@@ -14,7 +14,8 @@ class CmdGo : SCommand() {
         this.optionalArgs.add("player")
 
 
-        commandRequirements = CommandRequirementsBuilder().asIslandMember(true).asPlayer(true).withPermission(Permission.GO).build()
+        commandRequirements =
+            CommandRequirementsBuilder().asIslandMember(true).asPlayer(true).withPermission(Permission.GO).build()
     }
 
 

@@ -7,7 +7,7 @@ import java.util.*
 import java.util.zip.GZIPInputStream
 
 class SbfReader {
-    fun read(f:File, withoutGZIP: Boolean = false): SbfContainer {
+    fun read(f: File, withoutGZIP: Boolean = false): SbfContainer {
         var stream = DataInputStream(GZIPInputStream(FileInputStream(f)))
         if (withoutGZIP) {
             stream = DataInputStream(FileInputStream(f))
@@ -24,12 +24,12 @@ class SbfReader {
 
         val container = SbfContainer(version, offsetX, offsetY, offsetZ)
         val am = stream.readInt()
-        for(x in 0 until am) {
+        for (x in 0 until am) {
             val blockIndex = stream.readInt()
             val x = stream.readDouble()
             val y = stream.readDouble()
             val z = stream.readDouble()
-            container.blocks.add(SbfBlock(x,y,z, types[blockIndex]))
+            container.blocks.add(SbfBlock(x, y, z, types[blockIndex]))
         }
         val chestAm = stream.readInt()
         for (x in 0 until chestAm) {
@@ -46,7 +46,7 @@ class SbfReader {
                 val bType = stream.readUTF()
                 items.add(SbfChestItem(bSlot, bAmount, bType))
             }
-            container.chests.add(SbfChest(x,y,z,direction, size, items))
+            container.chests.add(SbfChest(x, y, z, direction, size, items))
         }
         return container
     }

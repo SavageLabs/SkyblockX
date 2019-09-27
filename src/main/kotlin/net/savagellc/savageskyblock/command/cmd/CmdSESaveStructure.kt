@@ -15,10 +15,9 @@ class CmdSESaveStructure : SCommand() {
 
         requiredArgs.add("filename")
 
-        commandRequirements = CommandRequirementsBuilder().asPlayer(true).withPermission(Permission.SE_SAVESTUCT).build()
+        commandRequirements =
+            CommandRequirementsBuilder().asPlayer(true).withPermission(Permission.SE_SAVESTUCT).build()
     }
-
-
 
 
     override fun perform(info: CommandInfo) {

@@ -12,7 +12,8 @@ class CmdDelete : SCommand() {
     init {
         aliases.add("delete")
 
-        commandRequirements = CommandRequirementsBuilder().asIslandMember(true).withPermission(Permission.DELETE).build()
+        commandRequirements =
+            CommandRequirementsBuilder().asIslandMember(true).withPermission(Permission.DELETE).build()
     }
 
 

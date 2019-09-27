@@ -13,7 +13,8 @@ class CmdCreate : SCommand() {
     init {
         aliases.add("create")
 
-        commandRequirements = CommandRequirementsBuilder().asIslandMember(false).asPlayer(true).withPermission(Permission.CREATE).build()
+        commandRequirements =
+            CommandRequirementsBuilder().asIslandMember(false).asPlayer(true).withPermission(Permission.CREATE).build()
     }
 
     override fun perform(info: CommandInfo) {
@@ -29,7 +30,7 @@ class CmdCreate : SCommand() {
 
 
     override fun getHelpInfo(): String {
-       return Message.commandCreateHelp
+        return Message.commandCreateHelp
     }
 
 }

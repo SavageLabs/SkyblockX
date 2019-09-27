@@ -7,7 +7,6 @@ import net.savagellc.savageskyblock.persist.Message
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
-import java.lang.NumberFormatException
 import java.util.*
 
 class CommandInfo(val commandSender: CommandSender, val args: ArrayList<String>, val aliasUsed: String) {
@@ -68,8 +67,6 @@ class CommandInfo(val commandSender: CommandSender, val args: ArrayList<String>,
     fun message(message: String) {
         commandSender.sendMessage(color(message))
     }
-
-
 
 
 }

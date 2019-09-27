@@ -2,10 +2,9 @@ package net.savagellc.savageskyblock.core
 
 import net.savagellc.savageskyblock.persist.Config
 import org.bukkit.entity.HumanEntity
+import org.bukkit.permissions.Permissible
 import org.bukkit.permissions.PermissionAttachmentInfo
 import java.util.concurrent.atomic.AtomicInteger
-import org.bukkit.permissions.Permissible
-import java.lang.NumberFormatException
 
 
 enum class Permission(val node: String) {
@@ -44,11 +43,11 @@ fun getMaxPermission(permissable: Permissible, permission: String): Int {
 
 
     permissable.effectivePermissions.stream()
-        .map (PermissionAttachmentInfo::getPermission)
+        .map(PermissionAttachmentInfo::getPermission)
         .map { perm -> perm.toString().toLowerCase() }
-        .filter{ permString -> permString.startsWith(permission) }
+        .filter { permString -> permString.startsWith(permission) }
         .map { permString -> permString.replace(permission, "") }
-        .forEach{ value ->
+        .forEach { value ->
             // If the value is *, then its basically infinity
             if (value.equals("*", true)) {
                 max.set(-1)

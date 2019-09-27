@@ -3,7 +3,6 @@ package net.savagellc.savageskyblock.persist
 import net.prosavage.baseplugin.serializer.Serializer
 import net.savagellc.savageskyblock.core.IPlayer
 import net.savagellc.savageskyblock.core.Island
-import net.savagellc.savageskyblock.world.Point
 
 object Data {
 
@@ -24,7 +23,6 @@ object Data {
     fun load() {
         Serializer().load(instance, Data::class.java, "data")
     }
-
 
 
 }

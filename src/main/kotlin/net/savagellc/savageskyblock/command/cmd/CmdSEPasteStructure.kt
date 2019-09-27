@@ -19,8 +19,6 @@ class CmdSEPasteStructure : SCommand() {
     }
 
 
-
-
     override fun perform(info: CommandInfo) {
         SkyblockEdit().pasteIsland(info.args[0], info.player!!.location, info.player!!)
     }

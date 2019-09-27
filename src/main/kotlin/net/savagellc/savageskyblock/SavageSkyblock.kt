@@ -11,7 +11,6 @@ import net.savagellc.savageskyblock.persist.Data
 import net.savagellc.savageskyblock.persist.Message
 import net.savagellc.savageskyblock.world.VoidWorldGenerator
 import org.bukkit.WorldCreator
-import kotlin.math.log
 
 
 class SavageSkyblock : BasePlugin() {
@@ -36,7 +35,6 @@ class SavageSkyblock : BasePlugin() {
         Data.save()
         Message.save()
     }
-
 
 
 }

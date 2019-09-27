@@ -18,7 +18,6 @@ import org.bukkit.event.player.PlayerInteractEvent
 class PlayerListener : Listener {
 
 
-
     @EventHandler
     fun onPlayerTakingDamage(event: EntityDamageByEntityEvent) {
         // If they're not a player or if the entity is not in the skyblock world, we do not care.
@@ -68,13 +67,21 @@ class PlayerListener : Listener {
         if (event.item == null
             || event.clickedBlock == null
             || event.clickedBlock!!.type != XMaterial.OBSIDIAN.parseMaterial()
-            || event.item!!.type != XMaterial.BUCKET.parseMaterial()) {
-           return
+            || event.item!!.type != XMaterial.BUCKET.parseMaterial()
+        ) {
+            return
         }
 
 
         if (!hasPermission(event.player, Permission.OBSIDIANTOLAVA)) {
-            event.player.sendMessage(color(String.format(Message.genericActionRequiresPermission, Permission.OBSIDIANTOLAVA.getFullPermissionNode())))
+            event.player.sendMessage(
+                color(
+                    String.format(
+                        Message.genericActionRequiresPermission,
+                        Permission.OBSIDIANTOLAVA.getFullPermissionNode()
+                    )
+                )
+            )
             return
         }
 

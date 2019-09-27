@@ -9,8 +9,6 @@ import org.bukkit.entity.Player
 class CommandRequirements(val permission: Permission?, var asPlayer: Boolean, var asIslandMember: Boolean) {
 
 
-
-
     fun computeRequirements(info: CommandInfo, informIfNot: Boolean = true): Boolean {
         // Check if the commandSender is a player
         if (asPlayer && !info.isPlayer()) {

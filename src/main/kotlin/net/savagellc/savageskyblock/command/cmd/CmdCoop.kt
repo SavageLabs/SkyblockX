@@ -14,7 +14,8 @@ class CmdCoop : SCommand() {
 
         requiredArgs.add("player")
 
-        commandRequirements = CommandRequirementsBuilder().asPlayer(true).asIslandMember(true).withPermission(Permission.COOP).build()
+        commandRequirements =
+            CommandRequirementsBuilder().asPlayer(true).asIslandMember(true).withPermission(Permission.COOP).build()
     }
 
 

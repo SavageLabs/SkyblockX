@@ -88,20 +88,27 @@ abstract class SCommand {
             }
             val command = subCommands[i]
             val base = (if (aliases.size > 0) aliases[0] + " " else "") + command.aliases[0]
-            val tooltip = String.format(Message.commandHelpGeneratorIslandRequired, (if (command.commandRequirements.asIslandMember) Message.commandHelpGeneratorRequires else Message.commandHelpGeneratorNotRequired)) + "\n" + String.format(Message.commandHelpGeneratorClickMeToPaste, "/is $base")
+            val tooltip = String.format(
+                Message.commandHelpGeneratorIslandRequired,
+                (if (command.commandRequirements.asIslandMember) Message.commandHelpGeneratorRequires else Message.commandHelpGeneratorNotRequired)
+            ) + "\n" + String.format(Message.commandHelpGeneratorClickMeToPaste, "/is $base")
 
-            JSONMessage.create(color(String.format(Message.commandHelpGeneratorFormat, base, command.getHelpInfo()))).tooltip(color(tooltip)).suggestCommand("/is $base").send(player)
+            JSONMessage.create(color(String.format(Message.commandHelpGeneratorFormat, base, command.getHelpInfo())))
+                .tooltip(color(tooltip)).suggestCommand("/is $base").send(player)
         }
     }
 
     private fun sendCommandFormat(info: CommandInfo, useJSON: Boolean = true) {
         if (useJSON) {
-            var commandFormatJSON = JSONMessage.create(color("&7&o((Hoverable))&r")).then(" /is ").then(this.aliases[0]).then(" ")
+            var commandFormatJSON =
+                JSONMessage.create(color("&7&o((Hoverable))&r")).then(" /is ").then(this.aliases[0]).then(" ")
             for (requiredArg in requiredArgs) {
-                commandFormatJSON = commandFormatJSON.then("<$requiredArg>").tooltip("This argument is required.").then(" ")
+                commandFormatJSON =
+                    commandFormatJSON.then("<$requiredArg>").tooltip("This argument is required.").then(" ")
             }
             for (optionalArg in optionalArgs) {
-                commandFormatJSON = commandFormatJSON.then("($optionalArg)").tooltip("The argument is optional").then(" ")
+                commandFormatJSON =
+                    commandFormatJSON.then("($optionalArg)").tooltip("The argument is optional").then(" ")
             }
 
             commandFormatJSON.send(info.player)
@@ -115,7 +122,6 @@ abstract class SCommand {
             }
             info.message(commandFormat)
         }
-
 
 
     }

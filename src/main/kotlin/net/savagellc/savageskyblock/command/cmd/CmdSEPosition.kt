@@ -15,7 +15,8 @@ class CmdSEPosition : SCommand() {
 
         requiredArgs.add("positionIndex")
 
-        commandRequirements = CommandRequirementsBuilder().asPlayer(true).withPermission(Permission.SE_PASTESTRUCT).build()
+        commandRequirements =
+            CommandRequirementsBuilder().asPlayer(true).withPermission(Permission.SE_PASTESTRUCT).build()
     }
 
 

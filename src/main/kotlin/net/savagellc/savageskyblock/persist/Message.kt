@@ -2,7 +2,6 @@ package net.savagellc.savageskyblock.persist
 
 import net.prosavage.baseplugin.serializer.Serializer
 import net.savagellc.savageskyblock.core.color
-import org.bukkit.ChatColor
 
 object Message {
 
@@ -10,7 +9,8 @@ object Message {
     private val instance = this
 
     var commandRequirementsNotAPlayer = "&cThis command requires the executor to be a player."
-    var commandRequirementsNotAnIslandMember = "&cThis command requires the executor to be a island member, create one using \"/is create\"."
+    var commandRequirementsNotAnIslandMember =
+        "&cThis command requires the executor to be a island member, create one using \"/is create\"."
     var commandRequirementsPlayerDoesNotHavePermission = "&cThis command requires the permission %1\$s"
 
     var commandHelpGeneratorPageInvalid = "&cThe page %1\$s is invalid."
@@ -48,7 +48,8 @@ object Message {
     var commandSEPosition = "Please right click a block to set it to position %1\$s"
 
     var commandSESaveStructureHelp = "This command saves a structure to a file name specified"
-    var commandSESaveStructurePositionsNotSet = "You have not set both positions use the command \"/is pos\" to set the positions"
+    var commandSESaveStructurePositionsNotSet =
+        "You have not set both positions use the command \"/is pos\" to set the positions"
 
     var commandSEPasteStructurePasted = "Structure pasted successfully"
 
@@ -58,9 +59,9 @@ object Message {
 
     var commandCoopInvokerSuccess = "You have added %1\$s to your island as co-op"
     var commandCoopMessageRecipient = "You have been added as a co-op player to %1\$s's island."
-    var commandCoopCannotHaveMoreCoopPlayers = "You cannot have more co-op players, run &c/is coop&r to view current co-op players, and remove them using &c/is remove <player>"
+    var commandCoopCannotHaveMoreCoopPlayers =
+        "You cannot have more co-op players, run &c/is coop&r to view current co-op players, and remove them using &c/is remove <player>"
     var commandCoopHelp = "This command allows you to set another player to co-op mode."
-
 
 
     var commandHomeHomeSet = "You have set this location to your %1\$s home."
@@ -80,7 +81,8 @@ object Message {
     var commandTpHelp = "This command allows you to teleport to islands of other players."
     var commandTpPossibleLocationsHeader = "You can teleport to the following locations..."
     var commandTpPossibleLocationsFormat = "%1\$s. %2\$s's island."
-    var commandTpThisIslandIsNotValid = "The player %1\$s does not own an island. Type &c/is tp &rto list possible locations."
+    var commandTpThisIslandIsNotValid =
+        "The player %1\$s does not own an island. Type &c/is tp &rto list possible locations."
     var commandTpTeleporting = "Teleporting you to %1\$s's island."
     var commandTpNoPermission = "The specified island does not have you as co-op or as a island member, "
 
@@ -105,7 +107,6 @@ object Message {
     fun load() {
         Serializer().load(instance, Message::class.java, "message")
     }
-
 
 
 }

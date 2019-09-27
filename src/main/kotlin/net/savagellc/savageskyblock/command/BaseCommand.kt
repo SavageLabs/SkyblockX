@@ -3,14 +3,11 @@ package net.savagellc.savageskyblock.command
 import net.savagellc.savageskyblock.Globals
 import net.savagellc.savageskyblock.command.cmd.*
 import net.savagellc.savageskyblock.command.cmd.home.CmdHome
+import net.savagellc.savageskyblock.persist.Message
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
-
-import net.savagellc.savageskyblock.persist.Message
-
-import java.util.ArrayList
-
+import java.util.*
 
 
 class BaseCommand : SCommand(), CommandExecutor {
