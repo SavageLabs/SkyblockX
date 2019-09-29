@@ -30,7 +30,7 @@ object Config {
 
     // TODO: Actually use GUI, also create island structure requirements.
     var islandCreateGUITitle = "Choose an island!"
-    var islandCreateGUIRows = 6
+    var islandCreateGUIRows = 1
     var islandCreateGUIBackgroundItem = SerializableItem(XMaterial.BLACK_STAINED_GLASS_PANE, "&9", listOf(""), 1)
     var islandCreateGUIIslandTypes = listOf(
         IslandCreateInfo(
