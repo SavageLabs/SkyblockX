@@ -34,6 +34,10 @@ fun hasPermission(humanEntity: HumanEntity, permission: Permission): Boolean {
     return humanEntity.hasPermission(permission.getFullPermissionNode())
 }
 
+fun hasPermission(humanEntity: HumanEntity, permission: String): Boolean {
+    return humanEntity.hasPermission(permission)
+}
+
 fun getMaxPermission(permissable: Permissible, permission: String): Int {
     if (permissable.isOp) {
         return -1
@@ -41,7 +45,6 @@ fun getMaxPermission(permissable: Permissible, permission: String): Int {
 
     // Atomic cuz values need to be final to be accessed from lambda.
     val max = AtomicInteger()
-
 
     permissable.effectivePermissions.stream()
         .map(PermissionAttachmentInfo::getPermission)

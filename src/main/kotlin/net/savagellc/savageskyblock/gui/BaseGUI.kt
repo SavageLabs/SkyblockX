@@ -7,7 +7,8 @@ import net.savagellc.savageskyblock.Globals
 import net.savagellc.savageskyblock.core.color
 import org.bukkit.entity.HumanEntity
 
-open class BaseGUI(val title: String, val backgroundItem: SerializableItem, val guiRows: Int) {
+open class BaseGUI(val title: String, val backgroundItem: SerializableItem, val guiRows: Int) : SkyblockGui{
+
 
     @Transient
     val gui = Gui(Globals.savageSkyblock, guiRows, color(title))
@@ -15,13 +16,14 @@ open class BaseGUI(val title: String, val backgroundItem: SerializableItem, val 
     val pane = PaginatedPane(0, 0, 9, guiRows)
 
 
-    fun buildGUI() {
+    override fun buildGui() {
         gui.addPane(pane)
         gui.update()
     }
 
-    fun showGUI(humanEntity: HumanEntity) {
+    override fun showGui(humanEntity: HumanEntity) {
         gui.show(humanEntity)
     }
+
 
 }

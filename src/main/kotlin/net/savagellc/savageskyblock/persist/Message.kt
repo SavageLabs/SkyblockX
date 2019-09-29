@@ -63,7 +63,6 @@ object Message {
         "You cannot have more co-op players, run &c/is coop&r to view current co-op players, and remove them using &c/is remove <player>"
     var commandCoopHelp = "&7set another player to co-op mode."
 
-
     var commandHomeGoSuccess = "&7You have been teleported to &b%1\$s"
     var commandHomeHomeSet = "&7You have set this location to your &b%1\$s&7 home."
     var commandHomeSetNotInIsland = "&7This location is not inside of the island's boundaries."
@@ -93,6 +92,8 @@ object Message {
     var commandTpThisIslandIsNotValid = "&7The player %1\$s does not own an island. Type &c/is tp &rto list possible locations."
     var commandTpTeleporting = "&7Teleporting you to %1\$s's island."
     var commandTpNoPermission = "&7The specified island does not have you as co-op or as a island member, "
+
+    var islandCreateGUIYouDontHavePermission = "You do not have permission to use this island."
 
     var listenerVoidDeathPrevented = "&7You fell into the void, teleporting you back."
     var listenerBlockPlacementDenied = "&7You can only place blocks inside of your island."

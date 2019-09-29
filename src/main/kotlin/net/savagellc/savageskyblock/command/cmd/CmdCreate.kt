@@ -5,7 +5,9 @@ import net.savagellc.savageskyblock.command.CommandRequirementsBuilder
 import net.savagellc.savageskyblock.command.SCommand
 import net.savagellc.savageskyblock.core.Permission
 import net.savagellc.savageskyblock.core.createIsland
+import net.savagellc.savageskyblock.gui.IslandCreateGUI
 import net.savagellc.savageskyblock.persist.Message
+import net.savagellc.savageskyblock.persist.data.IslandCreateInfo
 
 
 class CmdCreate : SCommand() {
@@ -22,9 +24,10 @@ class CmdCreate : SCommand() {
             info.message(Message.commandCreateAlreadyHaveAnIsland)
             return
         }
-        info.message("Creating island and filling it.")
-        val island = createIsland(info.player!!, "island")
-        info.message("Success.")
+
+        val islandCreateGUI = IslandCreateGUI()
+        islandCreateGUI.buildGui()
+        islandCreateGUI.showGui(info.player!!)
 
     }
 

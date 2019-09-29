@@ -16,6 +16,10 @@ class BaseCommandTesting : CommandExecutor {
 
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
         sender.sendMessage("command root")
+        if (!sender.isOp) {
+            sender.sendMessage("you need to be OP to use this testing command.")
+            return true
+        }
         when (args[0]) {
             "world" -> {
                 if (Bukkit.getWorld(Config.skyblockWorldName) != null) {

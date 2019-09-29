@@ -3,6 +3,7 @@ package net.savagellc.savageskyblock.persist
 import net.prosavage.baseplugin.XMaterial
 import net.prosavage.baseplugin.serializer.Serializer
 import net.prosavage.baseplugin.serializer.commonobjects.SerializableItem
+import net.savagellc.savageskyblock.persist.data.IslandCreateInfo
 
 object Config {
 
@@ -29,26 +30,24 @@ object Config {
 
     // TODO: Actually use GUI, also create island structure requirements.
     var islandCreateGUITitle = "Choose an island!"
-    var islandCreateGUIRows = 9
-    var islandCreateGUIBackgroundItem = SerializableItem(XMaterial.BLACK_STAINED_GLASS, "&9", listOf(""), 1)
-    var islandCreateGUIIslandTypes = mapOf(
-        "island.structure" to SerializableItem(
-            XMaterial.GRASS_BLOCK,
-            "&aBasic Island",
-            listOf("&aThis is the basic starter island", "&aComes with everything you need to get started."),
-            1
-        ),
-        "other.structure" to SerializableItem(
-            XMaterial.BEDROCK,
-            "&aVoid Island",
-            listOf(
-                "&aThis is a harder island.",
-                "&a - Start off with bedrock & a chest.",
-                "&a - Chest has extra dirt and sand, along with a sapling."
-            ),
-            1
+    var islandCreateGUIRows = 6
+    var islandCreateGUIBackgroundItem = SerializableItem(XMaterial.BLACK_STAINED_GLASS_PANE, "&9", listOf(""), 1)
+    var islandCreateGUIIslandTypes = listOf(
+        IslandCreateInfo(
+            "savageskyblock.islands.default", 2, SerializableItem(
+                XMaterial.GRASS_BLOCK,
+                "&aBasic Island",
+                listOf("&aThis is the basic starter island", "&aComes with everything you need to get started."),
+                1
+            ), "island.structure"),
+        IslandCreateInfo(
+            "savageskyblock.islands.bedrock", 2, SerializableItem(
+                XMaterial.BEDROCK,
+                "&aBedrock Island",
+                listOf("&aThis is the basic starter island", "&aComes with everything you need to get started."),
+                1
+            ), "island.structure")
         )
-    )
 
 
     fun save() {
