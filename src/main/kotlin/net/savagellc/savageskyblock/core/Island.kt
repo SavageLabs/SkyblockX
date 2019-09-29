@@ -42,7 +42,7 @@ data class Island(val islandID: Int, val point: Point, val ownerUUID: String, va
         if (owner != null) {
             maxCoopPlayers = getMaxPermission(owner, "savageskyblock.limits.coop-players")
             if (maxCoopPlayers == 0) {
-                maxCoopPlayers = 3
+                maxCoopPlayers = Config.defaultMaxCoopPlayers
             }
         }
 
@@ -58,10 +58,17 @@ data class Island(val islandID: Int, val point: Point, val ownerUUID: String, va
         val owner = Bukkit.getOfflinePlayer(UUID.fromString(ownerUUID)).player
         if (owner != null) {
             maxIslandHomes = getMaxPermission(owner, "savageskyblock.limits.island-homes")
+            if (maxIslandHomes == 0) {
+                maxIslandHomes = Config.defaultMaxIslandHomes
+            }
+        }
+
+        if (maxIslandHomes == -1) {
+            return true
         }
 
         // Return if the current size is less than the max, if so we gucci.
-        return currentCoopPlayers.size < maxIslandHomes
+        return homes.size < maxIslandHomes
     }
 
     var homes = HashMap<String, SLocation>()

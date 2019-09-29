@@ -1,6 +1,7 @@
 package net.savagellc.savageskyblock.core
 
 import net.savagellc.savageskyblock.persist.Config
+import org.bukkit.Bukkit
 import org.bukkit.entity.HumanEntity
 import org.bukkit.permissions.Permissible
 import org.bukkit.permissions.PermissionAttachmentInfo
@@ -46,7 +47,7 @@ fun getMaxPermission(permissable: Permissible, permission: String): Int {
         .map(PermissionAttachmentInfo::getPermission)
         .map { perm -> perm.toString().toLowerCase() }
         .filter { permString -> permString.startsWith(permission) }
-        .map { permString -> permString.replace(permission, "") }
+        .map { permString -> permString.replace("$permission.", "") }
         .forEach { value ->
             // If the value is *, then its basically infinity
             if (value.equals("*", true)) {
@@ -61,7 +62,7 @@ fun getMaxPermission(permissable: Permissible, permission: String): Int {
 
             try {
                 // Get the int from string
-                val amount = max.toInt()
+                val amount = Integer.parseInt(value)
 
                 // Check if our value is bigger than the one we have.
                 if (amount > max.get()) {

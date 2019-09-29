@@ -19,7 +19,7 @@ class CmdHomeSet : SCommand() {
     }
 
     override fun perform(info: CommandInfo) {
-        if (info.iPlayer!!.getIsland()!!.canHaveMoreHomes()) {
+        if (!info.iPlayer!!.getIsland()!!.canHaveMoreHomes()) {
             info.message(Message.commandHomeCannotHaveMoreHomes)
             return
         }
