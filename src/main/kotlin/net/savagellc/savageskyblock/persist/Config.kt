@@ -27,7 +27,6 @@ object Config {
 
     var helpGeneratorPageEntries = 4
 
-
     // TODO: Actually use GUI, also create island structure requirements.
     var islandCreateGUITitle = "Choose an island!"
     var islandCreateGUIRows = 1
@@ -41,7 +40,7 @@ object Config {
                 1
             ), "island.structure"),
         IslandCreateInfo(
-            "savageskyblock.islands.bedrock", 2, SerializableItem(
+            "savageskyblock.islands.bedrock", 6, SerializableItem(
                 XMaterial.BEDROCK,
                 "&aBedrock Island",
                 listOf("&aThis is the basic starter island", "&aComes with everything you need to get started."),

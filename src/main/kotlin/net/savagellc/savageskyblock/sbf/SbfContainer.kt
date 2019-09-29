@@ -15,6 +15,7 @@ class SbfChest(
 
 class SbfContainer(val version: String = "SBF_1", val offsetx: Int, val offsety: Int, val offsetz: Int) {
     val blocks = Vector<SbfBlock>()
+
     val chests = Vector<SbfChest>()
 
 }

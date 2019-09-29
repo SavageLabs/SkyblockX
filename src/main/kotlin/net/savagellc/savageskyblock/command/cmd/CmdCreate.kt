@@ -28,7 +28,6 @@ class CmdCreate : SCommand() {
         val islandCreateGUI = IslandCreateGUI()
         islandCreateGUI.buildGui()
         islandCreateGUI.showGui(info.player!!)
-
     }
 
 

@@ -24,14 +24,14 @@ class IslandCreateGUI() :
             guiItems.add(GuiItem(super.backgroundItem.buildItem()) { e -> e.isCancelled = true })
         }
         for (island in Config.islandCreateGUIIslandTypes) {
-            guiItems[island.key.guiIndex] = (GuiItem(island.key.item.buildItem()) { e ->
+            guiItems[island.guiIndex] = (GuiItem(island.item.buildItem()) { e ->
                 run {
                     e.isCancelled = true
                     val player = e.whoClicked as Player
-                    if (!hasPermission(player, island.key.requirementPermission)) {
+                    if (!hasPermission(player, island.requirementPermission)) {
                         player.sendMessage(color(Message.islandCreateGUIYouDontHavePermission))
                     }
-                    createIsland(player, island.value.replace(".structure", ""))
+                    createIsland(player, island.structureFile.replace(".structure", ""))
                     player.teleport(getIPlayer(player).getIsland()!!.getIslandSpawn())
                     player.sendMessage("Success -> Change this")
                 }
