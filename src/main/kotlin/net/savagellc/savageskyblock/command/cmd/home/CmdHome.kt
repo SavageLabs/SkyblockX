@@ -13,7 +13,8 @@ class CmdHome : SCommand() {
 
         optionalArgs.add("home-name")
 
-        commandRequirements = CommandRequirementsBuilder().withPermission(Permission.HOME).asPlayer(true).asIslandMember(true).build()
+        commandRequirements =
+            CommandRequirementsBuilder().withPermission(Permission.HOME).asPlayer(true).asIslandMember(true).build()
 
         subCommands.add(CmdHomeList())
         subCommands.add(CmdHomeSet())
@@ -22,10 +23,8 @@ class CmdHome : SCommand() {
     }
 
 
-
     override fun perform(info: CommandInfo) {
         generateHelp(1, info.player!!)
-
 
 
     }

@@ -4,10 +4,8 @@ import net.savagellc.savageskyblock.command.CommandInfo
 import net.savagellc.savageskyblock.command.CommandRequirementsBuilder
 import net.savagellc.savageskyblock.command.SCommand
 import net.savagellc.savageskyblock.core.Permission
-import net.savagellc.savageskyblock.core.createIsland
 import net.savagellc.savageskyblock.gui.IslandCreateGUI
 import net.savagellc.savageskyblock.persist.Message
-import net.savagellc.savageskyblock.persist.data.IslandCreateInfo
 
 
 class CmdCreate : SCommand() {

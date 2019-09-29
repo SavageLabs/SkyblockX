@@ -1,17 +1,15 @@
 package net.savagellc.savageskyblock.gui
 
 import com.github.stefvanschie.inventoryframework.GuiItem
-import net.prosavage.baseplugin.serializer.commonobjects.SerializableItem
 import net.savagellc.savageskyblock.core.color
 import net.savagellc.savageskyblock.core.createIsland
 import net.savagellc.savageskyblock.core.getIPlayer
 import net.savagellc.savageskyblock.core.hasPermission
 import net.savagellc.savageskyblock.persist.Config
 import net.savagellc.savageskyblock.persist.Message
-import org.bukkit.entity.HumanEntity
 import org.bukkit.entity.Player
 
-class IslandCreateGUI() :
+class IslandCreateGUI :
     BaseGUI(Config.islandCreateGUITitle, Config.islandCreateGUIBackgroundItem, Config.islandCreateGUIRows),
     SkyblockGui {
 

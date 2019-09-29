@@ -4,7 +4,6 @@ import net.savagellc.savageskyblock.command.CommandInfo
 import net.savagellc.savageskyblock.command.CommandRequirementsBuilder
 import net.savagellc.savageskyblock.command.SCommand
 import net.savagellc.savageskyblock.persist.Message
-import net.savagellc.savageskyblock.persist.data.getSLocation
 
 class CmdHomeGo : SCommand() {
 

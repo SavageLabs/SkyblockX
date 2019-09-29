@@ -7,7 +7,7 @@ import net.savagellc.savageskyblock.Globals
 import net.savagellc.savageskyblock.core.color
 import org.bukkit.entity.HumanEntity
 
-open class BaseGUI(val title: String, val backgroundItem: SerializableItem, val guiRows: Int) : SkyblockGui{
+open class BaseGUI(val title: String, val backgroundItem: SerializableItem, val guiRows: Int) : SkyblockGui {
 
 
     @Transient

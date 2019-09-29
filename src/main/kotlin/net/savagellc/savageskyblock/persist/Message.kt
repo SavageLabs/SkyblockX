@@ -84,12 +84,14 @@ object Message {
     var commandRemoveInvokerCoopRemoved = "&7%1\$s's co-op status has been removed."
     var commandRemoveInvokerPlayerNotOnIsland = "&7The specified player's location is currently not on your island."
     var commandRemovedCoopStatus = "&7Your co-op status has been removed due to you being removed from the island."
-    var commandRemoveHelp = "&7This command removes someone from your island, also removes co-op status if they have it."
+    var commandRemoveHelp =
+        "&7This command removes someone from your island, also removes co-op status if they have it."
 
     var commandTpHelp = "&7teleport to islands of other players."
     var commandTpPossibleLocationsHeader = "&7You can teleport to the following locations..."
     var commandTpPossibleLocationsFormat = "&7%1\$s. %2\$s's island."
-    var commandTpThisIslandIsNotValid = "&7The player %1\$s does not own an island. Type &c/is tp &rto list possible locations."
+    var commandTpThisIslandIsNotValid =
+        "&7The player %1\$s does not own an island. Type &c/is tp &rto list possible locations."
     var commandTpTeleporting = "&7Teleporting you to %1\$s's island."
     var commandTpNoPermission = "&7The specified island does not have you as co-op or as a island member, "
 

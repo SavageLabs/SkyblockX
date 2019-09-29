@@ -38,15 +38,17 @@ object Config {
                 "&aBasic Island",
                 listOf("&aThis is the basic starter island", "&aComes with everything you need to get started."),
                 1
-            ), "island.structure"),
+            ), "island.structure"
+        ),
         IslandCreateInfo(
             "savageskyblock.islands.bedrock", 6, SerializableItem(
                 XMaterial.BEDROCK,
                 "&aBedrock Island",
                 listOf("&aThis is the basic starter island", "&aComes with everything you need to get started."),
                 1
-            ), "island.structure")
+            ), "island.structure"
         )
+    )
 
 
     fun save() {

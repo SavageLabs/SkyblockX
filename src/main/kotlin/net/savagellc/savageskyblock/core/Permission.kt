@@ -1,7 +1,6 @@
 package net.savagellc.savageskyblock.core
 
 import net.savagellc.savageskyblock.persist.Config
-import org.bukkit.Bukkit
 import org.bukkit.entity.HumanEntity
 import org.bukkit.permissions.Permissible
 import org.bukkit.permissions.PermissionAttachmentInfo

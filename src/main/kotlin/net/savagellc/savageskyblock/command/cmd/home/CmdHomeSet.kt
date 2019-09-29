@@ -15,7 +15,8 @@ class CmdHomeSet : SCommand() {
 
         this.requiredArgs.add("home-name")
 
-        this.commandRequirements = CommandRequirementsBuilder().withPermission(Permission.HOME).asIslandMember(true).build()
+        this.commandRequirements =
+            CommandRequirementsBuilder().withPermission(Permission.HOME).asIslandMember(true).build()
     }
 
     override fun perform(info: CommandInfo) {
