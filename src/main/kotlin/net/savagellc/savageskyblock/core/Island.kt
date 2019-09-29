@@ -76,15 +76,20 @@ data class Island(val islandID: Int, val point: Point, val ownerUUID: String, va
     }
 
     fun removeHome(name: String) {
-        homes.remove(name)
+        // Lowercase home cause all homes are lowercase.
+        homes.remove(name.toLowerCase())
+    }
+
+    fun getAllHomes(): Map<String, SLocation> {
+        return homes
     }
 
     fun getHome(name: String): SLocation? {
-        return homes[name]
+        return homes[name.toLowerCase()]
     }
 
     fun hasHome(name: String): Boolean {
-        return homes.containsKey(name)
+        return homes.containsKey(name.toLowerCase())
     }
 
     fun coopPlayer(iPlayer: IPlayer) {

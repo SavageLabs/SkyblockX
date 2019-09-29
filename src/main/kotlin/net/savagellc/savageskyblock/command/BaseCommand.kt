@@ -27,7 +27,6 @@ class BaseCommand : SCommand(), CommandExecutor {
         subCommands.add(CmdHome())
         subCommands.add(CmdHelp())
 
-
         Globals.baseCommand = this
     }
 
@@ -41,7 +40,7 @@ class BaseCommand : SCommand(), CommandExecutor {
     }
 
     override fun perform(info: CommandInfo) {
-        info.commandSender.sendMessage(Message.commandBaseHelpMessage)
+        info.message(Message.commandBaseHelpMessage)
         generateHelp(1, info.player!!)
     }
 

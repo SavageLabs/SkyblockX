@@ -1,6 +1,7 @@
 package net.savagellc.savageskyblock.command
 
 import net.savagellc.savageskyblock.core.IPlayer
+import net.savagellc.savageskyblock.core.Island
 import net.savagellc.savageskyblock.core.color
 import net.savagellc.savageskyblock.core.getIPlayer
 import net.savagellc.savageskyblock.persist.Message
@@ -14,6 +15,7 @@ class CommandInfo(val commandSender: CommandSender, val args: ArrayList<String>,
 
     var player: Player? = if (commandSender is Player) commandSender else null
     var iPlayer: IPlayer? = if (commandSender is Player) getIPlayer(commandSender) else null
+    var island: Island? = if (commandSender is Player && iPlayer != null) iPlayer!!.getIsland() else null
 
 
     fun isBypassing(): Boolean {

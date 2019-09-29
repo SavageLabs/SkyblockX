@@ -80,10 +80,8 @@ abstract class SCommand {
             return
         }
 
-
-
-        for (i in pageStartEntry..pageStartEntry + Config.helpGeneratorPageEntries) {
-            if (subCommands.size <= i) {
+        for (i in pageStartEntry until (pageStartEntry + Config.helpGeneratorPageEntries)) {
+            if (subCommands.size - 1 < i) {
                 continue
             }
             val command = subCommands[i]
