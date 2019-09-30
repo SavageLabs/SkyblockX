@@ -4,6 +4,7 @@ package net.savagellc.savageskyblock.sedit
 import net.prosavage.baseplugin.ItemBuilder
 import net.prosavage.baseplugin.XMaterial
 import net.savagellc.savageskyblock.Globals
+import net.savagellc.savageskyblock.core.color
 import net.savagellc.savageskyblock.persist.Message
 import net.savagellc.savageskyblock.sbf.*
 import org.bukkit.Location
@@ -72,7 +73,7 @@ class SkyblockEdit {
         val structuresDir = File(Globals.savageSkyblock.dataFolder, "structures")
         structuresDir.mkdirs()
         SbfWriter(container).write(File(structuresDir, "${name}.structure"))
-        player.sendMessage(String.format(Message.skyblockEditStructureSaved, "${name}.structure"))
+        player.sendMessage(color(String.format(Message.skyblockEditStructureSaved, "${name}.structure")))
     }
 
     fun pasteIsland(name: String, location: Location, player: Player?) {

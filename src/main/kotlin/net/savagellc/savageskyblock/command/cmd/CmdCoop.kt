@@ -26,7 +26,7 @@ class CmdCoop : SCommand() {
             return
         }
 
-        info.iPlayer!!.getIsland()!!.coopPlayer(target)
+        info.iPlayer!!.getIsland()!!.coopPlayer(info.iPlayer, target)
 
         target.message(String.format(Message.commandCoopMessageRecipient, info.player!!.name))
         info.iPlayer!!.message(String.format(Message.commandCoopInvokerSuccess, target.getPlayer().name))

@@ -2,6 +2,7 @@ package net.savagellc.savageskyblock.core
 
 import net.savagellc.savageskyblock.persist.Config
 import net.savagellc.savageskyblock.persist.Data
+import net.savagellc.savageskyblock.persist.Message
 import net.savagellc.savageskyblock.persist.data.SLocation
 import net.savagellc.savageskyblock.sedit.SkyblockEdit
 import net.savagellc.savageskyblock.world.Point
@@ -99,13 +100,31 @@ data class Island(val islandID: Int, val point: Point, val ownerUUID: String, va
         return homes.containsKey(name.toLowerCase())
     }
 
-    fun coopPlayer(iPlayer: IPlayer) {
+    fun coopPlayer(authorizer: IPlayer?, iPlayer: IPlayer, notify: Boolean = true) {
+        if (authorizer != null) {
+            if (authorizer.coopedPlayersAuthorized == null) {
+                authorizer.coopedPlayersAuthorized = HashSet()
+            }
+            authorizer.coopedPlayersAuthorized.add(iPlayer)
+            if (notify) {
+                authorizer.message(String.format(Message.commandCoopAuthorized, authorizer.getPlayer().name, iPlayer.getPlayer().name))
+            }
+        }
+
         // the iplayer needs an island for this.
         if (iPlayer.coopedIslandIds == null) {
             iPlayer.coopedIslandIds = java.util.HashSet<Int>()
         }
         currentCoopPlayers.add(UUID.fromString(iPlayer.uuid))
         iPlayer.coopedIslandIds.add(islandID)
+    }
+
+    fun removeCoopPlayer(iPlayer: IPlayer, notify: Boolean = true) {
+        iPlayer.coopedIslandIds.remove(islandID)
+        currentCoopPlayers.remove(UUID.fromString(iPlayer.uuid))
+        if (notify) {
+            iPlayer.message(String.format(Message.commandCoopLoggedOut))
+        }
     }
 
 

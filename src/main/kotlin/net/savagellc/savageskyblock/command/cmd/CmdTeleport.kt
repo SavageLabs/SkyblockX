@@ -5,6 +5,7 @@ import net.savagellc.savageskyblock.command.CommandInfo
 import net.savagellc.savageskyblock.command.CommandRequirementsBuilder
 import net.savagellc.savageskyblock.command.SCommand
 import net.savagellc.savageskyblock.core.Permission
+import net.savagellc.savageskyblock.core.color
 import net.savagellc.savageskyblock.core.getIslandById
 import net.savagellc.savageskyblock.core.getIslandByOwnerTag
 import net.savagellc.savageskyblock.persist.Message
@@ -42,7 +43,7 @@ class CmdTeleport : SCommand() {
             // Message them.
             info.message(Message.commandTpPossibleLocationsHeader)
             for ((index, location) in possibleLocations.withIndex()) {
-                JSONMessage.create(String.format(Message.commandTpPossibleLocationsFormat, index + 1, location))
+                JSONMessage.create(color(String.format(Message.commandTpPossibleLocationsFormat, index + 1, location)))
                     .suggestCommand("/is tp $location")
                     .tooltip("Click to run /is tp $location")
                     .send(info.player)

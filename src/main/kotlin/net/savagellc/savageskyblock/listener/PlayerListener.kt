@@ -7,6 +7,7 @@ import net.savagellc.savageskyblock.core.getIPlayer
 import net.savagellc.savageskyblock.core.hasPermission
 import net.savagellc.savageskyblock.persist.Config
 import net.savagellc.savageskyblock.persist.Message
+import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
@@ -56,8 +57,12 @@ class PlayerListener : Listener {
         val player = event.entity as Player
         val iPlayer = getIPlayer(player)
         iPlayer.falling = true
-        player.sendMessage(Message.listenerVoidDeathPrevented)
-        player.teleport(iPlayer.getIsland()!!.getIslandSpawn())
+        player.sendMessage(color(Message.listenerVoidDeathPrevented))
+        if (iPlayer.hasIsland()) {
+            player.teleport(iPlayer.getIsland()!!.getIslandSpawn())
+        } else {
+            player.teleport(Bukkit.getWorld("world")!!.spawnLocation)
+        }
         event.isCancelled = true
     }
 
@@ -87,7 +92,7 @@ class PlayerListener : Listener {
 
         event.clickedBlock!!.type = Material.AIR
         event.player.setItemInHand(XMaterial.LAVA_BUCKET.parseItem())
-        event.player.sendMessage(Message.listenerObsidianBucketLava)
+        event.player.sendMessage(color(Message.listenerObsidianBucketLava))
         event.isCancelled = true
 
     }

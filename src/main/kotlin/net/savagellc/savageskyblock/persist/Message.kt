@@ -59,6 +59,8 @@ object Message {
 
     var commandCoopInvokerSuccess = "&7You have added %1\$s to your island as co-op"
     var commandCoopMessageRecipient = "&7You have been added as a co-op player to %1\$s's island."
+    var commandCoopAuthorized = "&b%1\$s&7 has been authorized as a co-op player; Once &b%2\$s &7logs out, &b%1\$s's&7 co-op status will be removed."
+    var commandCoopLoggedOut = "&7Your co-op access has expired because the player that authorized you logged out."
     var commandCoopCannotHaveMoreCoopPlayers =
         "You cannot have more co-op players, run &c/is coop&r to view current co-op players, and remove them using &c/is remove <player>"
     var commandCoopHelp = "&7set another player to co-op mode."
@@ -89,9 +91,9 @@ object Message {
 
     var commandTpHelp = "&7teleport to islands of other players."
     var commandTpPossibleLocationsHeader = "&7You can teleport to the following locations..."
-    var commandTpPossibleLocationsFormat = "&7%1\$s. %2\$s's island."
+    var commandTpPossibleLocationsFormat = "&7%1\$s. &b%2\$s's island."
     var commandTpThisIslandIsNotValid =
-        "&7The player %1\$s does not own an island. Type &c/is tp &rto list possible locations."
+        "&7The player %1\$s does not own an island. Type &b/is tp &r&7to list possible locations."
     var commandTpTeleporting = "&7Teleporting you to %1\$s's island."
     var commandTpNoPermission = "&7The specified island does not have you as co-op or as a island member, "
 

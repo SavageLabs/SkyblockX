@@ -23,6 +23,12 @@ data class IPlayer(val uuid: String) {
 
     var coopedIslandIds = HashSet<Int>()
 
+
+    // This is for the coop players that this iplayer instance has authorized.
+    // So that we can remove the co-op status of these players when this guy logs out.
+    @Transient
+    var coopedPlayersAuthorized = HashSet<IPlayer>()
+
     @Transient
     var pos1: Location? = null
     @Transient
