@@ -95,7 +95,9 @@ object Message {
     var commandTpThisIslandIsNotValid =
         "&7The player %1\$s does not own an island. Type &b/is tp &r&7to list possible locations."
     var commandTpTeleporting = "&7Teleporting you to %1\$s's island."
-    var commandTpNoPermission = "&7The specified island does not have you as co-op or as a island member, "
+    var commandTpNoPermission = "&7The specified island does not have you as co-op or as a island member."
+
+    var commandQuestHelp = "&7view Quest GUI."
 
     var islandCreateGUIYouDontHavePermission = "You do not have permission to use this island."
 

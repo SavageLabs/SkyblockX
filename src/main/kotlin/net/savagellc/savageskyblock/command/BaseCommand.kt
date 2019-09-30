@@ -26,6 +26,7 @@ class BaseCommand : SCommand(), CommandExecutor {
         subCommands.add(CmdTeleport())
         subCommands.add(CmdHome())
         subCommands.add(CmdHelp())
+        subCommands.add(CmdQuest())
 
         Globals.baseCommand = this
     }

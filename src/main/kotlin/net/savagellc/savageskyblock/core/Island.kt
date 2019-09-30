@@ -26,6 +26,11 @@ data class Island(val islandID: Int, val point: Point, val ownerUUID: String, va
     var maxIslandHomes = Config.defaultMaxIslandHomes
 
 
+    var questData = HashMap<String, Int>()
+
+
+
+
     /**
      * This set does not have methods on purpose to discourage developers from modifying it, as we need a player to authorize the co-op procedure and because it won't actually affect the co-op status of a player.
      */
@@ -71,6 +76,17 @@ data class Island(val islandID: Int, val point: Point, val ownerUUID: String, va
         // Return if the current size is less than the max, if so we gucci.
         return homes.size < maxIslandHomes
     }
+
+    fun getQuestCompletedAmountForMission(name: String): Int {
+        if (!questData.containsKey(name)) {
+            questData[name] = 0
+        }
+
+        // We just inserted a zero right above :)
+        return questData[name]!!
+    }
+
+
 
     var homes = HashMap<String, SLocation>()
 
