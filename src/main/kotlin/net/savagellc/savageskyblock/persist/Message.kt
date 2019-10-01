@@ -34,6 +34,9 @@ object Message {
     var commandBaseHelp = "&7The base command for skyblock."
     var commandBaseHelpMessage = "&aPlease execute /is help."
 
+    var commandCreateCLIHeader = "&7&m-------&r &bIsland Types &7&m-------"
+    var commandCreateCLIFormat = "&7%1\$s. &b%2\$s"
+    var commandCreateCLIFormatTooltip = "&7Click to paste &b/is create %1\$s&7 into your chatbar."
     var commandCreateHelp = "&7Creates a skyblock island."
     var commandCreateAlreadyHaveAnIsland = "&7You already have an island, use /is delete to delete your island."
 
@@ -59,7 +62,8 @@ object Message {
 
     var commandCoopInvokerSuccess = "&7You have added %1\$s to your island as co-op"
     var commandCoopMessageRecipient = "&7You have been added as a co-op player to %1\$s's island."
-    var commandCoopAuthorized = "&b%1\$s&7 has been authorized as a co-op player; Once &b%2\$s &7logs out, &b%1\$s's&7 co-op status will be removed."
+    var commandCoopAuthorized =
+        "&b%1\$s&7 has been authorized as a co-op player; Once &b%2\$s &7logs out, &b%1\$s's&7 co-op status will be removed."
     var commandCoopLoggedOut = "&7Your co-op access has expired because the player that authorized you logged out."
     var commandCoopCannotHaveMoreCoopPlayers =
         "You cannot have more co-op players, run &c/is coop&r to view current co-op players, and remove them using &c/is remove <player>"

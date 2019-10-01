@@ -30,7 +30,6 @@ class IslandCreateGUI :
                         player.sendMessage(color(Message.islandCreateGUIYouDontHavePermission))
                     }
                     createIsland(player, island.structureFile.replace(".structure", ""))
-                    player.teleport(getIPlayer(player).getIsland()!!.getIslandSpawn())
                     player.sendMessage("Success -> Change this")
                 }
             })

@@ -209,7 +209,7 @@ fun getIslandByOwnerTag(ownerTag: String): Island? {
     return null
 }
 
-fun createIsland(player: Player?, schematic: String): Island {
+fun createIsland(player: Player?, schematic: String, teleport: Boolean = true): Island {
     val island = Island(
         Data.nextIslandID,
         spiral(Data.nextIslandID),
@@ -223,6 +223,7 @@ fun createIsland(player: Player?, schematic: String): Island {
     if (player != null) {
         val iPlayer = getIPlayer(player)
         iPlayer.assignIsland(island)
+        player.teleport(island.getIslandSpawn())
     }
     return island
 }

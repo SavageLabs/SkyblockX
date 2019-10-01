@@ -20,7 +20,6 @@ class CmdTeleport : SCommand() {
         optionalArgs.add("island owner's name")
 
         commandRequirements = CommandRequirementsBuilder().asPlayer(true).withPermission(Permission.TELEPORT).build()
-
     }
 
 

@@ -35,6 +35,7 @@ object Config {
     var islandCreateGUIBackgroundItem = SerializableItem(XMaterial.BLACK_STAINED_GLASS_PANE, "&9", listOf(""), 1)
     var islandCreateGUIIslandTypes = listOf(
         IslandCreateInfo(
+            "normal",
             "savageskyblock.islands.default", 2, SerializableItem(
                 XMaterial.GRASS_BLOCK,
                 "&aBasic Island",
@@ -43,6 +44,7 @@ object Config {
             ), "island.structure"
         ),
         IslandCreateInfo(
+            "bedrock",
             "savageskyblock.islands.bedrock", 6, SerializableItem(
                 XMaterial.BEDROCK,
                 "&aBedrock Island",
