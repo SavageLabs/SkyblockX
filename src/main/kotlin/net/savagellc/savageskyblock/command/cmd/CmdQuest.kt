@@ -22,6 +22,7 @@ class CmdQuest : SCommand() {
         val islandQuestGUI = IslandQuestGUI()
         islandQuestGUI.makeGUI(info.iPlayer!!)
         islandQuestGUI.showGui(info.player!!)
+
     }
 
 

@@ -54,13 +54,13 @@ object Config {
         )
     )
 
-    val islandQuestGUITitle = "&bIsland Quests"
+    var islandQuestGUITitle = "&bIsland Quests"
 
-    val islandQuestGUIBackgroundItem = SerializableItem(XMaterial.BLACK_STAINED_GLASS_PANE, "&9", listOf(), 1)
+    var islandQuestGUIBackgroundItem = SerializableItem(XMaterial.BLACK_STAINED_GLASS_PANE, "&9", listOf(), 1)
 
-    val islandQuestGUIRows = 1
+    var islandQuestGUIRows = 1
 
-    val islandQuests = listOf(
+    var islandQuests = listOf(
         Quest(
             "Mine-Cobblestone-1",
             SerializableItem(

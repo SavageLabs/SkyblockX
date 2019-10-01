@@ -53,7 +53,7 @@ class SkyblockEdit {
                         val chest = block.state as Chest
                         for (slot in 0 until chest.blockInventory.size) {
                             val item = chest.blockInventory.getItem(slot) ?: continue
-                            items.add(SbfChestItem(slot, item.amount, XMaterial.matchXMaterial(item.type.name).name))
+                            items.add(SbfChestItem(slot, item.amount, XMaterial.matchXMaterial(item.type.name)!!.name))
                         }
 //                        val directionalState = chest.blockData as Directional
 //                        val direction = when (directionalState.facing) {
@@ -66,7 +66,7 @@ class SkyblockEdit {
                         container.chests.addElement(SbfChest(xRel, yRel, zRel, 0, chest.blockInventory.size, items))
                         continue
                     }
-                    container.blocks.add(SbfBlock(xRel, yRel, zRel, XMaterial.matchXMaterial(block.type.name).name))
+                    container.blocks.add(SbfBlock(xRel, yRel, zRel, XMaterial.matchXMaterial(block.type.name)!!.name))
                 }
             }
         }
@@ -96,7 +96,7 @@ class SkyblockEdit {
                 block.x.toInt() + relativeLocation.x.toInt() + reader.offsetx,
                 block.y.toInt() + relativeLocation.y.toInt() + reader.offsety,
                 block.z.toInt() + relativeLocation.z.toInt() + reader.offsetz
-            ).type = XMaterial.valueOf(block.type).parseMaterial()
+            ).type = XMaterial.valueOf(block.type).parseMaterial()!!
         }
         for (chest in reader.chests) {
             val blockAt = relativeLocation.world!!.getBlockAt(
@@ -104,7 +104,7 @@ class SkyblockEdit {
                 chest.y.toInt() + relativeLocation.y.toInt() + reader.offsety,
                 chest.z.toInt() + relativeLocation.z.toInt() + reader.offsetz
             )
-            blockAt.type = XMaterial.CHEST.parseMaterial()
+            blockAt.type = XMaterial.CHEST.parseMaterial()!!
             blockAt.state.update(true)
 
 
