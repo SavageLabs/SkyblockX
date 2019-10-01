@@ -24,7 +24,14 @@ class CmdHome : SCommand() {
 
 
     override fun perform(info: CommandInfo) {
-        generateHelp(1, info.player!!)
+        // No Args / Invalid args specified.
+        if (info.args.size != 1) {
+            generateHelp(1, info.player!!)
+            return
+        }
+
+        // Execute command go just to make a shorthand version for /is home go <home>.
+        this.subCommands.find { command -> command is CmdHomeGo }?.perform(info)
 
 
     }
