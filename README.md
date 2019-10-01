@@ -1,12 +1,12 @@
 ![Logo](./SkyblockHeader.png)
 
 
-##About
+## About
 A modern, fully functional skyblock core with minimal dependencies. 
 The plugin's primary deployment and testing version is the latest version of spigot available. IllyriaSkyblock was designed because of ASkyblock being discontinued also not being supported past Spigot-1.12 and all replacements being poorly designed or unstable.
 
 
-###Installation
+### Installation
 
 1. Get a skyblock release binary using one of the following options.
    * Download a binary from our [store](https://store.illyria.io).
@@ -24,4 +24,3 @@ The plugin's primary deployment and testing version is the latest version of spi
 * [SavageFramework](https://github.com/illyria-io/SavageFramework) for storage management & a collection of tools for cross version support.
 * [Gradle](https://gradle.org/) is used for dependency management.
 
-### 
