@@ -39,6 +39,7 @@ object Message {
     var commandCreateCLIFormatTooltip = "&7Click to paste &b/is create %1\$s&7 into your chatbar."
     var commandCreateHelp = "&7Creates a skyblock island."
     var commandCreateAlreadyHaveAnIsland = "&7You already have an island, use /is delete to delete your island."
+    var commandCreateSuccess = "&7Your island was successfully created."
 
     var commandGoHelp = "&7Takes you to an island"
     var commandGoTeleporting = "&7Taking you to your island..."
