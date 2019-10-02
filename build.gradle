@@ -65,6 +65,6 @@ shadowJar {
     exclude 'META-INF/*.RSA'
     relocate 'com.github.stefvanschie.inventoryframework', 'net.savagellc.savageskyblock.shade.stefvanschie.inventoryframework'
     relocate 'com.google.gson', 'net.savagellc.savageskyblock.shade.com.google.gson'
-    relocate 'net.prosavage.baseplugin', 'net.savagellc.savagecore.shade.baseplugin'
+    relocate 'net.prosavage.baseplugin', 'net.savagellc.savageskyblock.shade.baseplugin'
     archiveName 'SavageSkyblock-' + version + ".jar"
 }
