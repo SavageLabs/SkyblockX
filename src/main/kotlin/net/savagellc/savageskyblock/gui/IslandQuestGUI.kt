@@ -27,6 +27,10 @@ class IslandQuestGUI :
                 run {
                     e.isCancelled = true
                     val player = e.whoClicked as Player
+                    iPlayer.getIsland()!!.currentQuest = quest.name
+                    val islandQuestGUI = IslandQuestGUI()
+                    islandQuestGUI.makeGUI(iPlayer)
+                    islandQuestGUI.showGui(player)
                     player.sendMessage("Quest activation trigger. -> Change this")
                 }
             })
@@ -44,7 +48,7 @@ class IslandQuestGUI :
                 .replace("{currentAmount}", DecimalFormat.getInstance().format(island.getQuestCompletedAmountForMission(quest.name)))
                 .replace("{finalAmount}", DecimalFormat.getInstance().format(quest.amountTillComplete)))
         }
-        return ItemBuilder(serializableItem.material.parseItem()).amount(serializableItem.amt).lore(lore).build()
+        return ItemBuilder(serializableItem.material.parseItem()).amount(serializableItem.amt).lore(lore).glowing(island.currentQuest == quest.name).build()
     }
 
 

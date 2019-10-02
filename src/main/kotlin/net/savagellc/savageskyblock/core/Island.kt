@@ -27,6 +27,7 @@ data class Island(val islandID: Int, val point: Point, val ownerUUID: String, va
 
 
     var questData = HashMap<String, Int>()
+    var currentQuest: String? = null
 
 
 
