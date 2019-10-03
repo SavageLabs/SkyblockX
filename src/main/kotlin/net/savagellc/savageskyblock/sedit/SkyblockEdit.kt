@@ -8,14 +8,19 @@ import net.savagellc.savageskyblock.core.color
 import net.savagellc.savageskyblock.persist.Message
 import net.savagellc.savageskyblock.sbf.*
 import org.bukkit.Location
+import org.bukkit.Material
 import org.bukkit.block.Chest
 import org.bukkit.entity.Player
 import java.io.File
 import java.util.*
 
+
+/**
+ * This class is dog shit right now, I need to rewrite it to actually support more operations :P
+ */
 class SkyblockEdit {
 
-    fun saveStructure(pos1: Location, pos2: Location, player: Player, name: String) {
+    fun saveStructure(pos1: Location, pos2: Location, player: Player, name: String, skipAir: Boolean = false) {
         if (pos1.world != pos2.world) {
             player.sendMessage(Message.skyblockEditErrorPositionsNotInSameWorld)
             return
@@ -41,9 +46,9 @@ class SkyblockEdit {
             for (y in yStart.toInt() until yEnd.toInt()) {
                 for (z in zStart.toInt() until zEnd.toInt()) {
                     val block = world!!.getBlockAt(x, y, z)
-//                    if (block.type == Material.AIR) {
-//                        continue
-//                    }
+                    if (skipAir && block.type == Material.AIR) {
+                        continue
+                    }
                     val xRel = block.x - pos1.x
                     val yRel = block.y - pos1.y
                     val zRel = block.z - pos1.z
