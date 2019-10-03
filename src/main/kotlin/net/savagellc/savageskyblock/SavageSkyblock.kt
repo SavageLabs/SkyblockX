@@ -10,7 +10,6 @@ import net.savagellc.savageskyblock.persist.Data
 import net.savagellc.savageskyblock.persist.Message
 import net.savagellc.savageskyblock.world.VoidWorldGenerator
 import org.bukkit.WorldCreator
-import java.util.stream.Collectors
 
 
 class SavageSkyblock : BasePlugin() {
@@ -38,17 +37,15 @@ class SavageSkyblock : BasePlugin() {
     }
 
     fun sortQuests() {
-        Globals.blockQuests = Config.islandQuests.stream()
-            .filter { quest: Quest? -> quest != null && quest.questGoal == QuestGoal.MINE_BLOCKS }
-            .collect(Collectors.toList())
-       Globals.mobKillingQuests = Config.islandQuests.stream().filter { quest: Quest? -> quest != null && quest.questGoal == QuestGoal.KILL_MOBS }
-            .collect(Collectors.toList())
-
-
-        Globals.craftQuests = Config.islandQuests.stream()
-            .filter { quest: Quest? -> quest != null && quest.questGoal == QuestGoal.CRAFT }
-            .collect(Collectors.toList())
-
+        Config.islandQuests.forEach { quest: Quest? ->
+            if (quest != null) {
+                when (quest.questGoal) {
+                    QuestGoal.MINE_BLOCKS -> Globals.blockQuests.add(quest)
+                    QuestGoal.CRAFT -> Globals.craftQuests.add(quest)
+                    QuestGoal.KILL_MOBS -> Globals.mobKillingQuests.add(quest)
+                }
+            }
+        }
     }
 
 
