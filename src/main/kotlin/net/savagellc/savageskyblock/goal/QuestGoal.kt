@@ -3,8 +3,13 @@ package net.savagellc.savageskyblock.goal
 enum class QuestGoal {
 
     KILL_MOBS,
-    MINE_BLOCKS,
-    CRAFT
+    BREAK_BLOCKS,
+    CRAFT,
+    FISHING,
+    ENCHANT,
+    REPAIR,
+    BREW
+
 
 
 }

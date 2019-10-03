@@ -70,7 +70,7 @@ object Config {
                 1
             ),
             0,
-            QuestGoal.MINE_BLOCKS,
+            QuestGoal.BREAK_BLOCKS,
             XMaterial.COBBLESTONE.name,
             0,
             10,
@@ -85,7 +85,7 @@ object Config {
                 1
             ),
             1,
-            QuestGoal.MINE_BLOCKS,
+            QuestGoal.BREAK_BLOCKS,
             XMaterial.COBBLESTONE.name,
             0,
             100000,
@@ -100,7 +100,7 @@ object Config {
                 1
             ),
             2,
-            QuestGoal.MINE_BLOCKS,
+            QuestGoal.BREAK_BLOCKS,
             XMaterial.COBBLESTONE.name,
             0,
             1000000,

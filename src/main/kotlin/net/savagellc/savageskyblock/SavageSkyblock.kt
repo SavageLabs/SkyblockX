@@ -40,7 +40,7 @@ class SavageSkyblock : BasePlugin() {
         Config.islandQuests.forEach { quest: Quest? ->
             if (quest != null) {
                 when (quest.questGoal) {
-                    QuestGoal.MINE_BLOCKS -> Globals.blockQuests.add(quest)
+                    QuestGoal.BREAK_BLOCKS -> Globals.blockQuests.add(quest)
                     QuestGoal.CRAFT -> Globals.craftQuests.add(quest)
                     QuestGoal.KILL_MOBS -> Globals.mobKillingQuests.add(quest)
                 }
