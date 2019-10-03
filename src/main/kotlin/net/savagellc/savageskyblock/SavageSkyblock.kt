@@ -31,8 +31,15 @@ class SavageSkyblock : BasePlugin() {
 
     override fun onDisable() {
         super.onDisable()
+        // Load and save to take in account changes :P
+        Config.load()
         Config.save()
+
+        // Don't load this as people shouldn't be touching this file anyways.
         Data.save()
+
+        // Load and save to take in account changes :P
+        Message.load()
         Message.save()
     }
 
