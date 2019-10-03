@@ -39,11 +39,10 @@ class SavageSkyblock : BasePlugin() {
     fun sortQuests() {
         Config.islandQuests.forEach { quest: Quest? ->
             if (quest != null) {
-                when (quest.questGoal) {
-                    QuestGoal.BREAK_BLOCKS -> Globals.blockQuests.add(quest)
-                    QuestGoal.CRAFT -> Globals.craftQuests.add(quest)
-                    QuestGoal.KILL_MOBS -> Globals.mobKillingQuests.add(quest)
+                if (!Globals.quests.containsKey(quest.questGoal)) {
+                    Globals.quests[quest.questGoal] = ArrayList()
                 }
+                Globals.quests[quest.questGoal]?.add(quest)
             }
         }
     }
