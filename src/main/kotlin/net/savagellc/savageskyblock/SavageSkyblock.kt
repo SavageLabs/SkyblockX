@@ -22,7 +22,6 @@ class SavageSkyblock : BasePlugin() {
         WorldCreator(Config.skyblockWorldName).generator(VoidWorldGenerator()).createWorld()
         Config.load()
         Data.load()
-        this.sortQuests()
         Message.load()
         registerListeners(DataListener(), SEditListener(), BlockListener(), PlayerListener(), QuestListener())
         logger.info("Loaded ${Data.IPlayers.size} players")
@@ -43,16 +42,6 @@ class SavageSkyblock : BasePlugin() {
         Message.save()
     }
 
-    fun sortQuests() {
-        Config.islandQuests.forEach { quest: Quest? ->
-            if (quest != null) {
-                if (!Globals.quests.containsKey(quest.questGoal)) {
-                    Globals.quests[quest.questGoal] = ArrayList()
-                }
-                Globals.quests[quest.questGoal]?.add(quest)
-            }
-        }
-    }
 
 
 }
