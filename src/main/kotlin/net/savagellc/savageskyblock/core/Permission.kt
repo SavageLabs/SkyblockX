@@ -63,7 +63,7 @@ fun getMaxPermission(permissable: Permissible, permission: String): Int {
             }
 
             try {
-                // Get the int from string
+                // Get the int from name
                 val amount = Integer.parseInt(value)
 
                 // Check if our value is bigger than the one we have.

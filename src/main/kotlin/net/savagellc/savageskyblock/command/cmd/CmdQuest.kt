@@ -4,7 +4,6 @@ package net.savagellc.savageskyblock.command.cmd
 import net.savagellc.savageskyblock.command.CommandInfo
 import net.savagellc.savageskyblock.command.CommandRequirementsBuilder
 import net.savagellc.savageskyblock.command.SCommand
-import net.savagellc.savageskyblock.gui.IslandCreateGUI
 import net.savagellc.savageskyblock.gui.IslandQuestGUI
 import net.savagellc.savageskyblock.persist.Message
 

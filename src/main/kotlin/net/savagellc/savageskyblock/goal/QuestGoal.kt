@@ -1,14 +1,16 @@
 package net.savagellc.savageskyblock.goal
 
-enum class QuestGoal {
+enum class QuestGoal(val questName: String) {
 
-    KILL_MOBS,
-    BREAK_BLOCKS,
-    CRAFT,
-    FISHING,
-    ENCHANT,
-    REPAIR,
-    BREW
+    KILL_MOBS("KILL_MOBS"),
+    BREAK_BLOCKS("BREAK_BLOCKS"),
+    CRAFT("CRAFT"),
+    FISHING("FISHING"),
+    ENCHANT("ENCHANT"),
+    REPAIR("REPAIR"),
+    BREW("BREW")
+
+
 
 
 
