@@ -88,7 +88,7 @@ class BlockListener : Listener {
             val material = XMaterial.matchXMaterial(event.block.type)?.name ?: event.block.type.name
 
             // Check if the material we just processed is the targetQuest's material instead of just checking if the quest is equal.
-            if (material == targetQuest.goalParameter && event.block.hasMetadata("skyblock-placed-by-player")) {
+            if (material == targetQuest.goalParameter && !event.block.hasMetadata("skyblock-placed-by-player")) {
                 // Increment that quest data by 1 :)
                 island.addQuestData(targetQuest.name, 1)
                 // Check if quest is complete :D
