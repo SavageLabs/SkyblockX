@@ -23,7 +23,7 @@ class SavageSkyblock : BasePlugin() {
         Config.load()
         Data.load()
         Message.load()
-        registerListeners(DataListener(), SEditListener(), BlockListener(), PlayerListener(), QuestListener())
+        registerListeners(DataListener(), SEditListener(), BlockListener(), PlayerListener())
         logger.info("Loaded ${Data.IPlayers.size} players")
         logger.info("Loaded ${Data.islands.size} islands")
     }

@@ -60,6 +60,7 @@ object Config {
 
     var islandQuestGUIRows = 1
 
+
     var islandQuests = listOf(
         Quest(
             "Mine-Cobblestone-1",
@@ -72,7 +73,6 @@ object Config {
             0,
             QuestGoal.BREAK_BLOCKS,
             XMaterial.COBBLESTONE.name,
-            0,
             10,
             listOf("broadcast {player} completed the Tier 1 Cobblestone Mining Quest.", "give {player} diamond 1")
         ),
@@ -87,7 +87,6 @@ object Config {
             1,
             QuestGoal.BREAK_BLOCKS,
             XMaterial.COBBLESTONE.name,
-            0,
             100000,
             listOf("broadcast {player} completed the Tier 2 Cobblestone Mining Quest.", "give {player} diamond 1")
         ),
@@ -102,7 +101,6 @@ object Config {
             2,
             QuestGoal.BREAK_BLOCKS,
             XMaterial.COBBLESTONE.name,
-            0,
             1000000,
             listOf("broadcast {player} completed the Tier 3 Cobblestone Mining Quest.", "give {player} diamond 1")
         )

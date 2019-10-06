@@ -6,7 +6,6 @@ import net.prosavage.baseplugin.serializer.commonobjects.SerializableItem
 import net.savagellc.savageskyblock.core.*
 import net.savagellc.savageskyblock.goal.Quest
 import net.savagellc.savageskyblock.persist.Config
-import net.savagellc.savageskyblock.persist.Message
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import java.text.DecimalFormat
@@ -45,7 +44,7 @@ class IslandQuestGUI :
         val lore = ArrayList<String>()
         for (line in serializableItem.lore) {
             lore.add(line
-                .replace("{currentAmount}", DecimalFormat.getInstance().format(island.getQuestCompletedAmountForMission(quest.name)))
+                .replace("{currentAmount}", DecimalFormat.getInstance().format(island.getQuestCompletedAmount(quest.name)))
                 .replace("{finalAmount}", DecimalFormat.getInstance().format(quest.amountTillComplete)))
         }
         return ItemBuilder(serializableItem.material.parseItem()).amount(serializableItem.amt).lore(lore).glowing(island.currentQuest == quest.name).build()

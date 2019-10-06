@@ -1,5 +1,6 @@
 package net.savagellc.savageskyblock.core
 
+import net.savagellc.savageskyblock.goal.Quest
 import net.savagellc.savageskyblock.persist.Config
 import net.savagellc.savageskyblock.persist.Data
 import net.savagellc.savageskyblock.persist.Message
@@ -28,8 +29,6 @@ data class Island(val islandID: Int, val point: Point, val ownerUUID: String, va
 
     var questData = HashMap<String, Int>()
     var currentQuest: String? = null
-
-
 
 
     /**
@@ -78,7 +77,7 @@ data class Island(val islandID: Int, val point: Point, val ownerUUID: String, va
         return homes.size < maxIslandHomes
     }
 
-    fun getQuestCompletedAmountForMission(name: String): Int {
+    fun getQuestCompletedAmount(name: String): Int {
         if (!questData.containsKey(name)) {
             questData[name] = 0
         }
@@ -87,7 +86,25 @@ data class Island(val islandID: Int, val point: Point, val ownerUUID: String, va
         return questData[name]!!
     }
 
+    fun completeQuest(completingPlayer: IPlayer, quest: Quest) {
+        currentQuest = null
+        // Set it to complete amount just to prevent confusion
+        questData[quest.name] = 0
+        quest.giveRewards(completingPlayer)
+    }
 
+    fun setQuestData(name: String, value: Int) {
+        questData[name] = value
+    }
+
+    fun addQuestData(name: String, value: Int) {
+        questData[name] = (questData[name] ?: 0) + value
+
+    }
+
+    fun subtractQuestData(name: String, value: Int) {
+        questData[name] = (questData[name] ?: 0) + value
+    }
 
     var homes = HashMap<String, SLocation>()
 
@@ -124,7 +141,13 @@ data class Island(val islandID: Int, val point: Point, val ownerUUID: String, va
             }
             authorizer.coopedPlayersAuthorized.add(iPlayer)
             if (notify) {
-                authorizer.message(String.format(Message.commandCoopAuthorized, authorizer.getPlayer().name, iPlayer.getPlayer().name))
+                authorizer.message(
+                    String.format(
+                        Message.commandCoopAuthorized,
+                        authorizer.getPlayer().name,
+                        iPlayer.getPlayer().name
+                    )
+                )
             }
         }
 
