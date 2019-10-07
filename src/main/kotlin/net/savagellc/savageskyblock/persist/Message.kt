@@ -111,6 +111,7 @@ object Message {
     var listenerActionDeniedCreateAnIslandFirst = "&7This action has been denied, please create an island first."
     var listenerObsidianBucketLava = "&7The obsidian has been turned back to lava, be careful!"
     var listenerPlayerDamageCancelled = "&7Damage cancelled due to you not being on your island."
+    var listenerPlayerCannotInteract = "&7You cannot interact with this block."
 
     var skyblockEditPositionSet = "&7You have set position %1\$s to %2\$s"
     var skyblockEditStructureSaved = "&7You have saved a structure to a file called %1\$s"
