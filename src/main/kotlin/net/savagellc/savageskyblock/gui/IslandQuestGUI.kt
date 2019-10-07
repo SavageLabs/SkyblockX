@@ -4,7 +4,7 @@ import com.github.stefvanschie.inventoryframework.GuiItem
 import net.prosavage.baseplugin.ItemBuilder
 import net.prosavage.baseplugin.serializer.commonobjects.SerializableItem
 import net.savagellc.savageskyblock.core.*
-import net.savagellc.savageskyblock.goal.Quest
+import net.savagellc.savageskyblock.quest.Quest
 import net.savagellc.savageskyblock.persist.Config
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack

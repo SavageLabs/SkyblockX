@@ -3,8 +3,8 @@ package net.savagellc.savageskyblock.persist
 import net.prosavage.baseplugin.XMaterial
 import net.prosavage.baseplugin.serializer.Serializer
 import net.prosavage.baseplugin.serializer.commonobjects.SerializableItem
-import net.savagellc.savageskyblock.goal.Quest
-import net.savagellc.savageskyblock.goal.QuestGoal
+import net.savagellc.savageskyblock.quest.Quest
+import net.savagellc.savageskyblock.quest.QuestGoal
 import net.savagellc.savageskyblock.persist.data.IslandCreateInfo
 
 object Config {

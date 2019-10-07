@@ -2,8 +2,6 @@ package net.savagellc.savageskyblock
 
 import net.prosavage.baseplugin.BasePlugin
 import net.savagellc.savageskyblock.command.BaseCommand
-import net.savagellc.savageskyblock.goal.Quest
-import net.savagellc.savageskyblock.goal.QuestGoal
 import net.savagellc.savageskyblock.listener.*
 import net.savagellc.savageskyblock.persist.Config
 import net.savagellc.savageskyblock.persist.Data

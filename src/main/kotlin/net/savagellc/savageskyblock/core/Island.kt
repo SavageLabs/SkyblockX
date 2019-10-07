@@ -1,6 +1,6 @@
 package net.savagellc.savageskyblock.core
 
-import net.savagellc.savageskyblock.goal.Quest
+import net.savagellc.savageskyblock.quest.Quest
 import net.savagellc.savageskyblock.persist.Config
 import net.savagellc.savageskyblock.persist.Data
 import net.savagellc.savageskyblock.persist.Message

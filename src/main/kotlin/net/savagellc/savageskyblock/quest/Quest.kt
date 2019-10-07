@@ -1,4 +1,4 @@
-package net.savagellc.savageskyblock.goal
+package net.savagellc.savageskyblock.quest
 
 import net.prosavage.baseplugin.serializer.commonobjects.SerializableItem
 import net.savagellc.savageskyblock.core.IPlayer

@@ -1,4 +1,4 @@
-package net.savagellc.savageskyblock.goal
+package net.savagellc.savageskyblock.quest
 
 enum class QuestGoal(val questName: String) {
 
