@@ -109,10 +109,11 @@ data class IPlayer(val uuid: String) {
 }
 
 fun getIPlayer(player: Player): IPlayer {
-    if (Data.IPlayers.containsKey(player.uniqueId.toString())) {
-        return Data.IPlayers[player.uniqueId.toString()]!!
-    }
-    // The IPlayer instance does not exist, create it.
+    // Check data, if not, The IPlayer instance does not exist, create it.
+    return Data.IPlayers[player.uniqueId.toString()] ?: createIPlayer(player)
+}
+
+fun createIPlayer(player: Player): IPlayer {
     val iPlayer = IPlayer(player.uniqueId.toString())
     Data.IPlayers[player.uniqueId.toString()] = iPlayer
     return iPlayer
