@@ -7,11 +7,14 @@ import net.savagellc.savageskyblock.core.getIPlayer
 import net.savagellc.savageskyblock.goal.QuestGoal
 import net.savagellc.savageskyblock.persist.Config
 import net.savagellc.savageskyblock.persist.Message
+import org.bukkit.Bukkit
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.block.BlockPlaceEvent
 import org.bukkit.metadata.FixedMetadataValue
+import kotlin.time.ExperimentalTime
+import kotlin.time.measureTime
 
 
 class BlockListener : Listener {
@@ -72,7 +75,6 @@ class BlockListener : Listener {
         }
 
 
-
         // We're gonna need this more than once here, store to prevent lookups.
         val island = iPlayer.getIsland()!!
 
@@ -99,7 +101,7 @@ class BlockListener : Listener {
 
         }
 
-    }
 
+    }
 
 }
