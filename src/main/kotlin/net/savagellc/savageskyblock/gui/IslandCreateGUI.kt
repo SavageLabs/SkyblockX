@@ -30,7 +30,7 @@ class IslandCreateGUI :
                         player.sendMessage(color(Message.islandCreateGUIYouDontHavePermission))
                     }
                     createIsland(player, island.structureFile.replace(".structure", ""))
-                    player.sendMessage(Message.commandCreateSuccess)
+                    player.sendMessage(color(Message.commandCreateSuccess))
                 }
             })
             super.pane.populateWithGuiItems(guiItems)
