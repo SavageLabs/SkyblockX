@@ -123,10 +123,8 @@ class SkyblockEdit {
 //                else -> BlockFace.NORTH
 //            })
             for (item in chest.items) {
-                chestState.blockInventory.setItem(
-                    item.slot,
-                    ItemBuilder(XMaterial.valueOf(item.type).parseItem()).amount(item.amount).build()
-                )
+                val valueOf = XMaterial.valueOf(item.type).parseMaterial() ?: Material.valueOf(item.type)
+                chestState.blockInventory.setItem(item.slot, ItemBuilder(valueOf).amount(item.amount).build())
             }
         }
         player?.sendMessage(Message.commandSEPasteStructurePasted)
