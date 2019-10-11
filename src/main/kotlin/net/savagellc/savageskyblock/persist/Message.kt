@@ -41,7 +41,7 @@ object Message {
     var commandCreateAlreadyHaveAnIsland = "&7You already have an island, use /is delete to delete your island."
     var commandCreateSuccess = "&7Your island was successfully created."
 
-    var commandGoHelp = "&7Takes you to an island"
+    var commandGoHelp = "&7Takes you to an island."
     var commandGoTeleporting = "&7Taking you to your island..."
 
     var commandDeleteHelp = "&7Deletes an island."
@@ -49,16 +49,16 @@ object Message {
 
     var commandSEPostionHelp = "&7positions for skyblock edit."
     var commandSEPositionInvalidIndex = "&7The specified position index is invalid, it must be either 1 or 2."
-    var commandSEPosition = "&7Please right click a block to set it to position %1\$s"
+    var commandSEPosition = "&7Please right click a block to set it to position %1\$s."
 
-    var commandSESaveStructureHelp = "&7This command saves a structure to a file name specified"
+    var commandSESaveStructureHelp = "&7This command saves a structure to a file name specified."
     var commandSESaveStructurePositionsNotSet =
-        "You have not set both positions use the command \"/is pos\" to set the positions"
+        "You have not set both positions use the command \"/is pos\" to set the positions."
 
-    var commandSEPasteStructurePasted = "&7Structure pasted successfully"
+    var commandSEPasteStructurePasted = "&7Structure pasted successfully."
 
-    var commandBypassToggle = "&7You are now %1\$s bypass mode"
-    var commandBypassHelp = "&7bypass island checks (For Server Administrators)"
+    var commandBypassToggle = "&7You are now %1\$s bypass mode."
+    var commandBypassHelp = "&7bypass island checks (For Server Administrators)."
 
 
     var commandCoopInvokerSuccess = "&7You have added %1\$s to your island as co-op"
@@ -67,10 +67,10 @@ object Message {
         "&b%1\$s&7 has been authorized as a co-op player; Once &b%2\$s &7logs out, &b%1\$s's&7 co-op status will be removed."
     var commandCoopLoggedOut = "&7Your co-op access has expired because the player that authorized you logged out."
     var commandCoopCannotHaveMoreCoopPlayers =
-        "You cannot have more co-op players, run &c/is coop&r to view current co-op players, and remove them using &c/is remove <player>"
+        "You cannot have more co-op players, run &c/is coop&r to view current co-op players, and remove them using &c/is remove <player>."
     var commandCoopHelp = "&7set another player to co-op mode."
 
-    var commandHomeGoSuccess = "&7You have been teleported to &b%1\$s"
+    var commandHomeGoSuccess = "&7You have been teleported to &b%1\$s."
     var commandHomeHomeSet = "&7You have set this location to your &b%1\$s&7 home."
     var commandHomeSetNotInIsland = "&7This location is not inside of the island's boundaries."
     var commandHomeCannotHaveMoreHomes = "&7You cannot have more homes set."
