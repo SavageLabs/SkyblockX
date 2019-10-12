@@ -16,7 +16,11 @@ class SavageSkyblock : BasePlugin() {
         super.onEnable()
         Globals.savageSkyblock = this
         this.getCommand("savageskyblock")!!.setExecutor(BaseCommandTesting())
-        this.getCommand("is")!!.setExecutor(BaseCommand())
+        val baseCommand = BaseCommand()
+        val command = this.getCommand("is")!!
+        command.setExecutor(baseCommand)
+        command.tabCompleter = baseCommand
+        logger.info("Command Registered")
         WorldCreator(Config.skyblockWorldName).generator(VoidWorldGenerator()).createWorld()
         Config.load()
         Data.load()

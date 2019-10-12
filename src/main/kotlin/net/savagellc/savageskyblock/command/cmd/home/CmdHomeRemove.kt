@@ -12,7 +12,7 @@ class CmdHomeRemove : SCommand() {
     init {
         aliases.add("remove")
 
-        requiredArgs.add("home-name")
+        requiredArgs.add(Argument("home-name", 0, HomeArgument()))
 
         commandRequirements = CommandRequirementsBuilder().withPermission(Permission.HOME).asIslandMember(true).build()
     }

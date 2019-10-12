@@ -12,7 +12,7 @@ class CmdHelp : SCommand() {
     init {
         aliases.add("help")
 
-        requiredArgs.add("page-number")
+        requiredArgs.add(Argument("page-number", 0, IntArgument()))
 
         commandRequirements = CommandRequirementsBuilder().build()
     }

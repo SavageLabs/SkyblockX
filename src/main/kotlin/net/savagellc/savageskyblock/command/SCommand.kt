@@ -1,17 +1,19 @@
 package net.savagellc.savageskyblock.command
 
 import me.rayzr522.jsonmessage.JSONMessage
+import net.savagellc.savageskyblock.core.IPlayer
 import net.savagellc.savageskyblock.core.color
 import net.savagellc.savageskyblock.persist.Config
 import net.savagellc.savageskyblock.persist.Message
+import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import java.util.*
 
 abstract class SCommand {
 
     val aliases = LinkedList<String>()
-    val requiredArgs = LinkedList<String>()
-    val optionalArgs = LinkedList<String>()
+    val requiredArgs = LinkedList<Argument>()
+    val optionalArgs = LinkedList<Argument>()
     lateinit var commandRequirements: CommandRequirements
 
     val subCommands = LinkedList<SCommand>()
@@ -96,30 +98,73 @@ abstract class SCommand {
     }
 
     private fun sendCommandFormat(info: CommandInfo, useJSON: Boolean = true) {
+        requiredArgs.addAll(optionalArgs)
+        requiredArgs.sortBy { arg -> arg.argumentOrder }
         if (useJSON) {
             var commandFormatJSON =
                 JSONMessage.create(color("&7&o((Hoverable))&r")).then(" /is ").then(this.aliases[0]).then(" ")
-            for (requiredArg in requiredArgs) {
-                commandFormatJSON =
-                    commandFormatJSON.then("<$requiredArg>").tooltip("This argument is required.").then(" ")
-            }
-            for (optionalArg in optionalArgs) {
-                commandFormatJSON =
-                    commandFormatJSON.then("($optionalArg)").tooltip("The argument is optional").then(" ")
-            }
+            for (arg in requiredArgs) {
+                commandFormatJSON = if (optionalArgs.contains(arg)) {
+                    commandFormatJSON.then("(${arg.name})").tooltip("The argument is optional").then(" ")
+                } else {
+                    commandFormatJSON.then("<${arg.name}>").tooltip("This argument is required.").then(" ")
+                }
 
+            }
             commandFormatJSON.send(info.player)
-        } else {
-            var commandFormat = "/is "
-            for (requiredArg in requiredArgs) {
-                commandFormat += "<$requiredArg> "
-            }
-            for (optionalArg in optionalArgs) {
-                commandFormat += "($optionalArg) "
-            }
-            info.message(commandFormat)
+            return
         }
 
+        // This is for the rest usually for console.
+        var commandFormat = "/is "
+        for (arg in requiredArgs) {
+            commandFormat += if (optionalArgs.contains(arg)) {
+                "(${arg.name}) "
+            } else {
+                "<${arg.name}> "
+
+            }
+        }
+
+        info.message(commandFormat)
+
+
+    }
+
+    class Argument(val name: String, val argumentOrder: Int, val argumentType: ArgumentType)
+
+    abstract class ArgumentType {
+        abstract fun getPossibleValues(iPlayer: IPlayer?): List<String>
+    }
+
+    class HomeArgument : ArgumentType() {
+        override fun getPossibleValues(iPlayer: IPlayer?): List<String> {
+            return if (iPlayer != null && iPlayer.hasIsland()) iPlayer.getIsland()!!.getAllHomes().keys.toList() else emptyList()
+        }
+    }
+
+    class PlayerArgument : ArgumentType() {
+        override fun getPossibleValues(iPlayer: IPlayer?): List<String> {
+            return Bukkit.getOnlinePlayers().map { player -> player.name }
+        }
+    }
+
+    class StringArgument : ArgumentType() {
+        override fun getPossibleValues(iPlayer: IPlayer?): List<String> {
+            return emptyList()
+        }
+    }
+
+    class IntArgument : ArgumentType() {
+        override fun getPossibleValues(iPlayer: IPlayer?): List<String> {
+            return listOf(1.toString())
+        }
+    }
+
+    class PosArgument : ArgumentType() {
+        override fun getPossibleValues(iPlayer: IPlayer?): List<String> {
+            return if (iPlayer != null && iPlayer.pos1 == null) listOf(1.toString()) else listOf(2.toString())
+        }
 
     }
 

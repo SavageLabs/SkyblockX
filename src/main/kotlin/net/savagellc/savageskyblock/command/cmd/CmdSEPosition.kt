@@ -13,7 +13,7 @@ class CmdSEPosition : SCommand() {
         aliases.add("pos")
         aliases.add("position")
 
-        requiredArgs.add("positionIndex")
+        requiredArgs.add(Argument("positionIndex", 0, PosArgument()))
 
         commandRequirements =
             CommandRequirementsBuilder().asPlayer(true).withPermission(Permission.SE_PASTESTRUCT).build()

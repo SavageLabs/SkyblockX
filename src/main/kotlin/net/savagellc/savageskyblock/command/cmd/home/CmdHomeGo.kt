@@ -10,7 +10,7 @@ class CmdHomeGo : SCommand() {
     init {
         aliases.add("go")
 
-        requiredArgs.add("home-name")
+        requiredArgs.add(Argument("home-name", 0, HomeArgument()))
 
         commandRequirements = CommandRequirementsBuilder().asIslandMember(true).build()
     }

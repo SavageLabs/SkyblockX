@@ -11,7 +11,7 @@ class CmdGo : SCommand() {
 
     init {
         aliases.add("go")
-        this.optionalArgs.add("player")
+        this.optionalArgs.add(Argument("player", 0, PlayerArgument()))
 
 
         commandRequirements =

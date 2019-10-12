@@ -13,7 +13,8 @@ class CmdHomeSet : SCommand() {
     init {
         aliases.add("set")
 
-        this.requiredArgs.add("home-name")
+        // The home is not set yet, so we cannot suggest those.
+        this.requiredArgs.add(Argument("home-name", 0, StringArgument()))
 
         this.commandRequirements =
             CommandRequirementsBuilder().withPermission(Permission.HOME).asIslandMember(true).build()

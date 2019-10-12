@@ -13,7 +13,7 @@ class CmdSESaveStructure : SCommand() {
         aliases.add("save-struct")
         aliases.add("savestruct")
 
-        requiredArgs.add("filename")
+        requiredArgs.add(Argument("filename", 0, StringArgument()))
 
         commandRequirements =
             CommandRequirementsBuilder().asPlayer(true).withPermission(Permission.SE_SAVESTUCT).build()

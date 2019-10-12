@@ -17,7 +17,7 @@ class CmdCreate : SCommand() {
     init {
         aliases.add("create")
 
-        optionalArgs.add("island-type")
+        optionalArgs.add(Argument("island-type", 0, StringArgument()))
 
         commandRequirements =
             CommandRequirementsBuilder().asIslandMember(false).asPlayer(true).withPermission(Permission.CREATE).build()

@@ -13,7 +13,7 @@ class CmdRemove : SCommand() {
         aliases.add("remove")
         aliases.add("expel")
 
-        requiredArgs.add("player")
+        requiredArgs.add(Argument("player", 0, PlayerArgument()))
 
         commandRequirements =
             CommandRequirementsBuilder().asIslandMember(true).asPlayer(true).withPermission(Permission.REMOVE).build()

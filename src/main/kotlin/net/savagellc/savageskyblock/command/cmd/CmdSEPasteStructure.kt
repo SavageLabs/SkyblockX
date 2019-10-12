@@ -13,7 +13,7 @@ class CmdSEPasteStructure : SCommand() {
         aliases.add("paste-struct")
         aliases.add("pastestruct")
 
-        requiredArgs.add("filename")
+        requiredArgs.add(Argument("filename", 0, StringArgument()))
 
         commandRequirements = CommandRequirementsBuilder().asPlayer(true).withPermission(Permission.SE_REGIONS).build()
     }

@@ -11,7 +11,7 @@ class CmdHome : SCommand() {
     init {
         aliases.add("home")
 
-        optionalArgs.add("home-name")
+        optionalArgs.add(Argument("home-name", 0, HomeArgument()))
 
         commandRequirements =
             CommandRequirementsBuilder().withPermission(Permission.HOME).asPlayer(true).asIslandMember(true).build()

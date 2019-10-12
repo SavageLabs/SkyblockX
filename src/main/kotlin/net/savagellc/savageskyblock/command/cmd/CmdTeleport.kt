@@ -17,7 +17,7 @@ class CmdTeleport : SCommand() {
         aliases.add("tp")
 
 
-        optionalArgs.add("island owner's name")
+        optionalArgs.add(Argument("island owner's name", 0, PlayerArgument()))
 
         commandRequirements = CommandRequirementsBuilder().asPlayer(true).withPermission(Permission.TELEPORT).build()
     }

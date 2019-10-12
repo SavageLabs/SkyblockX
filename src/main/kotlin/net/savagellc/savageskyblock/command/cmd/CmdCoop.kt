@@ -12,7 +12,7 @@ class CmdCoop : SCommand() {
         aliases.add("co-op")
         aliases.add("coop")
 
-        requiredArgs.add("player")
+        requiredArgs.add(Argument("player", 0, PlayerArgument()))
 
         commandRequirements =
             CommandRequirementsBuilder().asPlayer(true).asIslandMember(true).withPermission(Permission.COOP).build()

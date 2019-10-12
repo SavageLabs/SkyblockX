@@ -32,12 +32,7 @@ class CommandRequirements(val permission: Permission?, var asPlayer: Boolean, va
         info.commandSender as Player
         if (!hasPermission(info.commandSender, permission)) {
             if (informIfNot) {
-                info.message(
-                    String.format(
-                        Message.commandRequirementsPlayerDoesNotHavePermission,
-                        permission.getFullPermissionNode()
-                    )
-                )
+                info.message(String.format(Message.commandRequirementsPlayerDoesNotHavePermission, permission.getFullPermissionNode()))
             }
             return false
         }
