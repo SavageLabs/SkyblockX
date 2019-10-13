@@ -1,10 +1,10 @@
-name: SavageSkyblock
-main: net.savagellc.savageskyblock.SavageSkyblock
+name: SkyblockX
+main: io.illyria.skyblockx.SkyblockX
 version: ${project.version}
 api-version: '1.13'
 load: POSTWORLD
 commands:
-  savageskyblock:
+  skyblockx:
     description: 'base skyblock command'
     aliases: [skyblock, sskyblock, sb, sblock]
   is:

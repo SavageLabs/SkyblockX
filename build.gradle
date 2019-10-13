@@ -3,7 +3,7 @@ plugins {
     id 'com.github.johnrengelman.shadow' version '5.1.0'
 }
 
-group 'net.savagellc'
+group 'io.illyria'
 version '1.0'
 
 
@@ -62,10 +62,10 @@ shadowJar {
     mergeServiceFiles()
     exclude 'META-INF/*.DSA'
     exclude 'META-INF/*.RSA'
-    relocate 'com.github.stefvanschie.inventoryframework', 'net.savagellc.savageskyblock.shade.stefvanschie.inventoryframework'
-    relocate 'com.google.gson', 'net.savagellc.savageskyblock.shade.com.google.gson'
-    relocate 'net.prosavage.baseplugin', 'net.savagellc.savageskyblock.shade.baseplugin'
-    relocate 'org.jetbrains.kotlin', 'net.savagellc.savageskyblock.shade.kotlin'
-    relocate 'me.rayzr522:jsonmessage', 'net.savagellc.savageskyblock.shade.jsonmessage'
-    archiveName 'SavageSkyblock-' + version + ".jar"
+    relocate 'com.github.stefvanschie.inventoryframework', 'io.illyria.skyblockx.shade.stefvanschie.inventoryframework'
+    relocate 'com.google.gson', 'io.illyria.skyblockx.shade.com.google.gson'
+    relocate 'net.prosavage.baseplugin', 'io.illyria.skyblockx.shade.baseplugin'
+    relocate 'org.jetbrains.kotlin', 'io.illyria.skyblockx.shade.kotlin'
+    relocate 'me.rayzr522:jsonmessage', 'io.illyria.skyblockx.shade.jsonmessage'
+    archiveName 'SkyblockX-' + version + ".jar"
 }
