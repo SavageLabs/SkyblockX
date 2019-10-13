@@ -3,6 +3,7 @@ package io.illyria.skyblockx.listener
 import io.illyria.skyblockx.core.*
 import io.illyria.skyblockx.persist.Config
 import io.illyria.skyblockx.persist.Message
+import io.illyria.skyblockx.quest.QuestGoal
 import net.prosavage.baseplugin.XMaterial
 import org.bukkit.Bukkit
 import org.bukkit.Material
@@ -11,6 +12,7 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.event.entity.EntityDamageEvent
+import org.bukkit.event.inventory.CraftItemEvent
 import org.bukkit.event.player.PlayerInteractEvent
 
 class PlayerListener : Listener {
@@ -57,6 +59,42 @@ class PlayerListener : Listener {
         if (event.cause == EntityDamageEvent.DamageCause.FALL && iPlayer.falling) {
             iPlayer.falling = false
             event.isCancelled = true
+        }
+
+    }
+
+    @EventHandler
+    fun onPlayerCraft(event: CraftItemEvent) {
+        // Exit if we aren't in skyblock world - since they cannot be on an island that way.
+        if (event.whoClicked.location.world?.name != Config.skyblockWorldName) {
+            return
+        }
+
+        val iplayer = getIPlayer(event.whoClicked as Player)
+        // Fail the checks if we dont have an island, or dont have a active quest, or if we arent on our own island.
+        val island = iplayer.getIsland()
+        if (!iplayer.hasIsland() || island!!.currentQuest == null || !island.containsBlock(event.whoClicked.location)) {
+            return
+        }
+
+        val currentQuest =  island.currentQuest
+        // Find the quest that the island has activated, if none found, return.
+        val targetQuest =
+            Config.islandQuests.find { quest -> quest.type == QuestGoal.CRAFT && quest.name == currentQuest }
+                ?: return
+        // Use XMaterial to parse the material, if null, try to use native material just in case.
+        val materialCrafted = XMaterial.matchXMaterial(event.recipe.result)?.name ?: event.recipe.result.type
+
+        // We had a quest active and it was a crafting quest, however, we didnt craft the goal item.
+        if (materialCrafted.toString().toLowerCase() != targetQuest.goalParameter.toLowerCase()) {
+            return
+        }
+
+        // Increment that quest data by 1 :)
+        island.addQuestData(targetQuest.name, 1)
+        // Check if quest is complete :D
+        if (targetQuest.isComplete(island.getQuestCompletedAmount(targetQuest.name))) {
+            island.completeQuest(iplayer, targetQuest)
         }
 
     }
