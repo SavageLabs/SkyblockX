@@ -13,13 +13,13 @@ object Config {
     private val instance = this
 
     @Transient
-    val skyblockPermissionPrefix = "savageskyblock"
+    val skyblockPermissionPrefix = "skyblockx"
 
     var islandMaxSizeInBlocks = 100
 
     var islandPaddingSizeInBlocks = 20
 
-    var skyblockWorldName = "savageskyblock"
+    var skyblockWorldName = "skyblockx"
 
     var preventFallingDeaths = true
 
