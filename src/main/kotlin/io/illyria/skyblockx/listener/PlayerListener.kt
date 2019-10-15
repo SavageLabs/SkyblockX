@@ -7,12 +7,14 @@ import io.illyria.skyblockx.quest.QuestGoal
 import net.prosavage.baseplugin.XMaterial
 import org.bukkit.Bukkit
 import org.bukkit.Material
+import org.bukkit.entity.EntityType
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.event.inventory.CraftItemEvent
+import org.bukkit.event.player.PlayerFishEvent
 import org.bukkit.event.player.PlayerInteractEvent
 
 class PlayerListener : Listener {
@@ -77,7 +79,7 @@ class PlayerListener : Listener {
             return
         }
 
-        val currentQuest =  island.currentQuest
+        val currentQuest = island.currentQuest
         // Find the quest that the island has activated, if none found, return.
         val targetQuest =
             Config.islandQuests.find { quest -> quest.type == QuestGoal.CRAFT && quest.name == currentQuest }
@@ -96,7 +98,42 @@ class PlayerListener : Listener {
         if (targetQuest.isComplete(island.getQuestCompletedAmount(targetQuest.name))) {
             island.completeQuest(iplayer, targetQuest)
         }
+    }
 
+    @EventHandler
+    fun onPlayerFish(event: PlayerFishEvent) {
+        // Event fires for all other times the rod is thrown, so we need to check the state of the event, along with the world it self right after.
+        if (event.state != PlayerFishEvent.State.CAUGHT_FISH || event.hook.location.world?.name != Config.skyblockWorldName) {
+            return
+        }
+
+        val iplayer = getIPlayer(event.player)
+
+
+        val island = iplayer.getIsland()
+        // Check if we even have an island, have a quest, and check the HOOK's position instead of the player, since we dont want people fishing in others islands for edge cases.
+        if (!iplayer.hasIsland() || island!!.currentQuest == null || !island.containsBlock(event.hook.location)) {
+            return
+        }
+
+        val currentQuest = island.currentQuest
+        // Find the quest that the island has activated, if none found, return.
+        val targetQuest =
+            Config.islandQuests.find { quest -> quest.type == QuestGoal.FISHING && quest.name == currentQuest }
+                ?: return
+        // Use the FISH caught and parse for the version that we need it for.
+        val fishNeededForQuest = EntityType.valueOf(targetQuest.goalParameter)
+
+        if (fishNeededForQuest != event.caught?.type) {
+            return
+        }
+
+        // this just increments quest data.
+        island.addQuestData(targetQuest.name)
+
+        if (targetQuest.isComplete(island.getQuestCompletedAmount(targetQuest.name))) {
+            island.completeQuest(iplayer, targetQuest)
+        }
     }
 
 
