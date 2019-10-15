@@ -96,7 +96,7 @@ data class Island(val islandID: Int, val point: Point, val ownerUUID: String, va
         questData[name] = value
     }
 
-    fun addQuestData(name: String, value: Int) {
+    fun addQuestData(name: String, value: Int = 1) {
         questData[name] = (questData[name] ?: 0) + value
 
     }
