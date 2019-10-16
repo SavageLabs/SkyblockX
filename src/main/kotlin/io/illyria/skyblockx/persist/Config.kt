@@ -118,6 +118,76 @@ object Config {
             EntityType.CREEPER.name,
             10,
             listOf("broadcast {player} completed the Tier 1 Creeper Killing Quest.", "give {player} diamond 1")
+        ),
+        Quest(
+            "Kill-Creeper-2",
+            SerializableItem(
+                XMaterial.CREEPER_SPAWN_EGG,
+                "&8Kill Creepers (Tier 2)",
+                listOf("&7Kill &b100 &7creepers", "&7Completion: &b{currentAmount}&7/&b{finalAmount}"),
+                1
+            ),
+            4,
+            QuestGoal.KILL_MOBS,
+            EntityType.CREEPER.name,
+            100,
+            listOf("broadcast {player} completed the Tier 2 Creeper Killing Quest.", "give {player} diamond 1")
+        ),
+        Quest(
+            "Kill-Creeper-3",
+            SerializableItem(
+                XMaterial.CREEPER_SPAWN_EGG,
+                "&8Kill Creepers (Tier 3)",
+                listOf("&7Kill &b1,000 &7creepers", "&7Completion: &b{currentAmount}&7/&b{finalAmount}"),
+                1
+            ),
+            5,
+            QuestGoal.KILL_MOBS,
+            EntityType.CREEPER.name,
+            1000,
+            listOf("broadcast {player} completed the Tier 3 Creeper Killing Quest.", "give {player} diamond 1")
+        ),
+        Quest(
+            "Craft-Diamond-Pickaxe-1",
+            SerializableItem(
+                XMaterial.DIAMOND_PICKAXE,
+                "&8Craft Diamond Pickaxe (Tier 1)",
+                listOf("&7Craft &b1 &7Diamond Pickaxe", "&7Completion: &b{currentAmount}&7/&b{finalAmount}"),
+                1
+            ),
+            6,
+            QuestGoal.CRAFT,
+            XMaterial.DIAMOND_PICKAXE.name,
+            1,
+            listOf("broadcast {player} completed the Tier 1 Diamond Pickaxe Quest.", "give {player} diamond 1")
+        ),
+        Quest(
+            "Craft-Diamond-Sword-1",
+            SerializableItem(
+                XMaterial.DIAMOND_SWORD,
+                "&8Craft Diamond Sword (Tier 1)",
+                listOf("&7Craft &b1 &7Diamond Sword", "&7Completion: &b{currentAmount}&7/&b{finalAmount}"),
+                1
+            ),
+            7,
+            QuestGoal.CRAFT,
+            XMaterial.DIAMOND_SWORD.name,
+            1,
+            listOf("broadcast {player} completed the Tier 1 Diamond Sword Quest.", "give {player} diamond 1")
+        ),
+        Quest(
+            "Craft-Diamond-Shovel-1",
+            SerializableItem(
+                XMaterial.DIAMOND_SHOVEL,
+                "&8Craft Diamond Shovel (Tier 1)",
+                listOf("&7Craft &b1 &7Diamond Shovel", "&7Completion: &b{currentAmount}&7/&b{finalAmount}"),
+                1
+            ),
+            8,
+            QuestGoal.CRAFT,
+            XMaterial.DIAMOND_SHOVEL.name,
+            1,
+            listOf("broadcast {player} completed the Tier 1 Diamond Shovel Quest.", "give {player} diamond 1")
         )
     )
 
