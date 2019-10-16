@@ -50,7 +50,7 @@ class SkyblockX : BasePlugin() {
     }
 
 
-    fun printHeader() {
+    private fun printHeader() {
         logger.info(
             "\n" +
                     "   ▄████████    ▄█   ▄█▄ ▄██   ▄   ▀█████████▄   ▄█        ▄██████▄   ▄████████    ▄█   ▄█▄ ▀████    ▐████▀ \n" +
