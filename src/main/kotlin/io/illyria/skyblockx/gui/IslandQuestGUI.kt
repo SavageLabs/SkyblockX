@@ -7,6 +7,7 @@ import io.illyria.skyblockx.persist.Config
 import io.illyria.skyblockx.quest.Quest
 import net.prosavage.baseplugin.ItemBuilder
 import net.prosavage.baseplugin.serializer.commonobjects.SerializableItem
+import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import java.text.DecimalFormat
@@ -19,7 +20,9 @@ class IslandQuestGUI :
         for (item in 0 until (Config.islandCreateGUIRows * 9)) {
             guiItems.add(GuiItem(super.backgroundItem.buildItem()) { e -> e.isCancelled = true })
         }
+
         for (quest in Config.islandQuests) {
+            Bukkit.broadcastMessage(quest.name)
             guiItems[quest.guiDisplayIndex] =
                 (GuiItem(buildItem(context.getIsland()!!, quest.guiDisplayItem, quest)) { e ->
                     run {
@@ -47,6 +50,7 @@ class IslandQuestGUI :
                     .replace("{finalAmount}", DecimalFormat.getInstance().format(quest.amountTillComplete))
             )
         }
+
         return ItemBuilder(serializableItem.material.parseItem()).amount(serializableItem.amt).lore(lore)
             .glowing(island.currentQuest == quest.name).build()
     }

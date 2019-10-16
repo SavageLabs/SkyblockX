@@ -6,6 +6,7 @@ import io.illyria.skyblockx.quest.QuestGoal
 import net.prosavage.baseplugin.XMaterial
 import net.prosavage.baseplugin.serializer.Serializer
 import net.prosavage.baseplugin.serializer.commonobjects.SerializableItem
+import org.bukkit.entity.EntityType
 
 object Config {
 
@@ -103,6 +104,22 @@ object Config {
             XMaterial.COBBLESTONE.name,
             1000000,
             listOf("broadcast {player} completed the Tier 3 Cobblestone Mining Quest.", "give {player} diamond 1")
+        ),
+        Quest(
+            "Kill-Creeper-1",
+            SerializableItem(
+                XMaterial.CREEPER_SPAWN_EGG,
+                "&8Kill Creepers (Tier 1)",
+                listOf("&7Kill &b10 &7creepers", "&7Completion: &b{currentAmount}&7/&b{finalAmount}"),
+                1
+            ),
+            3,
+            QuestGoal.KILL_MOBS,
+            EntityType.CREEPER.name,
+            10,
+            listOf("broadcast {player} completed the Tier 1 Creeper Killing Quest.", "give {player} diamond 1")
+
+
         )
     )
 

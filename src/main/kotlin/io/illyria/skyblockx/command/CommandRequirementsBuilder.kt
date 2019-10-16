@@ -9,25 +9,25 @@ class CommandRequirementsBuilder {
     var permission: Permission? = null
 
 
-    fun asPlayer(value: Boolean): io.illyria.skyblockx.command.CommandRequirementsBuilder {
+    fun asPlayer(value: Boolean): CommandRequirementsBuilder {
         this.asPlayer = value
         return this
     }
 
-    fun withPermission(permission: Permission): io.illyria.skyblockx.command.CommandRequirementsBuilder {
+    fun withPermission(permission: Permission): CommandRequirementsBuilder {
         this.permission = permission
         return this
     }
 
-    fun asIslandMember(value: Boolean): io.illyria.skyblockx.command.CommandRequirementsBuilder {
+    fun asIslandMember(value: Boolean): CommandRequirementsBuilder {
         // Gotta be a player to be a island member
         this.asIslandMember = value
         this.asPlayer = true
         return this
     }
 
-    fun build(): io.illyria.skyblockx.command.CommandRequirements {
-        return io.illyria.skyblockx.command.CommandRequirements(permission, asPlayer, asIslandMember)
+    fun build(): CommandRequirements {
+        return CommandRequirements(permission, asPlayer, asIslandMember)
     }
 
 

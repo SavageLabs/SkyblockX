@@ -84,12 +84,11 @@ class BlockListener : Listener {
             // Find the quest that the island has activated.
             val targetQuest =
                 Config.islandQuests.find { quest -> quest.type == QuestGoal.BREAK_BLOCKS && quest.name == currentQuest }
-                    ?: return
             // Use XMaterial to parse the material, if null, try to use native material just in case.
             val material = XMaterial.matchXMaterial(event.block.type)?.name ?: event.block.type.name
 
             // Check if the material we just processed is the targetQuest's material instead of just checking if the quest is equal.
-            if (material == targetQuest.goalParameter && !event.block.hasMetadata("skyblock-placed-by-player")) {
+            if (material == targetQuest?.goalParameter && !event.block.hasMetadata("skyblock-placed-by-player")) {
                 // Increment that quest data by 1 :)
                 island.addQuestData(targetQuest.name, 1)
                 // Check if quest is complete :D

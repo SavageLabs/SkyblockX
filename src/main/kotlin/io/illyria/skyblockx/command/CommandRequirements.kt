@@ -3,6 +3,7 @@ package io.illyria.skyblockx.command
 import io.illyria.skyblockx.core.Permission
 import io.illyria.skyblockx.core.hasPermission
 import io.illyria.skyblockx.persist.Message
+import org.bukkit.Bukkit
 import org.bukkit.command.ConsoleCommandSender
 import org.bukkit.entity.Player
 
@@ -18,10 +19,7 @@ class CommandRequirements(val permission: Permission?, var asPlayer: Boolean, va
             return false
         }
 
-        // If the permission is null then anyone can execute
-        if (permission == null) {
-            return true
-        }
+
 
         // If the console sends it then its OP
         if (info.commandSender is ConsoleCommandSender) {
@@ -30,7 +28,7 @@ class CommandRequirements(val permission: Permission?, var asPlayer: Boolean, va
 
         // Assume executor is player since we checked if they're ConsoleCommandSender above.
         info.commandSender as Player
-        if (!hasPermission(info.commandSender, permission)) {
+        if (permission != null && !hasPermission(info.commandSender, permission)) {
             if (informIfNot) {
                 info.message(
                     String.format(
@@ -45,6 +43,7 @@ class CommandRequirements(val permission: Permission?, var asPlayer: Boolean, va
         // Check if the player's got an island
 
         if (asIslandMember) {
+            Bukkit.broadcastMessage("checking island member.")
             if (info.iPlayer == null || !info.iPlayer!!.hasIsland()) {
                 if (informIfNot) {
                     info.message(Message.commandRequirementsNotAnIslandMember)
