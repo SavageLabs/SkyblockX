@@ -22,7 +22,6 @@ class IslandQuestGUI :
         }
 
         for (quest in Config.islandQuests) {
-            Bukkit.broadcastMessage(quest.name)
             guiItems[quest.guiDisplayIndex] =
                 (GuiItem(buildItem(context.getIsland()!!, quest.guiDisplayItem, quest)) { e ->
                     run {

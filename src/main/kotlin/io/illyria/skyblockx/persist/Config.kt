@@ -118,8 +118,6 @@ object Config {
             EntityType.CREEPER.name,
             10,
             listOf("broadcast {player} completed the Tier 1 Creeper Killing Quest.", "give {player} diamond 1")
-
-
         )
     )
 

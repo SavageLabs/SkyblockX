@@ -43,7 +43,6 @@ class CommandRequirements(val permission: Permission?, var asPlayer: Boolean, va
         // Check if the player's got an island
 
         if (asIslandMember) {
-            Bukkit.broadcastMessage("checking island member.")
             if (info.iPlayer == null || !info.iPlayer!!.hasIsland()) {
                 if (informIfNot) {
                     info.message(Message.commandRequirementsNotAnIslandMember)
