@@ -1,10 +1,7 @@
 package io.illyria.skyblockx
 
 import io.illyria.skyblockx.command.BaseCommand
-import io.illyria.skyblockx.listener.BlockListener
-import io.illyria.skyblockx.listener.DataListener
-import io.illyria.skyblockx.listener.PlayerListener
-import io.illyria.skyblockx.listener.SEditListener
+import io.illyria.skyblockx.listener.*
 import io.illyria.skyblockx.persist.Config
 import io.illyria.skyblockx.persist.Data
 import io.illyria.skyblockx.persist.Message
@@ -30,7 +27,7 @@ class SkyblockX : BasePlugin() {
         Config.load()
         Data.load()
         Message.load()
-        registerListeners(DataListener(), SEditListener(), BlockListener(), PlayerListener())
+        registerListeners(DataListener(), SEditListener(), BlockListener(), PlayerListener(), EntityListener())
         logger.info("Loaded ${Data.IPlayers.size} players")
         logger.info("Loaded ${Data.islands.size} islands")
     }
