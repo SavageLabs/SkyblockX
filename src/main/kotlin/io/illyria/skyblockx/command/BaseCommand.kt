@@ -10,7 +10,7 @@ import org.bukkit.entity.Player
 import java.util.*
 
 
-class BaseCommand : io.illyria.skyblockx.command.SCommand(), CommandExecutor, TabCompleter {
+class BaseCommand : SCommand(), CommandExecutor, TabCompleter {
 
     init {
         this.commandRequirements = io.illyria.skyblockx.command.CommandRequirementsBuilder().build()
@@ -75,9 +75,8 @@ class BaseCommand : io.illyria.skyblockx.command.SCommand(), CommandExecutor, Ta
             var relativeArgIndex = 2
             var subCommandIndex = 0
 
-            val tabbingOptions = mutableListOf<String>()
 
-            var commandToTab: io.illyria.skyblockx.command.SCommand = this
+            var commandToTab: SCommand = this
 
             // Predicate for filtering our command.
             // If command is not found return empty list.
@@ -98,7 +97,7 @@ class BaseCommand : io.illyria.skyblockx.command.SCommand(), CommandExecutor, Ta
             val argToComplete = args.size + 1 - relativeArgIndex
             if (commandToTab.requiredArgs.size >= argToComplete) {
                 // Quick add all so we can find from all args.
-                val list = mutableListOf<io.illyria.skyblockx.command.SCommand.Argument>()
+                val list = mutableListOf<SCommand.Argument>()
                 list.addAll(commandToTab.requiredArgs)
                 list.addAll(commandToTab.optionalArgs)
                 val arg = list.find { argument -> argument.argumentOrder == argToComplete } ?: return emptyList()

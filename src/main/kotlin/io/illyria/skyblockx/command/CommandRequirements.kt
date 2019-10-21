@@ -3,7 +3,6 @@ package io.illyria.skyblockx.command
 import io.illyria.skyblockx.core.Permission
 import io.illyria.skyblockx.core.hasPermission
 import io.illyria.skyblockx.persist.Message
-import org.bukkit.Bukkit
 import org.bukkit.command.ConsoleCommandSender
 import org.bukkit.entity.Player
 

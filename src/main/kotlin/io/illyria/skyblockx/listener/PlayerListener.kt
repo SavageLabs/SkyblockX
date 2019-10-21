@@ -179,6 +179,7 @@ class PlayerListener : Listener {
                 return
             }
             event.clickedBlock!!.type = Material.AIR
+            // Have to use setItemInHand for pre-1.13 support.
             event.player.setItemInHand(XMaterial.LAVA_BUCKET.parseItem())
             iPlayer.message(Message.listenerObsidianBucketLava)
             event.isCancelled = true

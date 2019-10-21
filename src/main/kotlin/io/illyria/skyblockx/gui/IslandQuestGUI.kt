@@ -7,7 +7,6 @@ import io.illyria.skyblockx.persist.Config
 import io.illyria.skyblockx.quest.Quest
 import net.prosavage.baseplugin.ItemBuilder
 import net.prosavage.baseplugin.serializer.commonobjects.SerializableItem
-import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import java.text.DecimalFormat
