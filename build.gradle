@@ -15,7 +15,7 @@ repositories {
         url "https://hub.spigotmc.org/nexus/content/repositories/snapshots"
     }
     maven {
-        url 'https://nexus.savagellc.net/repository/maven-public/'
+        url 'https://nexus.illyria.io/repository/maven-public/'
     }
     maven {
         url 'https://rayzr.dev/repo/'
