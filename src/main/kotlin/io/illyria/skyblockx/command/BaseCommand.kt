@@ -97,13 +97,14 @@ class BaseCommand : SCommand(), CommandExecutor, TabCompleter {
             val argToComplete = args.size + 1 - relativeArgIndex
             if (commandToTab.requiredArgs.size >= argToComplete) {
                 // Quick add all so we can find from all args.
-                val list = mutableListOf<SCommand.Argument>()
+                val list = mutableListOf<Argument>()
                 list.addAll(commandToTab.requiredArgs)
                 list.addAll(commandToTab.optionalArgs)
-                val arg = list.find { argument -> argument.argumentOrder == argToComplete } ?: return emptyList()
-                val possibleValues =
-                    arg.argumentType.getPossibleValues(if (sender is Player) getIPlayer(sender) else null)
-                        .toMutableList()
+                val possibleValues = mutableListOf<String>()
+                val arg = list.find { argument -> argument.argumentOrder == argToComplete }
+                if (arg != null) {
+                    possibleValues.addAll(arg.argumentType.getPossibleValues(if (sender is Player) getIPlayer(sender) else null).toList())
+                }
                 // If we have more subCommands show those
                 if (commandToTab.subCommands.isNotEmpty()) {
                     commandToTab.subCommands.forEach { subCommand -> possibleValues.add(subCommand.aliases[0]) }
