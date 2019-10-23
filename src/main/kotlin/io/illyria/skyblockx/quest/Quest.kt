@@ -1,8 +1,10 @@
 package io.illyria.skyblockx.quest
 
 import io.illyria.skyblockx.core.IPlayer
+import io.illyria.skyblockx.core.Island
 import net.prosavage.baseplugin.serializer.commonobjects.SerializableItem
 import org.bukkit.Bukkit
+import org.bukkit.Location
 
 data class Quest(
     val name: String,
@@ -27,4 +29,8 @@ data class Quest(
         }
     }
 
+}
+
+fun failsQuestCheckingPreRequisites(iPlayer: IPlayer, island: Island?, location: Location): Boolean {
+    return  (!iPlayer.hasIsland() || island!!.currentQuest == null || !island.containsBlock(location))
 }

@@ -1,69 +1,31 @@
 package io.illyria.skyblockx.listener
 
-import io.illyria.skyblockx.core.*
+import io.illyria.skyblockx.core.Permission
+import io.illyria.skyblockx.core.canUseBlockAtLocation
+import io.illyria.skyblockx.core.getIPlayer
+import io.illyria.skyblockx.core.hasPermission
 import io.illyria.skyblockx.persist.Config
 import io.illyria.skyblockx.persist.Message
 import io.illyria.skyblockx.quest.QuestGoal
+import io.illyria.skyblockx.quest.failsQuestCheckingPreRequisites
 import net.prosavage.baseplugin.XMaterial
 import org.bukkit.Bukkit
 import org.bukkit.Material
-import org.bukkit.entity.EntityType
+import org.bukkit.enchantments.Enchantment
+import org.bukkit.entity.Item
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
-import org.bukkit.event.entity.EntityDamageByEntityEvent
-import org.bukkit.event.entity.EntityDamageEvent
+import org.bukkit.event.enchantment.EnchantItemEvent
+import org.bukkit.event.inventory.BrewEvent
 import org.bukkit.event.inventory.CraftItemEvent
+import org.bukkit.event.inventory.InventoryClickEvent
+import org.bukkit.event.inventory.InventoryType
 import org.bukkit.event.player.PlayerFishEvent
 import org.bukkit.event.player.PlayerInteractEvent
 
 class PlayerListener : Listener {
 
-
-    @EventHandler
-    fun onPlayerTakingDamage(event: EntityDamageByEntityEvent) {
-        // If they're not a player or if the entity is not in the skyblock world, we do not care.
-        if (event.entity !is Player || event.entity.location.world?.name != Config.skyblockWorldName) {
-            return
-        }
-        val iPlayer = getIPlayer(event.entity as Player)
-        if (!iPlayer.isOnOwnIsland()) {
-            iPlayer.message(String.format(Message.listenerPlayerDamageCancelled))
-            event.isCancelled = true
-        }
-    }
-
-    @EventHandler
-    fun onPlayerDamage(event: EntityDamageEvent) {
-        if (!Config.preventFallingDeaths
-            || event.entity !is Player
-            || event.entity.location.world?.name != Config.skyblockWorldName
-        ) {
-            return
-        }
-
-        val player = event.entity as Player
-        val iPlayer = getIPlayer(player)
-
-        // Triggers when they fall into the void.
-        if (event.cause == EntityDamageEvent.DamageCause.VOID) {
-            iPlayer.falling = true
-            player.sendMessage(color(Message.listenerVoidDeathPrevented))
-            if (iPlayer.hasIsland()) {
-                player.teleport(iPlayer.getIsland()!!.getIslandSpawn())
-            } else {
-                player.teleport(Bukkit.getWorld("world")!!.spawnLocation)
-            }
-            event.isCancelled = true
-        }
-
-        // Triggers when they fall and the VOID damage registers falling to cancel.
-        if (event.cause == EntityDamageEvent.DamageCause.FALL && iPlayer.falling) {
-            iPlayer.falling = false
-            event.isCancelled = true
-        }
-
-    }
 
     @EventHandler
     fun onPlayerCraft(event: CraftItemEvent) {
@@ -75,11 +37,12 @@ class PlayerListener : Listener {
         val iplayer = getIPlayer(event.whoClicked as Player)
         // Fail the checks if we dont have an island, or dont have a active quest, or if we arent on our own island.
         val island = iplayer.getIsland()
-        if (!iplayer.hasIsland() || island!!.currentQuest == null || !island.containsBlock(event.whoClicked.location)) {
+
+        if (failsQuestCheckingPreRequisites(iplayer, island, event.whoClicked.location)) {
             return
         }
 
-        val currentQuest = island.currentQuest
+        val currentQuest = island!!.currentQuest
         // Find the quest that the island has activated, if none found, return.
         val targetQuest =
             Config.islandQuests.find { quest -> quest.type == QuestGoal.CRAFT && quest.name == currentQuest }
@@ -103,28 +66,27 @@ class PlayerListener : Listener {
     @EventHandler
     fun onPlayerFish(event: PlayerFishEvent) {
         // Event fires for all other times the rod is thrown, so we need to check the state of the event, along with the world it self right after.
-        if (event.state != PlayerFishEvent.State.CAUGHT_FISH || event.hook.location.world?.name != Config.skyblockWorldName) {
+        if (event.state != PlayerFishEvent.State.CAUGHT_FISH || event.caught !is Item || event.hook.location.world?.name != Config.skyblockWorldName) {
             return
         }
 
         val iplayer = getIPlayer(event.player)
 
-
         val island = iplayer.getIsland()
         // Check if we even have an island, have a quest, and check the HOOK's position instead of the player, since we dont want people fishing in others islands for edge cases.
-        if (!iplayer.hasIsland() || island!!.currentQuest == null || !island.containsBlock(event.hook.location)) {
+        if (failsQuestCheckingPreRequisites(iplayer, island, event.hook.location)) {
             return
         }
 
-        val currentQuest = island.currentQuest
+        val currentQuest = island!!.currentQuest
         // Find the quest that the island has activated, if none found, return.
         val targetQuest =
             Config.islandQuests.find { quest -> quest.type == QuestGoal.FISHING && quest.name == currentQuest }
                 ?: return
         // Use the FISH caught and parse for the version that we need it for.
-        val fishNeededForQuest = EntityType.valueOf(targetQuest.goalParameter)
-
-        if (fishNeededForQuest != event.caught?.type) {
+        val fishNeededForQuest = XMaterial.valueOf(targetQuest.goalParameter)
+        Bukkit.broadcastMessage(XMaterial.matchXMaterial((event.caught!! as Item).itemStack)!!.name)
+        if (fishNeededForQuest != XMaterial.matchXMaterial((event.caught!! as Item).itemStack)) {
             return
         }
 
@@ -133,6 +95,86 @@ class PlayerListener : Listener {
 
         if (targetQuest.isComplete(island.getQuestCompletedAmount(targetQuest.name))) {
             island.completeQuest(iplayer, targetQuest)
+        }
+    }
+
+    @EventHandler
+    fun onPlayerInventoryClick(event: InventoryClickEvent) {
+        if (event.whoClicked.location.world?.name != Config.skyblockWorldName
+            // Slot -999 is not in the inventory so return :P
+            || event.slot == -999
+        ) {
+            return
+        }
+
+        // This means they repaired an item.
+        if (event.inventory.type == InventoryType.ANVIL && event.slot == 2 && event.view.bottomInventory != event.clickedInventory) {
+            val iPlayer = getIPlayer(event.whoClicked as Player)
+
+            val island = iPlayer.getIsland()
+
+            if (failsQuestCheckingPreRequisites(iPlayer, island, event.whoClicked.location)) {
+                return
+            }
+
+            val currentQuest = island!!.currentQuest
+            val targetQuest =
+                Config.islandQuests.find { quest -> quest.type == QuestGoal.REPAIR && quest.name == currentQuest }
+                    ?: return
+
+            val materialToRepair =
+                XMaterial.matchXMaterial(targetQuest.goalParameter) ?: Material.valueOf(targetQuest.goalParameter)
+
+            if (materialToRepair.name != targetQuest.goalParameter) {
+                return
+            }
+
+            island.addQuestData(targetQuest.name)
+
+            if (targetQuest.isComplete(island.getQuestCompletedAmount(targetQuest.name))) {
+                island.completeQuest(iPlayer, targetQuest)
+            }
+            return
+        }
+    }
+
+
+
+    @EventHandler
+    fun onPlayerEnchant(event: EnchantItemEvent) {
+        if (event.enchantBlock.world.name != Config.skyblockWorldName) {
+            return
+        }
+
+        val iPlayer = getIPlayer(event.enchanter)
+
+        val island = iPlayer.getIsland()
+
+        // Island checking hehe.
+        if (failsQuestCheckingPreRequisites(iPlayer, island, event.enchantBlock.location)) {
+            return
+        }
+
+        val currentQuest = island!!.currentQuest
+
+        val targetQuest =
+            Config.islandQuests.find { quest -> quest.type == QuestGoal.ENCHANT && quest.name == currentQuest }
+                ?: return
+
+
+        val enchantNeeded = Enchantment.getByName(targetQuest.goalParameter.split("=")[0])
+        val enchantLevel = Integer.parseInt(targetQuest.goalParameter.split("=")[1])
+
+
+        if (!(event.enchantsToAdd.containsKey(enchantNeeded) && event.enchantsToAdd[enchantNeeded] == enchantLevel)) {
+            return
+        }
+
+
+        island.addQuestData(targetQuest.name)
+
+        if (targetQuest.isComplete(island.getQuestCompletedAmount(targetQuest.name))) {
+            island.completeQuest(iPlayer, targetQuest)
         }
     }
 
@@ -185,8 +227,6 @@ class PlayerListener : Listener {
             event.isCancelled = true
             return
         }
-
-
     }
 
 

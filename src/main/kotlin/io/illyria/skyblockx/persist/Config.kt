@@ -6,7 +6,9 @@ import io.illyria.skyblockx.quest.QuestGoal
 import net.prosavage.baseplugin.XMaterial
 import net.prosavage.baseplugin.serializer.Serializer
 import net.prosavage.baseplugin.serializer.commonobjects.SerializableItem
+import org.bukkit.enchantments.Enchantment
 import org.bukkit.entity.EntityType
+import org.bukkit.potion.PotionType
 
 object Config {
 
@@ -30,7 +32,7 @@ object Config {
 
     var helpGeneratorPageEntries = 4
 
-    // TODO: Actually use GUI, also create island structure requirements.
+
     var islandCreateGUITitle = "Choose an island!"
     var islandCreateGUIRows = 1
     var islandCreateGUIBackgroundItem = SerializableItem(XMaterial.BLACK_STAINED_GLASS_PANE, "&9", listOf(""), 1)
@@ -59,8 +61,7 @@ object Config {
 
     var islandQuestGUIBackgroundItem = SerializableItem(XMaterial.BLACK_STAINED_GLASS_PANE, "&9", listOf(), 1)
 
-    var islandQuestGUIRows = 1
-
+    var islandQuestGUIRows: Int = 3
 
     var islandQuests = listOf(
         Quest(
@@ -188,7 +189,92 @@ object Config {
             XMaterial.DIAMOND_SHOVEL.name,
             1,
             listOf("broadcast {player} completed the Tier 1 Diamond Shovel Quest.", "give {player} diamond 1")
+        ),
+        Quest(
+            "Fish-Salmon-1",
+            SerializableItem(
+                XMaterial.SALMON,
+                "&8Fish for Salmon (Tier 1)",
+                listOf("&7Fish for &b1 &7Salmon", "&7Completion: &b{currentAmount}&7/&b{finalAmount}"),
+                1
+            ),
+            9,
+            QuestGoal.FISHING,
+            EntityType.SALMON.name,
+            1,
+            listOf("broadcast {player} completed the Tier 1 Salmon Fishing Quest.", "give {player} diamond 1")
+        ),
+        Quest(
+            "Fish-Salmon-2",
+            SerializableItem(
+                XMaterial.SALMON,
+                "&8Fish for Salmon (Tier 2)",
+                listOf("&7Fish for &b10 &7Salmon", "&7Completion: &b{currentAmount}&7/&b{finalAmount}"),
+                1
+            ),
+            10,
+            QuestGoal.FISHING,
+            EntityType.SALMON.name,
+            10,
+            listOf("broadcast {player} completed the Tier 2 Salmon Fishing Quest.", "give {player} diamond 1")
+        ),
+        Quest(
+            "Fish-Salmon-3",
+            SerializableItem(
+                XMaterial.SALMON,
+                "&8Fish for Salmon (Tier 3)",
+                listOf("&7Fish for &b100 &7Salmon", "&7Completion: &b{currentAmount}&7/&b{finalAmount}"),
+                1
+            ),
+            11,
+            QuestGoal.FISHING,
+            EntityType.SALMON.name,
+            100,
+            listOf("broadcast {player} completed the Tier 3 Salmon Fishing Quest.", "give {player} diamond 1")
+        ),
+        Quest(
+            "Sharpness-1",
+            SerializableItem(
+                XMaterial.ENCHANTED_BOOK,
+                "&8Sharpness 1",
+                listOf("&7Enchant a book for sharpness 1", "&7Completion: &b{currentAmount}&7/&b{finalAmount}"),
+                1
+            ),
+            12,
+            QuestGoal.ENCHANT,
+            "${Enchantment.DAMAGE_ALL.name}=1",
+            1,
+            listOf("broadcast {player} completed the Tier 1 Sharpness 1 Enchanting Quest.", "give {player} diamond 1")
+        ),
+        Quest(
+            "Repair-1",
+            SerializableItem(
+                XMaterial.ANVIL,
+                "&8Repair A Bow",
+                listOf("&7Repair a broken bow using an anvil.", "&7Completion: &b{currentAmount}&7/&b{finalAmount}"),
+                1
+            ),
+            13,
+            QuestGoal.REPAIR,
+            XMaterial.BOW.parseMaterial()!!.name,
+            1,
+            listOf("broadcast {player} completed the Tier 1 Bow Repair Quest.", "give {player} diamond 1")
+        ),
+        Quest(
+            "Brew-1",
+            SerializableItem(
+                XMaterial.IRON_SWORD,
+                "&8Strength Potion",
+                listOf("&7Brew Strength Potion", "&7Completion: &b{currentAmount}&7/&b{finalAmount}"),
+                1
+            ),
+            14,
+            QuestGoal.BREW,
+            PotionType.STRENGTH.name,
+            1,
+            listOf("broadcast {player} completed the Tier 1 Brewing Quest.", "give {player} diamond 1")
         )
+
     )
 
 

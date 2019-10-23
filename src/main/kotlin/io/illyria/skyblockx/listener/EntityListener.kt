@@ -1,12 +1,17 @@
 package io.illyria.skyblockx.listener
 
+import io.illyria.skyblockx.core.color
 import io.illyria.skyblockx.core.getIPlayer
 import io.illyria.skyblockx.persist.Config
+import io.illyria.skyblockx.persist.Message
 import io.illyria.skyblockx.quest.QuestGoal
+import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
+import org.bukkit.event.entity.EntityDamageByEntityEvent
+import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.event.entity.EntityDeathEvent
 
 class EntityListener : Listener {
@@ -43,6 +48,51 @@ class EntityListener : Listener {
             }
 
 
+        }
+
+    }
+
+    @EventHandler
+    fun onPlayerTakingDamage(event: EntityDamageByEntityEvent) {
+        // If they're not a player or if the entity is not in the skyblock world, we do not care.
+        if (event.entity !is Player || event.entity.location.world?.name != Config.skyblockWorldName) {
+            return
+        }
+        val iPlayer = getIPlayer(event.entity as Player)
+        if (!iPlayer.isOnOwnIsland()) {
+            iPlayer.message(String.format(Message.listenerPlayerDamageCancelled))
+            event.isCancelled = true
+        }
+    }
+
+    @EventHandler
+    fun onPlayerDamage(event: EntityDamageEvent) {
+        if (!Config.preventFallingDeaths
+            || event.entity !is Player
+            || event.entity.location.world?.name != Config.skyblockWorldName
+        ) {
+            return
+        }
+
+        val player = event.entity as Player
+        val iPlayer = getIPlayer(player)
+
+        // Triggers when they fall into the void.
+        if (event.cause == EntityDamageEvent.DamageCause.VOID) {
+            iPlayer.falling = true
+            player.sendMessage(color(Message.listenerVoidDeathPrevented))
+            if (iPlayer.hasIsland()) {
+                player.teleport(iPlayer.getIsland()!!.getIslandSpawn())
+            } else {
+                player.teleport(Bukkit.getWorld("world")!!.spawnLocation)
+            }
+            event.isCancelled = true
+        }
+
+        // Triggers when they fall and the VOID damage registers falling to cancel.
+        if (event.cause == EntityDamageEvent.DamageCause.FALL && iPlayer.falling) {
+            iPlayer.falling = false
+            event.isCancelled = true
         }
 
     }
