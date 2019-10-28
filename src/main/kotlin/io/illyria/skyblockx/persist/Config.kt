@@ -32,6 +32,8 @@ object Config {
 
     var helpGeneratorPageEntries = 4
 
+    var defaultIslandMemberLimit = 3
+
 
     var islandCreateGUITitle = "Choose an island!"
     var islandCreateGUIRows = 1
@@ -259,20 +261,6 @@ object Config {
             XMaterial.BOW.parseMaterial()!!.name,
             1,
             listOf("broadcast {player} completed the Tier 1 Bow Repair Quest.", "give {player} diamond 1")
-        ),
-        Quest(
-            "Brew-1",
-            SerializableItem(
-                XMaterial.IRON_SWORD,
-                "&8Strength Potion",
-                listOf("&7Brew Strength Potion", "&7Completion: &b{currentAmount}&7/&b{finalAmount}"),
-                1
-            ),
-            14,
-            QuestGoal.BREW,
-            PotionType.STRENGTH.name,
-            1,
-            listOf("broadcast {player} completed the Tier 1 Brewing Quest.", "give {player} diamond 1")
         )
 
     )

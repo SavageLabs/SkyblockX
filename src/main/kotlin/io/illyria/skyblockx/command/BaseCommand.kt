@@ -1,7 +1,11 @@
 package io.illyria.skyblockx.command
 
+import io.illyria.skyblockx.command.cmd.*
+import io.illyria.skyblockx.command.cmd.home.CmdHome
+import io.illyria.skyblockx.command.cmd.member.CmdMember
 import io.illyria.skyblockx.core.getIPlayer
 import io.illyria.skyblockx.persist.Message
+import org.bukkit.Bukkit
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
@@ -13,26 +17,27 @@ import java.util.*
 class BaseCommand : SCommand(), CommandExecutor, TabCompleter {
 
     init {
-        this.commandRequirements = io.illyria.skyblockx.command.CommandRequirementsBuilder().build()
-        subCommands.add(io.illyria.skyblockx.command.cmd.CmdCreate())
-        subCommands.add(io.illyria.skyblockx.command.cmd.CmdGo())
-        subCommands.add(io.illyria.skyblockx.command.cmd.CmdDelete())
-        subCommands.add(io.illyria.skyblockx.command.cmd.CmdSEPosition())
-        subCommands.add(io.illyria.skyblockx.command.cmd.CmdSESaveStructure())
-        subCommands.add(io.illyria.skyblockx.command.cmd.CmdSEPasteStructure())
-        subCommands.add(io.illyria.skyblockx.command.cmd.CmdBypass())
-        subCommands.add(io.illyria.skyblockx.command.cmd.CmdCoop())
-        subCommands.add(io.illyria.skyblockx.command.cmd.CmdRemove())
-        subCommands.add(io.illyria.skyblockx.command.cmd.CmdTeleport())
-        subCommands.add(io.illyria.skyblockx.command.cmd.home.CmdHome())
-        subCommands.add(io.illyria.skyblockx.command.cmd.CmdHelp())
-        subCommands.add(io.illyria.skyblockx.command.cmd.CmdQuest())
+        this.commandRequirements = CommandRequirementsBuilder().build()
+        subCommands.add(CmdCreate())
+        subCommands.add(CmdGo())
+        subCommands.add(CmdDelete())
+        subCommands.add(CmdSEPosition())
+        subCommands.add(CmdSESaveStructure())
+        subCommands.add(CmdSEPasteStructure())
+        subCommands.add(CmdBypass())
+        subCommands.add(CmdCoop())
+        subCommands.add(CmdRemove())
+        subCommands.add(CmdTeleport())
+        subCommands.add(CmdHome())
+        subCommands.add(CmdHelp())
+        subCommands.add(CmdQuest())
+        subCommands.add(CmdMember())
 
         io.illyria.skyblockx.Globals.baseCommand = this
     }
 
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
-        execute(io.illyria.skyblockx.command.CommandInfo(sender, ArrayList(args.toList()), label))
+        execute(CommandInfo(sender, ArrayList(args.toList()), label))
         return true
     }
 
@@ -40,7 +45,7 @@ class BaseCommand : SCommand(), CommandExecutor, TabCompleter {
         return Message.commandBaseHelp
     }
 
-    override fun perform(info: io.illyria.skyblockx.command.CommandInfo) {
+    override fun perform(info: CommandInfo) {
         info.message(Message.commandBaseHelpMessage)
         generateHelp(1, info.player!!)
     }

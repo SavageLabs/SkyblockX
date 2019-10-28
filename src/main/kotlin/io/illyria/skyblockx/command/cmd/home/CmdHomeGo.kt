@@ -1,5 +1,6 @@
 package io.illyria.skyblockx.command.cmd.home
 
+import io.illyria.skyblockx.command.CommandRequirementsBuilder
 import io.illyria.skyblockx.persist.Message
 
 class CmdHomeGo : io.illyria.skyblockx.command.SCommand() {
@@ -9,7 +10,7 @@ class CmdHomeGo : io.illyria.skyblockx.command.SCommand() {
 
         requiredArgs.add(Argument("home-name", 0, HomeArgument()))
 
-        commandRequirements = io.illyria.skyblockx.command.CommandRequirementsBuilder().asIslandMember(true).build()
+        commandRequirements = CommandRequirementsBuilder().asIslandMember(true).build()
     }
 
     override fun perform(info: io.illyria.skyblockx.command.CommandInfo) {

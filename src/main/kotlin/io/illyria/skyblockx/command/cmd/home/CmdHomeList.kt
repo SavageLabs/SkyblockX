@@ -1,5 +1,7 @@
 package io.illyria.skyblockx.command.cmd.home
 
+import io.illyria.skyblockx.command.CommandInfo
+import io.illyria.skyblockx.command.CommandRequirementsBuilder
 import io.illyria.skyblockx.core.Permission
 import io.illyria.skyblockx.core.color
 import io.illyria.skyblockx.persist.Message
@@ -12,11 +14,11 @@ class CmdHomeList : io.illyria.skyblockx.command.SCommand() {
         aliases.add("list")
 
         this.commandRequirements =
-            io.illyria.skyblockx.command.CommandRequirementsBuilder().withPermission(Permission.HOME)
+            CommandRequirementsBuilder().withPermission(Permission.HOME)
                 .asIslandMember(true).build()
     }
 
-    override fun perform(info: io.illyria.skyblockx.command.CommandInfo) {
+    override fun perform(info: CommandInfo) {
         info.message(Message.commandHomeListHeader)
         for ((index, home) in info.iPlayer!!.getIsland()!!.getAllHomes().keys.withIndex()) {
             JSONMessage.create(color(String.format(Message.commandHomeListFormat, index + 1, home)))

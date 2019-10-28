@@ -1,9 +1,10 @@
 package io.illyria.skyblockx.command.cmd.home
 
+import io.illyria.skyblockx.command.SCommand
 import io.illyria.skyblockx.core.Permission
 import io.illyria.skyblockx.persist.Message
 
-class CmdHome : io.illyria.skyblockx.command.SCommand() {
+class CmdHome : SCommand() {
 
     init {
         aliases.add("home")
@@ -14,10 +15,10 @@ class CmdHome : io.illyria.skyblockx.command.SCommand() {
             io.illyria.skyblockx.command.CommandRequirementsBuilder().withPermission(Permission.HOME).asPlayer(true)
                 .asIslandMember(true).build()
 
-        subCommands.add(io.illyria.skyblockx.command.cmd.home.CmdHomeList())
-        subCommands.add(io.illyria.skyblockx.command.cmd.home.CmdHomeSet())
-        subCommands.add(io.illyria.skyblockx.command.cmd.home.CmdHomeRemove())
-        subCommands.add(io.illyria.skyblockx.command.cmd.home.CmdHomeGo())
+        subCommands.add(CmdHomeList())
+        subCommands.add(CmdHomeSet())
+        subCommands.add(CmdHomeRemove())
+        subCommands.add(CmdHomeGo())
     }
 
 
@@ -29,7 +30,7 @@ class CmdHome : io.illyria.skyblockx.command.SCommand() {
         }
 
         // Execute command go just to make a shorthand version for /is home go <home>.
-        this.subCommands.find { command -> command is io.illyria.skyblockx.command.cmd.home.CmdHomeGo }?.perform(info)
+        this.subCommands.find { command -> command is CmdHomeGo }?.perform(info)
 
 
     }

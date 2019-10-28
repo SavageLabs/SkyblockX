@@ -29,6 +29,37 @@ data class Island(val islandID: Int, val point: Point, val ownerUUID: String, va
     var questData = HashMap<String, Int>()
     var currentQuest: String? = null
 
+    var memberLimit = Config.defaultIslandMemberLimit
+
+    val members = mutableListOf<String>()
+
+
+    fun getAllMembers(): List<String> {
+        if (members == null) return emptyList()
+        return members
+    }
+
+    fun inviteMember(iPlayer: IPlayer) {
+        if (memberLimit >= members.size) {
+            return
+        }
+        if (iPlayer.islandsInvitedTo == null) {
+            iPlayer.islandsInvitedTo = HashSet()
+        }
+        iPlayer.islandsInvitedTo.add(islandID)
+    }
+
+    fun addMember(iPlayer: IPlayer) {
+        if (memberLimit >= members.size) {
+            return
+        }
+        members.add(iPlayer.getPlayer().name)
+    }
+
+    fun removeMember(name: String) {
+        members.remove(name)
+    }
+
 
     /**
      * This set does not have methods on purpose to discourage developers from modifying it, as we need a player to authorize the co-op procedure and because it won't actually affect the co-op status of a player.

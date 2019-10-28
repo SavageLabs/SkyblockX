@@ -29,6 +29,7 @@ object Message {
     var genericCommandsTooFewArgs = "&cThis command requires more arguments."
     var genericCommandsTooManyArgs = "&cThis command requires less arguments."
     var genericActionRequiresPermission = "&cThis action requires the permission %1\$s"
+    var genericCannotReferenceYourSelf = "&cYou cannot reference yourself."
 
 
     var commandBaseHelp = "&7The base command for skyblock."
@@ -102,9 +103,23 @@ object Message {
     var commandTpTeleporting = "&7Teleporting you to %1\$s's island."
     var commandTpNoPermission = "&7The specified island does not have you as co-op or as a island member."
 
+
+    var commandJoinNotInvited = "&7You have not been invited to %1\$s's island."
+    var commandJoinSuccess = "&7You have joined %1\$s's island."
+
+    var commandJoinHelp = "&7join an island."
+
     var commandQuestHelp = "&7view Quest GUI."
 
     var islandCreateGUIYouDontHavePermission = "You do not have permission to use this island."
+
+    var commandMemberInviteSuccess = "&7You have invited %1\$s to your island."
+    var commandMemberInviteMessage = "&7%1\$s has invited you to their island, click to accept!"
+    var commandMemberInviteLimit = "&7You cannot invite more members to your island, the limit is %1\$s."
+    var commandMemberRemove = "remove member from island."
+    var commandMemberList = "list all the members."
+    var commandMemberInvite = "invite a member to your island"
+    var commandMemberHelp = "Member commands."
 
     var listenerVoidDeathPrevented = "&7You fell into the void, teleporting you back."
     var listenerBlockPlacementDenied = "&7You can only place blocks inside of your island."

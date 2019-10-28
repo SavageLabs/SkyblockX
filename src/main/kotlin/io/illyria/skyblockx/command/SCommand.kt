@@ -12,11 +12,11 @@ import java.util.*
 abstract class SCommand {
 
     val aliases = LinkedList<String>()
-    val requiredArgs = LinkedList<io.illyria.skyblockx.command.SCommand.Argument>()
-    val optionalArgs = LinkedList<io.illyria.skyblockx.command.SCommand.Argument>()
+    val requiredArgs = LinkedList<SCommand.Argument>()
+    val optionalArgs = LinkedList<SCommand.Argument>()
     lateinit var commandRequirements: io.illyria.skyblockx.command.CommandRequirements
 
-    val subCommands = LinkedList<io.illyria.skyblockx.command.SCommand>()
+    val subCommands = LinkedList<SCommand>()
 
 
     abstract fun perform(info: io.illyria.skyblockx.command.CommandInfo)
@@ -98,7 +98,7 @@ abstract class SCommand {
     }
 
     private fun sendCommandFormat(info: io.illyria.skyblockx.command.CommandInfo, useJSON: Boolean = true) {
-        val list = mutableListOf<io.illyria.skyblockx.command.SCommand.Argument>()
+        val list = mutableListOf<SCommand.Argument>()
         list.addAll(requiredArgs)
         list.addAll(optionalArgs)
         requiredArgs.sortBy { arg -> arg.argumentOrder }
@@ -136,42 +136,47 @@ abstract class SCommand {
     class Argument(
         val name: String,
         val argumentOrder: Int,
-        val argumentType: io.illyria.skyblockx.command.SCommand.ArgumentType
+        val argumentType: SCommand.ArgumentType
     )
 
     abstract class ArgumentType {
         abstract fun getPossibleValues(iPlayer: IPlayer?): List<String>
     }
 
-    class HomeArgument : io.illyria.skyblockx.command.SCommand.ArgumentType() {
+    class HomeArgument : SCommand.ArgumentType() {
         override fun getPossibleValues(iPlayer: IPlayer?): List<String> {
             return if (iPlayer != null && iPlayer.hasIsland()) iPlayer.getIsland()!!.getAllHomes().keys.toList() else emptyList()
         }
     }
 
-    class PlayerArgument : io.illyria.skyblockx.command.SCommand.ArgumentType() {
+    class PlayerArgument : SCommand.ArgumentType() {
         override fun getPossibleValues(iPlayer: IPlayer?): List<String> {
             return Bukkit.getOnlinePlayers().map { player -> player.name }
         }
     }
 
-    class StringArgument : io.illyria.skyblockx.command.SCommand.ArgumentType() {
+    class StringArgument : SCommand.ArgumentType() {
         override fun getPossibleValues(iPlayer: IPlayer?): List<String> {
             return emptyList()
         }
     }
 
-    class IntArgument : io.illyria.skyblockx.command.SCommand.ArgumentType() {
+    class IntArgument : SCommand.ArgumentType() {
         override fun getPossibleValues(iPlayer: IPlayer?): List<String> {
             return listOf(1.toString())
         }
     }
 
-    class PosArgument : io.illyria.skyblockx.command.SCommand.ArgumentType() {
+    class PosArgument : SCommand.ArgumentType() {
         override fun getPossibleValues(iPlayer: IPlayer?): List<String> {
             return if (iPlayer != null && iPlayer.pos1 == null) listOf(1.toString()) else listOf(2.toString())
         }
+    }
 
+    class MemberArgument : ArgumentType() {
+        override fun getPossibleValues(iPlayer: IPlayer?): List<String> {
+           return if (iPlayer != null && iPlayer.hasIsland()) iPlayer.getIsland()!!.getAllMembers() else emptyList()
+        }
     }
 
     abstract fun getHelpInfo(): String

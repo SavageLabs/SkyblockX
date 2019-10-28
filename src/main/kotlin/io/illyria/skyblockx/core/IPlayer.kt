@@ -24,6 +24,16 @@ data class IPlayer(val uuid: String) {
     var coopedIslandIds = HashSet<Int>()
 
 
+
+
+    var islandsInvitedTo = HashSet<Int>()
+
+
+    fun isInvitedToIsland(island: Island): Boolean {
+        return islandsInvitedTo != null && islandsInvitedTo.contains(island.islandID)
+    }
+
+
     // This is for the coop players that this iplayer instance has authorized.
     // So that we can remove the co-op status of these players when this guy logs out.
     @Transient
