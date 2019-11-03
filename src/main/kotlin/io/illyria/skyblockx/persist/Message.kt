@@ -8,6 +8,9 @@ object Message {
     @Transient
     private val instance = this
 
+
+    var messagePrefix = "&7[&b!&7] "
+
     var commandRequirementsNotAPlayer = "&cThis command requires the executor to be a player."
     var commandRequirementsNotAnIslandMember =
         "&cThis command requires the executor to be a island member, create one using \"/is create\"."

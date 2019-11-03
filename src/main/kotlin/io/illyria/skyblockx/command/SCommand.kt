@@ -77,7 +77,7 @@ abstract class SCommand {
     fun generateHelp(page: Int, player: Player) {
         val pageStartEntry = Config.helpGeneratorPageEntries * (page - 1)
         if (page <= 0 || pageStartEntry >= subCommands.size) {
-            player.sendMessage(color(String.format(Message.commandHelpGeneratorPageInvalid, page)))
+            player.sendMessage(color(Message.messagePrefix + String.format(Message.commandHelpGeneratorPageInvalid, page)))
             return
         }
 

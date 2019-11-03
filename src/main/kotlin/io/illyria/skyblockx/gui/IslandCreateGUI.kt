@@ -23,10 +23,10 @@ class IslandCreateGUI :
                     e.isCancelled = true
                     val player = e.whoClicked as Player
                     if (!hasPermission(player, island.requirementPermission)) {
-                        player.sendMessage(color(Message.islandCreateGUIYouDontHavePermission))
+                        player.sendMessage(color(Message.messagePrefix + Message.islandCreateGUIYouDontHavePermission))
                     }
                     createIsland(player, island.structureFile.replace(".structure", ""))
-                    player.sendMessage(color(Message.commandCreateSuccess))
+                    player.sendMessage(color(Message.messagePrefix + Message.commandCreateSuccess))
                 }
             })
             pane.populateWithGuiItems(guiItems)

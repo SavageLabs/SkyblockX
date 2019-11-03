@@ -67,7 +67,7 @@ class CommandInfo(val commandSender: CommandSender, val args: ArrayList<String>,
     }
 
     fun message(message: String) {
-        commandSender.sendMessage(color(message))
+        commandSender.sendMessage(color(Message.messagePrefix + message))
     }
 
 

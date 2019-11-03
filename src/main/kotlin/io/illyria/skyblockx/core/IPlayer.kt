@@ -2,6 +2,7 @@ package io.illyria.skyblockx.core
 
 import io.illyria.skyblockx.persist.Config
 import io.illyria.skyblockx.persist.Data
+import io.illyria.skyblockx.persist.Message
 import io.illyria.skyblockx.sedit.Position
 import org.bukkit.Bukkit
 import org.bukkit.Location
@@ -55,7 +56,7 @@ data class IPlayer(val uuid: String) {
     }
 
     fun message(message: String) {
-        getPlayer().sendMessage(color(message))
+        getPlayer().sendMessage(color(Message.messagePrefix + message))
     }
 
     fun isCoopedIsland(id: Int): Boolean {

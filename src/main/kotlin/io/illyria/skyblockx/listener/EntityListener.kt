@@ -79,7 +79,7 @@ class EntityListener : Listener {
         // Triggers when they fall into the void.
         if (event.cause == EntityDamageEvent.DamageCause.VOID) {
             iPlayer.falling = true
-            player.sendMessage(color(Message.listenerVoidDeathPrevented))
+            player.sendMessage(color(Message.messagePrefix + Message.listenerVoidDeathPrevented))
             if (iPlayer.hasIsland()) {
                 player.teleport(iPlayer.getIsland()!!.getIslandSpawn())
             } else {

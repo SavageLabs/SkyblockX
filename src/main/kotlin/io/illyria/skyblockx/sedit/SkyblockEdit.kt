@@ -21,7 +21,7 @@ class SkyblockEdit {
 
     fun saveStructure(pos1: Location, pos2: Location, player: Player, name: String, skipAir: Boolean = false) {
         if (pos1.world != pos2.world) {
-            player.sendMessage(Message.skyblockEditErrorPositionsNotInSameWorld)
+            player.sendMessage(Message.messagePrefix + Message.skyblockEditErrorPositionsNotInSameWorld)
             return
         }
         val playerLoc = player.location
@@ -77,7 +77,7 @@ class SkyblockEdit {
         val structuresDir = File(io.illyria.skyblockx.Globals.skyblockX.dataFolder, "structures")
         structuresDir.mkdirs()
         SbfWriter(container).write(File(structuresDir, "${name}.structure"))
-        player.sendMessage(color(String.format(Message.skyblockEditStructureSaved, "${name}.structure")))
+        player.sendMessage(color(Message.messagePrefix + String.format(Message.skyblockEditStructureSaved, "${name}.structure")))
     }
 
     fun pasteIsland(name: String, location: Location, player: Player?) {
