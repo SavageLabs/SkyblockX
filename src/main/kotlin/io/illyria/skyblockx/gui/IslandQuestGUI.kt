@@ -48,8 +48,11 @@ class IslandQuestGUI :
             )
         }
 
-        return ItemBuilder(serializableItem.material.parseItem()).amount(serializableItem.amt).lore(lore)
-            .glowing(island.currentQuest == quest.name).build()
+        return ItemBuilder(serializableItem.material.parseItem())
+            .name(serializableItem.name)
+            .amount(serializableItem.amt).lore(lore)
+            .glowing(island.currentQuest == quest.name)
+            .build()
     }
 
 
