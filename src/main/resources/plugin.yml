@@ -3,6 +3,8 @@ main: io.illyria.skyblockx.SkyblockX
 version: ${project.version}
 api-version: '1.13'
 load: POSTWORLD
+authors: [ProSavage]
+description: 'The Ultimate Skyblock Core'
 commands:
   skyblockx:
     description: 'base skyblock command'
