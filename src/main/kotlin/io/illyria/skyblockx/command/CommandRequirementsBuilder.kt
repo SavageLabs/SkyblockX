@@ -6,11 +6,17 @@ class CommandRequirementsBuilder {
 
     var asPlayer = false
     var asIslandMember = false
+    var asLeader = false
     var permission: Permission? = null
 
 
     fun asPlayer(value: Boolean): CommandRequirementsBuilder {
         this.asPlayer = value
+        return this
+    }
+
+    fun asLeader(value: Boolean): CommandRequirementsBuilder {
+        this.asLeader = value
         return this
     }
 
@@ -27,7 +33,7 @@ class CommandRequirementsBuilder {
     }
 
     fun build(): CommandRequirements {
-        return CommandRequirements(permission, asPlayer, asIslandMember)
+        return CommandRequirements(permission, asPlayer, asIslandMember, asLeader)
     }
 
 

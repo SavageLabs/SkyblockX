@@ -12,16 +12,16 @@ import java.util.*
 abstract class SCommand {
 
     val aliases = LinkedList<String>()
-    val requiredArgs = LinkedList<SCommand.Argument>()
-    val optionalArgs = LinkedList<SCommand.Argument>()
-    lateinit var commandRequirements: io.illyria.skyblockx.command.CommandRequirements
+    val requiredArgs = LinkedList<Argument>()
+    val optionalArgs = LinkedList<Argument>()
+    lateinit var commandRequirements: CommandRequirements
 
     val subCommands = LinkedList<SCommand>()
 
 
-    abstract fun perform(info: io.illyria.skyblockx.command.CommandInfo)
+    abstract fun perform(info: CommandInfo)
 
-    fun execute(info: io.illyria.skyblockx.command.CommandInfo) {
+    fun execute(info: CommandInfo) {
         if (info.args.size > 0) {
             for (command in subCommands) {
                 if (command.aliases.contains(info.args[0].toLowerCase())) {
@@ -37,7 +37,7 @@ abstract class SCommand {
             return
         }
 
-        if (this !is io.illyria.skyblockx.command.BaseCommand) {
+        if (this !is BaseCommand) {
             if (!checkInput(info)) {
                 return
             }
@@ -47,11 +47,11 @@ abstract class SCommand {
     }
 
 
-    private fun checkRequirements(info: io.illyria.skyblockx.command.CommandInfo): Boolean {
+    private fun checkRequirements(info: CommandInfo): Boolean {
         return commandRequirements.computeRequirements(info)
     }
 
-    private fun checkInput(info: io.illyria.skyblockx.command.CommandInfo): Boolean {
+    private fun checkInput(info: CommandInfo): Boolean {
         if (info.args.size < requiredArgs.size) {
             info.message(Message.genericCommandsTooFewArgs)
             handleCommandFormat(info)
@@ -66,7 +66,7 @@ abstract class SCommand {
         return true
     }
 
-    private fun handleCommandFormat(info: io.illyria.skyblockx.command.CommandInfo) {
+    private fun handleCommandFormat(info: CommandInfo) {
         if (info.isPlayer()) {
             sendCommandFormat(info)
         } else {
@@ -97,8 +97,8 @@ abstract class SCommand {
         }
     }
 
-    private fun sendCommandFormat(info: io.illyria.skyblockx.command.CommandInfo, useJSON: Boolean = true) {
-        val list = mutableListOf<SCommand.Argument>()
+    private fun sendCommandFormat(info: CommandInfo, useJSON: Boolean = true) {
+        val list = mutableListOf<Argument>()
         list.addAll(requiredArgs)
         list.addAll(optionalArgs)
         requiredArgs.sortBy { arg -> arg.argumentOrder }
@@ -175,7 +175,7 @@ abstract class SCommand {
 
     class MemberArgument : ArgumentType() {
         override fun getPossibleValues(iPlayer: IPlayer?): List<String> {
-           return if (iPlayer != null && iPlayer.hasIsland()) iPlayer.getIsland()!!.getAllMembers() else emptyList()
+           return if (iPlayer != null && iPlayer.hasIsland()) iPlayer.getIsland()!!.getAllMembers().toList() else emptyList()
         }
     }
 

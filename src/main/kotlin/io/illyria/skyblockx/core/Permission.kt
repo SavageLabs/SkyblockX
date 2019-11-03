@@ -13,6 +13,7 @@ enum class Permission(val node: String) {
     DELETE("delete"),
     BYPASS("bypass"),
     COOP("coop"),
+    MEMBER("member"),
     REMOVE("remove"),
     TELEPORT("teleport"),
     HOME("home"),

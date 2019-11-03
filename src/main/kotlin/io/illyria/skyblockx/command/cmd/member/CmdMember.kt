@@ -3,6 +3,7 @@ package io.illyria.skyblockx.command.cmd.member
 import io.illyria.skyblockx.command.CommandInfo
 import io.illyria.skyblockx.command.CommandRequirementsBuilder
 import io.illyria.skyblockx.command.SCommand
+import io.illyria.skyblockx.core.Permission
 import io.illyria.skyblockx.persist.Message
 
 class CmdMember : SCommand() {
@@ -11,11 +12,11 @@ class CmdMember : SCommand() {
         aliases.add("member")
         aliases.add("members")
 
-        commandRequirements = CommandRequirementsBuilder().asIslandMember(true).build()
+        commandRequirements = CommandRequirementsBuilder().withPermission(Permission.MEMBER).asIslandMember(true).build()
 
         subCommands.add(CmdMemberInvite())
         subCommands.add(CmdMemberList())
-        subCommands.add(CmdMemberRemove())
+        subCommands.add(CmdMemberKick())
     }
 
     override fun perform(info: CommandInfo) {

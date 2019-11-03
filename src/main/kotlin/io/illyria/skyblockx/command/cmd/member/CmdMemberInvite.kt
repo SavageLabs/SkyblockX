@@ -3,6 +3,7 @@ package io.illyria.skyblockx.command.cmd.member
 import io.illyria.skyblockx.command.CommandInfo
 import io.illyria.skyblockx.command.CommandRequirementsBuilder
 import io.illyria.skyblockx.command.SCommand
+import io.illyria.skyblockx.core.Permission
 import io.illyria.skyblockx.core.color
 import io.illyria.skyblockx.persist.Message
 import me.rayzr522.jsonmessage.JSONMessage
@@ -15,7 +16,7 @@ class CmdMemberInvite : SCommand() {
 
         requiredArgs.add(Argument("player", 0, PlayerArgument()))
 
-        commandRequirements = CommandRequirementsBuilder().asIslandMember(true).build()
+        commandRequirements = CommandRequirementsBuilder().withPermission(Permission.MEMBER).asIslandMember(true).build()
     }
 
 
@@ -28,6 +29,10 @@ class CmdMemberInvite : SCommand() {
         val playerToInvite = info.getArgAsPlayer(0) ?: return
         if (playerToInvite == info.player) {
             info.message(Message.genericCannotReferenceYourSelf)
+            return
+        }
+        if (island.members.contains(playerToInvite.name)) {
+            info.message(Message.commandMemberAlreadyPartOfIsland)
             return
         }
         island.inviteMember(info.getArgAsIPlayer(0)!!)

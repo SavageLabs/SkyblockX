@@ -6,7 +6,7 @@ import io.illyria.skyblockx.persist.Message
 import org.bukkit.command.ConsoleCommandSender
 import org.bukkit.entity.Player
 
-class CommandRequirements(val permission: Permission?, var asPlayer: Boolean, var asIslandMember: Boolean) {
+class CommandRequirements(val permission: Permission?, var asPlayer: Boolean, var asIslandMember: Boolean, var asLeader: Boolean) {
 
 
     fun computeRequirements(info: io.illyria.skyblockx.command.CommandInfo, informIfNot: Boolean = true): Boolean {
@@ -46,8 +46,16 @@ class CommandRequirements(val permission: Permission?, var asPlayer: Boolean, va
                 if (informIfNot) {
                     info.message(Message.commandRequirementsNotAnIslandMember)
                 }
+
                 return false
             }
+        }
+
+        if (asLeader && info.iPlayer!!.getIsland()!!.getOwnerIPlayer() != info.iPlayer) {
+            if (informIfNot) {
+                info.message(Message.commandRequirementsNotAnIslandLeader)
+            }
+            return false
         }
 
         // Congrats the command is valid.

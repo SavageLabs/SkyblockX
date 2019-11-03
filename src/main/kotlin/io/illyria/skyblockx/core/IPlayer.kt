@@ -9,6 +9,7 @@ import org.bukkit.entity.Player
 import java.util.*
 
 data class IPlayer(val uuid: String) {
+    var name: String = Bukkit.getPlayer(UUID.fromString(uuid))!!.player!!.name;
 
 
     var inBypass = false
@@ -123,6 +124,9 @@ fun getIPlayer(player: Player): IPlayer {
     return Data.IPlayers[player.uniqueId.toString()] ?: createIPlayer(player)
 }
 
+fun getIPlayerByName(name: String): IPlayer? {
+    return Data.IPlayers.values.find { iPlayer -> iPlayer.name == name }
+}
 fun createIPlayer(player: Player): IPlayer {
     val iPlayer = IPlayer(player.uniqueId.toString())
     Data.IPlayers[player.uniqueId.toString()] = iPlayer
@@ -132,7 +136,7 @@ fun createIPlayer(player: Player): IPlayer {
 
 fun canUseBlockAtLocation(iPlayer: IPlayer, location: Location): Boolean {
     // If the world is not the skyblock world, we will not interfere.
-    if (!location.world!!.name.equals(Config.skyblockWorldName)) return true
+    if (location.world!!.name != Config.skyblockWorldName) return true
     // If they dont have any co-op island or an island of their own, then they cannot do anything.
     if (!iPlayer.hasIsland() && !iPlayer.hasCoopIsland()) return false
     // Check our own island.

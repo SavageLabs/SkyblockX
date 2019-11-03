@@ -11,6 +11,7 @@ object Message {
     var commandRequirementsNotAPlayer = "&cThis command requires the executor to be a player."
     var commandRequirementsNotAnIslandMember =
         "&cThis command requires the executor to be a island member, create one using \"/is create\"."
+    var commandRequirementsNotAnIslandLeader = "&cThis command requires the executor to be an island leader."
     var commandRequirementsPlayerDoesNotHavePermission = "&cThis command requires the permission %1\$s"
 
     var commandHelpGeneratorPageInvalid = "&cThe page %1\$s is invalid."
@@ -106,7 +107,6 @@ object Message {
 
     var commandJoinNotInvited = "&7You have not been invited to %1\$s's island."
     var commandJoinSuccess = "&7You have joined %1\$s's island."
-
     var commandJoinHelp = "&7join an island."
 
     var commandQuestHelp = "&7view Quest GUI."
@@ -116,16 +116,22 @@ object Message {
     var commandMemberInviteSuccess = "&7You have invited %1\$s to your island."
     var commandMemberInviteMessage = "&7%1\$s has invited you to their island, click to accept!"
     var commandMemberInviteLimit = "&7You cannot invite more members to your island, the limit is %1\$s."
+    var commandMemberRemoveLimit = "&7There are no members to remove!"
+    var commandMemberRemoveNotFound = "&7Your island does not have this member, names are &cCase Sensitive!"
+    var commandMemberRemoved = "&7You have successfully removed %1\$s from your island."
     var commandMemberRemove = "remove member from island."
     var commandMemberList = "list all the members."
     var commandMemberInvite = "invite a member to your island"
+    var commandMemberListHeader = "&7&m-------&r &bMembers &7&m-------"
+    var commandMemberListFormat = "&7&b%1\$s. &7%2\$s"
+    var commandMemberListRemoveTooltip = "&7Click to remove!"
+    var commandMemberAlreadyPartOfIsland = "&7This player is already in your island"
     var commandMemberHelp = "Member commands."
 
     var listenerVoidDeathPrevented = "&7You fell into the void, teleporting you back."
     var listenerBlockPlacementDenied = "&7You can only place blocks inside of your island."
     var listenerActionDeniedCreateAnIslandFirst = "&7This action has been denied, please create an island first."
     var listenerObsidianBucketLava = "&7The obsidian has been turned back to lava, be careful!"
-    var listenerPlayerDamageCancelled = "&7Damage cancelled due to you not being on your island."
     var listenerPlayerCannotInteract = "&7You cannot interact with this block."
 
     var skyblockEditPositionSet = "&7You have set position %1\$s to %2\$s"

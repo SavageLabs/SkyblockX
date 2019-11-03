@@ -31,16 +31,16 @@ data class Island(val islandID: Int, val point: Point, val ownerUUID: String, va
 
     var memberLimit = Config.defaultIslandMemberLimit
 
-    val members = mutableListOf<String>()
+    val members = mutableSetOf<String>()
 
 
-    fun getAllMembers(): List<String> {
-        if (members == null) return emptyList()
+    fun getAllMembers(): Set<String> {
+        if (members == null) return emptySet()
         return members
     }
 
     fun inviteMember(iPlayer: IPlayer) {
-        if (memberLimit >= members.size) {
+        if (memberLimit <= members.size) {
             return
         }
         if (iPlayer.islandsInvitedTo == null) {
@@ -50,14 +50,19 @@ data class Island(val islandID: Int, val point: Point, val ownerUUID: String, va
     }
 
     fun addMember(iPlayer: IPlayer) {
-        if (memberLimit >= members.size) {
+        if (memberLimit <= members.size) {
             return
         }
-        members.add(iPlayer.getPlayer().name)
+        if (!members.contains(iPlayer.getPlayer().name)) {
+            members.add(iPlayer.getPlayer().name)
+        }
+
+        iPlayer.assignIsland(this)
     }
 
-    fun removeMember(name: String) {
+    fun kickMember(name: String) {
         members.remove(name)
+        getIPlayerByName(name)?.assignIsland(-1)
     }
 
 
