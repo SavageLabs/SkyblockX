@@ -2,6 +2,7 @@ package io.illyria.skyblockx.command
 
 import io.illyria.skyblockx.command.cmd.*
 import io.illyria.skyblockx.command.cmd.home.CmdHome
+import io.illyria.skyblockx.command.cmd.home.CmdHomeGo
 import io.illyria.skyblockx.command.cmd.member.CmdMember
 import io.illyria.skyblockx.core.getIPlayer
 import io.illyria.skyblockx.persist.Message
@@ -48,8 +49,20 @@ class BaseCommand : SCommand(), CommandExecutor, TabCompleter {
     }
 
     override fun perform(info: CommandInfo) {
-        info.message(Message.commandBaseHelpMessage)
-        generateHelp(1, info.player!!)
+        // If console
+        if (info.player == null) {
+            info.message(Message.commandBaseHelpMessage)
+            generateHelp(1, info.player!!)
+            return
+        }
+
+        if (info.iPlayer!!.hasIsland()) {
+            // Execute command go just to make a shorthand version for /is menu.
+            this.subCommands.find { command -> command is CmdMenu }?.perform(info)
+        } else {
+            // Create an island gui since they dont have an island.
+            this.subCommands.find { command -> command is CmdCreate }?.perform(info)
+        }
     }
 
     override fun onTabComplete(
