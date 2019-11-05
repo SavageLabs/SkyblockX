@@ -22,9 +22,8 @@ class SkyblockX : BasePlugin() {
         command.setExecutor(baseCommand)
         command.tabCompleter = baseCommand
         logger.info("Command Registered")
-
-        WorldCreator(Config.skyblockWorldName).generator(VoidWorldGenerator()).createWorld()
         Config.load()
+        WorldCreator(Config.skyblockWorldName).generator(VoidWorldGenerator()).createWorld()
         Data.load()
         Message.load()
         registerListeners(DataListener(), SEditListener(), BlockListener(), PlayerListener(), EntityListener())
