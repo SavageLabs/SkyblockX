@@ -57,7 +57,7 @@ class BaseCommand : SCommand(), CommandExecutor, TabCompleter {
         }
 
         if (info.iPlayer!!.hasIsland()) {
-            // Execute command go just to make a shorthand version for /is menu.
+            // Execute command just to make a shorthand version for /is menu.
             this.subCommands.find { command -> command is CmdMenu }?.perform(info)
         } else {
             // Create an island gui since they dont have an island.
