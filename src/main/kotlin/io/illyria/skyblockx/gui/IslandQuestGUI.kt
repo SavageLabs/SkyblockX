@@ -16,7 +16,7 @@ class IslandQuestGUI :
 
     override fun populatePane(context: IPlayer) {
         val guiItems = ArrayList<GuiItem>()
-        for (item in 0 until (Config.islandQuestGUIRows * 9)) {
+        for (item in 0 until (super.guiRows * 9)) {
             guiItems.add(GuiItem(super.backgroundItem.buildItem()) { e -> e.isCancelled = true })
         }
         for (quest in Config.islandQuests) {

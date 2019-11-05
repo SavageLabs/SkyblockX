@@ -32,7 +32,7 @@ class BaseCommand : SCommand(), CommandExecutor, TabCompleter {
         subCommands.add(CmdHelp())
         subCommands.add(CmdQuest())
         subCommands.add(CmdMember())
-
+        subCommands.add(CmdMenu())
         subCommands.add(CmdJoin())
 
         io.illyria.skyblockx.Globals.baseCommand = this

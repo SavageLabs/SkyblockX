@@ -7,30 +7,35 @@ import io.illyria.skyblockx.core.createIsland
 import io.illyria.skyblockx.core.hasPermission
 import io.illyria.skyblockx.persist.Config
 import io.illyria.skyblockx.persist.Message
+import net.prosavage.baseplugin.serializer.commonobjects.SerializableItem
+import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 
-class IslandCreateGUI :
-    BaseGUI(Config.islandCreateGUITitle, Config.islandCreateGUIBackgroundItem, Config.islandCreateGUIRows) {
+class IslandMenuGUI : BaseGUI(Config.islandMenuGUITitle, Config.islandMenuGUIBackgroundItem, Config.islandMenuGUIRows) {
 
     override fun populatePane(context: IPlayer) {
         val guiItems = ArrayList<GuiItem>()
         for (item in 0 until (super.guiRows * 9)) {
             guiItems.add(GuiItem(super.backgroundItem.buildItem()) { e -> e.isCancelled = true })
         }
-        for (island in Config.islandCreateGUIIslandTypes) {
-            guiItems[island.guiIndex] = (GuiItem(island.item.buildItem()) { e ->
+        for (item in Config.islandMenuGUIItems) {
+            guiItems[item.slot] = (GuiItem(item.guiItem.buildItem()) { e ->
                 run {
                     e.isCancelled = true
                     val player = e.whoClicked as Player
-                    if (!hasPermission(player, island.requirementPermission)) {
-                        player.sendMessage(color(Message.messagePrefix + Message.islandCreateGUIYouDontHavePermission))
-                    }
-                    createIsland(player, island.structureFile.replace(".structure", ""))
-                    player.sendMessage(color(Message.messagePrefix + Message.commandCreateSuccess))
+                    executeCommands(item.commandsToExecute, player)
                 }
             })
             pane.populateWithGuiItems(guiItems)
         }
     }
 
+    fun executeCommands(commands: List<String>, player: Player) {
+        for (command in commands) {
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("{player}", player.name))
+        }
+    }
+
 }
+
+class MenuItem(val guiItem: SerializableItem, val commandsToExecute: List<String>, val slot: Int)

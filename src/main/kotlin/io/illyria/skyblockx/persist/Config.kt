@@ -1,5 +1,6 @@
 package io.illyria.skyblockx.persist
 
+import io.illyria.skyblockx.gui.MenuItem
 import io.illyria.skyblockx.persist.data.IslandCreateInfo
 import io.illyria.skyblockx.quest.Quest
 import io.illyria.skyblockx.quest.QuestGoal
@@ -33,6 +34,48 @@ object Config {
     var helpGeneratorPageEntries = 4
 
     var defaultIslandMemberLimit = 3
+
+    var islandMenuGUITitle = "Island Menu"
+    var islandMenuGUIRows = 1
+    var islandMenuGUIBackgroundItem = SerializableItem(XMaterial.LIGHT_BLUE_STAINED_GLASS_PANE, "&9", listOf(""), 1)
+    var islandMenuGUIItems = listOf(
+        MenuItem(
+            SerializableItem(
+                XMaterial.GRASS_BLOCK,
+                "&bGo to island",
+                listOf("&7Click to go to island"),
+                1
+            ),
+            listOf(
+                "is go"
+            ),
+            3
+        ),
+        MenuItem(
+            SerializableItem(
+                XMaterial.BOOK,
+                "&bIsland Quests",
+                listOf("&7Click to open quests"),
+                1
+            ),
+            listOf(
+                "is quest"
+            ),
+            5
+        ),
+        MenuItem(
+            SerializableItem(
+                XMaterial.RED_BED,
+                "&bIsland Home",
+                listOf("&7Click to go to island home"),
+                1
+            ),
+            listOf(
+                "is home"
+            ),
+            7
+        )
+    )
 
 
     var islandCreateGUITitle = "Choose an island!"

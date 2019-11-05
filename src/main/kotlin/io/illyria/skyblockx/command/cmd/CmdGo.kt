@@ -1,5 +1,6 @@
 package io.illyria.skyblockx.command.cmd
 
+import io.illyria.skyblockx.command.CommandInfo
 import io.illyria.skyblockx.core.Permission
 import io.illyria.skyblockx.persist.Message
 
@@ -17,7 +18,7 @@ class CmdGo : io.illyria.skyblockx.command.SCommand() {
     }
 
 
-    override fun perform(info: io.illyria.skyblockx.command.CommandInfo) {
+    override fun perform(info: CommandInfo) {
         val island = info.iPlayer!!.getIsland()!!
         info.message(Message.commandGoTeleporting)
         info.player!!.teleport(island.getIslandSpawn())

@@ -114,6 +114,8 @@ object Message {
 
     var commandQuestHelp = "&7view Quest GUI."
 
+    var commandMenuHelp = "&7Opens the Island Menu GUI"
+
     var islandCreateGUIYouDontHavePermission = "You do not have permission to use this island."
 
     var commandMemberInviteSuccess = "&7You have invited %1\$s to your island."
