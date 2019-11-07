@@ -77,6 +77,17 @@ object Config {
         )
     )
 
+    var questOrder = linkedMapOf(
+        1 to "Mine-Cobblestone-1",
+        2 to "Mine-Cobblestone-2",
+        3 to "Mine-Cobblestone-3",
+        4 to "Kill-Creeper-1",
+        5 to "Mine-Cobblestone-1",
+        6 to "Mine-Cobblestone-1",
+        7 to "Mine-Cobblestone-1"
+
+    )
+
 
     var islandCreateGUITitle = "Choose an island!"
     var islandCreateGUIRows = 1
