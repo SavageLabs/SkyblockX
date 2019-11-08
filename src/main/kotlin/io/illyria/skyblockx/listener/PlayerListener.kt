@@ -45,7 +45,7 @@ class PlayerListener : Listener {
         val currentQuest = island!!.currentQuest
         // Find the quest that the island has activated, if none found, return.
         val targetQuest =
-            Config.islandQuests.find { quest -> quest.type == QuestGoal.CRAFT && quest.name == currentQuest }
+            Config.islandQuests.find { quest -> quest.type == QuestGoal.CRAFT && quest.id == currentQuest }
                 ?: return
         // Use XMaterial to parse the material, if null, try to use native material just in case.
         val materialCrafted = XMaterial.matchXMaterial(event.recipe.result)?.name ?: event.recipe.result.type
@@ -56,9 +56,9 @@ class PlayerListener : Listener {
         }
 
         // Increment that quest data by 1 :)
-        island.addQuestData(targetQuest.name, 1)
+        island.addQuestData(targetQuest.id, 1)
         // Check if quest is complete :D
-        if (targetQuest.isComplete(island.getQuestCompletedAmount(targetQuest.name))) {
+        if (targetQuest.isComplete(island.getQuestCompletedAmount(targetQuest.id))) {
             island.completeQuest(iplayer, targetQuest)
         }
     }
@@ -81,7 +81,7 @@ class PlayerListener : Listener {
         val currentQuest = island!!.currentQuest
         // Find the quest that the island has activated, if none found, return.
         val targetQuest =
-            Config.islandQuests.find { quest -> quest.type == QuestGoal.FISHING && quest.name == currentQuest }
+            Config.islandQuests.find { quest -> quest.type == QuestGoal.FISHING && quest.id == currentQuest }
                 ?: return
         // Use the FISH caught and parse for the version that we need it for.
         val fishNeededForQuest = XMaterial.valueOf(targetQuest.goalParameter)
@@ -91,9 +91,9 @@ class PlayerListener : Listener {
         }
 
         // this just increments quest data.
-        island.addQuestData(targetQuest.name)
+        island.addQuestData(targetQuest.id)
 
-        if (targetQuest.isComplete(island.getQuestCompletedAmount(targetQuest.name))) {
+        if (targetQuest.isComplete(island.getQuestCompletedAmount(targetQuest.id))) {
             island.completeQuest(iplayer, targetQuest)
         }
     }
@@ -119,7 +119,7 @@ class PlayerListener : Listener {
 
             val currentQuest = island!!.currentQuest
             val targetQuest =
-                Config.islandQuests.find { quest -> quest.type == QuestGoal.REPAIR && quest.name == currentQuest }
+                Config.islandQuests.find { quest -> quest.type == QuestGoal.REPAIR && quest.id == currentQuest }
                     ?: return
 
             val materialToRepair =
@@ -129,9 +129,9 @@ class PlayerListener : Listener {
                 return
             }
 
-            island.addQuestData(targetQuest.name)
+            island.addQuestData(targetQuest.id)
 
-            if (targetQuest.isComplete(island.getQuestCompletedAmount(targetQuest.name))) {
+            if (targetQuest.isComplete(island.getQuestCompletedAmount(targetQuest.id))) {
                 island.completeQuest(iPlayer, targetQuest)
             }
             return
@@ -158,7 +158,7 @@ class PlayerListener : Listener {
         val currentQuest = island!!.currentQuest
 
         val targetQuest =
-            Config.islandQuests.find { quest -> quest.type == QuestGoal.ENCHANT && quest.name == currentQuest }
+            Config.islandQuests.find { quest -> quest.type == QuestGoal.ENCHANT && quest.id == currentQuest }
                 ?: return
 
 
@@ -171,9 +171,9 @@ class PlayerListener : Listener {
         }
 
 
-        island.addQuestData(targetQuest.name)
+        island.addQuestData(targetQuest.id)
 
-        if (targetQuest.isComplete(island.getQuestCompletedAmount(targetQuest.name))) {
+        if (targetQuest.isComplete(island.getQuestCompletedAmount(targetQuest.id))) {
             island.completeQuest(iPlayer, targetQuest)
         }
     }

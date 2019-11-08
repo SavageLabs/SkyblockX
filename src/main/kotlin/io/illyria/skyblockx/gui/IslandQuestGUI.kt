@@ -27,11 +27,11 @@ class IslandQuestGUI :
                     run {
                         e.isCancelled = true
                         val player = e.whoClicked as Player
-                        context.getIsland()!!.currentQuest = quest.name
+                        context.getIsland()!!.currentQuest = quest.id
                         val islandQuestGUI = IslandQuestGUI()
                         islandQuestGUI.showGui(player)
                         player.sendMessage(color(Message.questActivationTrigger
-                            .replace("{quest}", quest.name)))
+                            .replace("{quest}", quest.id)))
                     }
                 })
             pane.populateWithGuiItems(guiItems)
@@ -45,7 +45,7 @@ class IslandQuestGUI :
                 line
                     .replace(
                         "{currentAmount}",
-                        DecimalFormat.getInstance().format(island.getQuestCompletedAmount(quest.name))
+                        DecimalFormat.getInstance().format(island.getQuestCompletedAmount(quest.id))
                     )
                     .replace("{finalAmount}", DecimalFormat.getInstance().format(quest.amountTillComplete))
             )
@@ -54,7 +54,7 @@ class IslandQuestGUI :
         return ItemBuilder(serializableItem.material.parseItem())
             .name(serializableItem.name)
             .amount(serializableItem.amt).lore(lore)
-            .glowing(island.currentQuest == quest.name)
+            .glowing(island.currentQuest == quest.id)
             .build()
     }
 

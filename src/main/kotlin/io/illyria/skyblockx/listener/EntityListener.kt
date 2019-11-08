@@ -34,14 +34,14 @@ class EntityListener : Listener {
             val currentQuest = island.currentQuest!!
             // Find the quest that the island has activated.
             val targetQuest =
-                Config.islandQuests.find { quest -> quest.type == QuestGoal.KILL_MOBS && quest.name == currentQuest }
+                Config.islandQuests.find { quest -> quest.type == QuestGoal.KILL_MOBS && quest.id == currentQuest }
             if (targetQuest != null) {
                 val isCorrectType = targetQuest.goalParameter.equals(event.entity.type.name, true)
 
                 if (isCorrectType || targetQuest.goalParameter == "ANY") {
-                    island.addQuestData(targetQuest.name, 1)
+                    island.addQuestData(targetQuest.id, 1)
                     // Check if quest is complete :D
-                    if (targetQuest.isComplete(island.getQuestCompletedAmount(targetQuest.name))) {
+                    if (targetQuest.isComplete(island.getQuestCompletedAmount(targetQuest.id))) {
                         island.completeQuest(iPlayer, targetQuest)
                     }
                 }

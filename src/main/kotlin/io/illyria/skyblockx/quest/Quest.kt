@@ -7,6 +7,7 @@ import org.bukkit.Bukkit
 import org.bukkit.Location
 
 data class Quest(
+    val id: String,
     val name: String,
     val guiDisplayItem: SerializableItem,
     val guiDisplayIndex: Int,

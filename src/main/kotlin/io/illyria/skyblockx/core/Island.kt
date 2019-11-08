@@ -112,28 +112,28 @@ data class Island(val islandID: Int, val point: Point, val ownerUUID: String, va
         return homes.size < maxIslandHomes
     }
 
-    fun getQuestCompletedAmount(name: String): Int {
-        if (!questData.containsKey(name)) {
-            questData[name] = 0
+    fun getQuestCompletedAmount(id: String): Int {
+        if (!questData.containsKey(id)) {
+            questData[id] = 0
         }
 
         // We just inserted a zero right above :)
-        return questData[name]!!
+        return questData[id]!!
     }
 
     fun completeQuest(completingPlayer: IPlayer, quest: Quest) {
         currentQuest = null
         // Set it to complete amount just to prevent confusion
-        questData[quest.name] = 0
+        questData[quest.id] = 0
         quest.giveRewards(completingPlayer)
     }
 
-    fun setQuestData(name: String, value: Int) {
-        questData[name] = value
+    fun setQuestData(id: String, value: Int) {
+        questData[id] = value
     }
 
-    fun addQuestData(name: String, value: Int = 1) {
-        questData[name] = (questData[name] ?: 0) + value
+    fun addQuestData(id: String, value: Int = 1) {
+        questData[id] = (questData[id] ?: 0) + value
 
     }
 
