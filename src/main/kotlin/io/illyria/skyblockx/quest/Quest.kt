@@ -36,10 +36,11 @@ data class Quest(
 }
 
 fun failsQuestCheckingPreRequisites(iPlayer: IPlayer, island: Island?, location: Location): Boolean {
-    return  (!iPlayer.hasIsland() || island!!.currentQuest == null || !island.containsBlock(location))
+    return (!iPlayer.hasIsland() || island!!.currentQuest == null || !island.containsBlock(location))
 }
 
 fun sendQuestOrderMessage(island: Island) {
+    if (!Config.sendNextQuestInOrderMessages) return
     val quest = Config.islandQuests.find { quest -> quest.id == Config.questOrder[island.currentQuestOrderIndex] }
 
     if (quest == null) {
@@ -48,5 +49,4 @@ fun sendQuestOrderMessage(island: Island) {
     }
 
     island.messageAllOnlineIslandMembers(String.format(Message.nextQuestMessage, quest.name))
-
 }
