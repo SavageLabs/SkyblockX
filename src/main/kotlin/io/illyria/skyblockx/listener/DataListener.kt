@@ -36,6 +36,7 @@ class DataListener : Listener {
     @EventHandler
     fun onPlayerDisconnect(event: PlayerQuitEvent) {
         val iPlayer = getIPlayerByName(event.player.name) ?: return
+        if (iPlayer.coopedPlayersAuthorized == null) return
         for (authorizedUser in iPlayer.coopedPlayersAuthorized) {
             val island = iPlayer.getIsland() ?: continue
             island.removeCoopPlayer(authorizedUser)
