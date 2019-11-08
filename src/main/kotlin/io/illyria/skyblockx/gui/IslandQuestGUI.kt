@@ -27,6 +27,10 @@ class IslandQuestGUI :
                     run {
                         e.isCancelled = true
                         val player = e.whoClicked as Player
+                        if (quest.oneTime && context.getIsland()!!.isOneTimeQuestAlreadyCompleted(quest.id)) {
+                            player.sendMessage(color(Message.questIsOneTimeAndAlreadyCompleted))
+                            return@run
+                        }
                         context.getIsland()!!.currentQuest = quest.id
                         val islandQuestGUI = IslandQuestGUI()
                         islandQuestGUI.showGui(player)

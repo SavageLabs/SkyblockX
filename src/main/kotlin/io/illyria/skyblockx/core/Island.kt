@@ -22,6 +22,8 @@ data class Island(val islandID: Int, val point: Point, val ownerUUID: String, va
     val maxLocation = point.getLocation()
         .add(Config.islandMaxSizeInBlocks.toDouble(), 256.toDouble(), Config.islandMaxSizeInBlocks.toDouble())
 
+
+
     var maxCoopPlayers = Config.defaultMaxCoopPlayers
     var maxIslandHomes = Config.defaultMaxIslandHomes
 
@@ -29,9 +31,31 @@ data class Island(val islandID: Int, val point: Point, val ownerUUID: String, va
     var questData = HashMap<String, Int>()
     var currentQuest: String? = null
 
+    var oneTimeQuestsCompleted = mutableSetOf<String>()
+
     var memberLimit = Config.defaultIslandMemberLimit
 
     val members = mutableSetOf<String>()
+
+    var currentQuestOrderIndex = 0
+
+    fun isOneTimeQuestAlreadyCompleted(id: String): Boolean {
+        return oneTimeQuestsCompleted != null && oneTimeQuestsCompleted.isNotEmpty() && oneTimeQuestsCompleted.contains(id)
+    }
+
+
+    fun messageAllOnlineIslandMembers(message: String) {
+        // Color message in case.
+        val messageFormatted = color(message)
+
+        // Message the owner
+        Bukkit.getPlayer(ownerUUID)?.sendMessage(messageFormatted)
+
+        // Message island members
+        for (member in members) {
+            Bukkit.getPlayer(member)?.sendMessage(messageFormatted)
+        }
+    }
 
 
     fun getAllMembers(): Set<String> {
@@ -125,6 +149,12 @@ data class Island(val islandID: Int, val point: Point, val ownerUUID: String, va
         currentQuest = null
         // Set it to complete amount just to prevent confusion
         questData[quest.id] = 0
+        if (quest.oneTime) {
+            if (oneTimeQuestsCompleted == null) {
+                oneTimeQuestsCompleted = mutableSetOf<String>()
+            }
+            oneTimeQuestsCompleted.add(quest.id)
+        }
         quest.giveRewards(completingPlayer)
     }
 

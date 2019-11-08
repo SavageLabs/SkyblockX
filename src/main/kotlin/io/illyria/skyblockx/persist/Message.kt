@@ -143,7 +143,11 @@ object Message {
     var skyblockEditStructureSaved = "&7You have saved a structure to a file called %1\$s"
     var skyblockEditErrorPositionsNotInSameWorld = "&7Position 1 and position 2 are no in the same world."
 
-    var questActivationTrigger = "You have activated the quest {quest}"
+    var questActivationTrigger = "&7You have activated the quest &b{quest}"
+    var questIsOneTimeAndAlreadyCompleted = "&7This quest is a onetime quest and is already completed."
+    var questOrderNoNextQuestWasFound = "&7No next quest was found."
+    var nextQuestMessage = "&7Your next quest is &b%1\$s"
+
 
     override fun toString(): String {
         return color(super.toString())

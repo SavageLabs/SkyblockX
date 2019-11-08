@@ -77,10 +77,13 @@ object Config {
         )
     )
 
-    var questOrder = linkedMapOf(
-        1 to "MCobble-1"
-
+    var questOrder = listOf(
+        "Quest-1",
+        "Quest-2"
     )
+
+    var useQuestOrder = true
+    var sendNextQuestInOrderMessages = true
 
 
     var islandCreateGUITitle = "Choose an island!"
@@ -127,6 +130,7 @@ object Config {
             QuestGoal.BREAK_BLOCKS,
             XMaterial.OAK_LOG.name,
             1,
+            true,
             listOf("broadcast {player} crafted wooden planks", "give {player} oak_sapling 1")
         ),
         Quest(
@@ -142,6 +146,7 @@ object Config {
             QuestGoal.CRAFT,
             XMaterial.OAK_PLANKS.name,
             1,
+            true,
             listOf("broadcast {player} broke wood from island tree", "give {player} oak_sapling 1")
         ),
         Quest(
@@ -157,6 +162,7 @@ object Config {
             QuestGoal.BREAK_BLOCKS,
             XMaterial.OAK_LOG.name,
             1,
+            false,
             listOf("broadcast {player} broke wood from island tree", "give {player} oak_sapling 1")
         ),
         Quest(
@@ -172,6 +178,7 @@ object Config {
             QuestGoal.BREAK_BLOCKS,
             XMaterial.COBBLESTONE.name,
             10,
+            false,
             listOf("broadcast {player} completed the Tier 1 Cobblestone Mining Quest.", "give {player} diamond 1")
         ),
         Quest(
@@ -187,6 +194,7 @@ object Config {
             QuestGoal.BREAK_BLOCKS,
             XMaterial.COBBLESTONE.name,
             100000,
+            false,
             listOf("broadcast {player} completed the Tier 2 Cobblestone Mining Quest.", "give {player} diamond 1")
         ),
         Quest(
@@ -202,6 +210,7 @@ object Config {
             QuestGoal.BREAK_BLOCKS,
             XMaterial.COBBLESTONE.name,
             1000000,
+            false,
             listOf("broadcast {player} completed the Tier 3 Cobblestone Mining Quest.", "give {player} diamond 1")
         ),
         Quest(
@@ -217,6 +226,7 @@ object Config {
             QuestGoal.KILL_MOBS,
             EntityType.CREEPER.name,
             10,
+            false,
             listOf("broadcast {player} completed the Tier 1 Creeper Killing Quest.", "give {player} diamond 1")
         ),
         Quest(
@@ -232,6 +242,7 @@ object Config {
             QuestGoal.KILL_MOBS,
             EntityType.CREEPER.name,
             100,
+            false,
             listOf("broadcast {player} completed the Tier 2 Creeper Killing Quest.", "give {player} diamond 1")
         ),
         Quest(
@@ -247,6 +258,7 @@ object Config {
             QuestGoal.KILL_MOBS,
             EntityType.CREEPER.name,
             1000,
+            false,
             listOf("broadcast {player} completed the Tier 3 Creeper Killing Quest.", "give {player} diamond 1")
         ),
         Quest(
@@ -262,6 +274,7 @@ object Config {
             QuestGoal.CRAFT,
             XMaterial.DIAMOND_PICKAXE.name,
             1,
+            false,
             listOf("broadcast {player} completed the Tier 1 Diamond Pickaxe Quest.", "give {player} diamond 1")
         ),
         Quest(
@@ -277,6 +290,7 @@ object Config {
             QuestGoal.CRAFT,
             XMaterial.DIAMOND_SWORD.name,
             1,
+            false,
             listOf("broadcast {player} completed the Tier 1 Diamond Sword Quest.", "give {player} diamond 1")
         ),
         Quest(
@@ -292,6 +306,7 @@ object Config {
             QuestGoal.CRAFT,
             XMaterial.DIAMOND_SHOVEL.name,
             1,
+            false,
             listOf("broadcast {player} completed the Tier 1 Diamond Shovel Quest.", "give {player} diamond 1")
         ),
         Quest(
@@ -307,6 +322,7 @@ object Config {
             QuestGoal.FISHING,
             EntityType.SALMON.name,
             1,
+            false,
             listOf("broadcast {player} completed the Tier 1 Salmon Fishing Quest.", "give {player} diamond 1")
         ),
         Quest(
@@ -322,6 +338,7 @@ object Config {
             QuestGoal.FISHING,
             EntityType.SALMON.name,
             10,
+            false,
             listOf("broadcast {player} completed the Tier 2 Salmon Fishing Quest.", "give {player} diamond 1")
         ),
         Quest(
@@ -337,6 +354,7 @@ object Config {
             QuestGoal.FISHING,
             EntityType.SALMON.name,
             100,
+            false,
             listOf("broadcast {player} completed the Tier 3 Salmon Fishing Quest.", "give {player} diamond 1")
         ),
         Quest(
@@ -352,6 +370,7 @@ object Config {
             QuestGoal.ENCHANT,
             "${Enchantment.DAMAGE_ALL.name}=1",
             1,
+            false,
             listOf("broadcast {player} completed the Tier 1 Sharpness 1 Enchanting Quest.", "give {player} diamond 1")
         ),
         Quest(
@@ -367,6 +386,7 @@ object Config {
             QuestGoal.REPAIR,
             XMaterial.BOW.parseMaterial()!!.name,
             1,
+            false,
             listOf("broadcast {player} completed the Tier 1 Bow Repair Quest.", "give {player} diamond 1")
         )
 
