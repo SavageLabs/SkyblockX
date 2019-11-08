@@ -131,7 +131,7 @@ object Config {
             XMaterial.OAK_LOG.name,
             1,
             true,
-            listOf("broadcast {player} crafted wooden planks", "give {player} oak_sapling 1")
+            listOf("broadcast {player} broke wood from island tree", "give {player} oak_sapling 1")
         ),
         Quest(
             "Quest-2",
@@ -147,7 +147,7 @@ object Config {
             XMaterial.OAK_PLANKS.name,
             1,
             true,
-            listOf("broadcast {player} broke wood from island tree", "give {player} oak_sapling 1")
+            listOf("broadcast {player} crafted wooden planks", "give {player} oak_sapling 1")
         ),
         Quest(
             "Quest-1",

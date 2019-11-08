@@ -5,6 +5,7 @@ import io.illyria.skyblockx.persist.Data
 import io.illyria.skyblockx.persist.Message
 import io.illyria.skyblockx.persist.data.SLocation
 import io.illyria.skyblockx.quest.Quest
+import io.illyria.skyblockx.quest.incrementQuestInOrder
 import io.illyria.skyblockx.quest.sendQuestOrderMessage
 import io.illyria.skyblockx.sedit.SkyblockEdit
 import io.illyria.skyblockx.world.Point
@@ -49,14 +50,18 @@ data class Island(val islandID: Int, val point: Point, val ownerUUID: String, va
         // Color message in case.
         val messageFormatted = color(message)
 
+        println("$messageFormatted - to $this")
+
+
         // Message the owner
-        Bukkit.getPlayer(ownerUUID)?.sendMessage(messageFormatted)
+        Bukkit.getPlayer(UUID.fromString(ownerUUID))?.sendMessage(messageFormatted)
 
         // Message island members
         for (member in members) {
             Bukkit.getPlayer(member)?.sendMessage(messageFormatted)
         }
     }
+
 
 
     fun getAllMembers(): Set<String> {
@@ -156,16 +161,23 @@ data class Island(val islandID: Int, val point: Point, val ownerUUID: String, va
             }
             oneTimeQuestsCompleted.add(quest.id)
         }
+        // Check for quest ordering system.
         if (Config.useQuestOrder && Config.questOrder.contains(quest.id)) {
-            val indexOfQuest = Config.questOrder.indexOf(quest.id)
-            currentQuestOrderIndex = indexOfQuest
-            sendQuestOrderMessage(this)
+            val indexOfQuest = Config.questOrder.indexOf(quest.id) + 1
+            if (Config.questOrder.size > indexOfQuest) {
+                currentQuestOrderIndex = indexOfQuest
+            }
+            incrementQuestInOrder(this)
         }
         quest.giveRewards(completingPlayer)
     }
 
     fun setQuestData(id: String, value: Int) {
         questData[id] = value
+    }
+
+    fun changeCurrentQuest(id: String?) {
+        currentQuest = id
     }
 
     fun addQuestData(id: String, value: Int = 1) {
@@ -320,6 +332,7 @@ fun createIsland(player: Player?, schematic: String, teleport: Boolean = true): 
         iPlayer.assignIsland(island)
         player.teleport(island.getIslandSpawn())
     }
+    incrementQuestInOrder(island)
     return island
 }
 

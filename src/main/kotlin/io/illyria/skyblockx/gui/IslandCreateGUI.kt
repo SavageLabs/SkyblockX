@@ -7,6 +7,7 @@ import io.illyria.skyblockx.core.createIsland
 import io.illyria.skyblockx.core.hasPermission
 import io.illyria.skyblockx.persist.Config
 import io.illyria.skyblockx.persist.Message
+import io.illyria.skyblockx.quest.incrementQuestInOrder
 import io.illyria.skyblockx.quest.sendQuestOrderMessage
 import org.bukkit.entity.Player
 
@@ -26,9 +27,9 @@ class IslandCreateGUI :
                     if (!hasPermission(player, island.requirementPermission)) {
                         player.sendMessage(color(Message.messagePrefix + Message.islandCreateGUIYouDontHavePermission))
                     }
-                    val islandCreated = createIsland(player, island.structureFile.replace(".structure", ""))
+                    createIsland(player, island.structureFile.replace(".structure", ""))
                     player.sendMessage(color(Message.messagePrefix + Message.commandCreateSuccess))
-                    sendQuestOrderMessage(islandCreated)
+
                 }
             })
             pane.populateWithGuiItems(guiItems)

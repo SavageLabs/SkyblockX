@@ -39,8 +39,17 @@ fun failsQuestCheckingPreRequisites(iPlayer: IPlayer, island: Island?, location:
     return (!iPlayer.hasIsland() || island!!.currentQuest == null || !island.containsBlock(location))
 }
 
+fun incrementQuestInOrder(island: Island) {
+    if (Config.sendNextQuestInOrderMessages) sendQuestOrderMessage(island)
+
+    val quest = Config.islandQuests.find { quest -> quest.id == Config.questOrder[island.currentQuestOrderIndex] }
+
+    island.changeCurrentQuest(quest?.id)
+
+}
+
 fun sendQuestOrderMessage(island: Island) {
-    if (!Config.sendNextQuestInOrderMessages) return
+
     val quest = Config.islandQuests.find { quest -> quest.id == Config.questOrder[island.currentQuestOrderIndex] }
 
     if (quest == null) {

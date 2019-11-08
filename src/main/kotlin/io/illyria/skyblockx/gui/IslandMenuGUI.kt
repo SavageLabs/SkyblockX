@@ -10,6 +10,7 @@ import io.illyria.skyblockx.persist.Message
 import net.prosavage.baseplugin.serializer.commonobjects.SerializableItem
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
+import kotlin.collections.ArrayList
 
 class IslandMenuGUI : BaseGUI(Config.islandMenuGUITitle, Config.islandMenuGUIBackgroundItem, Config.islandMenuGUIRows) {
 
