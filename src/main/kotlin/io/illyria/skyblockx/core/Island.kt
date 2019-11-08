@@ -5,6 +5,7 @@ import io.illyria.skyblockx.persist.Data
 import io.illyria.skyblockx.persist.Message
 import io.illyria.skyblockx.persist.data.SLocation
 import io.illyria.skyblockx.quest.Quest
+import io.illyria.skyblockx.quest.sendQuestOrderMessage
 import io.illyria.skyblockx.sedit.SkyblockEdit
 import io.illyria.skyblockx.world.Point
 import io.illyria.skyblockx.world.spiral
@@ -154,6 +155,11 @@ data class Island(val islandID: Int, val point: Point, val ownerUUID: String, va
                 oneTimeQuestsCompleted = mutableSetOf<String>()
             }
             oneTimeQuestsCompleted.add(quest.id)
+        }
+        if (Config.useQuestOrder && Config.questOrder.contains(quest.id)) {
+            val indexOfQuest = Config.questOrder.indexOf(quest.id)
+            currentQuestOrderIndex = indexOfQuest
+            sendQuestOrderMessage(this)
         }
         quest.giveRewards(completingPlayer)
     }
