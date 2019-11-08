@@ -3,6 +3,7 @@ package io.illyria.skyblockx
 import io.illyria.skyblockx.core.Island
 import io.illyria.skyblockx.persist.Config
 import io.illyria.skyblockx.persist.Data
+import io.illyria.skyblockx.persist.Message
 import io.illyria.skyblockx.world.WorldManager
 import io.illyria.skyblockx.world.spiral
 import org.bukkit.Bukkit
@@ -39,6 +40,7 @@ class BaseCommandTesting : CommandExecutor {
             "reload" -> {
                 Config.load()
                 Data.load()
+                Message.load()
             }
             "tp-back" -> {
                 sender as Player
