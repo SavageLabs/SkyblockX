@@ -30,9 +30,9 @@ class IslandMenuGUI : BaseGUI(Config.islandMenuGUITitle, Config.islandMenuGUIBac
         }
     }
 
-    fun executeCommands(commands: List<String>, player: Player) {
+    private fun executeCommands(commands: List<String>, player: Player) {
         for (command in commands) {
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("{player}", player.name))
+            player.performCommand(command.replace("{player}", player.name))
         }
     }
 
