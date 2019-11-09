@@ -143,12 +143,8 @@ data class Island(val islandID: Int, val point: Point, val ownerUUID: String, va
     }
 
     fun getQuestCompletedAmount(id: String): Int {
-        if (!questData.containsKey(id)) {
-            questData[id] = 0
-        }
-
         // We just inserted a zero right above :)
-        return questData[id]!!
+        return questData[id] ?: 0
     }
 
     fun completeQuest(completingPlayer: IPlayer, quest: Quest) {
