@@ -47,11 +47,9 @@ class IslandQuestGUI :
         for (line in serializableItem.lore) {
             lore.add(
                 line
-                    .replace(
-                        "{currentAmount}",
-                        DecimalFormat.getInstance().format(island.getQuestCompletedAmount(quest.id))
-                    )
+                    .replace("{currentAmount}", DecimalFormat.getInstance().format(island.getQuestCompletedAmount(quest.id)))
                     .replace("{finalAmount}", DecimalFormat.getInstance().format(quest.amountTillComplete))
+                    .replace("{progress}", getProgressPlaceholder(island, quest))
             )
         }
 
@@ -62,5 +60,9 @@ class IslandQuestGUI :
             .build()
     }
 
+    private fun getProgressPlaceholder(island: Island, quest: Quest): String {
+        if (quest.id == island.currentQuest) return color(Message.questInProgressPlaceholder)
+        return if (island.isOneTimeQuestAlreadyCompleted(quest.id)) color(Message.questCompletedPlaceholder) else color(Message.questNotStarted)
+    }
 
 }
