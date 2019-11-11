@@ -147,6 +147,9 @@ object Message {
     var questIsOneTimeAndAlreadyCompleted = "&7This quest is a onetime quest and is already completed."
     var questOrderNoNextQuestWasFound = "&7No next quest was found."
     var nextQuestMessage = "&7Your next quest is &b%1\$s"
+    var questInProgressPlaceholder = "&a&lIN PROGRESS"
+    var questCompletedPlaceholder = "&b&lCOMPLETED"
+    var questNotStarted = "&c&lNOT STARTED"
 
 
     override fun toString(): String {
