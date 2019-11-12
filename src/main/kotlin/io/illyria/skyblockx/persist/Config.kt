@@ -49,7 +49,7 @@ object Config {
             listOf(
                 "is go"
             ),
-            3
+            1
         ),
         MenuItem(
             SerializableItem(
@@ -61,7 +61,7 @@ object Config {
             listOf(
                 "is quest"
             ),
-            5
+            4
         ),
         MenuItem(
             SerializableItem(

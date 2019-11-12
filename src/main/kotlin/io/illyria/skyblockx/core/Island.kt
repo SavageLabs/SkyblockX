@@ -10,6 +10,9 @@ import io.illyria.skyblockx.quest.sendQuestOrderMessage
 import io.illyria.skyblockx.sedit.SkyblockEdit
 import io.illyria.skyblockx.world.Point
 import io.illyria.skyblockx.world.spiral
+import me.rayzr522.jsonmessage.JSONMessage
+import net.prosavage.baseplugin.strings.Placeholder
+import net.prosavage.baseplugin.strings.StringProcessor
 import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.Material
@@ -168,6 +171,19 @@ data class Island(val islandID: Int, val point: Point, val ownerUUID: String, va
         quest.giveRewards(completingPlayer)
     }
 
+    fun sendTeamQuestProgress(quest: Quest, vararg players: Player) {
+        val progressAmt = (getQuestCompletedAmount(quest.id).toDouble() / quest.amountTillComplete.toDouble()) * 10
+        var progress = ""
+        for (completed in 0..10) {
+            progress += if (completed < progressAmt) Message.questProgressCompletedChar else Message.questProgressInCompleteChar
+        }
+        JSONMessage.actionbar(color(
+            Message.questProgressBarMessage
+                .replace("{quest-name}", quest.name)
+                .replace("{progress-bar}", progress)
+                .replace("{percentage}", "${progressAmt * 10}")) , *players)
+    }
+
     fun setQuestData(id: String, value: Int) {
         questData[id] = value
     }
@@ -178,7 +194,6 @@ data class Island(val islandID: Int, val point: Point, val ownerUUID: String, va
 
     fun addQuestData(id: String, value: Int = 1) {
         questData[id] = (questData[id] ?: 0) + value
-
     }
 
     fun subtractQuestData(name: String, value: Int) {

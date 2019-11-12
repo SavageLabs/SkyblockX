@@ -62,6 +62,7 @@ class BlockListener : Listener {
             if (material == targetQuest.goalParameter) {
                 // Increment that quest data by 1 :)
                 island.addQuestData(targetQuest.id, 1)
+                island.sendTeamQuestProgress(targetQuest, event.player)
                 // Check if quest is complete :D
                 if (targetQuest.isComplete(island.getQuestCompletedAmount(targetQuest.id))) {
                     island.completeQuest(iPlayer, targetQuest)
@@ -117,6 +118,8 @@ class BlockListener : Listener {
             if (material == targetQuest.goalParameter && !event.block.hasMetadata("skyblock-placed-by-player")) {
                 // Increment that quest data by 1 :)
                 island.addQuestData(targetQuest.id, 1)
+                island.sendTeamQuestProgress(targetQuest, event.player)
+
                 // Check if quest is complete :D
                 if (targetQuest.isComplete(island.getQuestCompletedAmount(targetQuest.id))) {
                     island.completeQuest(iPlayer, targetQuest)

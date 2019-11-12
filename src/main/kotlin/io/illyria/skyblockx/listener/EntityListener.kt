@@ -40,6 +40,7 @@ class EntityListener : Listener {
 
                 if (isCorrectType || targetQuest.goalParameter == "ANY") {
                     island.addQuestData(targetQuest.id, 1)
+                    island.sendTeamQuestProgress(targetQuest, event.entity.killer as Player)
                     // Check if quest is complete :D
                     if (targetQuest.isComplete(island.getQuestCompletedAmount(targetQuest.id))) {
                         island.completeQuest(iPlayer, targetQuest)

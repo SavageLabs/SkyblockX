@@ -150,6 +150,9 @@ object Message {
     var questInProgressPlaceholder = "&a&lIN PROGRESS"
     var questCompletedPlaceholder = "&b&lCOMPLETED"
     var questNotStarted = "&c&lNOT STARTED"
+    var questProgressCompletedChar = "&b="
+    var questProgressInCompleteChar = "&7="
+    var questProgressBarMessage = "&b&l{quest-name} {progress-bar} &b{percentage}%"
 
 
     override fun toString(): String {

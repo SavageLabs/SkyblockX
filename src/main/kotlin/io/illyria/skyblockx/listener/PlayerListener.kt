@@ -57,6 +57,7 @@ class PlayerListener : Listener {
 
         // Increment that quest data by 1 :)
         island.addQuestData(targetQuest.id, 1)
+        island.sendTeamQuestProgress(targetQuest, event.whoClicked as Player)
         // Check if quest is complete :D
         if (targetQuest.isComplete(island.getQuestCompletedAmount(targetQuest.id))) {
             island.completeQuest(iplayer, targetQuest)
@@ -92,6 +93,7 @@ class PlayerListener : Listener {
 
         // this just increments quest data.
         island.addQuestData(targetQuest.id)
+        island.sendTeamQuestProgress(targetQuest, event.player)
 
         if (targetQuest.isComplete(island.getQuestCompletedAmount(targetQuest.id))) {
             island.completeQuest(iplayer, targetQuest)
@@ -130,6 +132,7 @@ class PlayerListener : Listener {
             }
 
             island.addQuestData(targetQuest.id)
+            island.sendTeamQuestProgress(targetQuest, event.whoClicked as Player)
 
             if (targetQuest.isComplete(island.getQuestCompletedAmount(targetQuest.id))) {
                 island.completeQuest(iPlayer, targetQuest)
@@ -172,6 +175,7 @@ class PlayerListener : Listener {
 
 
         island.addQuestData(targetQuest.id)
+        island.sendTeamQuestProgress(targetQuest, event.enchanter)
 
         if (targetQuest.isComplete(island.getQuestCompletedAmount(targetQuest.id))) {
             island.completeQuest(iPlayer, targetQuest)
