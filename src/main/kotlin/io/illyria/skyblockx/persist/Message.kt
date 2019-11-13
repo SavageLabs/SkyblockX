@@ -81,7 +81,7 @@ object Message {
     var commandHomeCannotHaveMoreHomes = "&7You cannot have more homes set."
     var commandHomeListHeader = "&7&m-------&r &bHomes &7&m-------"
     var commandHomeListFormat = "&7&b%1\$s. &7%2\$s"
-    var commandHomeListRemoveTooltip = "&7Click to remove!"
+    var commandHomeListRemoveTooltip = "&7Click to go!"
     var commandHomeHelp = "&7go to a use island homes."
     var commandHomeSetHelp = "&7set island homes."
     var commandHomeDoesNotExist = "&7This home does not exist."
