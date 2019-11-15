@@ -45,7 +45,6 @@ object Config {
         WorldBorderUtil.Color.Green to IslandBorderItem(12, SerializableItem(XMaterial.LIME_STAINED_GLASS, "&aGreen Border", listOf(), 1)),
         WorldBorderUtil.Color.Blue to IslandBorderItem(14, SerializableItem(XMaterial.LIGHT_BLUE_STAINED_GLASS, "&bBlue Border", listOf(), 1)),
         WorldBorderUtil.Color.Off to IslandBorderItem(16, SerializableItem(XMaterial.GLASS, "&fNo Border", listOf(), 1))
-
     )
 
     var islandMenuGUITitle = "Island Menu"
@@ -59,9 +58,7 @@ object Config {
                 listOf("&7Click to go to island"),
                 1
             ),
-            listOf(
-                "is go"
-            ),
+            listOf("is go"),
             1
         ),
         MenuItem(
@@ -71,9 +68,7 @@ object Config {
                 listOf("&7Click to open quests"),
                 1
             ),
-            listOf(
-                "is quest"
-            ),
+            listOf("is quest"),
             4
         ),
         MenuItem(
@@ -83,9 +78,7 @@ object Config {
                 listOf("&7Click to go to island home"),
                 1
             ),
-            listOf(
-                "is home"
-            ),
+            listOf("is home"),
             7
         )
     )
