@@ -14,4 +14,4 @@ jobs:
     - uses: actions/upload-artifact@master
       with:
         name: SkyblockX.jar
-        path: build/libs/**
+        path: build/libs/SkyblockX.jar
