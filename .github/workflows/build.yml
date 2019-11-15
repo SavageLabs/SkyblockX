@@ -11,3 +11,7 @@ jobs:
         java-version: 1.8
     - name: Build with Gradle
       run: ./gradlew clean shadowJar
+    - uses: actions/upload-artifact@master
+      with:
+        name: SkyblockX.jar
+        path: build/libs/SkyblockX.jar
