@@ -6,16 +6,18 @@ import io.illyria.skyblockx.persist.Config
 import io.illyria.skyblockx.persist.Data
 import io.illyria.skyblockx.persist.Message
 import io.illyria.skyblockx.world.VoidWorldGenerator
-import net.prosavage.baseplugin.BasePlugin
+import net.prosavage.baseplugin.SavagePlugin
+import net.prosavage.baseplugin.WorldBorderUtil
 import org.bukkit.WorldCreator
 
 
-class SkyblockX : BasePlugin() {
+class SkyblockX : SavagePlugin() {
 
     override fun onEnable() {
         super.onEnable()
         printHeader()
         Globals.skyblockX = this
+        Globals.worldBorderUtil = WorldBorderUtil(this)
         this.getCommand("skyblockx")!!.setExecutor(BaseCommandTesting())
         val baseCommand = BaseCommand()
         val command = this.getCommand("is")!!

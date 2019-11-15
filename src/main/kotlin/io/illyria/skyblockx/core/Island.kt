@@ -6,13 +6,10 @@ import io.illyria.skyblockx.persist.Message
 import io.illyria.skyblockx.persist.data.SLocation
 import io.illyria.skyblockx.quest.Quest
 import io.illyria.skyblockx.quest.incrementQuestInOrder
-import io.illyria.skyblockx.quest.sendQuestOrderMessage
 import io.illyria.skyblockx.sedit.SkyblockEdit
 import io.illyria.skyblockx.world.Point
 import io.illyria.skyblockx.world.spiral
 import me.rayzr522.jsonmessage.JSONMessage
-import net.prosavage.baseplugin.strings.Placeholder
-import net.prosavage.baseplugin.strings.StringProcessor
 import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.Material
@@ -267,7 +264,7 @@ data class Island(val islandID: Int, val point: Point, val ownerUUID: String, va
     }
 
 
-    fun getIslandSpawn(): Location {
+    fun getIslandCenter(): Location {
         return Location(
             minLocation.world,
             minLocation.x + (Config.islandMaxSizeInBlocks / 2),
@@ -337,11 +334,11 @@ fun createIsland(player: Player?, schematic: String, teleport: Boolean = true): 
     Data.islands[Data.nextIslandID] = island
     Data.nextIslandID++
     // Make player null because we dont want to send them the SkyblockEdit Engine's success upon pasting the island.
-    SkyblockEdit().pasteIsland(schematic, island.getIslandSpawn(), null)
+    SkyblockEdit().pasteIsland(schematic, island.getIslandCenter(), null)
     if (player != null) {
         val iPlayer = getIPlayer(player)
         iPlayer.assignIsland(island)
-        player.teleport(island.getIslandSpawn())
+        player.teleport(island.getIslandCenter())
     }
     incrementQuestInOrder(island)
     return island

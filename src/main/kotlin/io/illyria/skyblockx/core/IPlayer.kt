@@ -4,6 +4,7 @@ import io.illyria.skyblockx.persist.Config
 import io.illyria.skyblockx.persist.Data
 import io.illyria.skyblockx.persist.Message
 import io.illyria.skyblockx.sedit.Position
+import net.prosavage.baseplugin.WorldBorderUtil
 import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.entity.Player
@@ -25,8 +26,8 @@ data class IPlayer(val uuid: String) {
 
     var coopedIslandIds = HashSet<Int>()
 
-
-
+    var borderColor = WorldBorderUtil.Color.Green
+        get() = field ?: WorldBorderUtil.Color.Green
 
     var islandsInvitedTo = HashSet<Int>()
 

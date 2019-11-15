@@ -82,7 +82,7 @@ class EntityListener : Listener {
             iPlayer.falling = true
             player.sendMessage(color(Message.messagePrefix + Message.listenerVoidDeathPrevented))
             if (iPlayer.hasIsland()) {
-                player.teleport(iPlayer.getIsland()!!.getIslandSpawn())
+                player.teleport(iPlayer.getIsland()!!.getIslandCenter())
             } else {
                 player.teleport(Bukkit.getWorld("world")!!.spawnLocation)
             }

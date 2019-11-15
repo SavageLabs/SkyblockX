@@ -90,6 +90,9 @@ object Message {
     var commandHomeGoHelp = "&7go to your homes."
     var commandHomeList = "&7list island homes."
 
+
+    var commandBorderHelp = "&7Change your border color."
+
     var commandHelpHelp = "&7view information about other commands."
 
     var commandRemoveInvokerSuccess = "&7You have removed %1\$s from your island."

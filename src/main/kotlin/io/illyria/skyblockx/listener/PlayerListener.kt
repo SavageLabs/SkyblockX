@@ -1,15 +1,15 @@
 package io.illyria.skyblockx.listener
 
-import io.illyria.skyblockx.core.Permission
-import io.illyria.skyblockx.core.canUseBlockAtLocation
-import io.illyria.skyblockx.core.getIPlayer
-import io.illyria.skyblockx.core.hasPermission
+import io.illyria.skyblockx.Globals
+import io.illyria.skyblockx.core.*
 import io.illyria.skyblockx.persist.Config
 import io.illyria.skyblockx.persist.Message
 import io.illyria.skyblockx.quest.QuestGoal
 import io.illyria.skyblockx.quest.failsQuestCheckingPreRequisites
+import net.prosavage.baseplugin.WorldBorderUtil
 import net.prosavage.baseplugin.XMaterial
 import org.bukkit.Bukkit
+import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.enchantments.Enchantment
 import org.bukkit.entity.Item
@@ -17,12 +17,12 @@ import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.enchantment.EnchantItemEvent
-import org.bukkit.event.inventory.BrewEvent
 import org.bukkit.event.inventory.CraftItemEvent
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.inventory.InventoryType
 import org.bukkit.event.player.PlayerFishEvent
 import org.bukkit.event.player.PlayerInteractEvent
+import org.bukkit.event.player.PlayerTeleportEvent
 
 class PlayerListener : Listener {
 
@@ -63,6 +63,14 @@ class PlayerListener : Listener {
             island.completeQuest(iplayer, targetQuest)
         }
     }
+
+
+    @EventHandler
+    fun onPlayerTeleport(event: PlayerTeleportEvent) {
+        updateWorldBorder(event.player, event.to!!, 10L)
+    }
+
+
 
     @EventHandler
     fun onPlayerFish(event: PlayerFishEvent) {
@@ -235,3 +243,4 @@ class PlayerListener : Listener {
 
 
 }
+

@@ -11,6 +11,7 @@ sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
+    mavenLocal()
     maven {
         url "https://hub.spigotmc.org/nexus/content/repositories/snapshots"
     }
@@ -22,6 +23,9 @@ repositories {
     }
     maven {
         url 'https://libraries.minecraft.net/'
+    }
+    maven {
+        url "http://repo.dmulloy2.net/nexus/repository/public/"
     }
 }
 
@@ -37,7 +41,8 @@ dependencies {
     }
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
-    implementation 'net.prosavage:BasePlugin:1.2'
+    implementation 'net.prosavage:BasePlugin:1.5'
+    compileOnly group: "com.comphenix.protocol", name: "ProtocolLib", version: "4.4.0"
     compile 'me.rayzr522:jsonmessage:1.2.0'
 }
 processResources {
@@ -66,6 +71,7 @@ shadowJar {
     relocate 'com.google.gson', 'io.illyria.skyblockx.shade.com.google.gson'
     relocate 'net.prosavage.baseplugin', 'io.illyria.skyblockx.shade.baseplugin'
     relocate 'org.jetbrains.kotlin', 'io.illyria.skyblockx.shade.kotlin'
-    relocate 'me.rayzr522:jsonmessage', 'io.illyria.skyblockx.shade.jsonmessage'
+    relocate 'me.rayzr522.jsonmessage', 'io.illyria.skyblockx.shade.jsonmessage'
+    relocate 'io.illyria.WorldBorder-API', 'io.illyria.skyblockx.shade.WorldBorder-API'
     archiveName 'SkyblockX-' + version + ".jar"
 }

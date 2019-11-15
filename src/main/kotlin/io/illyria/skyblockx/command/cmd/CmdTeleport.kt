@@ -63,7 +63,7 @@ class CmdTeleport : io.illyria.skyblockx.command.SCommand() {
         }
 
         // TODO: Allow them to set island teleport location maybe? idk.
-        info.player!!.teleport(targetLocation.getIslandSpawn())
+        info.player!!.teleport(targetLocation.getIslandCenter())
         info.message(String.format(Message.commandTpTeleporting, targetLocation.ownerTag))
 
 

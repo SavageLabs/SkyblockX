@@ -28,7 +28,7 @@ class CmdRemove : io.illyria.skyblockx.command.SCommand() {
 
         // TODO: Implement a default spawn mechanic to set the default spawn location, so that it is more elegant.
 
-        val targetNewLocation = target.getIsland()?.getIslandSpawn() ?: Bukkit.getWorld("world")!!.spawnLocation
+        val targetNewLocation = target.getIsland()?.getIslandCenter() ?: Bukkit.getWorld("world")!!.spawnLocation
 
         // Check if they're even on the island, to prevent abuse.
         if (!info.iPlayer!!.getIsland()!!.containsBlock(target.getPlayer().location)) {
