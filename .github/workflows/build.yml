@@ -12,14 +12,11 @@ jobs:
     - name: Build with Gradle
       run: ./gradlew clean shadowJar
     
-  release:
+  artifact:
     needs: [build]
     runs-on: ubuntu-latest
     steps:
-      - name: Release
-        uses: softprops/action-gh-release@v1
-        if: startsWith(github.ref, 'refs/tags/')
-        with:
-          files: build/libs/**
-        env: 
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}      
+    - uses: actions/upload-artifact@master
+      with:
+        name: SkyblockX.jar
+        path: build/libs/SkyblockX-1.0.jar
