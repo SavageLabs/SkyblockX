@@ -73,5 +73,13 @@ shadowJar {
     relocate 'org.jetbrains.kotlin', 'io.illyria.skyblockx.shade.kotlin'
     relocate 'me.rayzr522.jsonmessage', 'io.illyria.skyblockx.shade.jsonmessage'
     relocate 'io.illyria.WorldBorder-API', 'io.illyria.skyblockx.shade.WorldBorder-API'
-    archiveName 'SkyblockX-' + version + ".jar"
+    archiveName 'SkyblockX.jar'
+}
+
+
+
+task ci {
+    println 'Running CI Task for version ' + version
+    dependsOn clean
+    dependsOn shadowJar
 }
