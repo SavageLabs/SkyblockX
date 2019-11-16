@@ -6,6 +6,7 @@ import io.illyria.skyblockx.core.Island
 import io.illyria.skyblockx.core.color
 import io.illyria.skyblockx.persist.Config
 import io.illyria.skyblockx.persist.Message
+import io.illyria.skyblockx.persist.Quests
 import io.illyria.skyblockx.quest.Quest
 import net.prosavage.baseplugin.ItemBuilder
 import net.prosavage.baseplugin.serializer.commonobjects.SerializableItem
@@ -14,14 +15,14 @@ import org.bukkit.inventory.ItemStack
 import java.text.DecimalFormat
 
 class IslandQuestGUI :
-    BaseGUI(Config.islandQuestGUITitle, Config.islandQuestGUIBackgroundItem, Config.islandQuestGUIRows) {
+    BaseGUI(Quests.islandQuestGUITitle, Quests.islandQuestGUIBackgroundItem, Quests.islandQuestGUIRows) {
 
     override fun populatePane(context: IPlayer) {
         val guiItems = ArrayList<GuiItem>()
         for (item in 0 until (super.guiRows * 9)) {
             guiItems.add(GuiItem(super.backgroundItem.buildItem()) { e -> e.isCancelled = true })
         }
-        for (quest in Config.islandQuests) {
+        for (quest in Quests.islandQuests) {
             guiItems[quest.guiDisplayIndex] =
                 (GuiItem(buildItem(context.getIsland()!!, quest.guiDisplayItem, quest)) { e ->
                     run {

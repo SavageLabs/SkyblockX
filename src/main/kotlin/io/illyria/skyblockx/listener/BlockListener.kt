@@ -5,6 +5,7 @@ import io.illyria.skyblockx.core.getIPlayer
 import io.illyria.skyblockx.core.getIslandFromLocation
 import io.illyria.skyblockx.persist.Config
 import io.illyria.skyblockx.persist.Message
+import io.illyria.skyblockx.persist.Quests
 import io.illyria.skyblockx.quest.QuestGoal
 import net.prosavage.baseplugin.XMaterial
 import org.bukkit.Bukkit
@@ -54,7 +55,7 @@ class BlockListener : Listener {
             val currentQuest = island.currentQuest!!
             // Find the quest that the island has activated.
             val targetQuest =
-                Config.islandQuests.find { quest -> quest.type == QuestGoal.PLACE_BLOCKS && quest.id == currentQuest } ?: return
+                Quests.islandQuests.find { quest -> quest.type == QuestGoal.PLACE_BLOCKS && quest.id == currentQuest } ?: return
             // Use XMaterial to parse the material, if null, try to use native material just in case.
             val material = XMaterial.matchXMaterial(event.block.type)?.name ?: event.block.type.name
 
@@ -110,7 +111,7 @@ class BlockListener : Listener {
             val currentQuest = island.currentQuest!!
             // Find the quest that the island has activated.
             val targetQuest =
-                Config.islandQuests.find { quest -> quest.type == QuestGoal.BREAK_BLOCKS && quest.id == currentQuest } ?: return
+                Quests.islandQuests.find { quest -> quest.type == QuestGoal.BREAK_BLOCKS && quest.id == currentQuest } ?: return
             // Use XMaterial to parse the material, if null, try to use native material just in case.
             val material = XMaterial.matchXMaterial(event.block.type)?.name ?: event.block.type.name
 

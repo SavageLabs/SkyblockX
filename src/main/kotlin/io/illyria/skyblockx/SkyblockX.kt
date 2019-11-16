@@ -5,6 +5,7 @@ import io.illyria.skyblockx.listener.*
 import io.illyria.skyblockx.persist.Config
 import io.illyria.skyblockx.persist.Data
 import io.illyria.skyblockx.persist.Message
+import io.illyria.skyblockx.persist.Quests
 import io.illyria.skyblockx.world.VoidWorldGenerator
 import net.prosavage.baseplugin.SavagePlugin
 import net.prosavage.baseplugin.WorldBorderUtil
@@ -38,6 +39,10 @@ class SkyblockX : SavagePlugin() {
         // Load and save to take in account changes :P
         Config.load()
         Config.save()
+
+        // Load and save to take in account changes :P
+        Quests.load()
+        Quests.save()
 
         // Don't load this as people shouldn't be touching this file anyways.
         Data.save()

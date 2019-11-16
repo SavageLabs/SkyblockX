@@ -4,6 +4,7 @@ import io.illyria.skyblockx.core.IPlayer
 import io.illyria.skyblockx.core.Island
 import io.illyria.skyblockx.persist.Config
 import io.illyria.skyblockx.persist.Message
+import io.illyria.skyblockx.persist.Quests
 import net.prosavage.baseplugin.serializer.commonobjects.SerializableItem
 import org.bukkit.Bukkit
 import org.bukkit.Location
@@ -40,16 +41,16 @@ fun failsQuestCheckingPreRequisites(iPlayer: IPlayer, island: Island?, location:
 }
 
 fun incrementQuestInOrder(island: Island) {
-    if (Config.sendNextQuestInOrderMessages) sendQuestOrderMessage(island)
+    if (Quests.sendNextQuestInOrderMessages) sendQuestOrderMessage(island)
     if (island.currentQuestOrderIndex == null) return
-    val quest = Config.islandQuests.find { quest -> quest.id == Config.questOrder[island.currentQuestOrderIndex!!] }
+    val quest = Quests.islandQuests.find { quest -> quest.id == Quests.questOrder[island.currentQuestOrderIndex!!] }
     island.changeCurrentQuest(quest?.id)
 
 }
 
 fun sendQuestOrderMessage(island: Island) {
     if (island.currentQuestOrderIndex == null) return
-    val quest = Config.islandQuests.find { quest -> quest.id == Config.questOrder[island.currentQuestOrderIndex!!] }
+    val quest = Quests.islandQuests.find { quest -> quest.id == Quests.questOrder[island.currentQuestOrderIndex!!] }
 
     if (quest == null) {
         island.messageAllOnlineIslandMembers(Message.messagePrefix + Message.questOrderNoNextQuestWasFound)

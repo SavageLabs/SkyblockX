@@ -4,6 +4,7 @@ import io.illyria.skyblockx.core.color
 import io.illyria.skyblockx.core.getIPlayer
 import io.illyria.skyblockx.persist.Config
 import io.illyria.skyblockx.persist.Message
+import io.illyria.skyblockx.persist.Quests
 import io.illyria.skyblockx.quest.QuestGoal
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
@@ -34,7 +35,7 @@ class EntityListener : Listener {
             val currentQuest = island.currentQuest!!
             // Find the quest that the island has activated.
             val targetQuest =
-                Config.islandQuests.find { quest -> quest.type == QuestGoal.KILL_MOBS && quest.id == currentQuest }
+                Quests.islandQuests.find { quest -> quest.type == QuestGoal.KILL_MOBS && quest.id == currentQuest }
             if (targetQuest != null) {
                 val isCorrectType = targetQuest.goalParameter.equals(event.entity.type.name, true)
 

@@ -3,6 +3,7 @@ package io.illyria.skyblockx.core
 import io.illyria.skyblockx.persist.Config
 import io.illyria.skyblockx.persist.Data
 import io.illyria.skyblockx.persist.Message
+import io.illyria.skyblockx.persist.Quests
 import io.illyria.skyblockx.persist.data.SLocation
 import io.illyria.skyblockx.quest.Quest
 import io.illyria.skyblockx.quest.incrementQuestInOrder
@@ -156,9 +157,9 @@ data class Island(val islandID: Int, val point: Point, val ownerUUID: String, va
             oneTimeQuestsCompleted.add(quest.id)
         }
         // Check for quest ordering system.
-        if (Config.useQuestOrder && Config.questOrder.contains(quest.id)) {
-            val indexOfQuest = Config.questOrder.indexOf(quest.id) + 1
-            currentQuestOrderIndex = if (Config.questOrder.size > indexOfQuest) { indexOfQuest } else { null }
+        if (Quests.useQuestOrder && Quests.questOrder.contains(quest.id)) {
+            val indexOfQuest = Quests.questOrder.indexOf(quest.id) + 1
+            currentQuestOrderIndex = if (Quests.questOrder.size > indexOfQuest) { indexOfQuest } else { null }
             incrementQuestInOrder(this)
         }
         quest.giveRewards(completingPlayer)
