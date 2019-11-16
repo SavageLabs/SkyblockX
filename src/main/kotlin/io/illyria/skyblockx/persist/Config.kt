@@ -78,7 +78,7 @@ object Config {
                 listOf("&7Click to go to island home"),
                 1
             ),
-            listOf("is home"),
+            listOf("is home list"),
             7
         )
     )
