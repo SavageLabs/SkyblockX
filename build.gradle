@@ -114,5 +114,4 @@ task updatePermissionsList {
 task ci {
     dependsOn clean
     dependsOn shadowJar
-    dependsOn updatePermissionsList
 }
