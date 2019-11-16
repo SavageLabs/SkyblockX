@@ -61,12 +61,17 @@ class BaseCommand : SCommand(), CommandExecutor, TabCompleter {
             return
         }
 
-        if (info.iPlayer!!.hasIsland()) {
-            // Execute command just to make a shorthand version for /is menu.
-            this.subCommands.find { command -> command is CmdMenu }?.perform(info)
+        if (info.args.isEmpty()) {
+            if (info.iPlayer!!.hasIsland()) {
+                // Execute command just to make a shorthand version for /is menu.
+                this.subCommands.find { command -> command is CmdMenu }?.perform(info)
+            } else {
+                // Create an island gui since they dont have an island.
+                this.subCommands.find { command -> command is CmdCreate }?.perform(info)
+            }
         } else {
-            // Create an island gui since they dont have an island.
-            this.subCommands.find { command -> command is CmdCreate }?.perform(info)
+            info.message(Message.commandBaseHelpMessage)
+            generateHelp(1, info.player!!)
         }
     }
 
