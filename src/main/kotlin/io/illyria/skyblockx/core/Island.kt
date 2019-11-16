@@ -14,6 +14,7 @@ import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.entity.Player
+import java.text.DecimalFormat
 import java.util.*
 import kotlin.collections.HashSet
 
@@ -39,12 +40,11 @@ data class Island(val islandID: Int, val point: Point, val ownerUUID: String, va
 
     val members = mutableSetOf<String>()
 
-    var currentQuestOrderIndex = 0
+    var currentQuestOrderIndex: Int? = 0
 
     fun isOneTimeQuestAlreadyCompleted(id: String): Boolean {
         return oneTimeQuestsCompleted != null && oneTimeQuestsCompleted.isNotEmpty() && oneTimeQuestsCompleted.contains(id)
     }
-
 
     fun messageAllOnlineIslandMembers(message: String) {
         // Color message in case.
@@ -61,8 +61,6 @@ data class Island(val islandID: Int, val point: Point, val ownerUUID: String, va
             Bukkit.getPlayer(member)?.sendMessage(messageFormatted)
         }
     }
-
-
 
     fun getAllMembers(): Set<String> {
         if (members == null) return emptySet()
@@ -160,9 +158,7 @@ data class Island(val islandID: Int, val point: Point, val ownerUUID: String, va
         // Check for quest ordering system.
         if (Config.useQuestOrder && Config.questOrder.contains(quest.id)) {
             val indexOfQuest = Config.questOrder.indexOf(quest.id) + 1
-            if (Config.questOrder.size > indexOfQuest) {
-                currentQuestOrderIndex = indexOfQuest
-            }
+            currentQuestOrderIndex = if (Config.questOrder.size > indexOfQuest) { indexOfQuest } else { null }
             incrementQuestInOrder(this)
         }
         quest.giveRewards(completingPlayer)
@@ -174,11 +170,12 @@ data class Island(val islandID: Int, val point: Point, val ownerUUID: String, va
         for (completed in 0..10) {
             progress += if (completed < progressAmt) Message.questProgressCompletedChar else Message.questProgressInCompleteChar
         }
+
         JSONMessage.actionbar(color(
             Message.questProgressBarMessage
                 .replace("{quest-name}", quest.name)
                 .replace("{progress-bar}", progress)
-                .replace("{percentage}", "${progressAmt * 10}")) , *players)
+                .replace("{percentage}", DecimalFormat("##").format(progressAmt * 10))), *players)
     }
 
     fun setQuestData(id: String, value: Int) {
