@@ -314,10 +314,11 @@ fun getIslandFromLocation(location: Location): Island? {
 
 fun getIslandByOwnerTag(ownerTag: String): Island? {
     for (island in Data.islands.values) {
-        if (island.ownerTag == ownerTag) {
+        if (island.ownerTag.toLowerCase() == ownerTag.toLowerCase()) {
             return island
         }
     }
+
     return null
 }
 
