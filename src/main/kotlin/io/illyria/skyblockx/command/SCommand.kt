@@ -6,6 +6,7 @@ import io.illyria.skyblockx.persist.Config
 import io.illyria.skyblockx.persist.Message
 import me.rayzr522.jsonmessage.JSONMessage
 import org.bukkit.Bukkit
+import org.bukkit.ChatColor
 import org.bukkit.entity.Player
 import java.util.*
 
@@ -92,7 +93,7 @@ abstract class SCommand {
                 (if (command.commandRequirements.asIslandMember) Message.commandHelpGeneratorRequires else Message.commandHelpGeneratorNotRequired)
             ) + "\n" + String.format(Message.commandHelpGeneratorClickMeToPaste, "/is $base")
 
-            JSONMessage.create(color(String.format(Message.commandHelpGeneratorFormat, base, command.getHelpInfo())))
+            JSONMessage.create(color(String.format(Message.commandHelpGeneratorFormat, base, command.getHelpInfo()))).color(Message.commandHelpGeneratorBackgroundColor)
                 .tooltip(color(tooltip)).suggestCommand("/is $base").send(player)
         }
     }

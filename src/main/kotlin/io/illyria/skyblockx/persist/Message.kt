@@ -2,6 +2,7 @@ package io.illyria.skyblockx.persist
 
 import io.illyria.skyblockx.core.color
 import net.prosavage.baseplugin.serializer.Serializer
+import org.bukkit.ChatColor
 
 object Message {
 
@@ -19,6 +20,7 @@ object Message {
 
     var commandHelpGeneratorPageInvalid = "&cThe page %1\$s is invalid."
     var commandHelpGeneratorFormat = "&b/is %1\$s &8> &7 %2\$s"
+    var commandHelpGeneratorBackgroundColor = ChatColor.GRAY
     var commandHelpGeneratorNotRequired = "&c✗&r"
     var commandHelpGeneratorRequires = "&a✔&r"
     var commandHelpGeneratorIslandRequired = "&7Island member requirement: %1\$s"
