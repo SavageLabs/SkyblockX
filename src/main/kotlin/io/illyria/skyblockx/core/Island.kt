@@ -168,7 +168,7 @@ data class Island(val islandID: Int, val point: Point, val ownerUUID: String, va
     fun sendTeamQuestProgress(quest: Quest, vararg players: Player) {
         val progressAmt = (getQuestCompletedAmount(quest.id).toDouble() / quest.amountTillComplete.toDouble()) * 10
         var progress = ""
-        for (completed in 0..10) {
+        for (completed in 0..9) {
             progress += if (completed < progressAmt) Message.questProgressCompletedChar else Message.questProgressInCompleteChar
         }
 
