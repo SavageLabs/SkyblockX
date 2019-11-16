@@ -158,6 +158,10 @@ object Message {
     var questProgressBarMessage = "&b&l{quest-name} {progress-bar} &b{percentage}%"
 
 
+    var islandCreatedTitle = "&9SkyblockX"
+    var islandCreatedSubtitle = "&7By: ProSavage"
+
+
     override fun toString(): String {
         return color(super.toString())
     }

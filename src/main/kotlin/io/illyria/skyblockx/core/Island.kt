@@ -341,6 +341,7 @@ fun createIsland(player: Player?, schematic: String, teleport: Boolean = true): 
         player.teleport(island.getIslandCenter())
     }
     incrementQuestInOrder(island)
+    player?.sendTitle(color(Message.islandCreatedTitle), color(Message.islandCreatedSubtitle))
     return island
 }
 
