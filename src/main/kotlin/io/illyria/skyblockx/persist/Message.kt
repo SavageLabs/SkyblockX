@@ -25,6 +25,8 @@ object Message {
     var commandHelpGeneratorRequires = "&a✔&r"
     var commandHelpGeneratorIslandRequired = "&7Island member requirement: %1\$s"
     var commandHelpGeneratorClickMeToPaste = "&7Click me to paste \"%1\$s\" in chat bar."
+    var commandHelpGeneratorPageNavBack = "&b<<<"
+    var commandHelpGeneratorPageNavNext = "&b>>>"
 
 
     var commandParsingArgIsNotInt = "&cThis argument is not an integer, please make it one."
@@ -58,7 +60,7 @@ object Message {
     var commandSEPositionInvalidIndex = "&7The specified position index is invalid, it must be either 1 or 2."
     var commandSEPosition = "&7Please right click a block to set it to position %1\$s."
 
-    var commandSESaveStructureHelp = "&7This command saves a structure to a file name specified."
+    var commandSESaveStructureHelp = "&7saves a structure to a specified file."
     var commandSESaveStructurePositionsNotSet =
         "You have not set both positions use the command \"/is pos\" to set the positions."
 
@@ -102,7 +104,7 @@ object Message {
     var commandRemoveInvokerPlayerNotOnIsland = "&7The specified player's location is currently not on your island."
     var commandRemovedCoopStatus = "&7Your co-op status has been removed due to you being removed from the island."
     var commandRemoveHelp =
-        "&7This command removes someone from your island, also removes co-op status if they have it."
+        "&7removes island/co-op member."
 
     var commandTpHelp = "&7teleport to islands of other players."
     var commandTpPossibleLocationsHeader = "&7You can teleport to the following locations..."

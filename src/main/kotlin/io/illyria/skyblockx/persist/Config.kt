@@ -33,7 +33,7 @@ object Config {
 
     var defaultMaxIslandHomes = 3
 
-    var helpGeneratorPageEntries = 4
+    var helpGeneratorPageEntries = 10
 
     var defaultIslandMemberLimit = 3
 

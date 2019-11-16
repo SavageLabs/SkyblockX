@@ -6,7 +6,6 @@ import io.illyria.skyblockx.persist.Config
 import io.illyria.skyblockx.persist.Message
 import me.rayzr522.jsonmessage.JSONMessage
 import org.bukkit.Bukkit
-import org.bukkit.ChatColor
 import org.bukkit.entity.Player
 import java.util.*
 
@@ -78,7 +77,14 @@ abstract class SCommand {
     fun generateHelp(page: Int, player: Player) {
         val pageStartEntry = Config.helpGeneratorPageEntries * (page - 1)
         if (page <= 0 || pageStartEntry >= subCommands.size) {
-            player.sendMessage(color(Message.messagePrefix + String.format(Message.commandHelpGeneratorPageInvalid, page)))
+            player.sendMessage(
+                color(
+                    Message.messagePrefix + String.format(
+                        Message.commandHelpGeneratorPageInvalid,
+                        page
+                    )
+                )
+            )
             return
         }
 
@@ -93,9 +99,14 @@ abstract class SCommand {
                 (if (command.commandRequirements.asIslandMember) Message.commandHelpGeneratorRequires else Message.commandHelpGeneratorNotRequired)
             ) + "\n" + String.format(Message.commandHelpGeneratorClickMeToPaste, "/is $base")
 
-            JSONMessage.create(color(String.format(Message.commandHelpGeneratorFormat, base, command.getHelpInfo()))).color(Message.commandHelpGeneratorBackgroundColor)
+            JSONMessage.create(color(String.format(Message.commandHelpGeneratorFormat, base, command.getHelpInfo())))
+                .color(Message.commandHelpGeneratorBackgroundColor)
                 .tooltip(color(tooltip)).suggestCommand("/is $base").send(player)
         }
+        val pageNav = JSONMessage.create("       ")
+        if (page > 1) pageNav.then(color(Message.commandHelpGeneratorPageNavBack)).tooltip("Go to Page ${page - 1}").runCommand("/is help ${page - 1}").then("       ")
+        if (page < subCommands.size) pageNav.then(color(Message.commandHelpGeneratorPageNavNext)).tooltip("Go to Page ${page + 1}").runCommand("/is help ${page + 1}")
+        pageNav.send(player)
     }
 
     private fun sendCommandFormat(info: CommandInfo, useJSON: Boolean = true) {
@@ -176,7 +187,7 @@ abstract class SCommand {
 
     class MemberArgument : ArgumentType() {
         override fun getPossibleValues(iPlayer: IPlayer?): List<String> {
-           return if (iPlayer != null && iPlayer.hasIsland()) iPlayer.getIsland()!!.getAllMembers().toList() else emptyList()
+            return if (iPlayer != null && iPlayer.hasIsland()) iPlayer.getIsland()!!.getAllMembers().toList() else emptyList()
         }
     }
 
