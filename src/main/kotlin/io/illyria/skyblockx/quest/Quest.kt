@@ -43,7 +43,6 @@ fun incrementQuestInOrder(island: Island) {
     if (Config.sendNextQuestInOrderMessages) sendQuestOrderMessage(island)
     if (island.currentQuestOrderIndex == null) return
     val quest = Config.islandQuests.find { quest -> quest.id == Config.questOrder[island.currentQuestOrderIndex!!] }
-    println(quest)
     island.changeCurrentQuest(quest?.id)
 
 }
