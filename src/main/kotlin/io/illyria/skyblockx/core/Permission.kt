@@ -19,6 +19,7 @@ enum class Permission(val node: String) {
     TELEPORT("teleport"),
     MENU("menu"),
     HOME("home"),
+    QUEST("quest"),
     OBSIDIANTOLAVA("obsidiantolava"),
     SE_SAVESTUCT("se.savestructure"),
     SE_PASTESTRUCT("se.pastestructure"),

@@ -2,6 +2,7 @@ package io.illyria.skyblockx.command.cmd
 
 
 import io.illyria.skyblockx.command.CommandRequirementsBuilder
+import io.illyria.skyblockx.core.Permission
 import io.illyria.skyblockx.gui.IslandQuestGUI
 import io.illyria.skyblockx.persist.Message
 
@@ -11,7 +12,7 @@ class CmdQuest : io.illyria.skyblockx.command.SCommand() {
         aliases.add("quest")
         aliases.add("quests")
 
-        commandRequirements = CommandRequirementsBuilder().asIslandMember(true).build()
+        commandRequirements = CommandRequirementsBuilder().withPermission(Permission.QUEST).asIslandMember(true).build()
     }
 
 
