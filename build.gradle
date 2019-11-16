@@ -96,14 +96,19 @@ task updatePermissionsList {
         table.append("$permissionName | `$permissionNode`\n")
 
     }
+    println("File Processed.")
     // Clone and update wiki.
     delete "./Wiki"
     println("Deleted Wiki Folder.")
     exec { commandLine 'git', 'clone', 'https://github.com/illyria-io/SkyblockX.wiki.git', 'Wiki' }
+    println("Wiki Cloned")
     File permissionsWikiFile = file(".\\Wiki\\Permissions.md")
     delete "./Wiki/Permissions.md"
+    println("Old Permissions.md Deleted.")
     permissionsWikiFile.createNewFile()
+    println("New Permissions.md Created.")
     permissionsWikiFile.text = table.toString()
+    println("Permissions.md file content set.")
 }
 
 task ci {
