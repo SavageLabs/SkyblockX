@@ -52,9 +52,9 @@ fun sendQuestOrderMessage(island: Island) {
     val quest = Config.islandQuests.find { quest -> quest.id == Config.questOrder[island.currentQuestOrderIndex!!] }
 
     if (quest == null) {
-        island.messageAllOnlineIslandMembers(Message.messagePrefix + " " + Message.questOrderNoNextQuestWasFound)
+        island.messageAllOnlineIslandMembers(Message.messagePrefix + Message.questOrderNoNextQuestWasFound)
         return
     }
 
-    island.messageAllOnlineIslandMembers(Message.messagePrefix + " " + String.format(Message.nextQuestMessage, quest.name))
+    island.messageAllOnlineIslandMembers(Message.messagePrefix + String.format(Message.nextQuestMessage, quest.name))
 }
