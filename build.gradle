@@ -94,6 +94,7 @@ task updatePermissionsList {
         String permissionNode = "skyblockx.${permissionSplit[1].replace(" ", "").replaceAll("[\\n\\t ]", "")}"
         println permissionName + " " + "skyblockx." + permissionSplit[1]
         table.append("$permissionName | `$permissionNode`\n")
+
     }
     // Clone and update wiki.
     delete "./Wiki"
