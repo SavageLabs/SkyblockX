@@ -341,6 +341,8 @@ fun createIsland(player: Player?, schematic: String, teleport: Boolean = true): 
         player.teleport(island.getIslandCenter())
     }
     incrementQuestInOrder(island)
+    if (player != null) updateWorldBorder(player, player.location, 10L)
+    // Use deprecated method for 1.8 support.
     player?.sendTitle(color(Message.islandCreatedTitle), color(Message.islandCreatedSubtitle))
     return island
 }
