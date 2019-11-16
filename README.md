@@ -3,13 +3,12 @@
 
 ## About
 A modern, fully functional skyblock core with minimal dependencies. 
-The plugin's primary deployment and testing version is the latest version of spigot available. IllyriaSkyblock was designed because of ASkyblock being discontinued and also not being supported past Spigot-1.12 and all replacements being poorly designed or unstable.
+The plugin's primary deployment and testing version is the latest version of spigot available. SkyblockX was designed because of ASkyblock being discontinued and also not being supported past Spigot-1.12 and all replacements being poorly designed or unstable.
 
 
 ### Installation
 
 1. Get a skyblock release binary using one of the following options.
-   * Download a binary from our [store](https://store.illyria.io).
    * Download from [spigot](https://www.spigotmc.org/resources/authors/prosavage.203132/).
    * Compile a binary file on your own, see the developers section.
 2. Get a spigot binary file.
