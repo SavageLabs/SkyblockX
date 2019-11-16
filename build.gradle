@@ -76,10 +76,37 @@ shadowJar {
     archiveName 'SkyblockX.jar'
 }
 
-
+task updatePermissionsList {
+    File permissionsFile = file(".\\src\\main\\kotlin\\io\\illyria\\skyblockx\\core\\Permission.kt")
+    String text = permissionsFile.text
+    // Splits the file's text @ `{`.
+    // The first one should show the beginning of the class.
+    String[] textSplit = text.split("\\{")
+    String permissionsEnumText = textSplit[1].split(";")[0]
+    String[] permissionsListRaw = permissionsEnumText.split(",")
+    // Process each permission.
+    StringBuilder table = new StringBuilder()
+    table.append("Permission Name | Permission Node\n")
+    table.append("--- | ---")
+    for (String permissionRaw : permissionsListRaw) {
+        String[] permissionSplit = permissionRaw.split("\"")
+        String permissionName = permissionSplit[0].replace("(", "").replaceAll("[\\n\\t ]", "")
+        String permissionNode = "skyblockx.${permissionSplit[1].replace(" ", "").replaceAll("[\\n\\t ]", "")}"
+        println permissionName + " " + "skyblockx." + permissionSplit[1]
+        table.append("$permissionName | `$permissionNode`")
+    }
+    // Clone and update wiki.
+    delete "./Wiki"
+    println("Deleted Wiki Folder.")
+    exec { commandLine 'git', 'clone', 'https://github.com/illyria-io/SkyblockX.wiki.git', 'Wiki' }
+    File permissionsWikiFile = file(".\\Wiki\\Permissions.md")
+    delete "./Wiki/Permissions.md"
+    permissionsWikiFile.createNewFile()
+    permissionsWikiFile.text = table.toString()
+}
 
 task ci {
-    println 'Running CI Task for version ' + version
     dependsOn clean
     dependsOn shadowJar
+    dependsOn updatePermissionsList
 }
