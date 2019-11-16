@@ -313,8 +313,9 @@ fun getIslandFromLocation(location: Location): Island? {
 }
 
 fun getIslandByOwnerTag(ownerTag: String): Island? {
+    val lowerCaseOwnerTag = ownerTag.toLowerCase()
     for (island in Data.islands.values) {
-        if (island.ownerTag.toLowerCase() == ownerTag.toLowerCase()) {
+        if (island.ownerTag.toLowerCase() == lowerCaseOwnerTag) {
             return island
         }
     }
