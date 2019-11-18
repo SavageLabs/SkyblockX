@@ -87,14 +87,15 @@ task updatePermissionsList {
     println permissionsListRaw.size()
     // Process each permission.
     StringBuilder table = new StringBuilder()
-    table.append("Permission Name | Permission Node | Permission Description\n")
-    table.append("--- | --- | ---")
+    table.append("Permission Name | Permission Node | Permission Description | Permission Default \n")
+    table.append("--- | --- | --- | ---")
     for (String permissionRaw : permissionsListRaw) {
         String[] permissionSplit = permissionRaw.split(",")
         String permissionName = permissionSplit[0].replace(" ", "")
         String permissionDesc = permissionSplit[1].replace("\"", "")
         String permissionNode = "skyblockx." + permissionName.split("\\(\"")[1].replace("\"","")
-        table.append("${permissionName.split("\\(\"")[0]} | `$permissionNode` | $permissionDesc")
+        String permissionDefault = permissionSplit[2].replace("\"", "").replace("PermissionDefault.", "")
+        table.append("${permissionName.split("\\(\"")[0]} | `$permissionNode` | $permissionDesc | $permissionDefault")
     }
     println("File Processed.")
     // Clone and update wiki.

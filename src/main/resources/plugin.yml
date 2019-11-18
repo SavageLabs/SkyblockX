@@ -12,4 +12,3 @@ commands:
   is:
     description: 'base savageskyblock command'
     aliases: [island]
-

@@ -1,6 +1,7 @@
 package io.illyria.skyblockx
 
 import io.illyria.skyblockx.command.BaseCommand
+import io.illyria.skyblockx.core.registerAllPermissions
 import io.illyria.skyblockx.listener.*
 import io.illyria.skyblockx.persist.Config
 import io.illyria.skyblockx.persist.Data
@@ -20,6 +21,7 @@ class SkyblockX : SavagePlugin() {
         super.onEnable()
         printHeader()
         Globals.skyblockX = this
+        registerAllPermissions(server.pluginManager)
         loadWorld()
         loadDataFiles()
         initWorldBorderUiltity()

@@ -4,28 +4,30 @@ import io.illyria.skyblockx.persist.Config
 import org.bukkit.entity.HumanEntity
 import org.bukkit.permissions.Permissible
 import org.bukkit.permissions.PermissionAttachmentInfo
+import org.bukkit.permissions.PermissionDefault
+import org.bukkit.plugin.PluginManager
 import java.util.concurrent.atomic.AtomicInteger
 
 
-enum class Permission(val node: String, val description: String) {
-    CREATE("create", "create an island."),
-    GO("go", "go to your island."),
-    DELETE("delete", "delete your island."),
-    BYPASS("bypass", "administrator bypass permisssions."),
-    BORDER("border", "update your island border."),
-    COOP("coop", "co-op a player."),
-    MEMBER("member", "manage island members."),
-    REMOVE("remove", "remove/expel a player from your island."),
-    TELEPORT("teleport", "teleport to another island."),
-    LEAVE("leave", "leave your island."),
-    MENU("menu", "open the island menu."),
-    HOME("home", "manage island homes."),
-    ALLOWVISITOR("allowvisitor", "allow visitors on your island."),
-    QUEST("quest", "opening the questing gui."),
-    OBSIDIANTOLAVA("obsidiantolava", "turn obsidian to lava with an empty bucket"),
-    SE_SAVESTUCT("se.savestructure", "administrator skyblock edit save"),
-    SE_PASTESTRUCT("se.pastestructure", "administrator skyblock edit paste"),
-    SE_REGIONS("se.regions", "set positions and make a region");
+enum class Permission(val node: String, val description: String, val permissionDefault: PermissionDefault) {
+    CREATE("create", "create an island.", PermissionDefault.TRUE),
+    GO("go", "go to your island.", PermissionDefault.TRUE),
+    DELETE("delete", "delete your island.", PermissionDefault.TRUE),
+    BYPASS("bypass", "administrator bypass permisssions.", PermissionDefault.OP),
+    BORDER("border", "update your island border.", PermissionDefault.TRUE),
+    COOP("coop", "co-op a player.", PermissionDefault.TRUE),
+    MEMBER("member", "manage island members.", PermissionDefault.TRUE),
+    REMOVE("remove", "remove/expel a player from your island.", PermissionDefault.TRUE),
+    TELEPORT("teleport", "teleport to another island.", PermissionDefault.TRUE),
+    LEAVE("leave", "leave your island.", PermissionDefault.TRUE),
+    MENU("menu", "open the island menu.", PermissionDefault.TRUE),
+    HOME("home", "manage island homes.", PermissionDefault.TRUE),
+    ALLOWVISITOR("allowvisitor", "allow visitors on your island.", PermissionDefault.TRUE),
+    QUEST("quest", "opening the questing gui.", PermissionDefault.TRUE),
+    OBSIDIANTOLAVA("obsidiantolava", "turn obsidian to lava with an empty bucket", PermissionDefault.FALSE),
+    SE_SAVESTUCT("se.savestructure", "administrator skyblock edit save", PermissionDefault.OP),
+    SE_PASTESTRUCT("se.pastestructure", "administrator skyblock edit paste", PermissionDefault.OP),
+    SE_REGIONS("se.regions", "set positions and make a region", PermissionDefault.OP);
 
 
     fun getFullPermissionNode(): String {
@@ -34,6 +36,17 @@ enum class Permission(val node: String, val description: String) {
 
 }
 
+fun registerAllPermissions(pluginManager: PluginManager) {
+    Permission.values().forEach { permission ->
+        pluginManager.addPermission(
+            org.bukkit.permissions.Permission(
+                permission.getFullPermissionNode(),
+                permission.description,
+                permission.permissionDefault
+            )
+        )
+    }
+}
 
 fun hasPermission(humanEntity: HumanEntity, permission: Permission): Boolean {
     return humanEntity.hasPermission(permission.getFullPermissionNode())
