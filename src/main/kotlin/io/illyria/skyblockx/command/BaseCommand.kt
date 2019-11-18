@@ -39,6 +39,7 @@ class BaseCommand : SCommand(), CommandExecutor, TabCompleter {
         subCommands.add(CmdInvite())
         subCommands.add(CmdLeave())
         subCommands.add(CmdPromote())
+        subCommands.add(CmdReset())
 
         Globals.baseCommand = this
     }

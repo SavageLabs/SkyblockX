@@ -151,6 +151,8 @@ object Message {
         "&7You cannot leave an island as a leader, promote someone else to leader, or delete it."
     var commandLeaveHelp = "leave your island."
 
+    var commandResetHelp = "&7reset your island."
+
 
     var listenerVoidDeathPrevented = "&7You fell into the void, teleporting you back."
     var listenerBlockPlacementDenied = "&7You can only place blocks inside of your island."
