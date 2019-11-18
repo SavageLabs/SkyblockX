@@ -97,7 +97,7 @@ abstract class SCommand {
             val tooltip = String.format(
                 Message.commandHelpGeneratorIslandRequired,
                 (if (command.commandRequirements.asIslandMember) Message.commandHelpGeneratorRequires else Message.commandHelpGeneratorNotRequired)
-            ) + "\n" + String.format(Message.commandHelpGeneratorClickMeToPaste, "/is $base")
+            ) + "\n" + Message.commandHelpGeneratorClickMeToPaste
 
             JSONMessage.create(color(String.format(Message.commandHelpGeneratorFormat, base, command.getHelpInfo())))
                 .color(Message.commandHelpGeneratorBackgroundColor)

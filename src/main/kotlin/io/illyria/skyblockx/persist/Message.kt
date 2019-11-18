@@ -21,10 +21,10 @@ object Message {
     var commandHelpGeneratorPageInvalid = "&cThe page %1\$s is invalid."
     var commandHelpGeneratorFormat = "&b/is %1\$s &8> &7 %2\$s"
     var commandHelpGeneratorBackgroundColor = ChatColor.GRAY
-    var commandHelpGeneratorNotRequired = "&c✗&r"
-    var commandHelpGeneratorRequires = "&a✔&r"
+    var commandHelpGeneratorNotRequired = "&cNo&r"
+    var commandHelpGeneratorRequires = "&aYes&r"
     var commandHelpGeneratorIslandRequired = "&7Island member requirement: %1\$s"
-    var commandHelpGeneratorClickMeToPaste = "&7Click me to paste \"%1\$s\" in chat bar."
+    var commandHelpGeneratorClickMeToPaste = "&7Click me to autocomplete."
     var commandHelpGeneratorPageNavBack = "&b<<<"
     var commandHelpGeneratorPageNavNext = "&b>>>"
 
