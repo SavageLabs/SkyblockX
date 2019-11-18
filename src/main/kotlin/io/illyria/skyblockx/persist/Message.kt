@@ -140,6 +140,12 @@ object Message {
     var commandMemberAlreadyPartOfIsland = "&7This player is already in your island"
     var commandMemberHelp = "Member commands."
 
+    var commandLeaveSuccess = "&7You have successfully left your island."
+    var commandLeaveMemberLeftIsland = "&7%1\$s has left your island."
+    var commandLeaveDeniedLeader = "&7You cannot leave an island as a leader, promote someone else to leader, or delete it."
+    var commandLeaveHelp = "leave your island."
+
+
     var listenerVoidDeathPrevented = "&7You fell into the void, teleporting you back."
     var listenerBlockPlacementDenied = "&7You can only place blocks inside of your island."
     var listenerActionDeniedCreateAnIslandFirst = "&7This action has been denied, please create an island first."

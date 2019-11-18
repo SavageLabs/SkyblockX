@@ -17,6 +17,7 @@ enum class Permission(val node: String) {
     MEMBER("member"),
     REMOVE("remove"),
     TELEPORT("teleport"),
+    LEAVE("leave"),
     MENU("menu"),
     HOME("home"),
     QUEST("quest"),
