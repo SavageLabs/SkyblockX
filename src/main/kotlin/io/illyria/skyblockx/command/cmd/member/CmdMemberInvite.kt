@@ -1,5 +1,6 @@
 package io.illyria.skyblockx.command.cmd.member
 
+import io.illyria.skyblockx.Globals
 import io.illyria.skyblockx.command.CommandInfo
 import io.illyria.skyblockx.command.CommandRequirementsBuilder
 import io.illyria.skyblockx.command.SCommand
@@ -44,7 +45,23 @@ class CmdMemberInvite : SCommand() {
     }
 
     override fun getHelpInfo(): String {
-        return Message.commandMemberInvite
+        return Message.commandMemberInviteHelp
     }
 
 }
+
+class CmdInvite : SCommand() {
+    init {
+        aliases.add("invite")
+        requiredArgs.add(Argument("player", 0, PlayerArgument()))
+        commandRequirements = CommandRequirementsBuilder().withPermission(Permission.MEMBER).asIslandMember(true).build()
+    }
+
+    override fun perform(info: CommandInfo) {
+        Globals.baseCommand.subCommands.find { command -> command is CmdMember }?.subCommands?.find { subcommand -> subcommand is CmdMemberInvite }?.perform(info)
+    }
+    override fun getHelpInfo(): String {
+        return Message.commandMemberInviteHelp
+    }
+}
+

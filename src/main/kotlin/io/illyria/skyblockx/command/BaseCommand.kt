@@ -4,6 +4,8 @@ import io.illyria.skyblockx.Globals
 import io.illyria.skyblockx.command.cmd.*
 import io.illyria.skyblockx.command.cmd.home.CmdHome
 import io.illyria.skyblockx.command.cmd.home.CmdHomeGo
+import io.illyria.skyblockx.command.cmd.member.CmdInvite
+import io.illyria.skyblockx.command.cmd.member.CmdKick
 import io.illyria.skyblockx.command.cmd.member.CmdMember
 import io.illyria.skyblockx.core.getIPlayer
 import io.illyria.skyblockx.persist.Config
@@ -41,6 +43,7 @@ class BaseCommand : SCommand(), CommandExecutor, TabCompleter {
         subCommands.add(CmdJoin())
         subCommands.add(CmdBorder())
         subCommands.add(CmdKick())
+        subCommands.add(CmdInvite())
 
         Globals.baseCommand = this
     }
