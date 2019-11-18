@@ -94,7 +94,7 @@ task updatePermissionsList {
         String permissionName = permissionSplit[0].replace(" ", "")
         String permissionDesc = permissionSplit[1].replace("\"", "")
         String permissionNode = "skyblockx." + permissionName.split("\\(\"")[1].replace("\"","")
-        table.append("$permissionName | `$permissionNode` | $permissionDesc")
+        table.append("${permissionName.split("\\(\"")[0]} | `$permissionNode` | $permissionDesc")
     }
     println("File Processed.")
     // Clone and update wiki.
