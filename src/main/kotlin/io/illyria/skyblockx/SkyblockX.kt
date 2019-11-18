@@ -21,12 +21,7 @@ class SkyblockX : SavagePlugin() {
         printHeader()
         Globals.skyblockX = this
         Globals.worldBorderUtil = WorldBorderUtil(this)
-        this.getCommand("skyblockx")!!.setExecutor(BaseCommandTesting())
-        val baseCommand = BaseCommand()
-        val command = this.getCommand("is")!!
-        command.setExecutor(baseCommand)
-        command.tabCompleter = baseCommand
-        logger.info("${baseCommand.subCommands.size} commands registered.")
+        setupCommands()
         Config.load()
         setupOreGeneratorAlgorithm()
         Data.load()
@@ -34,6 +29,15 @@ class SkyblockX : SavagePlugin() {
         registerListeners(DataListener(), SEditListener(), BlockListener(), PlayerListener(), EntityListener())
         logger.info("Loaded ${Data.IPlayers.size} players")
         logger.info("Loaded ${Data.islands.size} islands")
+    }
+
+    private fun setupCommands() {
+        this.getCommand("skyblockx")!!.setExecutor(BaseCommandTesting())
+        val baseCommand = BaseCommand()
+        val command = this.getCommand("is")!!
+        command.setExecutor(baseCommand)
+        command.tabCompleter = baseCommand
+        logger.info("${baseCommand.subCommands.size} commands registered.")
     }
 
     private fun setupOreGeneratorAlgorithm() {
