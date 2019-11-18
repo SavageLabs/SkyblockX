@@ -62,6 +62,14 @@ class CommandInfo(val commandSender: CommandSender, val args: ArrayList<String>,
         return null
     }
 
+    fun getArgAsBoolean(index: Int, informIfNot: Boolean = true): Boolean? {
+        val arg = args[index].toLowerCase()
+        if (arg.equals("true") || arg.equals("1")) return true
+        if (arg.equals("false") || arg.equals("0")) return false
+        if (informIfNot) message(Message.commandParsingArgIsNotBoolean)
+        return null
+    }
+
     fun isPlayer(): Boolean {
         return player != null
     }

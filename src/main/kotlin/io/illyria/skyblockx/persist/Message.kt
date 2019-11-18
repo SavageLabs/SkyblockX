@@ -31,6 +31,7 @@ object Message {
 
     var commandParsingArgIsNotInt = "&cThis argument is not an integer, please make it one."
     var commandParsingPlayerDoesNotExist = "&cThis player does not exist."
+    var commandParsingArgIsNotBoolean = "&cThis argument is not a boolean, please make it 'true' or 'false'"
     var commandParsingPlayerIsYou = "&cYou cannot reference yourself."
 
 
@@ -153,6 +154,8 @@ object Message {
 
     var commandResetHelp = "&7reset your island."
 
+    var commandAllowVisitorsStatus = "&7Your visitor allowed status is now set to &b%1\$s&7."
+    var commandAllowVisitorsHelp = "&7Allow visitors to your island using /is teleport <owner-name>."
 
     var listenerVoidDeathPrevented = "&7You fell into the void, teleporting you back."
     var listenerBlockPlacementDenied = "&7You can only place blocks inside of your island."
