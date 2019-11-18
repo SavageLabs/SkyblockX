@@ -14,7 +14,7 @@ class CmdSEPosition : io.illyria.skyblockx.command.SCommand() {
 
         commandRequirements =
             io.illyria.skyblockx.command.CommandRequirementsBuilder().asPlayer(true)
-                .withPermission(Permission.SE_PASTESTRUCT).build()
+                .withPermission(Permission.SE_REGIONS).build()
     }
 
 
