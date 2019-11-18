@@ -7,25 +7,25 @@ import org.bukkit.permissions.PermissionAttachmentInfo
 import java.util.concurrent.atomic.AtomicInteger
 
 
-enum class Permission(val node: String) {
-    CREATE("create"),
-    GO("go"),
-    DELETE("delete"),
-    BYPASS("bypass"),
-    BORDER("border"),
-    COOP("coop"),
-    MEMBER("member"),
-    REMOVE("remove"),
-    TELEPORT("teleport"),
-    LEAVE("leave"),
-    MENU("menu"),
-    HOME("home"),
-    ALLOWVISITOR("allowvisitor"),
-    QUEST("quest"),
-    OBSIDIANTOLAVA("obsidiantolava"),
-    SE_SAVESTUCT("se.savestructure"),
-    SE_PASTESTRUCT("se.pastestructure"),
-    SE_REGIONS("se.regions");
+enum class Permission(val node: String, val description: String) {
+    CREATE("create", "create an island."),
+    GO("go", "go to your island."),
+    DELETE("delete", "delete your island."),
+    BYPASS("bypass", "administrator bypass permisssions."),
+    BORDER("border", "update your island border."),
+    COOP("coop", "co-op a player."),
+    MEMBER("member", "manage island members."),
+    REMOVE("remove", "remove/expel a player from your island."),
+    TELEPORT("teleport", "teleport to another island."),
+    LEAVE("leave", "leave your island."),
+    MENU("menu", "open the island menu."),
+    HOME("home", "manage island homes."),
+    ALLOWVISITOR("allowvisitor", "allow visitors on your island."),
+    QUEST("quest", "opening the questing gui."),
+    OBSIDIANTOLAVA("obsidiantolava", "turn obsidian to lava with an empty bucket"),
+    SE_SAVESTUCT("se.savestructure", "administrator skyblock edit save"),
+    SE_PASTESTRUCT("se.pastestructure", "administrator skyblock edit paste"),
+    SE_REGIONS("se.regions", "set positions and make a region");
 
 
     fun getFullPermissionNode(): String {
