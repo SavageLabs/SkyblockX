@@ -40,7 +40,7 @@ class CmdMemberInvite : SCommand() {
         info.message(String.format(Message.commandMemberInviteSuccess, playerToInvite.name))
         JSONMessage.create(color(String.format(Message.commandMemberInviteMessage, info.player?.name)))
             .tooltip(color("&7Click to paste &f\"/is join ${info.player!!.name}\""))
-            .suggestCommand("/is join ${info.player!!.name}")
+            .runCommand("/is join ${info.player!!.name}")
             .send(info.getArgAsPlayer(0)!!)
     }
 
