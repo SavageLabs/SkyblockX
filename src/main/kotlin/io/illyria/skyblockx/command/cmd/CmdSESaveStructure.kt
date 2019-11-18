@@ -1,5 +1,6 @@
 package io.illyria.skyblockx.command.cmd
 
+import io.illyria.skyblockx.command.CommandRequirementsBuilder
 import io.illyria.skyblockx.core.Permission
 import io.illyria.skyblockx.persist.Message
 import io.illyria.skyblockx.sedit.SkyblockEdit
@@ -13,7 +14,7 @@ class CmdSESaveStructure : io.illyria.skyblockx.command.SCommand() {
         requiredArgs.add(Argument("filename", 0, StringArgument()))
 
         commandRequirements =
-            io.illyria.skyblockx.command.CommandRequirementsBuilder().asPlayer(true)
+            CommandRequirementsBuilder().asPlayer(true)
                 .withPermission(Permission.SE_SAVESTUCT).build()
     }
 
