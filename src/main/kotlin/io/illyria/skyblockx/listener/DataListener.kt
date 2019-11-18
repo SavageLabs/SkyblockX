@@ -4,6 +4,7 @@ import io.illyria.skyblockx.Globals
 import io.illyria.skyblockx.core.IPlayer
 import io.illyria.skyblockx.core.getIPlayerByName
 import io.illyria.skyblockx.core.getIslandById
+import io.illyria.skyblockx.core.updateWorldBorder
 import io.illyria.skyblockx.persist.Data
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
@@ -26,6 +27,8 @@ class DataListener : Listener {
                     Globals.skyblockX.logger.info("Updated ${event.player.name}'s tag since they changed their name.")
                 }
             }
+            // Delay to handle other plugins teleporting on login etc...
+            updateWorldBorder(event.player, event.player.location, 10L)
             return
         }
         Data.IPlayers[event.player.uniqueId.toString()] = IPlayer(event.player.uniqueId.toString())

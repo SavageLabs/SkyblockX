@@ -189,6 +189,12 @@ abstract class SCommand {
         }
     }
 
+    class BooleanArgument : SCommand.ArgumentType() {
+        override fun getPossibleValues(iPlayer: IPlayer?): List<String> {
+            return listOf("true", "false")
+        }
+    }
+
     class MemberArgument : ArgumentType() {
         override fun getPossibleValues(iPlayer: IPlayer?): List<String> {
             return if (iPlayer != null && iPlayer.hasIsland()) iPlayer.getIsland()!!.getAllMembers().toList() else emptyList()

@@ -9,7 +9,6 @@ class CmdGo : io.illyria.skyblockx.command.SCommand() {
 
     init {
         aliases.add("go")
-        this.optionalArgs.add(Argument("player", 0, PlayerArgument()))
 
 
         commandRequirements =

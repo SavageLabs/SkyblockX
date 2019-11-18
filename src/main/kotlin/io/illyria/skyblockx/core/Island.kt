@@ -37,6 +37,8 @@ data class Island(val islandID: Int, val point: Point, var ownerUUID: String, va
     var questData = HashMap<String, Int>()
     var currentQuest: String? = null
 
+    var allowVisitors = false
+
     var oneTimeQuestsCompleted = mutableSetOf<String>()
 
     var memberLimit = Config.defaultIslandMemberLimit
