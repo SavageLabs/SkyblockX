@@ -34,9 +34,10 @@ class SkyblockX : SavagePlugin() {
         saveDataFiles()
     }
 
-    private fun loadDataFiles() {
+    fun loadDataFiles() {
         Config.load()
         Data.load()
+        Quests.load()
         Message.load()
     }
 
@@ -53,7 +54,7 @@ class SkyblockX : SavagePlugin() {
         logger.info("${baseCommand.subCommands.size} commands registered.")
     }
 
-    private fun setupOreGeneratorAlgorithm() {
+    fun setupOreGeneratorAlgorithm() {
         val generatorStrategyMap = HashMap<Int, Items<XMaterial>>()
         Config.generatorProbability.forEach{ (key, value) -> run {generatorStrategyMap[key] = Items<XMaterial>(value)}}
         Globals.generatorAlgorithm = generatorStrategyMap
