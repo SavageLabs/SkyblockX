@@ -28,15 +28,19 @@ class SkyblockX : SavagePlugin() {
         command.tabCompleter = baseCommand
         logger.info("${baseCommand.subCommands.size} commands registered.")
         Config.load()
-        val generatorStrategyMap = HashMap<Int, Items<XMaterial>>()
-        Config.generatorProbability.forEach{ key, value -> run {generatorStrategyMap[key] = Items<XMaterial>(value)}}
-        Globals.generatorAlgorithm = generatorStrategyMap
-        WorldCreator(Config.skyblockWorldName).generator(VoidWorldGenerator()).createWorld()
+        setupOreGeneratorAlgorithm()
         Data.load()
         Message.load()
         registerListeners(DataListener(), SEditListener(), BlockListener(), PlayerListener(), EntityListener())
         logger.info("Loaded ${Data.IPlayers.size} players")
         logger.info("Loaded ${Data.islands.size} islands")
+    }
+
+    private fun setupOreGeneratorAlgorithm() {
+        val generatorStrategyMap = HashMap<Int, Items<XMaterial>>()
+        Config.generatorProbability.forEach{ (key, value) -> run {generatorStrategyMap[key] = Items<XMaterial>(value)}}
+        Globals.generatorAlgorithm = generatorStrategyMap
+        WorldCreator(Config.skyblockWorldName).generator(VoidWorldGenerator()).createWorld()
     }
 
     override fun onDisable() {
