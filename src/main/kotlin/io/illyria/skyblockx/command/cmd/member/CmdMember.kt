@@ -12,7 +12,8 @@ class CmdMember : SCommand() {
         aliases.add("member")
         aliases.add("members")
 
-        commandRequirements = CommandRequirementsBuilder().withPermission(Permission.MEMBER).asIslandMember(true).build()
+        commandRequirements =
+            CommandRequirementsBuilder().withPermission(Permission.MEMBER).asIslandMember(true).build()
 
         subCommands.add(CmdMemberInvite())
         subCommands.add(CmdMemberList())

@@ -17,7 +17,8 @@ class CmdMemberInvite : SCommand() {
 
         requiredArgs.add(Argument("player", 0, PlayerArgument()))
 
-        commandRequirements = CommandRequirementsBuilder().withPermission(Permission.MEMBER).asIslandMember(true).build()
+        commandRequirements =
+            CommandRequirementsBuilder().withPermission(Permission.MEMBER).asIslandMember(true).build()
     }
 
 
@@ -54,12 +55,15 @@ class CmdInvite : SCommand() {
     init {
         aliases.add("invite")
         requiredArgs.add(Argument("player", 0, PlayerArgument()))
-        commandRequirements = CommandRequirementsBuilder().withPermission(Permission.MEMBER).asIslandMember(true).build()
+        commandRequirements =
+            CommandRequirementsBuilder().withPermission(Permission.MEMBER).asIslandMember(true).build()
     }
 
     override fun perform(info: CommandInfo) {
-        Globals.baseCommand.subCommands.find { command -> command is CmdMember }?.subCommands?.find { subcommand -> subcommand is CmdMemberInvite }?.perform(info)
+        Globals.baseCommand.subCommands.find { command -> command is CmdMember }
+            ?.subCommands?.find { subcommand -> subcommand is CmdMemberInvite }?.perform(info)
     }
+
     override fun getHelpInfo(): String {
         return Message.commandMemberInviteHelp
     }

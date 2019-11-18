@@ -33,7 +33,10 @@ object Quests {
             SerializableItem(
                 XMaterial.OAK_WOOD,
                 "&bGet wood from island's tree",
-                listOf("&7Break the wood from your island's tree trunk", "&7Completion: &b{currentAmount}&7/&b{finalAmount}"),
+                listOf(
+                    "&7Break the wood from your island's tree trunk",
+                    "&7Completion: &b{currentAmount}&7/&b{finalAmount}"
+                ),
                 1
             ),
             14,
@@ -65,7 +68,10 @@ object Quests {
             SerializableItem(
                 XMaterial.OAK_WOOD,
                 "&bGet wood from island's tree",
-                listOf("&7Break the wood from your island's tree trunk", "&7Completion: &b{currentAmount}&7/&b{finalAmount}"),
+                listOf(
+                    "&7Break the wood from your island's tree trunk",
+                    "&7Completion: &b{currentAmount}&7/&b{finalAmount}"
+                ),
                 1
             ),
             14,

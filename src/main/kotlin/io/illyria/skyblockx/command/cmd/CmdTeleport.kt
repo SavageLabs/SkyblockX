@@ -6,7 +6,6 @@ import io.illyria.skyblockx.core.getIslandById
 import io.illyria.skyblockx.core.getIslandByOwnerTag
 import io.illyria.skyblockx.persist.Message
 import me.rayzr522.jsonmessage.JSONMessage
-import org.bukkit.Bukkit
 
 class CmdTeleport : io.illyria.skyblockx.command.SCommand() {
 

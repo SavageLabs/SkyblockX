@@ -3,7 +3,6 @@ package io.illyria.skyblockx.listener
 import io.illyria.skyblockx.Globals
 import io.illyria.skyblockx.core.canUseBlockAtLocation
 import io.illyria.skyblockx.core.getIPlayer
-import io.illyria.skyblockx.core.getIslandFromLocation
 import io.illyria.skyblockx.persist.Config
 import io.illyria.skyblockx.persist.Message
 import io.illyria.skyblockx.persist.Quests
@@ -15,7 +14,6 @@ import org.bukkit.block.BlockFace
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.block.BlockBreakEvent
-import org.bukkit.event.block.BlockFormEvent
 import org.bukkit.event.block.BlockFromToEvent
 import org.bukkit.event.block.BlockPlaceEvent
 import org.bukkit.metadata.FixedMetadataValue
@@ -145,7 +143,8 @@ class BlockListener : Listener {
 
         Bukkit.getScheduler().runTask(Globals.skyblockX) { _ ->
             run {
-                if (event.toBlock.type == Material.COBBLESTONE) event.toBlock.location.block.type = Globals.generatorAlgorithm[1]!!.choose().parseMaterial()!!
+                if (event.toBlock.type == Material.COBBLESTONE) event.toBlock.location.block.type =
+                    Globals.generatorAlgorithm[1]!!.choose().parseMaterial()!!
             }
         }
 

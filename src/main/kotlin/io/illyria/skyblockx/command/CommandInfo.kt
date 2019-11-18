@@ -18,7 +18,6 @@ class CommandInfo(val commandSender: CommandSender, val args: ArrayList<String>,
     var island: Island? = if (commandSender is Player && iPlayer != null) iPlayer!!.getIsland() else null
 
 
-
     fun isBypassing(): Boolean {
         return iPlayer!!.inBypass
     }

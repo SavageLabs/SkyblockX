@@ -2,15 +2,9 @@ package io.illyria.skyblockx.gui
 
 import com.github.stefvanschie.inventoryframework.GuiItem
 import io.illyria.skyblockx.core.IPlayer
-import io.illyria.skyblockx.core.color
-import io.illyria.skyblockx.core.createIsland
-import io.illyria.skyblockx.core.hasPermission
 import io.illyria.skyblockx.persist.Config
-import io.illyria.skyblockx.persist.Message
 import net.prosavage.baseplugin.serializer.commonobjects.SerializableItem
-import org.bukkit.Bukkit
 import org.bukkit.entity.Player
-import kotlin.collections.ArrayList
 
 class IslandMenuGUI : BaseGUI(Config.islandMenuGUITitle, Config.islandMenuGUIBackgroundItem, Config.islandMenuGUIRows) {
 

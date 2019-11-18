@@ -1,16 +1,13 @@
 package io.illyria.skyblockx.listener
 
-import io.illyria.skyblockx.Globals
 import io.illyria.skyblockx.core.*
 import io.illyria.skyblockx.persist.Config
 import io.illyria.skyblockx.persist.Message
 import io.illyria.skyblockx.persist.Quests
 import io.illyria.skyblockx.quest.QuestGoal
 import io.illyria.skyblockx.quest.failsQuestCheckingPreRequisites
-import net.prosavage.baseplugin.WorldBorderUtil
 import net.prosavage.baseplugin.XMaterial
 import org.bukkit.Bukkit
-import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.enchantments.Enchantment
 import org.bukkit.entity.Item
@@ -70,7 +67,6 @@ class PlayerListener : Listener {
     fun onPlayerTeleport(event: PlayerTeleportEvent) {
         updateWorldBorder(event.player, event.to!!, 10L)
     }
-
 
 
     @EventHandler
@@ -149,7 +145,6 @@ class PlayerListener : Listener {
             return
         }
     }
-
 
 
     @EventHandler

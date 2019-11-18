@@ -56,11 +56,13 @@ class CmdPromote : SCommand() {
         commandRequirements =
             CommandRequirementsBuilder().withPermission(Permission.MEMBER).asIslandMember(true).asLeader(true).build()
     }
+
     override fun perform(info: CommandInfo) {
         // Execute command go just to make a shorthand version for /is member kick <member>.
         Globals.baseCommand.subCommands.find { command -> command is CmdMember }
             ?.subCommands?.find { command -> command is CmdMemberPromote }?.perform(info)
     }
+
     override fun getHelpInfo(): String {
         return Message.commandMemberKickHelp
     }

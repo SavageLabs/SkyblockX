@@ -13,7 +13,8 @@ class CmdBorder : SCommand() {
     init {
         aliases.add("border")
 
-        commandRequirements = CommandRequirementsBuilder().withPermission(Permission.BORDER).asIslandMember(true).build()
+        commandRequirements =
+            CommandRequirementsBuilder().withPermission(Permission.BORDER).asIslandMember(true).build()
     }
 
     override fun perform(info: CommandInfo) {

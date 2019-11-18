@@ -104,8 +104,12 @@ abstract class SCommand {
                 .tooltip(color(tooltip)).suggestCommand("/is $base").send(player)
         }
         val pageNav = JSONMessage.create("       ")
-        if (page > 1) pageNav.then(color(Message.commandHelpGeneratorPageNavBack)).tooltip("Go to Page ${page - 1}").runCommand("/is help ${page - 1}").then("       ")
-        if (page < subCommands.size) pageNav.then(color(Message.commandHelpGeneratorPageNavNext)).tooltip("Go to Page ${page + 1}").runCommand("/is help ${page + 1}")
+        if (page > 1) pageNav.then(color(Message.commandHelpGeneratorPageNavBack)).tooltip("Go to Page ${page - 1}").runCommand(
+            "/is help ${page - 1}"
+        ).then("       ")
+        if (page < subCommands.size) pageNav.then(color(Message.commandHelpGeneratorPageNavNext)).tooltip("Go to Page ${page + 1}").runCommand(
+            "/is help ${page + 1}"
+        )
         pageNav.send(player)
     }
 

@@ -44,10 +44,10 @@ class SEditListener : Listener {
                 color(
                     Message.messagePrefix +
                             String.format(
-                        Message.skyblockEditPositionSet,
-                        2.toString(),
-                        "${iPlayer.pos2!!.x}, ${iPlayer.pos2!!.y}, ${iPlayer.pos2!!.z} in ${iPlayer.pos2!!.world!!.name}"
-                    )
+                                Message.skyblockEditPositionSet,
+                                2.toString(),
+                                "${iPlayer.pos2!!.x}, ${iPlayer.pos2!!.y}, ${iPlayer.pos2!!.z} in ${iPlayer.pos2!!.world!!.name}"
+                            )
                 )
             )
             iPlayer.choosingPosition = false

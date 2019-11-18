@@ -4,7 +4,6 @@ import io.illyria.skyblockx.command.CommandInfo
 import io.illyria.skyblockx.command.CommandRequirementsBuilder
 import io.illyria.skyblockx.command.SCommand
 import io.illyria.skyblockx.core.Permission
-import io.illyria.skyblockx.core.getIPlayerByName
 import io.illyria.skyblockx.persist.Message
 
 class CmdLeave : SCommand() {
@@ -24,7 +23,12 @@ class CmdLeave : SCommand() {
         }
 
         info.message(Message.commandLeaveSuccess)
-        info.island!!.messageAllOnlineIslandMembers(String.format(Message.commandLeaveMemberLeftIsland, info.player!!.name))
+        info.island!!.messageAllOnlineIslandMembers(
+            String.format(
+                Message.commandLeaveMemberLeftIsland,
+                info.player!!.name
+            )
+        )
         info.island!!.kickMember(info.player!!.name)
 
 

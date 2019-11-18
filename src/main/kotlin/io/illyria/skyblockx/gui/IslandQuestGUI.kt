@@ -4,7 +4,6 @@ import com.github.stefvanschie.inventoryframework.GuiItem
 import io.illyria.skyblockx.core.IPlayer
 import io.illyria.skyblockx.core.Island
 import io.illyria.skyblockx.core.color
-import io.illyria.skyblockx.persist.Config
 import io.illyria.skyblockx.persist.Message
 import io.illyria.skyblockx.persist.Quests
 import io.illyria.skyblockx.quest.Quest
@@ -35,8 +34,12 @@ class IslandQuestGUI :
                         context.getIsland()!!.currentQuest = quest.id
                         val islandQuestGUI = IslandQuestGUI()
                         islandQuestGUI.showGui(player)
-                        player.sendMessage(color(Message.questActivationTrigger
-                            .replace("{quest}", quest.id)))
+                        player.sendMessage(
+                            color(
+                                Message.questActivationTrigger
+                                    .replace("{quest}", quest.id)
+                            )
+                        )
                     }
                 })
             pane.populateWithGuiItems(guiItems)
@@ -48,7 +51,10 @@ class IslandQuestGUI :
         for (line in serializableItem.lore) {
             lore.add(
                 line
-                    .replace("{currentAmount}", DecimalFormat.getInstance().format(island.getQuestCompletedAmount(quest.id)))
+                    .replace(
+                        "{currentAmount}",
+                        DecimalFormat.getInstance().format(island.getQuestCompletedAmount(quest.id))
+                    )
                     .replace("{finalAmount}", DecimalFormat.getInstance().format(quest.amountTillComplete))
                     .replace("{progress}", getProgressPlaceholder(island, quest))
             )
@@ -63,7 +69,9 @@ class IslandQuestGUI :
 
     private fun getProgressPlaceholder(island: Island, quest: Quest): String {
         if (quest.id == island.currentQuest) return color(Message.questInProgressPlaceholder)
-        return if (island.isOneTimeQuestAlreadyCompleted(quest.id)) color(Message.questCompletedPlaceholder) else color(Message.questNotStarted)
+        return if (island.isOneTimeQuestAlreadyCompleted(quest.id)) color(Message.questCompletedPlaceholder) else color(
+            Message.questNotStarted
+        )
     }
 
 }

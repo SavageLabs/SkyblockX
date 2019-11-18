@@ -3,7 +3,6 @@ package io.illyria.skyblockx.command.cmd
 import io.illyria.skyblockx.command.CommandInfo
 import io.illyria.skyblockx.command.CommandRequirementsBuilder
 import io.illyria.skyblockx.command.SCommand
-import io.illyria.skyblockx.gui.IslandQuestGUI
 import io.illyria.skyblockx.persist.Message
 
 class CmdJoin : SCommand() {

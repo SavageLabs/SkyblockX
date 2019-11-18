@@ -2,7 +2,6 @@ package io.illyria.skyblockx.listener
 
 import io.illyria.skyblockx.Globals
 import io.illyria.skyblockx.core.IPlayer
-import io.illyria.skyblockx.core.getIPlayer
 import io.illyria.skyblockx.core.getIPlayerByName
 import io.illyria.skyblockx.core.getIslandById
 import io.illyria.skyblockx.persist.Data

@@ -147,7 +147,8 @@ object Message {
 
     var commandLeaveSuccess = "&7You have successfully left your island."
     var commandLeaveMemberLeftIsland = "&7%1\$s has left your island."
-    var commandLeaveDeniedLeader = "&7You cannot leave an island as a leader, promote someone else to leader, or delete it."
+    var commandLeaveDeniedLeader =
+        "&7You cannot leave an island as a leader, promote someone else to leader, or delete it."
     var commandLeaveHelp = "leave your island."
 
 

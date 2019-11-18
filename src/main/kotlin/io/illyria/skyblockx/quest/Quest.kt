@@ -2,7 +2,6 @@ package io.illyria.skyblockx.quest
 
 import io.illyria.skyblockx.core.IPlayer
 import io.illyria.skyblockx.core.Island
-import io.illyria.skyblockx.persist.Config
 import io.illyria.skyblockx.persist.Message
 import io.illyria.skyblockx.persist.Quests
 import net.prosavage.baseplugin.serializer.commonobjects.SerializableItem

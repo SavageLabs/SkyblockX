@@ -3,10 +3,8 @@ package io.illyria.skyblockx.command
 import io.illyria.skyblockx.Globals
 import io.illyria.skyblockx.command.cmd.*
 import io.illyria.skyblockx.command.cmd.home.CmdHome
-import io.illyria.skyblockx.command.cmd.home.CmdHomeGo
 import io.illyria.skyblockx.command.cmd.member.*
 import io.illyria.skyblockx.core.getIPlayer
-import io.illyria.skyblockx.persist.Config
 import io.illyria.skyblockx.persist.Message
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor

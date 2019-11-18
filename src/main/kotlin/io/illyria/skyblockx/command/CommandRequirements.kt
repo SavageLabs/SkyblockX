@@ -6,7 +6,12 @@ import io.illyria.skyblockx.persist.Message
 import org.bukkit.command.ConsoleCommandSender
 import org.bukkit.entity.Player
 
-class CommandRequirements(val permission: Permission?, var asPlayer: Boolean, var asIslandMember: Boolean, var asLeader: Boolean) {
+class CommandRequirements(
+    val permission: Permission?,
+    var asPlayer: Boolean,
+    var asIslandMember: Boolean,
+    var asLeader: Boolean
+) {
 
 
     fun computeRequirements(info: io.illyria.skyblockx.command.CommandInfo, informIfNot: Boolean = true): Boolean {
@@ -17,7 +22,6 @@ class CommandRequirements(val permission: Permission?, var asPlayer: Boolean, va
             }
             return false
         }
-
 
 
         // If the console sends it then its OP

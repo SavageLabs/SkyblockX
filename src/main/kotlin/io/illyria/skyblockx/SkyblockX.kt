@@ -61,7 +61,11 @@ class SkyblockX : SavagePlugin() {
 
     fun setupOreGeneratorAlgorithm() {
         val generatorStrategyMap = HashMap<Int, Items<XMaterial>>()
-        Config.generatorProbability.forEach{ (key, value) -> run {generatorStrategyMap[key] = Items<XMaterial>(value)}}
+        Config.generatorProbability.forEach { (key, value) ->
+            run {
+                generatorStrategyMap[key] = Items<XMaterial>(value)
+            }
+        }
         Globals.generatorAlgorithm = generatorStrategyMap
     }
 

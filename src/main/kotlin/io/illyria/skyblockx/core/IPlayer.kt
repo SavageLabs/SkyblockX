@@ -27,7 +27,7 @@ data class IPlayer(val uuid: String) {
     var coopedIslandIds = HashSet<Int>()
 
     var borderColor = WorldBorderUtil.Color.Green
-        get() = field ?: WorldBorderUtil.Color.Green
+        get() = field
 
     var islandsInvitedTo = HashSet<Int>()
 
@@ -133,6 +133,7 @@ fun getIPlayer(player: Player): IPlayer {
 fun getIPlayerByName(name: String): IPlayer? {
     return Data.IPlayers.values.find { iPlayer -> iPlayer.name == name }
 }
+
 fun createIPlayer(player: Player): IPlayer {
     val iPlayer = IPlayer(player.uniqueId.toString())
     Data.IPlayers[player.uniqueId.toString()] = iPlayer

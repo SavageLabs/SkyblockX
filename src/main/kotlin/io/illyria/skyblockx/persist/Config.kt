@@ -3,17 +3,11 @@ package io.illyria.skyblockx.persist
 import io.illyria.skyblockx.gui.IslandBorderItem
 import io.illyria.skyblockx.gui.MenuItem
 import io.illyria.skyblockx.persist.data.IslandCreateInfo
-import io.illyria.skyblockx.persist.data.Items
 import io.illyria.skyblockx.persist.data.WeightedItem
-import io.illyria.skyblockx.quest.Quest
-import io.illyria.skyblockx.quest.QuestGoal
 import net.prosavage.baseplugin.WorldBorderUtil
 import net.prosavage.baseplugin.XMaterial
 import net.prosavage.baseplugin.serializer.Serializer
 import net.prosavage.baseplugin.serializer.commonobjects.SerializableItem
-import org.bukkit.enchantments.Enchantment
-import org.bukkit.entity.EntityType
-import org.bukkit.potion.PotionType
 
 object Config {
 
