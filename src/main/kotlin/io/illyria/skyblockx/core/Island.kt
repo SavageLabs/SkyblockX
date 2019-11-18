@@ -21,13 +21,13 @@ import java.util.*
 import kotlin.collections.HashSet
 
 
-data class Island(val islandID: Int, val point: Point, var ownerUUID: String, var ownerTag: String) {
+
+data class Island(val islandID: Int, val point: Point, val ownerUUID: String, var ownerTag: String) {
 
     val minLocation: SLocation = getSLocation(point.getLocation())
-    val maxLocation: SLocation = getSLocation(
-        point.getLocation()
-            .add(Config.islandMaxSizeInBlocks.toDouble(), 256.toDouble(), Config.islandMaxSizeInBlocks.toDouble())
-    )
+    val maxLocation: SLocation = getSLocation(point.getLocation()
+        .add(Config.islandMaxSizeInBlocks.toDouble(), 256.toDouble(), Config.islandMaxSizeInBlocks.toDouble()))
+
 
 
     var maxCoopPlayers = Config.defaultMaxCoopPlayers
@@ -305,6 +305,7 @@ data class Island(val islandID: Int, val point: Point, var ownerUUID: String, va
         val x = v.x
         val z = v.z
         return x >= minLocation.x && x < maxLocation.x + 1 && z >= minLocation.z && z < maxLocation.z + 1
+
     }
 
 

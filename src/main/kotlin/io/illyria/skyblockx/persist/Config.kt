@@ -127,7 +127,7 @@ object Config {
     var islandCreateGUIIslandTypes = listOf(
         IslandCreateInfo(
             "normal",
-            "savageskyblock.islands.default", 2, SerializableItem(
+            "skyblockx.islands.default", 2, SerializableItem(
                 XMaterial.GRASS_BLOCK,
                 "&aBasic Island",
                 listOf("&aThis is the basic starter island", "&aComes with everything you need to get started."),
@@ -136,7 +136,7 @@ object Config {
         ),
         IslandCreateInfo(
             "bedrock",
-            "savageskyblock.islands.bedrock", 6, SerializableItem(
+            "skyblockx.islands.bedrock", 6, SerializableItem(
                 XMaterial.BEDROCK,
                 "&aBedrock Island",
                 listOf("&aThis is the basic starter island", "&aComes with everything you need to get started."),
