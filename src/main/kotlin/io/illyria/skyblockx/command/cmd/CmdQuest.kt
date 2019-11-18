@@ -18,7 +18,6 @@ class CmdQuest : io.illyria.skyblockx.command.SCommand() {
 
     override fun perform(info: io.illyria.skyblockx.command.CommandInfo) {
         IslandQuestGUI().showGui(info.player!!)
-
     }
 
 
