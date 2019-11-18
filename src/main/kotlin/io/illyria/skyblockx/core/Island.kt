@@ -5,6 +5,7 @@ import io.illyria.skyblockx.persist.Data
 import io.illyria.skyblockx.persist.Message
 import io.illyria.skyblockx.persist.Quests
 import io.illyria.skyblockx.persist.data.SLocation
+import io.illyria.skyblockx.persist.data.getSLocation
 import io.illyria.skyblockx.quest.Quest
 import io.illyria.skyblockx.quest.incrementQuestInOrder
 import io.illyria.skyblockx.sedit.SkyblockEdit
@@ -22,9 +23,9 @@ import kotlin.collections.HashSet
 
 data class Island(val islandID: Int, val point: Point, val ownerUUID: String, var ownerTag: String) {
 
-    val minLocation = point.getLocation()
-    val maxLocation = point.getLocation()
-        .add(Config.islandMaxSizeInBlocks.toDouble(), 256.toDouble(), Config.islandMaxSizeInBlocks.toDouble())
+    val minLocation: SLocation = getSLocation(point.getLocation())
+    val maxLocation: SLocation = getSLocation(point.getLocation()
+        .add(Config.islandMaxSizeInBlocks.toDouble(), 256.toDouble(), Config.islandMaxSizeInBlocks.toDouble()))
 
 
 
@@ -264,7 +265,7 @@ data class Island(val islandID: Int, val point: Point, val ownerUUID: String, va
 
     fun getIslandCenter(): Location {
         return Location(
-            minLocation.world,
+            minLocation.getLocation().world,
             minLocation.x + (Config.islandMaxSizeInBlocks / 2),
             101.toDouble(),
             minLocation.z + (Config.islandMaxSizeInBlocks / 2)
@@ -282,11 +283,11 @@ data class Island(val islandID: Int, val point: Point, val ownerUUID: String, va
     }
 
     fun containsBlock(v: Location): Boolean {
-        if (v.world !== minLocation.world) return false
+        if (v.world !== minLocation.getLocation().world) return false
         val x = v.x
         val y = v.y
         val z = v.z
-        return x >= minLocation.blockX && x < maxLocation.blockX + 1 && y >= minLocation.blockY && y < maxLocation.blockY + 1 && z >= minLocation.blockZ && z < maxLocation.blockZ + 1
+        return x >= minLocation.x && x < maxLocation.x + 1 && y >= minLocation.y && y < maxLocation.y + 1 && z >= minLocation.z && z < maxLocation.z + 1
     }
 
     /**
@@ -295,7 +296,7 @@ data class Island(val islandID: Int, val point: Point, val ownerUUID: String, va
     fun locationInIsland(v: Location): Boolean {
         val x = v.x
         val z = v.z
-        return x >= minLocation.blockX && x < maxLocation.blockX + 1 && z >= minLocation.blockZ && z < maxLocation.blockZ + 1
+        return x >= minLocation.x && x < maxLocation.x + 1 && z >= minLocation.z && z < maxLocation.z + 1
     }
 
 }

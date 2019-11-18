@@ -13,7 +13,6 @@ data class SLocation(val x: Double, val y: Double, val z: Double) {
     fun getLocation(): Location {
         return Location(Bukkit.getWorld(Config.skyblockWorldName), x, y, z)
     }
-
 }
 
 
