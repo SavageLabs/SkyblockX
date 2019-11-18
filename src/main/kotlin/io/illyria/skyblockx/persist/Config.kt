@@ -3,6 +3,8 @@ package io.illyria.skyblockx.persist
 import io.illyria.skyblockx.gui.IslandBorderItem
 import io.illyria.skyblockx.gui.MenuItem
 import io.illyria.skyblockx.persist.data.IslandCreateInfo
+import io.illyria.skyblockx.persist.data.Items
+import io.illyria.skyblockx.persist.data.WeightedItem
 import io.illyria.skyblockx.quest.Quest
 import io.illyria.skyblockx.quest.QuestGoal
 import net.prosavage.baseplugin.WorldBorderUtil
@@ -37,13 +39,48 @@ object Config {
 
     var defaultIslandMemberLimit = 3
 
+    var islandOreGeneratorEnabled = true
+
+
+    var generatorProbability = hashMapOf(
+        1 to arrayListOf(
+            WeightedItem(XMaterial.COBBLESTONE, 5),
+            WeightedItem(XMaterial.GOLD_ORE, 1),
+            WeightedItem(XMaterial.IRON_ORE, 1),
+            WeightedItem(XMaterial.COAL_ORE, 3)
+        ),
+        2 to arrayListOf(
+            WeightedItem(XMaterial.COBBLESTONE, 3),
+            WeightedItem(XMaterial.GOLD_ORE, 2),
+            WeightedItem(XMaterial.IRON_ORE, 2),
+            WeightedItem(XMaterial.COAL_ORE, 3),
+            WeightedItem(XMaterial.DIAMOND_ORE, 1)
+        ),
+        3 to arrayListOf(
+            WeightedItem(XMaterial.COBBLESTONE, 3),
+            WeightedItem(XMaterial.GOLD_ORE, 2),
+            WeightedItem(XMaterial.IRON_ORE, 2),
+            WeightedItem(XMaterial.COAL_ORE, 3),
+            WeightedItem(XMaterial.DIAMOND_ORE, 1)
+        )
+    )
+
     var islandBorderGUITitle = "&7Change border color"
     var islandBorderGUIRows = 3
     var islandBorderGUIBackgroundItem = SerializableItem(XMaterial.GRAY_STAINED_GLASS_PANE, "&7", listOf(""), 1)
     var islandBorderGUIItems = mapOf(
-        WorldBorderUtil.Color.Red to IslandBorderItem(10, SerializableItem(XMaterial.RED_STAINED_GLASS, "&cRed Border", listOf(), 1)),
-        WorldBorderUtil.Color.Green to IslandBorderItem(12, SerializableItem(XMaterial.LIME_STAINED_GLASS, "&aGreen Border", listOf(), 1)),
-        WorldBorderUtil.Color.Blue to IslandBorderItem(14, SerializableItem(XMaterial.LIGHT_BLUE_STAINED_GLASS, "&bBlue Border", listOf(), 1)),
+        WorldBorderUtil.Color.Red to IslandBorderItem(
+            10,
+            SerializableItem(XMaterial.RED_STAINED_GLASS, "&cRed Border", listOf(), 1)
+        ),
+        WorldBorderUtil.Color.Green to IslandBorderItem(
+            12,
+            SerializableItem(XMaterial.LIME_STAINED_GLASS, "&aGreen Border", listOf(), 1)
+        ),
+        WorldBorderUtil.Color.Blue to IslandBorderItem(
+            14,
+            SerializableItem(XMaterial.LIGHT_BLUE_STAINED_GLASS, "&bBlue Border", listOf(), 1)
+        ),
         WorldBorderUtil.Color.Off to IslandBorderItem(16, SerializableItem(XMaterial.GLASS, "&fNo Border", listOf(), 1))
     )
 
@@ -84,8 +121,6 @@ object Config {
     )
 
 
-
-
     var islandCreateGUITitle = "Choose an island!"
     var islandCreateGUIRows = 1
     var islandCreateGUIBackgroundItem = SerializableItem(XMaterial.BLACK_STAINED_GLASS_PANE, "&9", listOf(""), 1)
@@ -109,8 +144,6 @@ object Config {
             ), "island.structure"
         )
     )
-
-
 
 
     fun save() {

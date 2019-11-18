@@ -12,6 +12,7 @@ class CmdMenu : SCommand() {
 
     init {
         aliases.add("menu")
+        
 
         commandRequirements = CommandRequirementsBuilder().withPermission(Permission.MENU).asIslandMember(true).build()
     }

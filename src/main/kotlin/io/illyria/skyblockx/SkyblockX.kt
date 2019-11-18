@@ -6,9 +6,11 @@ import io.illyria.skyblockx.persist.Config
 import io.illyria.skyblockx.persist.Data
 import io.illyria.skyblockx.persist.Message
 import io.illyria.skyblockx.persist.Quests
+import io.illyria.skyblockx.persist.data.Items
 import io.illyria.skyblockx.world.VoidWorldGenerator
 import net.prosavage.baseplugin.SavagePlugin
 import net.prosavage.baseplugin.WorldBorderUtil
+import net.prosavage.baseplugin.XMaterial
 import org.bukkit.WorldCreator
 
 
@@ -24,14 +26,21 @@ class SkyblockX : SavagePlugin() {
         val command = this.getCommand("is")!!
         command.setExecutor(baseCommand)
         command.tabCompleter = baseCommand
-        logger.info("Command Registered")
+        logger.info("${baseCommand.subCommands.size} commands registered.")
         Config.load()
-        WorldCreator(Config.skyblockWorldName).generator(VoidWorldGenerator()).createWorld()
+        setupOreGeneratorAlgorithm()
         Data.load()
         Message.load()
         registerListeners(DataListener(), SEditListener(), BlockListener(), PlayerListener(), EntityListener())
         logger.info("Loaded ${Data.IPlayers.size} players")
         logger.info("Loaded ${Data.islands.size} islands")
+    }
+
+    private fun setupOreGeneratorAlgorithm() {
+        val generatorStrategyMap = HashMap<Int, Items<XMaterial>>()
+        Config.generatorProbability.forEach{ (key, value) -> run {generatorStrategyMap[key] = Items<XMaterial>(value)}}
+        Globals.generatorAlgorithm = generatorStrategyMap
+        WorldCreator(Config.skyblockWorldName).generator(VoidWorldGenerator()).createWorld()
     }
 
     override fun onDisable() {

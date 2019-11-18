@@ -1,5 +1,6 @@
 package io.illyria.skyblockx.listener
 
+import io.illyria.skyblockx.Globals
 import io.illyria.skyblockx.core.canUseBlockAtLocation
 import io.illyria.skyblockx.core.getIPlayer
 import io.illyria.skyblockx.core.getIslandFromLocation
@@ -10,6 +11,7 @@ import io.illyria.skyblockx.quest.QuestGoal
 import net.prosavage.baseplugin.XMaterial
 import org.bukkit.Bukkit
 import org.bukkit.Material
+import org.bukkit.block.BlockFace
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.block.BlockBreakEvent
@@ -55,7 +57,8 @@ class BlockListener : Listener {
             val currentQuest = island.currentQuest!!
             // Find the quest that the island has activated.
             val targetQuest =
-                Quests.islandQuests.find { quest -> quest.type == QuestGoal.PLACE_BLOCKS && quest.id == currentQuest } ?: return
+                Quests.islandQuests.find { quest -> quest.type == QuestGoal.PLACE_BLOCKS && quest.id == currentQuest }
+                    ?: return
             // Use XMaterial to parse the material, if null, try to use native material just in case.
             val material = XMaterial.matchXMaterial(event.block.type)?.name ?: event.block.type.name
 
@@ -74,7 +77,10 @@ class BlockListener : Listener {
 
 
         // Anti-abuse for skyblock.
-        event.block.setMetadata("skyblock-placed-by-player", FixedMetadataValue(io.illyria.skyblockx.Globals.skyblockX, true))
+        event.block.setMetadata(
+            "skyblock-placed-by-player",
+            FixedMetadataValue(io.illyria.skyblockx.Globals.skyblockX, true)
+        )
     }
 
     @EventHandler
@@ -111,7 +117,8 @@ class BlockListener : Listener {
             val currentQuest = island.currentQuest!!
             // Find the quest that the island has activated.
             val targetQuest =
-                Quests.islandQuests.find { quest -> quest.type == QuestGoal.BREAK_BLOCKS && quest.id == currentQuest } ?: return
+                Quests.islandQuests.find { quest -> quest.type == QuestGoal.BREAK_BLOCKS && quest.id == currentQuest }
+                    ?: return
             // Use XMaterial to parse the material, if null, try to use native material just in case.
             val material = XMaterial.matchXMaterial(event.block.type)?.name ?: event.block.type.name
 
@@ -127,6 +134,19 @@ class BlockListener : Listener {
                 }
             }
 
+        }
+
+    }
+
+    @EventHandler
+    fun onBlockFromToEvent(event: BlockFromToEvent) {
+        // No skyblock world or generating from down block face.
+        if (!Config.islandOreGeneratorEnabled || event.face == BlockFace.DOWN || event.block.location.world?.name != Config.skyblockWorldName) return
+
+        Bukkit.getScheduler().runTask(Globals.skyblockX) { _ ->
+            run {
+                if (event.toBlock.type == Material.COBBLESTONE) event.toBlock.location.block.type = Globals.generatorAlgorithm[1]!!.choose().parseMaterial()!!
+            }
         }
 
 
