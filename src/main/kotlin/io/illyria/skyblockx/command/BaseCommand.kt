@@ -40,6 +40,7 @@ class BaseCommand : SCommand(), CommandExecutor, TabCompleter {
         subCommands.add(CmdMenu())
         subCommands.add(CmdJoin())
         subCommands.add(CmdBorder())
+        subCommands.add(CmdKick())
 
         Globals.baseCommand = this
     }
