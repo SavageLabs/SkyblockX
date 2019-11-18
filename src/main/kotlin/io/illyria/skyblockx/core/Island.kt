@@ -21,12 +21,13 @@ import java.util.*
 import kotlin.collections.HashSet
 
 
-data class Island(val islandID: Int, val point: Point, val ownerUUID: String, var ownerTag: String) {
+data class Island(val islandID: Int, val point: Point, var ownerUUID: String, var ownerTag: String) {
 
     val minLocation: SLocation = getSLocation(point.getLocation())
-    val maxLocation: SLocation = getSLocation(point.getLocation()
-        .add(Config.islandMaxSizeInBlocks.toDouble(), 256.toDouble(), Config.islandMaxSizeInBlocks.toDouble()))
-
+    val maxLocation: SLocation = getSLocation(
+        point.getLocation()
+            .add(Config.islandMaxSizeInBlocks.toDouble(), 256.toDouble(), Config.islandMaxSizeInBlocks.toDouble())
+    )
 
 
     var maxCoopPlayers = Config.defaultMaxCoopPlayers
@@ -45,15 +46,14 @@ data class Island(val islandID: Int, val point: Point, val ownerUUID: String, va
     var currentQuestOrderIndex: Int? = 0
 
     fun isOneTimeQuestAlreadyCompleted(id: String): Boolean {
-        return oneTimeQuestsCompleted != null && oneTimeQuestsCompleted.isNotEmpty() && oneTimeQuestsCompleted.contains(id)
+        return oneTimeQuestsCompleted != null && oneTimeQuestsCompleted.isNotEmpty() && oneTimeQuestsCompleted.contains(
+            id
+        )
     }
 
     fun messageAllOnlineIslandMembers(message: String) {
         // Color message in case.
         val messageFormatted = color(message)
-
-        println("$messageFormatted - to $this")
-
 
         // Message the owner
         Bukkit.getPlayer(UUID.fromString(ownerUUID))?.sendMessage(messageFormatted)
@@ -89,6 +89,7 @@ data class Island(val islandID: Int, val point: Point, val ownerUUID: String, va
 
         iPlayer.assignIsland(this)
     }
+
 
     fun kickMember(name: String) {
         members.remove(name)
@@ -160,7 +161,11 @@ data class Island(val islandID: Int, val point: Point, val ownerUUID: String, va
         // Check for quest ordering system.
         if (Quests.useQuestOrder && Quests.questOrder.contains(quest.id)) {
             val indexOfQuest = Quests.questOrder.indexOf(quest.id) + 1
-            currentQuestOrderIndex = if (Quests.questOrder.size > indexOfQuest) { indexOfQuest } else { null }
+            currentQuestOrderIndex = if (Quests.questOrder.size > indexOfQuest) {
+                indexOfQuest
+            } else {
+                null
+            }
             incrementQuestInOrder(this)
         }
         quest.giveRewards(completingPlayer)
@@ -173,11 +178,14 @@ data class Island(val islandID: Int, val point: Point, val ownerUUID: String, va
             progress += if (completed < progressAmt) Message.questProgressCompletedChar else Message.questProgressInCompleteChar
         }
 
-        JSONMessage.actionbar(color(
-            Message.questProgressBarMessage
-                .replace("{quest-name}", quest.name)
-                .replace("{progress-bar}", progress)
-                .replace("{percentage}", DecimalFormat("##").format(progressAmt * 10))), *players)
+        JSONMessage.actionbar(
+            color(
+                Message.questProgressBarMessage
+                    .replace("{quest-name}", quest.name)
+                    .replace("{progress-bar}", progress)
+                    .replace("{percentage}", DecimalFormat("##").format(progressAmt * 10))
+            ), *players
+        )
     }
 
     fun setQuestData(id: String, value: Int) {
@@ -297,6 +305,22 @@ data class Island(val islandID: Int, val point: Point, val ownerUUID: String, va
         val x = v.x
         val z = v.z
         return x >= minLocation.x && x < maxLocation.x + 1 && z >= minLocation.z && z < maxLocation.z + 1
+    }
+
+
+    fun promoteNewLeader(name: String) {
+        // Get new leader.
+        val newLeader = getIPlayerByName(name)!!
+        // remove new leader from member list.
+        members.remove(name)
+        // Make old leader a member
+        val oldleader = getIPlayerByName(ownerTag)!!
+        members.add(oldleader.getPlayer().name)
+        // Assign again just in case :P
+        oldleader.assignIsland(this)
+        // Actually make the leader the leader of the island
+        ownerUUID = newLeader.uuid
+        ownerTag = newLeader.name
     }
 
 }

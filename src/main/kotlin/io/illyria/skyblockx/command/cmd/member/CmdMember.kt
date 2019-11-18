@@ -17,6 +17,7 @@ class CmdMember : SCommand() {
         subCommands.add(CmdMemberInvite())
         subCommands.add(CmdMemberList())
         subCommands.add(CmdMemberKick())
+        subCommands.add(CmdMemberPromote())
     }
 
     override fun perform(info: CommandInfo) {

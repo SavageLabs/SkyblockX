@@ -11,7 +11,7 @@ import org.bukkit.entity.Player
 import java.util.*
 
 data class IPlayer(val uuid: String) {
-    var name: String = Bukkit.getPlayer(UUID.fromString(uuid))!!.player!!.name;
+    var name: String = Bukkit.getPlayer(UUID.fromString(uuid))!!.player!!.name
 
 
     var inBypass = false
