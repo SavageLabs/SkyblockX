@@ -51,6 +51,10 @@ data class IPlayer(val uuid: String) {
         return Bukkit.getPlayer(UUID.fromString(uuid))!!
     }
 
+    fun isLeader(): Boolean {
+        return hasIsland() && getIsland()!!.ownerUUID == uuid
+    }
+
 
     fun isOnOwnIsland(): Boolean {
         return !(this.hasIsland() && this.getIsland()!!.containsBlock(getPlayer().location))
