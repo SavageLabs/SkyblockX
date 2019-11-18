@@ -19,7 +19,6 @@ class Items<T>(val weightedItems: ArrayList<WeightedItem<T>>) {
     }
 
     fun choose(): T {
-        println(neutralList + "ya YEET")
         return neutralList[ThreadLocalRandom.current().nextInt(0, neutralList.size - 1)]
     }
 
