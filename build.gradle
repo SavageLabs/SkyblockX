@@ -83,21 +83,18 @@ task updatePermissionsList {
     // The first one should show the beginning of the class.
     String[] textSplit = text.split("\\{")
     String permissionsEnumText = textSplit[1].split(";")[0]
-    String[] permissionsListRaw = permissionsEnumText.split(",")
+    String[] permissionsListRaw = permissionsEnumText.split("\\),")
+    println permissionsListRaw.size()
     // Process each permission.
     StringBuilder table = new StringBuilder()
     table.append("Permission Name | Permission Node | Permission Description\n")
     table.append("--- | --- | ---\n")
     for (String permissionRaw : permissionsListRaw) {
-        String[] permissionSplit = permissionRaw.split("\"")
-        String permissionName = permissionSplit[0].replace("(", "").replaceAll("[\\n\\t ]", "")
-        String permissionNode = "skyblockx.${permissionSplit[1].replace(" ", "").replaceAll("[\\n\\t ]", "")}"
-        String permissionDesc = permissionSplit[1].split(" ", 1)[0].replaceAll("[\\n\\t]", "")
-        permissionDesc = permissionDesc.replaceAll("\\r\\n|\\r|\\n", " ")
-        println permissionDesc
-//        println permissionName + " " + "skyblockx." + permissionSplit[1] + " " + permissionDesc
+        String[] permissionSplit = permissionRaw.split(",")
+        String permissionName = permissionSplit[0]
+        String permissionDesc = permissionSplit[1].replace("\"", "")
+        String permissionNode = "skyblockx." + permissionName.split("\\(\"")[1].replace("\"","")
         table.append("$permissionName | `$permissionNode` | $permissionDesc\n")
-
     }
     println("File Processed.")
     // Clone and update wiki.
