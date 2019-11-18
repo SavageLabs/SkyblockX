@@ -20,15 +20,19 @@ class SkyblockX : SavagePlugin() {
         super.onEnable()
         printHeader()
         Globals.skyblockX = this
+        loadDataFiles()
         initWorldBorderUiltity()
         setupCommands()
-        Config.load()
         setupOreGeneratorAlgorithm()
-        Data.load()
-        Message.load()
         registerListeners(DataListener(), SEditListener(), BlockListener(), PlayerListener(), EntityListener())
         logger.info("Loaded ${Data.IPlayers.size} players")
         logger.info("Loaded ${Data.islands.size} islands")
+    }
+
+    private fun loadDataFiles() {
+        Config.load()
+        Data.load()
+        Message.load()
     }
 
     private fun initWorldBorderUiltity() {
