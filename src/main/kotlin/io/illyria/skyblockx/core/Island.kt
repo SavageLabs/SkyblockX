@@ -21,7 +21,7 @@ import java.util.*
 import kotlin.collections.HashSet
 
 
-data class Island(val islandID: Int, val point: Point, val ownerUUID: String, var ownerTag: String) {
+data class Island(val islandID: Int, val point: Point, var ownerUUID: String, var ownerTag: String) {
 
     val minLocation: SLocation = getSLocation(point.getLocation())
     val maxLocation: SLocation = getSLocation(
