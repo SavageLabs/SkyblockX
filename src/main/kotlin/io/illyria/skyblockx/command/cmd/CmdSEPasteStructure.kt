@@ -13,7 +13,7 @@ class CmdSEPasteStructure : io.illyria.skyblockx.command.SCommand() {
         requiredArgs.add(Argument("filename", 0, StringArgument()))
 
         commandRequirements = io.illyria.skyblockx.command.CommandRequirementsBuilder().asPlayer(true)
-            .withPermission(Permission.SE_REGIONS).build()
+            .withPermission(Permission.SE_PASTESTRUCT).build()
     }
 
 
