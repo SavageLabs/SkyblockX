@@ -20,20 +20,37 @@ class SkyblockX : SavagePlugin() {
         super.onEnable()
         printHeader()
         Globals.skyblockX = this
+        loadDataFiles()
+        initWorldBorderUiltity()
+        setupCommands()
+        setupOreGeneratorAlgorithm()
+        registerListeners(DataListener(), SEditListener(), BlockListener(), PlayerListener(), EntityListener())
+        logger.info("Loaded ${Data.IPlayers.size} players")
+        logger.info("Loaded ${Data.islands.size} islands")
+    }
+
+    override fun onDisable() {
+        super.onDisable()
+        saveDataFiles()
+    }
+
+    private fun loadDataFiles() {
+        Config.load()
+        Data.load()
+        Message.load()
+    }
+
+    private fun initWorldBorderUiltity() {
         Globals.worldBorderUtil = WorldBorderUtil(this)
+    }
+
+    private fun setupCommands() {
         this.getCommand("skyblockx")!!.setExecutor(BaseCommandTesting())
         val baseCommand = BaseCommand()
         val command = this.getCommand("is")!!
         command.setExecutor(baseCommand)
         command.tabCompleter = baseCommand
         logger.info("${baseCommand.subCommands.size} commands registered.")
-        Config.load()
-        setupOreGeneratorAlgorithm()
-        Data.load()
-        Message.load()
-        registerListeners(DataListener(), SEditListener(), BlockListener(), PlayerListener(), EntityListener())
-        logger.info("Loaded ${Data.IPlayers.size} players")
-        logger.info("Loaded ${Data.islands.size} islands")
     }
 
     private fun setupOreGeneratorAlgorithm() {
@@ -43,8 +60,7 @@ class SkyblockX : SavagePlugin() {
         WorldCreator(Config.skyblockWorldName).generator(VoidWorldGenerator()).createWorld()
     }
 
-    override fun onDisable() {
-        super.onDisable()
+    private fun saveDataFiles() {
         // Load and save to take in account changes :P
         Config.load()
         Config.save()
@@ -60,7 +76,6 @@ class SkyblockX : SavagePlugin() {
         Message.load()
         Message.save()
     }
-
 
     private fun printHeader() {
         logger.info(
