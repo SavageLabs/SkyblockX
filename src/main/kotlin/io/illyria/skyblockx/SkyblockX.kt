@@ -29,6 +29,11 @@ class SkyblockX : SavagePlugin() {
         logger.info("Loaded ${Data.islands.size} islands")
     }
 
+    override fun onDisable() {
+        super.onDisable()
+        saveDataFiles()
+    }
+
     private fun loadDataFiles() {
         Config.load()
         Data.load()
@@ -55,11 +60,6 @@ class SkyblockX : SavagePlugin() {
         WorldCreator(Config.skyblockWorldName).generator(VoidWorldGenerator()).createWorld()
     }
 
-    override fun onDisable() {
-        super.onDisable()
-        saveDataFiles()
-    }
-
     private fun saveDataFiles() {
         // Load and save to take in account changes :P
         Config.load()
@@ -76,7 +76,6 @@ class SkyblockX : SavagePlugin() {
         Message.load()
         Message.save()
     }
-
 
     private fun printHeader() {
         logger.info(
