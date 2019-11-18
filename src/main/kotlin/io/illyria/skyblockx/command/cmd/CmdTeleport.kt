@@ -58,9 +58,8 @@ class CmdTeleport : SCommand() {
             return
         }
 
-
         // Check if they can actually go to the location
-        if (info.iPlayer!!.islandID != targetLocation.islandID && !info.iPlayer!!.isCoopedIsland(targetLocation.islandID)) {
+        if (!targetLocation.allowVisitors && info.iPlayer!!.islandID != targetLocation.islandID && !info.iPlayer!!.isCoopedIsland(targetLocation.islandID)) {
             info.message(Message.commandTpNoPermission)
             return
         }
