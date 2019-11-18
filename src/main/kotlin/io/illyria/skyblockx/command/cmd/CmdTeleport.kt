@@ -1,5 +1,8 @@
 package io.illyria.skyblockx.command.cmd
 
+import io.illyria.skyblockx.command.CommandInfo
+import io.illyria.skyblockx.command.CommandRequirementsBuilder
+import io.illyria.skyblockx.command.SCommand
 import io.illyria.skyblockx.core.Permission
 import io.illyria.skyblockx.core.color
 import io.illyria.skyblockx.core.getIslandById
@@ -7,7 +10,7 @@ import io.illyria.skyblockx.core.getIslandByOwnerTag
 import io.illyria.skyblockx.persist.Message
 import me.rayzr522.jsonmessage.JSONMessage
 
-class CmdTeleport : io.illyria.skyblockx.command.SCommand() {
+class CmdTeleport : SCommand() {
 
     init {
         aliases.add("teleport")
@@ -17,12 +20,12 @@ class CmdTeleport : io.illyria.skyblockx.command.SCommand() {
         optionalArgs.add(Argument("island owner's name", 0, PlayerArgument()))
 
         commandRequirements =
-            io.illyria.skyblockx.command.CommandRequirementsBuilder().asPlayer(true).withPermission(Permission.TELEPORT)
+            CommandRequirementsBuilder().asPlayer(true).withPermission(Permission.TELEPORT)
                 .build()
     }
 
 
-    override fun perform(info: io.illyria.skyblockx.command.CommandInfo) {
+    override fun perform(info: CommandInfo) {
         // list possible locations if empty.
         if (info.args.isEmpty()) {
             val possibleLocations = ArrayList<String>()
@@ -55,9 +58,8 @@ class CmdTeleport : io.illyria.skyblockx.command.SCommand() {
             return
         }
 
-
         // Check if they can actually go to the location
-        if (info.iPlayer!!.islandID != targetLocation.islandID && !info.iPlayer!!.isCoopedIsland(targetLocation.islandID)) {
+        if (!targetLocation.allowVisitors && info.iPlayer!!.islandID != targetLocation.islandID && !info.iPlayer!!.isCoopedIsland(targetLocation.islandID)) {
             info.message(Message.commandTpNoPermission)
             return
         }
