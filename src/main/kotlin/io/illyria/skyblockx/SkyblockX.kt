@@ -20,6 +20,7 @@ class SkyblockX : SavagePlugin() {
         super.onEnable()
         printHeader()
         Globals.skyblockX = this
+        loadWorld()
         loadDataFiles()
         initWorldBorderUiltity()
         setupCommands()
@@ -27,6 +28,10 @@ class SkyblockX : SavagePlugin() {
         registerListeners(DataListener(), SEditListener(), BlockListener(), PlayerListener(), EntityListener())
         logger.info("Loaded ${Data.IPlayers.size} players")
         logger.info("Loaded ${Data.islands.size} islands")
+    }
+
+    private fun loadWorld() {
+        WorldCreator(Config.skyblockWorldName).generator(VoidWorldGenerator()).createWorld()
     }
 
     override fun onDisable() {
@@ -58,7 +63,6 @@ class SkyblockX : SavagePlugin() {
         val generatorStrategyMap = HashMap<Int, Items<XMaterial>>()
         Config.generatorProbability.forEach{ (key, value) -> run {generatorStrategyMap[key] = Items<XMaterial>(value)}}
         Globals.generatorAlgorithm = generatorStrategyMap
-        WorldCreator(Config.skyblockWorldName).generator(VoidWorldGenerator()).createWorld()
     }
 
     private fun saveDataFiles() {

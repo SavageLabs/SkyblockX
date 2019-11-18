@@ -4,19 +4,16 @@ import io.illyria.skyblockx.Globals
 import io.illyria.skyblockx.command.cmd.*
 import io.illyria.skyblockx.command.cmd.home.CmdHome
 import io.illyria.skyblockx.command.cmd.home.CmdHomeGo
-import io.illyria.skyblockx.command.cmd.member.CmdMember
+import io.illyria.skyblockx.command.cmd.member.*
 import io.illyria.skyblockx.core.getIPlayer
 import io.illyria.skyblockx.persist.Config
 import io.illyria.skyblockx.persist.Message
-import net.prosavage.baseplugin.WorldBorderUtil
-import org.bukkit.Bukkit
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
 import org.bukkit.command.TabCompleter
 import org.bukkit.entity.Player
 import java.util.*
-import java.util.concurrent.ThreadLocalRandom
 
 
 class BaseCommand : SCommand(), CommandExecutor, TabCompleter {
@@ -40,6 +37,10 @@ class BaseCommand : SCommand(), CommandExecutor, TabCompleter {
         subCommands.add(CmdMenu())
         subCommands.add(CmdJoin())
         subCommands.add(CmdBorder())
+        subCommands.add(CmdKick())
+        subCommands.add(CmdInvite())
+        subCommands.add(CmdLeave())
+        subCommands.add(CmdPromote())
 
         Globals.baseCommand = this
     }
