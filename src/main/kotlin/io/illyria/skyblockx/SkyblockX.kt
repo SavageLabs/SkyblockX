@@ -20,7 +20,7 @@ class SkyblockX : SavagePlugin() {
         super.onEnable()
         printHeader()
         Globals.skyblockX = this
-        Globals.worldBorderUtil = WorldBorderUtil(this)
+        initWorldBorderUiltity()
         setupCommands()
         Config.load()
         setupOreGeneratorAlgorithm()
@@ -29,6 +29,10 @@ class SkyblockX : SavagePlugin() {
         registerListeners(DataListener(), SEditListener(), BlockListener(), PlayerListener(), EntityListener())
         logger.info("Loaded ${Data.IPlayers.size} players")
         logger.info("Loaded ${Data.islands.size} islands")
+    }
+
+    private fun initWorldBorderUiltity() {
+        Globals.worldBorderUtil = WorldBorderUtil(this)
     }
 
     private fun setupCommands() {
