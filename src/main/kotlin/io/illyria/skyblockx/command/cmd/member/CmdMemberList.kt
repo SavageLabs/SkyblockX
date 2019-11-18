@@ -33,7 +33,7 @@ class CmdMemberList : SCommand() {
     }
 
     override fun getHelpInfo(): String {
-        return Message.commandMemberList
+        return Message.commandMemberListHelp
     }
 
 }
