@@ -144,7 +144,6 @@ class BlockListener : Listener {
         if (!Config.islandOreGeneratorEnabled || event.face == BlockFace.DOWN || event.block.location.world?.name != Config.skyblockWorldName
             || (event.block.type != Material.LAVA && event.toBlock.type != Material.AIR)
         ) return
-        Globals.generatorAlgorithm.values.forEach{ gen -> gen.neutralList}
         Bukkit.getScheduler().runTask(Globals.skyblockX) { _ -> event.toBlock.location.block.type = Globals.generatorAlgorithm[1]!!.choose().parseMaterial()!! }
 
 
