@@ -57,6 +57,10 @@ class SkyblockX : SavagePlugin() {
 
     override fun onDisable() {
         super.onDisable()
+        saveDataFiles()
+    }
+
+    private fun saveDataFiles() {
         // Load and save to take in account changes :P
         Config.load()
         Config.save()
