@@ -39,10 +39,8 @@ class BaseCommandTesting : CommandExecutor {
                 sender.teleport(Bukkit.getWorld(Config.skyblockWorldName)!!.spawnLocation)
             }
             "reload" -> {
-                Config.load()
-                Quests.load()
-                Data.load()
-                Message.load()
+                Globals.skyblockX.loadDataFiles()
+                Globals.skyblockX.setupOreGeneratorAlgorithm()
             }
             "tp-back" -> {
                 sender as Player
