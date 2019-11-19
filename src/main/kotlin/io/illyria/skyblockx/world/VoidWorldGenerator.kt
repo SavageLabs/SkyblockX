@@ -11,7 +11,7 @@ import java.util.*
 class VoidWorldGenerator : ChunkGenerator() {
 
     override fun getDefaultPopulators(world: World): List<BlockPopulator> {
-        return Arrays.asList(*arrayOfNulls(0))
+        return emptyList()
     }
 
     override fun canSpawn(world: World, x: Int, z: Int): Boolean {

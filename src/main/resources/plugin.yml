@@ -3,6 +3,7 @@ main: io.illyria.skyblockx.SkyblockX
 version: ${project.version}
 api-version: '1.13'
 load: POSTWORLD
+loadbefore: [Multiverse-Core]
 authors: [ProSavage]
 description: 'The Ultimate Skyblock Core'
 commands:
