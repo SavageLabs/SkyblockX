@@ -1,5 +1,6 @@
 package io.illyria.skyblockx.world
 
+import io.illyria.skyblockx.persist.Config
 import org.bukkit.Location
 import org.bukkit.World
 import org.bukkit.block.Biome
@@ -25,7 +26,7 @@ class VoidWorldGenerator : ChunkGenerator() {
         val createChunkData = createChunkData(world)
         for (cx in 0..15) {
             for (cz in 0..15) {
-                biome.setBiome(cx, cz, Biome.PLAINS)
+                biome.setBiome(cx, cz, Config.skyblockWorldBiome)
             }
         }
         return createChunkData

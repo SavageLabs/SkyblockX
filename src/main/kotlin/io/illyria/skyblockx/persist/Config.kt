@@ -8,6 +8,7 @@ import net.prosavage.baseplugin.WorldBorderUtil
 import net.prosavage.baseplugin.XMaterial
 import net.prosavage.baseplugin.serializer.Serializer
 import net.prosavage.baseplugin.serializer.commonobjects.SerializableItem
+import org.bukkit.block.Biome
 
 object Config {
 
@@ -34,6 +35,8 @@ object Config {
     var defaultIslandMemberLimit = 3
 
     var islandOreGeneratorEnabled = true
+
+    var skyblockWorldBiome = Biome.PLAINS
 
 
     var generatorProbability = hashMapOf(
