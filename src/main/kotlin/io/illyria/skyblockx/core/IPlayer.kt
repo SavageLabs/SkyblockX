@@ -144,6 +144,7 @@ fun createIPlayer(player: Player): IPlayer {
 fun canUseBlockAtLocation(iPlayer: IPlayer, location: Location): Boolean {
     // If the world is not the skyblock world, we will not interfere.
     if (location.world!!.name != Config.skyblockWorldName) return true
+    if (iPlayer.inBypass) return true
     // If they dont have any co-op island or an island of their own, then they cannot do anything.
     if (!iPlayer.hasIsland() && !iPlayer.hasCoopIsland()) return false
     // Check our own island.
