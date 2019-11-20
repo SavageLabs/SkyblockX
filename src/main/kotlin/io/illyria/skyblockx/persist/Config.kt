@@ -42,7 +42,6 @@ object Config {
     var generatorProbability = hashMapOf(
         1 to arrayListOf(
             WeightedItem(XMaterial.COBBLESTONE, 5),
-            WeightedItem(XMaterial.GOLD_ORE, 1),
             WeightedItem(XMaterial.IRON_ORE, 1),
             WeightedItem(XMaterial.COAL_ORE, 3)
         ),
@@ -51,6 +50,7 @@ object Config {
             WeightedItem(XMaterial.GOLD_ORE, 2),
             WeightedItem(XMaterial.IRON_ORE, 2),
             WeightedItem(XMaterial.COAL_ORE, 3),
+            WeightedItem(XMaterial.LAPIS_ORE, 1),
             WeightedItem(XMaterial.DIAMOND_ORE, 1)
         ),
         3 to arrayListOf(
@@ -58,6 +58,7 @@ object Config {
             WeightedItem(XMaterial.GOLD_ORE, 2),
             WeightedItem(XMaterial.IRON_ORE, 2),
             WeightedItem(XMaterial.COAL_ORE, 3),
+            WeightedItem(XMaterial.LAPIS_ORE, 1),
             WeightedItem(XMaterial.DIAMOND_ORE, 1)
         )
     )
