@@ -2,6 +2,7 @@ package io.illyria.skyblockx
 
 import io.illyria.skyblockx.core.Island
 import io.illyria.skyblockx.persist.Config
+import io.illyria.skyblockx.persist.Data
 import io.illyria.skyblockx.world.WorldManager
 import io.illyria.skyblockx.world.spiral
 import org.bukkit.Bukkit
@@ -36,6 +37,7 @@ class BaseCommandTesting : CommandExecutor {
                 sender.teleport(Bukkit.getWorld(Config.skyblockWorldName)!!.spawnLocation)
             }
             "reload" -> {
+                Data.save()
                 Globals.skyblockX.loadDataFiles()
                 Globals.skyblockX.setupOreGeneratorAlgorithm()
             }
@@ -48,9 +50,6 @@ class BaseCommandTesting : CommandExecutor {
                 val material = Material.valueOf(args[1].toUpperCase())
                 val index = args[2].toInt()
                 Island(1, spiral(index), "", "I want to fucking kill my self").fillIsland(material)
-            }
-            "pos1" -> {
-
             }
             else -> sender.sendMessage("Arg does not exist")
         }
