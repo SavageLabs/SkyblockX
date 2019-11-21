@@ -76,7 +76,7 @@ class QuestActions(val actions: List<String>) {
             .replace("{uuid}", context.contextIPlayer.uuid)
             .replace("{quest-name}", context.quest.name)
             .replace("{quest-amount-till-complete}", "${context.quest.amountTillComplete}")
-            .replace("quest-amount-completed", "${context.contextIsland.getQuestCompletedAmount(context.quest.id)}")
+
     }
 
     class QuestContext(val contextIPlayer: IPlayer, val contextIsland: Island, val quest: Quest)
