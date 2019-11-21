@@ -13,6 +13,7 @@ import net.prosavage.baseplugin.SavagePlugin
 import net.prosavage.baseplugin.WorldBorderUtil
 import net.prosavage.baseplugin.XMaterial
 import org.bukkit.WorldCreator
+import org.bukkit.generator.ChunkGenerator
 
 
 class SkyblockX : SavagePlugin() {
@@ -34,6 +35,10 @@ class SkyblockX : SavagePlugin() {
 
     private fun loadWorld() {
         WorldCreator(Config.skyblockWorldName).generator(VoidWorldGenerator()).createWorld()
+    }
+
+    override fun getDefaultWorldGenerator(worldName: String, id: String?): ChunkGenerator? {
+        return VoidWorldGenerator()
     }
 
     override fun onDisable() {
