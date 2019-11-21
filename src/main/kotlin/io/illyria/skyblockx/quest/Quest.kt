@@ -51,7 +51,7 @@ class QuestActions(val actions: List<String>) {
     }
 
     fun getActionParams(context: QuestContext, rawAction: String): List<String> {
-        val statement = rawAction.split("(", limit = 1)[1].replace(")", "")
+        val statement = rawAction.split("(", limit = 2)[1].replace(")", "")
         return statement.split(":::").toList().map { line -> parseQuestPlaceholders(context, line) }.toList()
     }
 
