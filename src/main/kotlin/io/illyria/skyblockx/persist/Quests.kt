@@ -1,12 +1,11 @@
 package io.illyria.skyblockx.persist
 
 import io.illyria.skyblockx.quest.Quest
+import io.illyria.skyblockx.quest.QuestActions
 import io.illyria.skyblockx.quest.QuestGoal
 import net.prosavage.baseplugin.XMaterial
 import net.prosavage.baseplugin.serializer.Serializer
 import net.prosavage.baseplugin.serializer.commonobjects.SerializableItem
-import org.bukkit.enchantments.Enchantment
-import org.bukkit.entity.EntityType
 
 object Quests {
     @Transient
@@ -45,7 +44,19 @@ object Quests {
             XMaterial.OAK_LOG.name,
             1,
             true,
-            listOf("broadcast {player} broke wood from island tree", "give {player} oak_sapling 1")
+            QuestActions(
+                listOf(
+                    "message(&7You have started the {quest-name}:::&7Your current progress is {quest-amount-till-complete})",
+                    "actionbar(&7Your quest progress is {quest-amount-till-complete})"
+                )
+            ),
+            QuestActions(
+                listOf(
+                    "message(&7You have finished the {quest-name}:::&7Your current progress {quest-amount-till-complete})",
+                    "title(&7{quest-name}:::&b&lQuest Completed)",
+                    "command(give {player} oak_sapling 1:::give {player} apple 1)"
+                )
+            )
         ),
         Quest(
             "Quest-2",
@@ -61,7 +72,18 @@ object Quests {
             XMaterial.OAK_PLANKS.name,
             1,
             true,
-            listOf("broadcast {player} crafted wooden planks", "give {player} oak_sapling 1")
+            QuestActions(
+                listOf(
+                    "message(&7You have started the {quest-name}:::&7Your current progress {quest-amount-till-complete})",
+                    "actionbar(&7Your quest progress is {quest-amount-till-complete})"
+                )
+            ),
+            QuestActions(
+                listOf(
+                    "message(&7You have finished the {quest-name}:::&7Your current progress {quest-amount-till-complete})",
+                    "title(&7{quest-name}:::&b&lQuest Completed)"
+                )
+            )
         ),
         Quest(
             "Quest-3",
@@ -77,7 +99,18 @@ object Quests {
             XMaterial.COBBLESTONE.name,
             10,
             true,
-            listOf("broadcast {player} successfully got a block of cobblestone from their generator!.", "give {player} iron_pickaxe 1")
+            QuestActions(
+                listOf(
+                    "message(&7You have started the {quest-name}:::&7Your current progress is {quest-amount-completed}/{quest-amount-till-complete})",
+                    "actionbar(&7Your quest progress is {quest-amount-completed}/{quest-amount-till-complete})"
+                )
+            ),
+            QuestActions(
+                listOf(
+                    "message(&7You have finished the {quest-name}:::&7Your current progress is {quest-amount-completed}/{quest-amount-till-complete})",
+                    "title(&7{quest-name}:::&b&lQuest Completed)"
+                )
+            )
         )
     )
 
