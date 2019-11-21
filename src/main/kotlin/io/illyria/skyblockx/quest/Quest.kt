@@ -7,6 +7,7 @@ import io.illyria.skyblockx.persist.Quests
 import net.prosavage.baseplugin.serializer.commonobjects.SerializableItem
 import org.bukkit.Bukkit
 import org.bukkit.Location
+import org.bukkit.Sound
 
 data class Quest(
     val id: String,
@@ -34,6 +35,40 @@ data class Quest(
     }
 
 }
+
+class QuestActions(val actions: List<String>) {
+    fun executeActions(contextIPlayer: IPlayer, contextIsland: Island) {
+        actions.forEach { action ->
+            run {
+                when(action.split("(")[0].toLowerCase()) {
+                    "message" -> println("do message")
+                    "sendtitle" -> println("do sendtitle")
+                    "executecommand" -> println("do cmd")
+                    else -> pass
+                }
+            }
+        }
+    }
+
+    fun getActionParams(rawAction: String): List<String> {
+        val statement = rawAction.split("(", limit = 1)[1].replace(")","")
+        return statement.split(":::").toList()
+    }
+
+    fun doMessage(actionParams: List<String>) {
+        actionParams.forEach {  }
+    }
+
+
+    fun parseQuestPlaceholders(line: String) {
+        line.replace("{player}", "")
+    }
+
+}
+
+
+
+val pass: Unit = Unit
 
 fun failsQuestCheckingPreRequisites(iPlayer: IPlayer, island: Island?, location: Location): Boolean {
     return (!iPlayer.hasIsland() || island!!.currentQuest == null || !island.containsBlock(location))
