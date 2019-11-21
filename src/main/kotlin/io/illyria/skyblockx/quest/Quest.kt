@@ -7,7 +7,6 @@ import io.illyria.skyblockx.persist.Quests
 import net.prosavage.baseplugin.serializer.commonobjects.SerializableItem
 import org.bukkit.Bukkit
 import org.bukkit.Location
-import org.bukkit.Sound
 
 data class Quest(
     val id: String,
@@ -37,35 +36,48 @@ data class Quest(
 }
 
 class QuestActions(val actions: List<String>) {
-    fun executeActions(contextIPlayer: IPlayer, contextIsland: Island) {
+    fun executeActions(context: QuestContext) {
         actions.forEach { action ->
             run {
-                when(action.split("(")[0].toLowerCase()) {
-                    "message" -> println("do message")
-                    "sendtitle" -> println("do sendtitle")
-                    "executecommand" -> println("do cmd")
+                when (action.split("(")[0].toLowerCase()) {
+                    "message" -> doMessage(context, getActionParams(context, action))
+                    "sendtitle" -> doTitle(context, getActionParams(context, action))
+                    "executecommand" -> doCommand(context, getActionParams(context, action))
                     else -> pass
                 }
             }
         }
     }
 
-    fun getActionParams(rawAction: String): List<String> {
-        val statement = rawAction.split("(", limit = 1)[1].replace(")","")
-        return statement.split(":::").toList()
+    fun getActionParams(context: QuestContext, rawAction: String): List<String> {
+        val statement = rawAction.split("(", limit = 1)[1].replace(")", "")
+        return statement.split(":::").toList().map { line -> parseQuestPlaceholders(context, line) }.toList()
     }
 
-    fun doMessage(actionParams: List<String>) {
-        actionParams.forEach {  }
+    fun doMessage(context: QuestContext, actionParams: List<String>) {
+        actionParams.forEach { messageParam -> context.contextIPlayer.message(messageParam) }
+    }
+    fun doTitle(context: QuestContext, actionParams: List<String>) {
+        // Not using new method with the time cuz 1.8 :/
+        context.contextIPlayer.getPlayer()?.sendTitle(actionParams[0] ?: "", actionParams[1] ?: "")
+    }
+    fun doCommand(context: QuestContext, actionParams: List<String>) {
+        actionParams.forEach { commandParam -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), commandParam) }
     }
 
 
-    fun parseQuestPlaceholders(line: String) {
-        line.replace("{player}", "")
+    fun parseQuestPlaceholders(context: QuestContext, line: String): String {
+        return line
+            .replace("{player}", context.contextIPlayer.name)
+            .replace("{uuid}", context.contextIPlayer.uuid)
+            .replace("{quest-name}", context.quest.name)
+            .replace("{quest-amount-till-complete}", "${context.quest.amountTillComplete}")
+            .replace("quest-amount-completed", "${context.contextIsland.getQuestCompletedAmount(context.quest.id)}")
     }
+
+    class QuestContext(val contextIPlayer: IPlayer, val contextIsland: Island, val quest: Quest)
 
 }
-
 
 
 val pass: Unit = Unit
