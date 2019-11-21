@@ -2,8 +2,10 @@ package io.illyria.skyblockx.quest
 
 import io.illyria.skyblockx.core.IPlayer
 import io.illyria.skyblockx.core.Island
+import io.illyria.skyblockx.core.color
 import io.illyria.skyblockx.persist.Message
 import io.illyria.skyblockx.persist.Quests
+import me.rayzr522.jsonmessage.JSONMessage
 import net.prosavage.baseplugin.serializer.commonobjects.SerializableItem
 import org.bukkit.Bukkit
 import org.bukkit.Location
@@ -43,6 +45,7 @@ class QuestActions(val actions: List<String>) {
                     "message" -> doMessage(context, getActionParams(context, action))
                     "sendtitle" -> doTitle(context, getActionParams(context, action))
                     "executecommand" -> doCommand(context, getActionParams(context, action))
+                    "actionbar" -> doActionbarMessage(context, getActionParams(context, action))
                     else -> pass
                 }
             }
@@ -63,6 +66,9 @@ class QuestActions(val actions: List<String>) {
     }
     fun doCommand(context: QuestContext, actionParams: List<String>) {
         actionParams.forEach { commandParam -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), commandParam) }
+    }
+    fun doActionbarMessage(context: QuestContext, actionParams: List<String>) {
+        actionParams.forEach { actionbarMessage -> JSONMessage.create(color(actionbarMessage)).actionbar(context.contextIPlayer.getPlayer()) }
     }
 
 
