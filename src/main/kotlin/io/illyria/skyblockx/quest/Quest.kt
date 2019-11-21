@@ -42,7 +42,7 @@ class QuestActions(val actions: List<String>) {
                 when (action.split("(")[0].toLowerCase()) {
                     "message" -> doMessage(context, getActionParams(context, action))
                     "title" -> doTitle(context, getActionParams(context, action))
-                    "executecommand" -> doCommand(context, getActionParams(context, action))
+                    "command" -> doCommand(context, getActionParams(context, action))
                     "actionbar" -> doActionbarMessage(context, getActionParams(context, action))
                     else -> pass
                 }
