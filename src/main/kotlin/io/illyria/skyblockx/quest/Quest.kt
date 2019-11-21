@@ -19,7 +19,8 @@ data class Quest(
     val goalParameter: String,
     val amountTillComplete: Int,
     val oneTime: Boolean,
-    val commandsToExecuteOnCompletion: List<String>
+    val actionsOnActivation: QuestActions,
+    val actionsOnCompletion: QuestActions
 ) {
 
 
@@ -29,10 +30,7 @@ data class Quest(
 
 
     fun giveRewards(iPlayer: IPlayer) {
-        val player = iPlayer.getPlayer()
-        for (command in commandsToExecuteOnCompletion) {
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("{player}", player.name))
-        }
+        actionsOnCompletion.executeActions(QuestActions.QuestContext(iPlayer, iPlayer.getIsland()!!, this))
     }
 
 }
