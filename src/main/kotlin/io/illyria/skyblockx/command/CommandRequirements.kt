@@ -14,7 +14,7 @@ class CommandRequirements(
 ) {
 
 
-    fun computeRequirements(info: io.illyria.skyblockx.command.CommandInfo, informIfNot: Boolean = true): Boolean {
+    fun computeRequirements(info: CommandInfo, informIfNot: Boolean = true): Boolean {
         // Check if the commandSender is a player
         if (asPlayer && !info.isPlayer()) {
             if (informIfNot) {
