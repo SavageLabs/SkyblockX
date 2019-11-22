@@ -34,12 +34,8 @@ class IslandQuestGUI :
                         context.getIsland()!!.currentQuest = quest.id
                         val islandQuestGUI = IslandQuestGUI()
                         islandQuestGUI.showGui(player)
-                        player.sendMessage(
-                            color(
-                                Message.questActivationTrigger
-                                    .replace("{quest}", quest.id)
-                            )
-                        )
+                        player.sendMessage(color(Message.questActivationTrigger.replace("{quest}", quest.id)))
+                        quest.executeActivationTrigger(context)
                     }
                 })
             pane.populateWithGuiItems(guiItems)

@@ -28,6 +28,10 @@ data class Quest(
         return amountTillComplete <= amount
     }
 
+    fun executeActivationTrigger(iPlayer: IPlayer) {
+        actionsOnActivation.executeActions(QuestActions.QuestContext(iPlayer, iPlayer.getIsland()!!, this))
+    }
+
 
     fun giveRewards(iPlayer: IPlayer) {
         actionsOnCompletion.executeActions(QuestActions.QuestContext(iPlayer, iPlayer.getIsland()!!, this))
