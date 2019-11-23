@@ -74,7 +74,6 @@ class CommandInfo(val commandSender: CommandSender, val args: ArrayList<String>,
         return player != null
     }
 
-
     fun message(message: String) {
         commandSender.sendMessage(color(Message.messagePrefix + message))
     }
