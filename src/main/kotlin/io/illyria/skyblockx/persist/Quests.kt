@@ -89,6 +89,33 @@ object Quests {
             "Quest-3",
             "Mine-Cobblestone-1",
             SerializableItem(
+                XMaterial.LAVA_BUCKET,
+                "&8Create a Cobblestone generator and mine a block from it.",
+                listOf("&7Mine &b1 &7cobblestone", "&7Completion: &b{currentAmount}&7/&b{finalAmount}"),
+                1
+            ),
+            0,
+            QuestGoal.BREAK_BLOCKS,
+            XMaterial.COBBLESTONE.name,
+            10,
+            true,
+            QuestActions(
+                listOf(
+                    "message(&7You have started the {quest-name}:::&7Your current progress is {quest-amount-till-complete})",
+                    "actionbar(&7Your quest progress is {quest-amount-completed}/{quest-amount-till-complete})"
+                )
+            ),
+            QuestActions(
+                listOf(
+                    "message(&7You have finished the {quest-name}:::&7Your current progress is {quest-amount-till-complete})",
+                    "title(&7{quest-name}:::&b&lQuest Completed)"
+                )
+            )
+        ),
+        Quest(
+            "Quest-4",
+            "Mine 10 Cobblestone",
+            SerializableItem(
                 XMaterial.COBBLESTONE,
                 "&8Create a Cobblestone generator and mine a block from it.",
                 listOf("&7Mine &b1 &7cobblestone", "&7Completion: &b{currentAmount}&7/&b{finalAmount}"),
@@ -101,13 +128,13 @@ object Quests {
             true,
             QuestActions(
                 listOf(
-                    "message(&7You have started the {quest-name}:::&7Your current progress is {quest-amount-completed}/{quest-amount-till-complete})",
+                    "message(&7You have started the {quest-name}:::&7Your current progress is {quest-amount-till-complete})",
                     "actionbar(&7Your quest progress is {quest-amount-completed}/{quest-amount-till-complete})"
                 )
             ),
             QuestActions(
                 listOf(
-                    "message(&7You have finished the {quest-name}:::&7Your current progress is {quest-amount-completed}/{quest-amount-till-complete})",
+                    "message(&7You have finished the {quest-name}:::&7Your current progress is {quest-amount-till-complete})",
                     "title(&7{quest-name}:::&b&lQuest Completed)"
                 )
             )

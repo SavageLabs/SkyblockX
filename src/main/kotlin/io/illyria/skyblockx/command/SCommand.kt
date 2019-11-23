@@ -42,7 +42,6 @@ abstract class SCommand {
                 return
             }
         }
-
         perform(info)
     }
 
@@ -152,44 +151,44 @@ abstract class SCommand {
     class Argument(
         val name: String,
         val argumentOrder: Int,
-        val argumentType: SCommand.ArgumentType
+        val argumentType: ArgumentType
     )
 
     abstract class ArgumentType {
         abstract fun getPossibleValues(iPlayer: IPlayer?): List<String>
     }
 
-    class HomeArgument : SCommand.ArgumentType() {
+    class HomeArgument : ArgumentType() {
         override fun getPossibleValues(iPlayer: IPlayer?): List<String> {
             return if (iPlayer != null && iPlayer.hasIsland()) iPlayer.getIsland()!!.getAllHomes().keys.toList() else emptyList()
         }
     }
 
-    class PlayerArgument : SCommand.ArgumentType() {
+    class PlayerArgument : ArgumentType() {
         override fun getPossibleValues(iPlayer: IPlayer?): List<String> {
             return Bukkit.getOnlinePlayers().map { player -> player.name }
         }
     }
 
-    class StringArgument : SCommand.ArgumentType() {
+    class StringArgument : ArgumentType() {
         override fun getPossibleValues(iPlayer: IPlayer?): List<String> {
             return emptyList()
         }
     }
 
-    class IntArgument : SCommand.ArgumentType() {
+    class IntArgument : ArgumentType() {
         override fun getPossibleValues(iPlayer: IPlayer?): List<String> {
             return listOf(1.toString())
         }
     }
 
-    class PosArgument : SCommand.ArgumentType() {
+    class PosArgument : ArgumentType() {
         override fun getPossibleValues(iPlayer: IPlayer?): List<String> {
             return if (iPlayer != null && iPlayer.pos1 == null) listOf(1.toString()) else listOf(2.toString())
         }
     }
 
-    class BooleanArgument : SCommand.ArgumentType() {
+    class BooleanArgument : ArgumentType() {
         override fun getPossibleValues(iPlayer: IPlayer?): List<String> {
             return listOf("true", "false")
         }
