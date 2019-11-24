@@ -7,6 +7,7 @@ enum class QuestGoal(val questName: String) {
     PLACE_BLOCKS("PLACE_BLOCKS"),
     CRAFT("CRAFT"),
     FISHING("FISHING"),
+    SMELT("SMELT"),
     ENCHANT("ENCHANT"),
     REPAIR("REPAIR")
 
