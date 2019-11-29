@@ -14,26 +14,31 @@ import net.prosavage.baseplugin.WorldBorderUtil
 import net.prosavage.baseplugin.XMaterial
 import org.bukkit.WorldCreator
 import org.bukkit.generator.ChunkGenerator
+import kotlin.system.measureTimeMillis
 
 
 class SkyblockX : SavagePlugin() {
 
     override fun onEnable() {
-        super.onEnable()
-        printHeader()
-        Globals.skyblockX = this
-        registerAllPermissions(server.pluginManager)
-        loadWorld()
-        loadDataFiles()
-        initWorldBorderUiltity()
-        setupCommands()
-        setupOreGeneratorAlgorithm()
-        registerListeners(DataListener(), SEditListener(), BlockListener(), PlayerListener(), EntityListener())
-        logger.info("Loaded ${Data.IPlayers.size} players")
-        logger.info("Loaded ${Data.islands.size} islands")
+        val startupTime = measureTimeMillis {
+            super.onEnable()
+            printHeader()
+            Globals.skyblockX = this
+            registerAllPermissions(server.pluginManager)
+            loadWorld()
+            loadDataFiles()
+            initWorldBorderUiltity()
+            setupCommands()
+            setupOreGeneratorAlgorithm()
+            registerListeners(DataListener(), SEditListener(), BlockListener(), PlayerListener(), EntityListener())
+            logger.info("Loaded ${Data.IPlayers.size} players")
+            logger.info("Loaded ${Data.islands.size} islands")
+        }
+        logger.info("Startup Finished ($startupTime ms)")
     }
 
     private fun loadWorld() {
+        logger.info("Loading World ${Config.skyblockWorldName}")
         WorldCreator(Config.skyblockWorldName).generator(VoidWorldGenerator()).createWorld()
     }
 
@@ -47,6 +52,7 @@ class SkyblockX : SavagePlugin() {
     }
 
     fun loadDataFiles() {
+        logger.info("Loading data files.")
         Config.load()
         Data.load()
         Quests.load()
@@ -54,10 +60,12 @@ class SkyblockX : SavagePlugin() {
     }
 
     private fun initWorldBorderUiltity() {
+        logger.info("Starting WorldBorder Packet Util.")
         Globals.worldBorderUtil = WorldBorderUtil(this)
     }
 
     private fun setupCommands() {
+        logger.info("Setting up Commands.")
         this.getCommand("skyblockx")!!.setExecutor(BaseCommandTesting())
         val baseCommand = BaseCommand()
         val command = this.getCommand("is")!!
