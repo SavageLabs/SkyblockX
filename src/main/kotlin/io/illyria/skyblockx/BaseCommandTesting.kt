@@ -49,7 +49,6 @@ class BaseCommandTesting : CommandExecutor {
                 sender as Player
                 val material = Material.valueOf(args[1].toUpperCase())
                 val index = args[2].toInt()
-                Island(1, spiral(index), "", "I want to fucking kill my self").fillIsland(material)
             }
             else -> sender.sendMessage("Arg does not exist")
         }
