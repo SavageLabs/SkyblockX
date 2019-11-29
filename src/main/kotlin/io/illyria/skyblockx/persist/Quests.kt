@@ -6,6 +6,8 @@ import io.illyria.skyblockx.quest.QuestGoal
 import net.prosavage.baseplugin.XMaterial
 import net.prosavage.baseplugin.serializer.Serializer
 import net.prosavage.baseplugin.serializer.commonobjects.SerializableItem
+import org.bukkit.entity.Entity
+import org.bukkit.entity.EntityType
 
 object Quests {
     @Transient
@@ -29,7 +31,13 @@ object Quests {
         "Quest-9",
         "Quest-10",
         "Quest-11",
-        "Quest-12"
+        "Quest-12",
+        "Quest-13",
+        "Quest-14",
+        "Quest-15",
+        "Quest-16",
+        "Quest-17",
+        "Quest-18"
     )
 
     var useQuestOrder = true
@@ -350,7 +358,7 @@ object Quests {
             11,
             QuestGoal.PLACE_BLOCKS,
             XMaterial.CACTUS.name,
-            1,
+            10,
             true,
             QuestActions(
                 listOf(
@@ -367,17 +375,179 @@ object Quests {
         ),
         Quest(
             "Quest-12",
-            "&8Plant some pumpkin seeds.",
+            "&8Plant some melons.",
             SerializableItem(
-                XMaterial.PUMPKIN,
-                "&8Plant some pumpkin.",
-                listOf("&7Plant some pumpkin on sand.", "&7You can find some pumpkin in the island chest.", "&7Completion: &b{currentAmount}&7/&b{finalAmount}"),
+                XMaterial.MELON_SLICE,
+                "&8Plant some melons.",
+                listOf("&7Plant some melons on tilled dirt.", "&7You can find some melon seeds in the island chest.", "&7Completion: &b{currentAmount}&7/&b{finalAmount}"),
                 1
             ),
             12,
             QuestGoal.PLACE_BLOCKS,
-            XMaterial.PUMPKIN_SEEDS.name,
+            XMaterial.MELON_SEEDS.name,
             1,
+            true,
+            QuestActions(
+                listOf(
+                    "message(&7You have started the {quest-name}:::&7Your current progress is {quest-amount-till-complete})",
+                    "actionbar(&7Your quest progress is {quest-amount-till-complete})"
+                )
+            ),
+            QuestActions(
+                listOf(
+                    "message(&7You have finished the {quest-name}:::&7Your current progress is {quest-amount-till-complete})",
+                    "title(&7{quest-name}:::&b&lQuest Completed)"
+                )
+            )
+        ),
+        Quest(
+            "Quest-13",
+            "&8Plant 20 Cacti.",
+            SerializableItem(
+                XMaterial.CACTUS,
+                "&8Make a cactus farm.",
+                listOf("&7Plant 20 cacti.", "&7You can buy more sand from /is shop.", "&7Completion: &b{currentAmount}&7/&b{finalAmount}"),
+                1
+            ),
+            13,
+            QuestGoal.PLACE_BLOCKS,
+            XMaterial.CACTUS.name,
+            20,
+            true,
+            QuestActions(
+                listOf(
+                    "message(&7You have started the {quest-name}:::&7Your current progress is {quest-amount-till-complete})",
+                    "actionbar(&7Your quest progress is {quest-amount-till-complete})"
+                )
+            ),
+            QuestActions(
+                listOf(
+                    "message(&7You have finished the {quest-name}:::&7Your current progress is {quest-amount-till-complete})",
+                    "title(&7{quest-name}:::&b&lQuest Completed)"
+                )
+            )
+        ),
+        Quest(
+            "Quest-14",
+            "&8Plant 30 wheat seeds.",
+            SerializableItem(
+                XMaterial.WHEAT_SEEDS,
+                "&8Make a wheat farm.",
+                listOf("&7Plant some wheat on dirt.", "&7You can buy more dirt from /is shop.", "&7Completion: &b{currentAmount}&7/&b{finalAmount}"),
+                1
+            ),
+            14,
+            QuestGoal.PLACE_BLOCKS,
+            XMaterial.WHEAT_SEEDS.name,
+            30,
+            true,
+            QuestActions(
+                listOf(
+                    "message(&7You have started the {quest-name}:::&7Your current progress is {quest-amount-till-complete})",
+                    "actionbar(&7Your quest progress is {quest-amount-till-complete})"
+                )
+            ),
+            QuestActions(
+                listOf(
+                    "message(&7You have finished the {quest-name}:::&7Your current progress is {quest-amount-till-complete})",
+                    "title(&7{quest-name}:::&b&lQuest Completed)"
+                )
+            )
+        ),
+        Quest(
+            "Quest-15",
+            "&8Harvest some wheat.",
+            SerializableItem(
+                XMaterial.WHEAT,
+                "&8Harvest some wheat.",
+                listOf("&7Harvest some fully grown wheat.", "&7You can find some pumpkin in the island chest.", "&7Completion: &b{currentAmount}&7/&b{finalAmount}"),
+                1
+            ),
+            15,
+            QuestGoal.BREAK_BLOCKS,
+            XMaterial.WHEAT.name,
+            1,
+            true,
+            QuestActions(
+                listOf(
+                    "message(&7You have started the {quest-name}:::&7Your current progress is {quest-amount-till-complete})",
+                    "actionbar(&7Your quest progress is {quest-amount-till-complete})"
+                )
+            ),
+            QuestActions(
+                listOf(
+                    "message(&7You have finished the {quest-name}:::&7Your current progress is {quest-amount-till-complete})",
+                    "title(&7{quest-name}:::&b&lQuest Completed)"
+                )
+            )
+        ),
+        Quest(
+            "Quest-16",
+            "&8Kill 100 Zombies.",
+            SerializableItem(
+                XMaterial.ZOMBIE_HEAD,
+                "&8Kill Zombies.",
+                listOf("&7Kill 100 Zombies.", "&7They will spawn in the dark.", "&7Completion: &b{currentAmount}&7/&b{finalAmount}"),
+                1
+            ),
+            16,
+            QuestGoal.KILL_MOBS,
+            EntityType.ZOMBIE.name,
+            100,
+            true,
+            QuestActions(
+                listOf(
+                    "message(&7You have started the {quest-name}:::&7Your current progress is {quest-amount-till-complete})",
+                    "actionbar(&7Your quest progress is {quest-amount-till-complete})"
+                )
+            ),
+            QuestActions(
+                listOf(
+                    "message(&7You have finished the {quest-name}:::&7Your current progress is {quest-amount-till-complete})",
+                    "title(&7{quest-name}:::&b&lQuest Completed)"
+                )
+            )
+        ),
+        Quest(
+            "Quest-17",
+            "&8Kill 100 Skeleton.",
+            SerializableItem(
+                XMaterial.SKELETON_SKULL,
+                "&8Kill Skeletons.",
+                listOf("&7Kill 100 Skeletons.", "&7They will spawn in the dark.", "&7Completion: &b{currentAmount}&7/&b{finalAmount}"),
+                1
+            ),
+            17,
+            QuestGoal.KILL_MOBS,
+            EntityType.SKELETON.name,
+            100,
+            true,
+            QuestActions(
+                listOf(
+                    "message(&7You have started the {quest-name}:::&7Your current progress is {quest-amount-till-complete})",
+                    "actionbar(&7Your quest progress is {quest-amount-till-complete})"
+                )
+            ),
+            QuestActions(
+                listOf(
+                    "message(&7You have finished the {quest-name}:::&7Your current progress is {quest-amount-till-complete})",
+                    "title(&7{quest-name}:::&b&lQuest Completed)"
+                )
+            )
+        ),
+        Quest(
+            "Quest-18",
+            "&8Kill 100 Creepers.",
+            SerializableItem(
+                XMaterial.CREEPER_HEAD,
+                "&8Kill Creepers.",
+                listOf("&7Kill 100 Creepers.", "&7They will spawn in the dark.", "&7Completion: &b{currentAmount}&7/&b{finalAmount}"),
+                1
+            ),
+            16,
+            QuestGoal.KILL_MOBS,
+            EntityType.CREEPER.name,
+            100,
             true,
             QuestActions(
                 listOf(
