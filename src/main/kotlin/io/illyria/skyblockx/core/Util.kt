@@ -26,7 +26,7 @@ fun updateWorldBorder(player: Player, location: Location, delay: Long) {
         Bukkit.getScheduler()
             .runTaskLater(
                 Globals.skyblockX,
-                { t ->
+                Runnable {
                     WorldBorderUtil(Globals.skyblockX).sendWorldBorder(
                         player,
                         getIPlayer(player).borderColor,

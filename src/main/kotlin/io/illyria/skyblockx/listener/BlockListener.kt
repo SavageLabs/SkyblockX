@@ -141,12 +141,12 @@ class BlockListener : Listener {
         // No skyblock world or generating from down block face.
         if (!Config.islandOreGeneratorEnabled || event.face == BlockFace.DOWN || event.block.location.world?.name != Config.skyblockWorldName) return
 
-        Bukkit.getScheduler().runTask(Globals.skyblockX) { _ ->
+        Bukkit.getScheduler().runTask(Globals.skyblockX, Runnable {
             run {
                 if (event.toBlock.type == Material.COBBLESTONE) event.toBlock.location.block.type =
                     Globals.generatorAlgorithm[1]!!.choose().parseMaterial()!!
             }
-        }
+        })
 
 
     }
