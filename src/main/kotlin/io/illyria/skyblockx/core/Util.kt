@@ -22,17 +22,21 @@ fun updateWorldBorder(player: Player, location: Location, delay: Long) {
             worldBorder.center
         )
     } else {
-        val islandFromLocation = getIslandFromLocation(location) ?: return
+
         Bukkit.getScheduler()
             .runTaskLater(
                 Globals.skyblockX,
                 Runnable {
-                    WorldBorderUtil(Globals.skyblockX).sendWorldBorder(
-                        player,
-                        getIPlayer(player).borderColor,
-                        Config.islandMaxSizeInBlocks.toDouble(),
-                        islandFromLocation.getIslandCenter()
-                    )
+                    val islandFromLocation = getIslandFromLocation(location)
+                    if (islandFromLocation != null) {
+                        WorldBorderUtil(Globals.skyblockX).sendWorldBorder(
+                            player,
+                            getIPlayer(player).borderColor,
+                            Config.islandMaxSizeInBlocks.toDouble(),
+                            islandFromLocation.getIslandCenter()
+                        )
+                    }
+
                 },
                 delay
             )
