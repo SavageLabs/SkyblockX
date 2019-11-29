@@ -18,7 +18,7 @@ class VoidWorldGenerator : ChunkGenerator() {
         return true
     }
 
-    fun generate(world: World, rand: Random, chunkx: Int, chunkz: Int): ByteArray {
+    override fun generate(world: World, rand: Random, chunkx: Int, chunkz: Int): ByteArray {
         return ByteArray(world.getMaxHeight() / 16)
     }
 
