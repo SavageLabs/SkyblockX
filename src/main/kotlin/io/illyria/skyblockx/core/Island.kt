@@ -282,15 +282,6 @@ data class Island(val islandID: Int, val point: Point, var ownerUUID: String, va
         )
     }
 
-    fun fillIsland(material: Material = Material.BONE_BLOCK) {
-        val origin = point.getLocation()
-        for (x in origin.x.toInt()..(origin.x + Config.islandMaxSizeInBlocks).toInt()) {
-            for (z in origin.z.toInt()..(origin.z + Config.islandMaxSizeInBlocks).toInt()) {
-                origin.world!!.getBlockAt(Location(origin.world, x.toDouble(), 100.toDouble(), z.toDouble())).type =
-                    material
-            }
-        }
-    }
 
     fun containsBlock(v: Location): Boolean {
         if (v.world !== minLocation.getLocation().world) return false
