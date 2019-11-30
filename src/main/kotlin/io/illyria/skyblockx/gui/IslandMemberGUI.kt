@@ -51,12 +51,13 @@ class IslandMemberGUI :
 
     private fun getSkullOfPlayer(name: String, headFormat: HeadFormat): ItemStack? {
         val itemStack = ItemStack(XMaterial.PLAYER_HEAD.parseItem()!!)
+        val offlinePlayer = Bukkit.getOfflinePlayer(name)
         val skullMeta = itemStack.itemMeta as SkullMeta
         skullMeta.owner = name
-        skullMeta.setDisplayName(color(headFormat.name.replace("{player}", name)))
+        skullMeta.setDisplayName(color(PlaceholderAPI.setPlaceholders(offlinePlayer, headFormat.name.replace("{player}", name))))
         val lore: MutableList<String> = ArrayList()
         for (line in headFormat.lore) {
-            lore.add(PlaceholderAPI.setPlaceholders(Bukkit.getOfflinePlayer(name), color(line)))
+            lore.add(PlaceholderAPI.setPlaceholders(offlinePlayer, color(line)))
         }
         skullMeta.lore = lore
         itemStack.itemMeta = skullMeta
