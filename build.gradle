@@ -35,7 +35,7 @@ repositories {
 
 dependencies {
     compileOnly 'me.clip:placeholderapi:2.9.2'
-    implementation 'com.github.stefvanschie.inventoryframework:IF:0.5.8'
+    implementation 'com.github.stefvanschie.inventoryframework:IF:0.5.14'
     compileOnly ("org.spigotmc:spigot-api:1.14.2-R0.1-SNAPSHOT") {
         exclude group: 'net.md-5', module: 'bungeecord-chat'
         exclude group: 'javax.persistence', module: 'persistence-api'

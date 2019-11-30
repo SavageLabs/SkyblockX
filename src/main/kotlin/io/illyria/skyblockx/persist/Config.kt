@@ -1,5 +1,6 @@
 package io.illyria.skyblockx.persist
 
+import io.illyria.skyblockx.gui.HeadFormat
 import io.illyria.skyblockx.gui.IslandBorderItem
 import io.illyria.skyblockx.gui.MenuItem
 import io.illyria.skyblockx.persist.data.IslandCreateInfo
@@ -62,6 +63,13 @@ object Config {
             WeightedItem(XMaterial.DIAMOND_ORE, 1)
         )
     )
+
+    var islandMemberGUITitle = "&7Select a member."
+    var islandMemberGUIRows = 3
+    var islandMemberGUIBackgroundItem = SerializableItem(XMaterial.GRAY_STAINED_GLASS_PANE, "&7", listOf(""), 1)
+    var islandMemberGUIHeadSlots = listOf(10, 13, 16)
+    var islandMemberGUIItemMeta = HeadFormat("&c&{player}", listOf("&cClick for more info"))
+
 
     var islandBorderGUITitle = "&7Change border color"
     var islandBorderGUIRows = 3
