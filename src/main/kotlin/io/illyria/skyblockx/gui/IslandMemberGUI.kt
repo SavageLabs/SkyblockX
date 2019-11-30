@@ -35,7 +35,7 @@ class IslandMemberGUI :
             guiItems[Config.islandMemberGUIHeadSlots[slotListIndexesUsed]] = GuiItem(getSkullOfPlayer(memberName, Config.islandMemberGUIItemMeta)!!) { e ->
                 run {
                     e.isCancelled = true
-                    context.message("Go to submenu -> $memberName")
+                    IslandMemberActionGUI(memberName).showGui(context.getPlayer())
                 }
             }
             slotListIndexesUsed++

@@ -68,7 +68,52 @@ object Config {
     var islandMemberGUIRows = 3
     var islandMemberGUIBackgroundItem = SerializableItem(XMaterial.GRAY_STAINED_GLASS_PANE, "&7", listOf(""), 1)
     var islandMemberGUIHeadSlots = listOf(10, 13, 16)
-    var islandMemberGUIItemMeta = HeadFormat("&c&{player}", listOf("&cClick for more info"))
+    var islandMemberGUIItemMeta = HeadFormat("&b&l{player}", listOf("&7Click for more info"))
+
+    var islandMemberActionGUITitle = "&b&l{player}"
+    var islandMemberActionGUIBackgroundItem = SerializableItem(XMaterial.GRAY_STAINED_GLASS_PANE, "&7", listOf(""), 1)
+    var islandMemberActionGUIRows = 3
+    var islandMemberActionItems = listOf(
+        MenuItem(
+            SerializableItem(
+                XMaterial.OAK_DOOR,
+                "&bBack",
+                listOf("&7Click to go back."),
+                1
+            ),
+            listOf("is member"),
+            0
+        ),
+        MenuItem(
+            SerializableItem(
+                XMaterial.BARRIER,
+                "&7Ban &b&l{player}",
+                listOf("&7Click to ban"),
+                1
+            ),
+            listOf("is members ban {player}"),
+            10
+        ), MenuItem(
+            SerializableItem(
+                XMaterial.DIAMOND_SWORD,
+                "&7Kick &b&l{player}",
+                listOf("&7Click to kick"),
+                1
+            ),
+            listOf("is members kick {player}"),
+            13
+        ),
+        MenuItem(
+            SerializableItem(
+                XMaterial.GOLDEN_APPLE,
+                "&7Promote &b&l{player}&7 to leader",
+                listOf("&7The current leader &b&lWILL &7lose their position", "&7Click to promote"),
+                1
+            ),
+            listOf("is members promote {player}"),
+            16
+        )
+    )
 
 
     var islandBorderGUITitle = "&7Change border color"
