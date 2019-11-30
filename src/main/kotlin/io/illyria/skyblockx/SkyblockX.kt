@@ -2,6 +2,7 @@ package io.illyria.skyblockx
 
 import io.illyria.skyblockx.command.BaseCommand
 import io.illyria.skyblockx.core.registerAllPermissions
+import io.illyria.skyblockx.hooks.PlacholderAPI
 import io.illyria.skyblockx.listener.*
 import io.illyria.skyblockx.persist.Config
 import io.illyria.skyblockx.persist.Data
@@ -12,6 +13,7 @@ import io.illyria.skyblockx.world.VoidWorldGenerator
 import net.prosavage.baseplugin.SavagePlugin
 import net.prosavage.baseplugin.WorldBorderUtil
 import net.prosavage.baseplugin.XMaterial
+import org.bukkit.ChatColor
 import org.bukkit.WorldCreator
 import org.bukkit.generator.ChunkGenerator
 import kotlin.system.measureTimeMillis
@@ -20,6 +22,7 @@ import kotlin.system.measureTimeMillis
 class SkyblockX : SavagePlugin() {
 
     override fun onEnable() {
+
         val startupTime = measureTimeMillis {
             super.onEnable()
             printHeader()
@@ -30,11 +33,20 @@ class SkyblockX : SavagePlugin() {
             initWorldBorderUiltity()
             setupCommands()
             setupOreGeneratorAlgorithm()
+            loadPlaceholderAPIHook()
             registerListeners(DataListener(), SEditListener(), BlockListener(), PlayerListener(), EntityListener())
             logger.info("Loaded ${Data.IPlayers.size} players")
             logger.info("Loaded ${Data.islands.size} islands")
         }
         logger.info("Startup Finished ($startupTime ms)")
+
+    }
+
+    private fun loadPlaceholderAPIHook() {
+        if (server.pluginManager.getPlugin("PlaceholderAPI") != null) {
+            server.consoleSender.sendMessage(ChatColor.YELLOW.toString() + "Loading Placeholders...")
+            PlacholderAPI().register()
+        }
     }
 
     private fun loadWorld() {
