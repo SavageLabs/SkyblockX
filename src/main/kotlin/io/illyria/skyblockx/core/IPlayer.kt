@@ -134,6 +134,10 @@ fun getIPlayerByName(name: String): IPlayer? {
     return Data.IPlayers.values.find { iPlayer -> iPlayer.name == name }
 }
 
+fun getIPlayerByUUID(uuid: String): IPlayer? {
+    return Data.IPlayers[uuid]
+}
+
 fun createIPlayer(player: Player): IPlayer {
     val iPlayer = IPlayer(player.uniqueId.toString())
     Data.IPlayers[player.uniqueId.toString()] = iPlayer
