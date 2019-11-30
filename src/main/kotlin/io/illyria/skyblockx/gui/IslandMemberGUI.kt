@@ -1,6 +1,7 @@
 package io.illyria.skyblockx.gui
 
 import com.github.stefvanschie.inventoryframework.GuiItem
+import io.illyria.skyblockx.Globals
 import io.illyria.skyblockx.core.IPlayer
 import io.illyria.skyblockx.core.color
 import io.illyria.skyblockx.core.createIsland
@@ -10,6 +11,7 @@ import io.illyria.skyblockx.persist.Message
 import me.clip.placeholderapi.PlaceholderAPI
 import net.prosavage.baseplugin.XMaterial
 import org.bukkit.Bukkit
+import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.meta.SkullMeta
@@ -17,28 +19,34 @@ import java.util.*
 
 
 class IslandMemberGUI :
-    BaseGUI(Config.islandCreateGUITitle, Config.islandCreateGUIBackgroundItem, Config.islandCreateGUIRows) {
+    BaseGUI(Config.islandMemberGUITitle, Config.islandMemberGUIBackgroundItem, Config.islandMemberGUIRows) {
 
     override fun populatePane(context: IPlayer) {
         val guiItems = ArrayList<GuiItem>()
         for (item in 0 until (super.guiRows * 9)) {
             guiItems.add(GuiItem(super.backgroundItem.buildItem()) { e -> e.isCancelled = true })
         }
-        for (island in Config.islandCreateGUIIslandTypes) {
-            guiItems[island.guiIndex] = (GuiItem(island.item.buildItem()) { e ->
+        var slotListIndexesUsed = 0
+        for (memberName in context.getIsland()!!.getAllMembers()) {
+            if (slotListIndexesUsed >= Config.islandMemberGUIHeadSlots.size) {
+                Globals.skyblockX.logger.info("Skipping for $memberName due to not having a configured slot for the ${slotListIndexesUsed + 1}th member.")
+                continue
+            }
+            guiItems[Config.islandMemberGUIHeadSlots[slotListIndexesUsed]] = GuiItem(getSkullOfPlayer(memberName, Config.islandMemberGUIItemMeta)!!) { e ->
                 run {
                     e.isCancelled = true
-                    val player = e.whoClicked as Player
-                    if (!hasPermission(player, island.requirementPermission)) {
-                        player.sendMessage(color(Message.messagePrefix + Message.islandCreateGUIYouDontHavePermission))
-                    }
-                    createIsland(player, island.structureFile.replace(".structure", ""))
-                    player.sendMessage(color(Message.messagePrefix + Message.commandCreateSuccess))
-
+                    context.message("Go to submenu -> $memberName")
                 }
-            })
-            pane.populateWithGuiItems(guiItems)
+            }
+            slotListIndexesUsed++
         }
+
+        if (slotListIndexesUsed < Config.islandMemberGUIHeadSlots.size) {
+            for(slot in slotListIndexesUsed until Config.islandMemberGUIHeadSlots.size) {
+                guiItems[Config.islandMemberGUIHeadSlots[slot]] = GuiItem(ItemStack(Material.AIR))
+            }
+        }
+        pane.populateWithGuiItems(guiItems)
     }
 
     private fun getSkullOfPlayer(name: String, headFormat: HeadFormat): ItemStack? {

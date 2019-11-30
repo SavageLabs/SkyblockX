@@ -4,6 +4,7 @@ import io.illyria.skyblockx.command.CommandInfo
 import io.illyria.skyblockx.command.CommandRequirementsBuilder
 import io.illyria.skyblockx.command.SCommand
 import io.illyria.skyblockx.core.Permission
+import io.illyria.skyblockx.gui.IslandMemberGUI
 import io.illyria.skyblockx.persist.Message
 
 class CmdMember : SCommand() {
@@ -22,11 +23,13 @@ class CmdMember : SCommand() {
     }
 
     override fun perform(info: CommandInfo) {
+        IslandMemberGUI().showGui(info.player!!)
         // No Args / Invalid args specified.
         if (info.args.size != 1) {
             generateHelp(1, info.player!!)
             return
         }
+
     }
 
     override fun getHelpInfo(): String {
