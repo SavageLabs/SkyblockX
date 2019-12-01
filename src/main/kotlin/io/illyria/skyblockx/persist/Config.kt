@@ -136,8 +136,8 @@ object Config {
     )
 
     var islandMenuGUITitle = "Island Menu"
-    var islandMenuGUIRows = 1
-    var islandMenuGUIBackgroundItem = SerializableItem(XMaterial.LIGHT_BLUE_STAINED_GLASS_PANE, "&9", listOf(""), 1)
+    var islandMenuGUIRows = 3
+    var islandMenuGUIBackgroundItem = SerializableItem(XMaterial.GRAY_STAINED_GLASS_PANE, "&9", listOf(""), 1)
     var islandMenuGUIItems = listOf(
         MenuItem(
             SerializableItem(
@@ -147,7 +147,7 @@ object Config {
                 1
             ),
             listOf("is go"),
-            1
+            10
         ),
         MenuItem(
             SerializableItem(
@@ -157,17 +157,17 @@ object Config {
                 1
             ),
             listOf("is quest"),
-            4
+            13
         ),
         MenuItem(
             SerializableItem(
-                XMaterial.RED_BED,
-                "&bIsland Home",
-                listOf("&7Click to go to island home"),
+                XMaterial.BLUE_BANNER,
+                "&bManage Members",
+                listOf("&7Click to manage island members"),
                 1
             ),
-            listOf("is home list"),
-            7
+            listOf("is members"),
+            16
         )
     )
 
