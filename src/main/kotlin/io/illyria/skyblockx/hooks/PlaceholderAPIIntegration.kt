@@ -29,7 +29,7 @@ class PlacholderAPI : PlaceholderExpansion() {
         return when (s) {
             "island_owner" -> iPlayer.getIsland()?.ownerTag ?: "N/A"
             "island_member_amount", "island_member_count" -> iPlayer.getIsland()?.getAllMembers()?.size.toString() ?: "0"
-            "island_member_list" -> iPlayer.getIsland()?.getAllMembers()?.stream()!!.collect(joining(", "))
+            "island_member_list" -> iPlayer.getIsland()?.getAllMembers()?.stream()!!.collect(joining(", ")) ?: "N/A"
 
             else -> null
         }
