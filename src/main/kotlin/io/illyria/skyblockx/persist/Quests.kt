@@ -37,7 +37,8 @@ object Quests {
         "Quest-15",
         "Quest-16",
         "Quest-17",
-        "Quest-18"
+        "Quest-18",
+        "Quest-19"
     )
 
     var useQuestOrder = true
@@ -63,13 +64,13 @@ object Quests {
             true,
             QuestActions(
                 listOf(
-                    "message(&7You have started the {quest-name}:::&7Your current progress is {quest-amount-till-complete})",
-                    "actionbar(&7Your quest progress is {quest-amount-till-complete})"
+                    "message(&7You have started the {quest-name}:::&7Your current progress is 0/0/{quest-amount-till-complete})",
+                    "actionbar(&7Your quest progress is 0/0/{quest-amount-till-complete})"
                 )
             ),
             QuestActions(
                 listOf(
-                    "message(&7You have finished the {quest-name}:::&7Your current progress {quest-amount-till-complete})",
+                    "message(&7You have finished the {quest-name}:::&7Your current progress 0/0/{quest-amount-till-complete})",
                     "title(&7{quest-name}:::&b&lQuest Completed)",
                     "command(give {player} oak_sapling 1:::give {player} apple 1)"
                 )
@@ -91,13 +92,13 @@ object Quests {
             true,
             QuestActions(
                 listOf(
-                    "message(&7You have started the {quest-name}:::&7Your current progress {quest-amount-till-complete})",
-                    "actionbar(&7Your quest progress is {quest-amount-till-complete})"
+                    "message(&7You have started the {quest-name}:::&7Your current progress 0/0/{quest-amount-till-complete})",
+                    "actionbar(&7Your quest progress is 0/0/{quest-amount-till-complete})"
                 )
             ),
             QuestActions(
                 listOf(
-                    "message(&7You have finished the {quest-name}:::&7Your current progress {quest-amount-till-complete})",
+                    "message(&7You have finished the {quest-name}:::&7Your current progress 0/0/{quest-amount-till-complete})",
                     "title(&7{quest-name}:::&b&lQuest Completed)"
                 )
             )
@@ -118,13 +119,13 @@ object Quests {
             true,
             QuestActions(
                 listOf(
-                    "message(&7You have started the {quest-name}:::&7Your current progress is {quest-amount-till-complete})",
-                    "actionbar(&7Your quest progress is {quest-amount-till-complete})"
+                    "message(&7You have started the {quest-name}:::&7Your current progress is 0/0/{quest-amount-till-complete})",
+                    "actionbar(&7Your quest progress is 0/0/{quest-amount-till-complete})"
                 )
             ),
             QuestActions(
                 listOf(
-                    "message(&7You have finished the {quest-name}:::&7Your current progress is {quest-amount-till-complete})",
+                    "message(&7You have finished the {quest-name}:::&7Your current progress is 0/0/{quest-amount-till-complete})",
                     "title(&7{quest-name}:::&b&lQuest Completed)"
                 )
             )
@@ -145,13 +146,13 @@ object Quests {
             true,
             QuestActions(
                 listOf(
-                    "message(&7You have started the {quest-name}:::&7Your current progress is {quest-amount-till-complete})",
-                    "actionbar(&7Your quest progress is {quest-amount-till-complete})"
+                    "message(&7You have started the {quest-name}:::&7Your current progress is 0/0/{quest-amount-till-complete})",
+                    "actionbar(&7Your quest progress is 0/0/{quest-amount-till-complete})"
                 )
             ),
             QuestActions(
                 listOf(
-                    "message(&7You have finished the {quest-name}:::&7Your current progress is {quest-amount-till-complete})",
+                    "message(&7You have finished the {quest-name}:::&7Your current progress is 0/0/{quest-amount-till-complete})",
                     "title(&7{quest-name}:::&b&lQuest Completed)"
                 )
             )
@@ -172,13 +173,13 @@ object Quests {
             true,
             QuestActions(
                 listOf(
-                    "message(&7You have started the {quest-name}:::&7Your current progress is {quest-amount-till-complete})",
-                    "actionbar(&7Your quest progress is {quest-amount-till-complete})"
+                    "message(&7You have started the {quest-name}:::&7Your current progress is 0/0/{quest-amount-till-complete})",
+                    "actionbar(&7Your quest progress is 0/0/{quest-amount-till-complete})"
                 )
             ),
             QuestActions(
                 listOf(
-                    "message(&7You have finished the {quest-name}:::&7Your current progress is {quest-amount-till-complete})",
+                    "message(&7You have finished the {quest-name}:::&7Your current progress is 0/0/{quest-amount-till-complete})",
                     "title(&7{quest-name}:::&b&lQuest Completed)"
                 )
             )
@@ -199,13 +200,13 @@ object Quests {
             true,
             QuestActions(
                 listOf(
-                    "message(&7You have started the {quest-name}:::&7Your current progress is {quest-amount-till-complete})",
-                    "actionbar(&7Your quest progress is {quest-amount-till-complete})"
+                    "message(&7You have started the {quest-name}:::&7Your current progress is 0/0/{quest-amount-till-complete})",
+                    "actionbar(&7Your quest progress is 0/0/{quest-amount-till-complete})"
                 )
             ),
             QuestActions(
                 listOf(
-                    "message(&7You have finished the {quest-name}:::&7Your current progress is {quest-amount-till-complete})",
+                    "message(&7You have finished the {quest-name}:::&7Your current progress is 0/0/{quest-amount-till-complete})",
                     "title(&7{quest-name}:::&b&lQuest Completed)",
                     "command(&7give {player} coal 1)"
                 )
@@ -227,13 +228,13 @@ object Quests {
             true,
             QuestActions(
                 listOf(
-                    "message(&7You have started the {quest-name}:::&7Your current progress is {quest-amount-till-complete})",
-                    "actionbar(&7Your quest progress is {quest-amount-till-complete})"
+                    "message(&7You have started the {quest-name}:::&7Your current progress is 0/0/{quest-amount-till-complete})",
+                    "actionbar(&7Your quest progress is 0/0/{quest-amount-till-complete})"
                 )
             ),
             QuestActions(
                 listOf(
-                    "message(&7You have finished the {quest-name}:::&7Your current progress is {quest-amount-till-complete})",
+                    "message(&7You have finished the {quest-name}:::&7Your current progress is 0/0/{quest-amount-till-complete})",
                     "title(&7{quest-name}:::&b&lQuest Completed)"
                 )
             )
@@ -254,13 +255,13 @@ object Quests {
             true,
             QuestActions(
                 listOf(
-                    "message(&7You have started the {quest-name}:::&7Your current progress is {quest-amount-till-complete})",
-                    "actionbar(&7Your quest progress is {quest-amount-till-complete})"
+                    "message(&7You have started the {quest-name}:::&7Your current progress is 0/0/{quest-amount-till-complete})",
+                    "actionbar(&7Your quest progress is 0/0/{quest-amount-till-complete})"
                 )
             ),
             QuestActions(
                 listOf(
-                    "message(&7You have finished the {quest-name}:::&7Your current progress is {quest-amount-till-complete})",
+                    "message(&7You have finished the {quest-name}:::&7Your current progress is 0/0/{quest-amount-till-complete})",
                     "title(&7{quest-name}:::&b&lQuest Completed)"
                 )
             )
@@ -281,13 +282,13 @@ object Quests {
             true,
             QuestActions(
                 listOf(
-                    "message(&7You have started the {quest-name}:::&7Your current progress is {quest-amount-till-complete})",
-                    "actionbar(&7Your quest progress is {quest-amount-till-complete})"
+                    "message(&7You have started the {quest-name}:::&7Your current progress is 0/0/{quest-amount-till-complete})",
+                    "actionbar(&7Your quest progress is 0/0/{quest-amount-till-complete})"
                 )
             ),
             QuestActions(
                 listOf(
-                    "message(&7You have finished the {quest-name}:::&7Your current progress is {quest-amount-till-complete})",
+                    "message(&7You have finished the {quest-name}:::&7Your current progress is 0/0/{quest-amount-till-complete})",
                     "title(&7{quest-name}:::&b&lQuest Completed)"
                 )
             )
@@ -308,13 +309,13 @@ object Quests {
             true,
             QuestActions(
                 listOf(
-                    "message(&7You have started the {quest-name}:::&7Your current progress is {quest-amount-till-complete})",
-                    "actionbar(&7Your quest progress is {quest-amount-till-complete})"
+                    "message(&7You have started the {quest-name}:::&7Your current progress is 0/0/{quest-amount-till-complete})",
+                    "actionbar(&7Your quest progress is 0/0/{quest-amount-till-complete})"
                 )
             ),
             QuestActions(
                 listOf(
-                    "message(&7You have finished the {quest-name}:::&7Your current progress is {quest-amount-till-complete})",
+                    "message(&7You have finished the {quest-name}:::&7Your current progress is 0/{quest-amount-till-complete})",
                     "title(&7{quest-name}:::&b&lQuest Completed)"
                 )
             )
@@ -335,19 +336,19 @@ object Quests {
             true,
             QuestActions(
                 listOf(
-                    "message(&7You have started the {quest-name}:::&7Your current progress is {quest-amount-till-complete})",
-                    "actionbar(&7Your quest progress is {quest-amount-till-complete})"
+                    "message(&7You have started the {quest-name}:::&7Your current progress is 0/{quest-amount-till-complete})",
+                    "actionbar(&7Your quest progress is 0/{quest-amount-till-complete})"
                 )
             ),
             QuestActions(
                 listOf(
-                    "message(&7You have finished the {quest-name}:::&7Your current progress is {quest-amount-till-complete})",
+                    "message(&7You have finished the {quest-name}:::&7Your current progress is 0/{quest-amount-till-complete})",
                     "title(&7{quest-name}:::&b&lQuest Completed)"
                 )
             )
         ),
         Quest(
-            "Quest-11",
+            "Quest-12",
             "&8Plant some sugarcane.",
             SerializableItem(
                 XMaterial.SUGAR_CANE,
@@ -362,19 +363,19 @@ object Quests {
             true,
             QuestActions(
                 listOf(
-                    "message(&7You have started the {quest-name}:::&7Your current progress is {quest-amount-till-complete})",
-                    "actionbar(&7Your quest progress is {quest-amount-till-complete})"
+                    "message(&7You have started the {quest-name}:::&7Your current progress is 0/{quest-amount-till-complete})",
+                    "actionbar(&7Your quest progress is 0/{quest-amount-till-complete})"
                 )
             ),
             QuestActions(
                 listOf(
-                    "message(&7You have finished the {quest-name}:::&7Your current progress is {quest-amount-till-complete})",
+                    "message(&7You have finished the {quest-name}:::&7Your current progress is 0/{quest-amount-till-complete})",
                     "title(&7{quest-name}:::&b&lQuest Completed)"
                 )
             )
         ),
         Quest(
-            "Quest-12",
+            "Quest-13",
             "&8Plant some melons.",
             SerializableItem(
                 XMaterial.MELON_SLICE,
@@ -389,19 +390,19 @@ object Quests {
             true,
             QuestActions(
                 listOf(
-                    "message(&7You have started the {quest-name}:::&7Your current progress is {quest-amount-till-complete})",
-                    "actionbar(&7Your quest progress is {quest-amount-till-complete})"
+                    "message(&7You have started the {quest-name}:::&7Your current progress is 0/{quest-amount-till-complete})",
+                    "actionbar(&7Your quest progress is 0/{quest-amount-till-complete})"
                 )
             ),
             QuestActions(
                 listOf(
-                    "message(&7You have finished the {quest-name}:::&7Your current progress is {quest-amount-till-complete})",
+                    "message(&7You have finished the {quest-name}:::&7Your current progress is 0/{quest-amount-till-complete})",
                     "title(&7{quest-name}:::&b&lQuest Completed)"
                 )
             )
         ),
         Quest(
-            "Quest-13",
+            "Quest-14",
             "&8Plant 20 Cacti.",
             SerializableItem(
                 XMaterial.CACTUS,
@@ -416,19 +417,19 @@ object Quests {
             true,
             QuestActions(
                 listOf(
-                    "message(&7You have started the {quest-name}:::&7Your current progress is {quest-amount-till-complete})",
-                    "actionbar(&7Your quest progress is {quest-amount-till-complete})"
+                    "message(&7You have started the {quest-name}:::&7Your current progress is 0/{quest-amount-till-complete})",
+                    "actionbar(&7Your quest progress is 0/{quest-amount-till-complete})"
                 )
             ),
             QuestActions(
                 listOf(
-                    "message(&7You have finished the {quest-name}:::&7Your current progress is {quest-amount-till-complete})",
+                    "message(&7You have finished the {quest-name}:::&7Your current progress is 0/{quest-amount-till-complete})",
                     "title(&7{quest-name}:::&b&lQuest Completed)"
                 )
             )
         ),
         Quest(
-            "Quest-14",
+            "Quest-15",
             "&8Plant 30 wheat seeds.",
             SerializableItem(
                 XMaterial.WHEAT_SEEDS,
@@ -443,19 +444,19 @@ object Quests {
             true,
             QuestActions(
                 listOf(
-                    "message(&7You have started the {quest-name}:::&7Your current progress is {quest-amount-till-complete})",
-                    "actionbar(&7Your quest progress is {quest-amount-till-complete})"
+                    "message(&7You have started the {quest-name}:::&7Your current progress is 0/{quest-amount-till-complete})",
+                    "actionbar(&7Your quest progress is 0/{quest-amount-till-complete})"
                 )
             ),
             QuestActions(
                 listOf(
-                    "message(&7You have finished the {quest-name}:::&7Your current progress is {quest-amount-till-complete})",
+                    "message(&7You have finished the {quest-name}:::&7Your current progress is 0/{quest-amount-till-complete})",
                     "title(&7{quest-name}:::&b&lQuest Completed)"
                 )
             )
         ),
         Quest(
-            "Quest-15",
+            "Quest-16",
             "&8Harvest some wheat.",
             SerializableItem(
                 XMaterial.WHEAT,
@@ -470,19 +471,19 @@ object Quests {
             true,
             QuestActions(
                 listOf(
-                    "message(&7You have started the {quest-name}:::&7Your current progress is {quest-amount-till-complete})",
-                    "actionbar(&7Your quest progress is {quest-amount-till-complete})"
+                    "message(&7You have started the {quest-name}:::&7Your current progress is 0/{quest-amount-till-complete})",
+                    "actionbar(&7Your quest progress is 0/{quest-amount-till-complete})"
                 )
             ),
             QuestActions(
                 listOf(
-                    "message(&7You have finished the {quest-name}:::&7Your current progress is {quest-amount-till-complete})",
+                    "message(&7You have finished the {quest-name}:::&7Your current progress is 0/{quest-amount-till-complete})",
                     "title(&7{quest-name}:::&b&lQuest Completed)"
                 )
             )
         ),
         Quest(
-            "Quest-16",
+            "Quest-17",
             "&8Kill 100 Zombies.",
             SerializableItem(
                 XMaterial.ZOMBIE_HEAD,
@@ -497,19 +498,19 @@ object Quests {
             true,
             QuestActions(
                 listOf(
-                    "message(&7You have started the {quest-name}:::&7Your current progress is {quest-amount-till-complete})",
-                    "actionbar(&7Your quest progress is {quest-amount-till-complete})"
+                    "message(&7You have started the {quest-name}:::&7Your current progress is 0/{quest-amount-till-complete})",
+                    "actionbar(&7Your quest progress is 0/{quest-amount-till-complete})"
                 )
             ),
             QuestActions(
                 listOf(
-                    "message(&7You have finished the {quest-name}:::&7Your current progress is {quest-amount-till-complete})",
+                    "message(&7You have finished the {quest-name}:::&7Your current progress is 0/{quest-amount-till-complete})",
                     "title(&7{quest-name}:::&b&lQuest Completed)"
                 )
             )
         ),
         Quest(
-            "Quest-17",
+            "Quest-18",
             "&8Kill 100 Skeleton.",
             SerializableItem(
                 XMaterial.SKELETON_SKULL,
@@ -524,19 +525,19 @@ object Quests {
             true,
             QuestActions(
                 listOf(
-                    "message(&7You have started the {quest-name}:::&7Your current progress is {quest-amount-till-complete})",
-                    "actionbar(&7Your quest progress is {quest-amount-till-complete})"
+                    "message(&7You have started the {quest-name}:::&7Your current progress is 0/{quest-amount-till-complete})",
+                    "actionbar(&7Your quest progress is 0/{quest-amount-till-complete})"
                 )
             ),
             QuestActions(
                 listOf(
-                    "message(&7You have finished the {quest-name}:::&7Your current progress is {quest-amount-till-complete})",
+                    "message(&7You have finished the {quest-name}:::&7Your current progress is 0/{quest-amount-till-complete})",
                     "title(&7{quest-name}:::&b&lQuest Completed)"
                 )
             )
         ),
         Quest(
-            "Quest-18",
+            "Quest-19",
             "&8Kill 100 Creepers.",
             SerializableItem(
                 XMaterial.CREEPER_HEAD,
@@ -551,13 +552,13 @@ object Quests {
             true,
             QuestActions(
                 listOf(
-                    "message(&7You have started the {quest-name}:::&7Your current progress is {quest-amount-till-complete})",
-                    "actionbar(&7Your quest progress is {quest-amount-till-complete})"
+                    "message(&7You have started the {quest-name}:::&7Your current progress is 0/{quest-amount-till-complete})",
+                    "actionbar(&7Your quest progress is 0/0/{quest-amount-till-complete})"
                 )
             ),
             QuestActions(
                 listOf(
-                    "message(&7You have finished the {quest-name}:::&7Your current progress is {quest-amount-till-complete})",
+                    "message(&7You have finished the {quest-name}:::&7Your current progress is 0/{quest-amount-till-complete})",
                     "title(&7{quest-name}:::&b&lQuest Completed)"
                 )
             )

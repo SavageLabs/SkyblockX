@@ -28,15 +28,15 @@ fun updateWorldBorder(player: Player, location: Location, delay: Long) {
                 Globals.skyblockX,
                 Runnable {
                     val islandFromLocation = getIslandFromLocation(location)
+                    val iPlayer = getIPlayer(player)
                     if (islandFromLocation != null) {
                         WorldBorderUtil(Globals.skyblockX).sendWorldBorder(
                             player,
-                            getIPlayer(player).borderColor,
+                            iPlayer.borderColor,
                             Config.islandMaxSizeInBlocks.toDouble(),
                             islandFromLocation.getIslandCenter()
                         )
                     }
-
                 },
                 delay
             )
