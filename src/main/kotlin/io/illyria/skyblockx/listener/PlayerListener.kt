@@ -16,6 +16,7 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.enchantment.EnchantItemEvent
 import org.bukkit.event.inventory.CraftItemEvent
+import org.bukkit.event.inventory.InventoryAction
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.inventory.InventoryType
 import org.bukkit.event.player.PlayerFishEvent
@@ -111,6 +112,37 @@ class PlayerListener : Listener {
             // Slot -999 is not in the inventory so return :P
             || event.slot == -999
         ) {
+            return
+        }
+
+        // Smelting Quests POG.
+        if (event.inventory.type == InventoryType.FURNACE && event.slot == 2 && event.action == InventoryAction.MOVE_TO_OTHER_INVENTORY && event.view.bottomInventory != event.clickedInventory) {
+            val iPlayer = getIPlayer(event.whoClicked as Player)
+
+            val island = iPlayer.getIsland()
+
+            if (failsQuestCheckingPreRequisites(iPlayer, island, event.whoClicked.location)) {
+                return
+            }
+
+            val currentQuest = island!!.currentQuest
+            val targetQuest =
+                Quests.islandQuests.find { quest -> quest.type == QuestGoal.SMELT && quest.id == currentQuest }
+                    ?: return
+
+            val materialSmelted =
+                XMaterial.matchXMaterial(targetQuest.goalParameter) ?: Material.valueOf(targetQuest.goalParameter)
+
+            if (materialSmelted.name != targetQuest.goalParameter) {
+                return
+            }
+
+            island.addQuestData(targetQuest.id)
+            island.sendTeamQuestProgress(targetQuest, event.whoClicked as Player)
+
+            if (targetQuest.isComplete(island.getQuestCompletedAmount(targetQuest.id))) {
+                island.completeQuest(iPlayer, targetQuest)
+            }
             return
         }
 
