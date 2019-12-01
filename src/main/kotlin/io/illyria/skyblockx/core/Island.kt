@@ -18,7 +18,9 @@ import org.bukkit.Material
 import org.bukkit.entity.Player
 import java.text.DecimalFormat
 import java.util.*
+import java.util.stream.Collectors
 import kotlin.collections.HashSet
+import kotlin.streams.toList
 
 
 data class Island(val islandID: Int, val point: Point, var ownerUUID: String, var ownerTag: String) {
@@ -68,7 +70,7 @@ data class Island(val islandID: Int, val point: Point, var ownerUUID: String, va
 
     fun getAllMembers(): Set<String> {
         if (members == null) return emptySet()
-        return members
+        return members.stream().map { uuid -> getIPlayerByUUID(uuid)?.name!! }?.toList()?.toSet() as Set<String>
     }
 
     fun inviteMember(iPlayer: IPlayer) {
@@ -85,8 +87,8 @@ data class Island(val islandID: Int, val point: Point, var ownerUUID: String, va
         if (memberLimit <= members.size) {
             return
         }
-        if (!members.contains(iPlayer.getPlayer().name)) {
-            members.add(iPlayer.getPlayer().name)
+        if (!members.contains(iPlayer.getPlayer().uniqueId.toString())) {
+            members.add(iPlayer.getPlayer().uniqueId.toString())
         }
 
         iPlayer.assignIsland(this)
@@ -94,7 +96,7 @@ data class Island(val islandID: Int, val point: Point, var ownerUUID: String, va
 
 
     fun kickMember(name: String) {
-        members.remove(name)
+        members.remove(getIPlayerByName(name)?.uuid)
         getIPlayerByName(name)?.assignIsland(-1)
     }
 
