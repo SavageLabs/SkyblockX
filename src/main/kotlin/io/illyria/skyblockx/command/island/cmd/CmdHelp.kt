@@ -15,7 +15,7 @@ class CmdHelp : io.illyria.skyblockx.command.SCommand() {
 
     override fun perform(info: io.illyria.skyblockx.command.CommandInfo) {
         val page = info.getArgAsInt(0) ?: return
-        io.illyria.skyblockx.Globals.baseCommand.generateHelp(page, info.player!!)
+        io.illyria.skyblockx.Globals.islandBaseCommand.generateHelp(page, info.player!!)
     }
 
     override fun getHelpInfo(): String {

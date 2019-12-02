@@ -1,6 +1,7 @@
 package io.illyria.skyblockx
 
-import io.illyria.skyblockx.command.island.BaseCommand
+import io.illyria.skyblockx.command.island.IslandBaseCommand
+import io.illyria.skyblockx.command.skyblock.SkyblockBaseCommand
 import io.illyria.skyblockx.core.registerAllPermissions
 import io.illyria.skyblockx.hooks.PlacholderAPI
 import io.illyria.skyblockx.listener.*
@@ -32,6 +33,7 @@ class SkyblockX : SavagePlugin() {
             loadDataFiles()
             initWorldBorderUiltity()
             setupCommands()
+            setupAdminCommands()
             setupOreGeneratorAlgorithm()
             loadPlaceholderAPIHook()
             registerListeners(DataListener(), SEditListener(), BlockListener(), PlayerListener(), EntityListener())
@@ -78,12 +80,22 @@ class SkyblockX : SavagePlugin() {
 
     private fun setupCommands() {
         logger.info("Setting up Commands.")
-        this.getCommand("skyblockx")!!.setExecutor(BaseCommandTesting())
-        val baseCommand = BaseCommand()
+        val baseCommand = IslandBaseCommand()
+        baseCommand.prefix = "is"
         val command = this.getCommand("is")!!
         command.setExecutor(baseCommand)
         command.tabCompleter = baseCommand
         logger.info("${baseCommand.subCommands.size} commands registered.")
+    }
+
+    private fun setupAdminCommands() {
+        logger.info("Setting up administrator Commands.")
+        val baseCommand = SkyblockBaseCommand()
+        baseCommand.prefix = "sbx"
+        val command = this.getCommand("skyblockx")!!
+        command.setExecutor(baseCommand)
+        command.tabCompleter = baseCommand
+        logger.info("${baseCommand.subCommands.size} admin commands registered.")
     }
 
     fun setupOreGeneratorAlgorithm() {

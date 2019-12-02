@@ -111,6 +111,8 @@ data class IPlayer(val uuid: String) {
     }
 
 
+
+
     fun coopIslandsContainBlock(location: Location): Boolean {
         for (id in coopedIslandIds) {
             // Island was not found, continue to next island.

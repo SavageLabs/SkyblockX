@@ -56,7 +56,7 @@ class CmdKick : SCommand() {
 
     override fun perform(info: CommandInfo) {
         // Execute command go just to make a shorthand version for /is member kick <member>.
-        Globals.baseCommand.subCommands.find { command -> command is CmdMember }
+        Globals.islandBaseCommand.subCommands.find { command -> command is CmdMember }
             ?.subCommands?.find { command -> command is CmdMemberKick }?.perform(info)
     }
 

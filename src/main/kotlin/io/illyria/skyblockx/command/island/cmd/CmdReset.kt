@@ -15,8 +15,8 @@ class CmdReset : SCommand() {
     }
 
     override fun perform(info: CommandInfo) {
-        Globals.baseCommand.subCommands.find { command -> command is CmdDelete }?.perform(info)
-        Globals.baseCommand.subCommands.find { command -> command is CmdCreate }?.perform(info)
+        Globals.islandBaseCommand.subCommands.find { command -> command is CmdDelete }?.perform(info)
+        Globals.islandBaseCommand.subCommands.find { command -> command is CmdCreate }?.perform(info)
     }
 
     override fun getHelpInfo(): String {

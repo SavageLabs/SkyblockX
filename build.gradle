@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'io.illyria'
-version 'v1.0.0.1-alpha'
+version '1.0-ALPHA'
 
 
 sourceCompatibility = 1.8
@@ -76,6 +76,7 @@ shadowJar {
     relocate 'net.prosavage.baseplugin', 'io.illyria.skyblockx.shade.baseplugin'
     relocate 'org.jetbrains.kotlin', 'io.illyria.skyblockx.shade.kotlin'
     relocate 'me.rayzr522.jsonmessage', 'io.illyria.skyblockx.shade.jsonmessage'
+    relocate 'io.illyria.WorldBorder-API', 'io.illyria.skyblockx.shade.WorldBorder-API'
     archiveName 'SkyblockX.jar'
 }
 

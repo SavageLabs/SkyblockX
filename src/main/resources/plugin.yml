@@ -9,7 +9,7 @@ description: 'The Ultimate Skyblock Core'
 commands:
   skyblockx:
     description: 'base skyblock command'
-    aliases: [skyblock, sskyblock, sb, sblock]
+    aliases: [skyblock, sskyblock, sb, sbx, sblock]
   is:
     description: 'base savageskyblock command'
     aliases: [island]

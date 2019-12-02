@@ -19,7 +19,7 @@ object Message {
     var commandRequirementsPlayerDoesNotHavePermission = "&cThis command requires the permission %1\$s"
 
     var commandHelpGeneratorPageInvalid = "&cThe page %1\$s is invalid."
-    var commandHelpGeneratorFormat = "&b/is %1\$s &8> &7 %2\$s"
+    var commandHelpGeneratorFormat = "&b/%1\$s %2\$s &8> &7 %3\$s"
     var commandHelpGeneratorBackgroundColor = ChatColor.GRAY
     var commandHelpGeneratorNotRequired = "&cNo&r"
     var commandHelpGeneratorRequires = "&aYes&r"
@@ -41,8 +41,10 @@ object Message {
     var genericCannotReferenceYourSelf = "&cYou cannot reference yourself."
 
 
+    var commandSkyblockBaseHelp = "&7The base admin command for skyblock."
     var commandBaseHelp = "&7The base command for skyblock."
     var commandBaseHelpMessage = "&aPlease execute /is help."
+    var commandSkyblockBaseHelpMessage = "&aPlease execute /sb help"
 
     var commandCreateCLIHeader = "&7&m-------&r &bIsland Types &7&m-------"
     var commandCreateCLIFormat = "&7%1\$s. &b%2\$s"
@@ -156,6 +158,13 @@ object Message {
     var commandLeaveHelp = "leave your island."
 
     var commandResetHelp = "&7reset your island."
+
+    var commandSkyblockRemoveHelp = "&7delete a player's island."
+    var commandSkyblockRemoveNotAnIslandOwner = "&7This player is &bnot&7 an island member."
+    var commandSkyblockRemoveSuccess = "&7The island was successfully deleted."
+
+
+
 
     var commandAllowVisitorsStatus = "&7Your visitor allowed status is now set to &b%1\$s&7."
     var commandAllowVisitorsHelp = "&7Allow visitors to your island using /is teleport <owner-name>."

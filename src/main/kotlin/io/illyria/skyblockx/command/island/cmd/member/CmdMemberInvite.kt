@@ -60,7 +60,7 @@ class CmdInvite : SCommand() {
     }
 
     override fun perform(info: CommandInfo) {
-        Globals.baseCommand.subCommands.find { command -> command is CmdMember }
+        Globals.islandBaseCommand.subCommands.find { command -> command is CmdMember }
             ?.subCommands?.find { subcommand -> subcommand is CmdMemberInvite }?.perform(info)
     }
 

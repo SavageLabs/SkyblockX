@@ -73,6 +73,11 @@ data class Island(val islandID: Int, val point: Point, var ownerUUID: String, va
         return members.stream().map { uuid -> getIPlayerByUUID(uuid)?.name!! }?.toList()?.toSet() as Set<String>
     }
 
+    fun getAllMemberUUIDs(): Set<String> {
+        if (members == null) return emptySet()
+        return members
+    }
+
     fun inviteMember(iPlayer: IPlayer) {
         if (memberLimit <= members.size) {
             return
@@ -303,6 +308,13 @@ data class Island(val islandID: Int, val point: Point, var ownerUUID: String, va
 
     }
 
+    /**
+     * Delete the players island by removing the whole team, Deleting the actual blocks is too intensive.
+     */
+    fun delete() {
+        getIPlayerByUUID(ownerUUID)?.unassignIsland()
+        getAllMemberUUIDs().forEach { memberUUID -> getIPlayerByUUID(memberUUID)?.unassignIsland() }
+    }
 
     fun promoteNewLeader(name: String) {
         // Get new leader.
