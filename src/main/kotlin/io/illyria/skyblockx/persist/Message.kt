@@ -122,6 +122,9 @@ object Message {
 
     var commandQuestHelp = "&7view Quest GUI."
 
+    var commandReloadHelp = "&7Reloads the skyblock config files"
+    var commandReloadSuccess = "&7Reloaded configs and saved data."
+
     var commandMenuHelp = "&7Opens the Island Menu GUI"
 
     var islandCreateGUIYouDontHavePermission = "You do not have permission to use this island."

@@ -11,6 +11,7 @@ import java.util.concurrent.atomic.AtomicInteger
 
 enum class Permission(val node: String, val description: String, val permissionDefault: PermissionDefault) {
     CREATE("create", "create an island.", PermissionDefault.TRUE),
+    RELOAD("reload", "reload the plugin", PermissionDefault.OP),
     GO("go", "go to your island.", PermissionDefault.TRUE),
     DELETE("delete", "delete your island.", PermissionDefault.TRUE),
     BYPASS("bypass", "administrator bypass permisssions.", PermissionDefault.OP),
