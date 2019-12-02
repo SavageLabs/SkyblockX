@@ -27,9 +27,10 @@ class IslandBorderGUI :
                 }
 
             }
-            pane.populateWithGuiItems(guiItems)
+
 
         }
+        pane.populateWithGuiItems(guiItems)
 
     }
 

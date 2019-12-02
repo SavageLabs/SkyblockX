@@ -21,8 +21,9 @@ class IslandMenuGUI : BaseGUI(Config.islandMenuGUITitle, Config.islandMenuGUIBac
                     executeCommands(item.commandsToExecute, player)
                 }
             })
-            pane.populateWithGuiItems(guiItems)
+
         }
+        pane.populateWithGuiItems(guiItems)
     }
 
     private fun executeCommands(commands: List<String>, player: Player) {

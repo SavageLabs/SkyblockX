@@ -30,8 +30,8 @@ class IslandCreateGUI :
 
                 }
             })
-            pane.populateWithGuiItems(guiItems)
         }
+        pane.populateWithGuiItems(guiItems)
     }
 
 }

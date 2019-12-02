@@ -38,8 +38,9 @@ class IslandQuestGUI :
                         quest.executeActivationTrigger(context)
                     }
                 })
-            pane.populateWithGuiItems(guiItems)
+
         }
+        pane.populateWithGuiItems(guiItems)
     }
 
     private fun buildItem(island: Island, serializableItem: SerializableItem, quest: Quest): ItemStack {
