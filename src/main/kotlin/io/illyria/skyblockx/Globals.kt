@@ -1,6 +1,6 @@
 package io.illyria.skyblockx
 
-import io.illyria.skyblockx.command.BaseCommand
+import io.illyria.skyblockx.command.island.BaseCommand
 import io.illyria.skyblockx.persist.data.Items
 import net.prosavage.baseplugin.WorldBorderUtil
 import net.prosavage.baseplugin.XMaterial

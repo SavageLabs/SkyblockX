@@ -1,5 +1,6 @@
 package io.illyria.skyblockx.command
 
+import io.illyria.skyblockx.command.island.BaseCommand
 import io.illyria.skyblockx.core.IPlayer
 import io.illyria.skyblockx.core.color
 import io.illyria.skyblockx.persist.Config

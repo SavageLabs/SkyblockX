@@ -1,6 +1,6 @@
 package io.illyria.skyblockx
 
-import io.illyria.skyblockx.command.BaseCommand
+import io.illyria.skyblockx.command.island.BaseCommand
 import io.illyria.skyblockx.core.registerAllPermissions
 import io.illyria.skyblockx.hooks.PlacholderAPI
 import io.illyria.skyblockx.listener.*
