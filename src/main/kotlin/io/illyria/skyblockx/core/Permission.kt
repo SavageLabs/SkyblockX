@@ -28,7 +28,8 @@ enum class Permission(val node: String, val description: String, val permissionD
     OBSIDIANTOLAVA("obsidiantolava", "turn obsidian to lava with an empty bucket", PermissionDefault.FALSE),
     SE_SAVESTUCT("se.savestructure", "administrator skyblock edit save", PermissionDefault.OP),
     SE_PASTESTRUCT("se.pastestructure", "administrator skyblock edit paste", PermissionDefault.OP),
-    SE_REGIONS("se.regions", "set positions and make a region", PermissionDefault.OP);
+    SE_REGIONS("se.regions", "set positions and make a region", PermissionDefault.OP),
+    ADMIN_KICKFROMISLAND("admin.kickfromisland", "kick a player from their island.", PermissionDefault.OP);
 
 
     fun getFullPermissionNode(): String {

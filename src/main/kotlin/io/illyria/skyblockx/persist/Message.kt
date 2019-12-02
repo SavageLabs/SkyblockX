@@ -39,6 +39,7 @@ object Message {
     var genericCommandsTooManyArgs = "&cThis command requires less arguments."
     var genericActionRequiresPermission = "&cThis action requires the permission %1\$s"
     var genericCannotReferenceYourSelf = "&cYou cannot reference yourself."
+    var genericPlayerNotAnIslandMember = "&cThis player is not an island member."
 
 
     var commandSkyblockBaseHelp = "&7The base admin command for skyblock."
@@ -162,6 +163,13 @@ object Message {
     var commandSkyblockRemoveHelp = "&7delete a player's island."
     var commandSkyblockRemoveNotAnIslandOwner = "&7This player is &bnot&7 an island member."
     var commandSkyblockRemoveSuccess = "&7The island was successfully deleted."
+
+
+    var commandSkyblockKickHelp = "&7kick a player from their island."
+    var commandSkyblockKickMemberKicked = "&b%1\$s was kicked from their island."
+    var commandSkyblockKickMemberKickedOwner = "&b%1\$s is now the owner of the island."
+    var commandSkyblockKickIslandDeleted = "&7The island has been deleted since the island has no members left to inherit the island."
+
 
 
 
