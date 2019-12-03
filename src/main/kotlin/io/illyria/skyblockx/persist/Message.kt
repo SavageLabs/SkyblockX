@@ -171,6 +171,8 @@ object Message {
     var commandSkyblockKickIslandDeleted = "&7The island has been deleted since the island has no members left to inherit the island."
 
 
+    var commandSkyblockNewOwnerSuccess = "&7New owner successfully set."
+    var commandSkyblockNewOwnerHelp = "&7set a new owner for an island."
 
 
 

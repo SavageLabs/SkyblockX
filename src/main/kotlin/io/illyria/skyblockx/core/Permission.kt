@@ -29,6 +29,8 @@ enum class Permission(val node: String, val description: String, val permissionD
     SE_SAVESTUCT("se.savestructure", "administrator skyblock edit save", PermissionDefault.OP),
     SE_PASTESTRUCT("se.pastestructure", "administrator skyblock edit paste", PermissionDefault.OP),
     SE_REGIONS("se.regions", "set positions and make a region", PermissionDefault.OP),
+    ADMIN_DELETEISLAND("admin.deleteisland", "delete island of a player", PermissionDefault.OP),
+    ADMIN_NEWOWNER("admin.newowner", "change an island's owner", PermissionDefault.OP),
     ADMIN_KICKFROMISLAND("admin.kickfromisland", "kick a player from their island.", PermissionDefault.OP);
 
 

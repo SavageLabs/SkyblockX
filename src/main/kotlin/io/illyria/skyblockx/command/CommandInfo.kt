@@ -33,7 +33,7 @@ class CommandInfo(val commandSender: CommandSender, val args: ArrayList<String>,
         return player
     }
 
-    fun getArgAsIPlayer(index: Int, informIfNot: Boolean = true): IPlayer? {
+    fun getArgAsIPlayer(index: Int, cannotReferenceYourSelf: Boolean = true, informIfNot: Boolean = true): IPlayer? {
         val player = Bukkit.getPlayer(args[index])
         if (player == null) {
             if (informIfNot) {
@@ -41,7 +41,7 @@ class CommandInfo(val commandSender: CommandSender, val args: ArrayList<String>,
             }
             return null
         }
-        if (player == this.player) {
+        if (cannotReferenceYourSelf && player == this.player) {
             if (informIfNot) {
                 message(Message.commandParsingPlayerIsYou)
             }

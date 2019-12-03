@@ -50,10 +50,14 @@ data class Island(val islandID: Int, val point: Point, var ownerUUID: String, va
     var currentQuestOrderIndex: Int? = 0
 
     fun isOneTimeQuestAlreadyCompleted(id: String): Boolean {
-        return oneTimeQuestsCompleted != null && oneTimeQuestsCompleted.isNotEmpty() && oneTimeQuestsCompleted.contains(
-            id
-        )
+        return oneTimeQuestsCompleted != null && oneTimeQuestsCompleted.isNotEmpty() && oneTimeQuestsCompleted.contains(id)
     }
+
+    fun assignNewOwner(ownerIPlayer: IPlayer) {
+        ownerUUID = ownerIPlayer.uuid
+        ownerTag = ownerTag
+    }
+
 
     fun messageAllOnlineIslandMembers(message: String) {
         // Color message in case.
