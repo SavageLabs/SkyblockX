@@ -71,6 +71,7 @@ class EntityListener : Listener {
         if (!Config.preventFallingDeaths
             || event.entity !is Player
             || event.entity.location.world?.name != Config.skyblockWorldName
+            || event.entity.location.y > 0
         ) {
             return
         }
