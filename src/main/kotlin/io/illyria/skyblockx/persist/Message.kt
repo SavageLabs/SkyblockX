@@ -12,6 +12,8 @@ object Message {
 
     var messagePrefix = "&7[&b!&7] "
 
+    var islandCreationMessage = "&7Island created with size %1\$s."
+
     var commandRequirementsNotAPlayer = "&cThis command requires the executor to be a player."
     var commandRequirementsNotAnIslandMember =
         "&cThis command requires the executor to be a island member, create one using \"/is create\"."
