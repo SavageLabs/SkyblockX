@@ -9,10 +9,7 @@ import org.bukkit.entity.Player
 class IslandMenuGUI : BaseGUI(Config.islandMenuGUITitle, Config.islandMenuGUIBackgroundItem, Config.islandMenuGUIRows) {
 
     override fun populatePane(context: IPlayer) {
-        val guiItems = ArrayList<GuiItem>()
-        for (item in 0 until (super.guiRows * 9)) {
-            guiItems.add(GuiItem(super.backgroundItem.buildItem()) { e -> e.isCancelled = true })
-        }
+        val guiItems = buildFullBackgroundItemlist()
         for (item in Config.islandMenuGUIItems) {
             guiItems[item.slot] = (GuiItem(item.guiItem.buildItem()) { e ->
                 run {
@@ -21,7 +18,6 @@ class IslandMenuGUI : BaseGUI(Config.islandMenuGUITitle, Config.islandMenuGUIBac
                     executeCommands(item.commandsToExecute, player)
                 }
             })
-
         }
         pane.populateWithGuiItems(guiItems)
     }

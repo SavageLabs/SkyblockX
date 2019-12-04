@@ -13,10 +13,7 @@ class IslandBorderGUI :
     BaseGUI(Config.islandBorderGUITitle, Config.islandBorderGUIBackgroundItem, Config.islandBorderGUIRows) {
 
     override fun populatePane(context: IPlayer) {
-        val guiItems = ArrayList<GuiItem>()
-        for (item in 0 until (super.guiRows * 9)) {
-            guiItems.add(GuiItem(super.backgroundItem.buildItem()) { e -> e.isCancelled = true })
-        }
+        val guiItems = buildFullBackgroundItemlist()
         Config.islandBorderGUIItems.forEach { color: WorldBorderUtil.Color, item: IslandBorderItem ->
             guiItems[item.slot] = GuiItem(item.displayItem.buildItem()) { e ->
                 run {
@@ -25,10 +22,7 @@ class IslandBorderGUI :
                     getIPlayer(player).borderColor = color
                     updateWorldBorder(player, player.location, 0L)
                 }
-
             }
-
-
         }
         pane.populateWithGuiItems(guiItems)
 

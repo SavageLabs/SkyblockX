@@ -22,10 +22,7 @@ class IslandMemberGUI :
     BaseGUI(Config.islandMemberGUITitle, Config.islandMemberGUIBackgroundItem, Config.islandMemberGUIRows) {
 
     override fun populatePane(context: IPlayer) {
-        val guiItems = ArrayList<GuiItem>()
-        for (item in 0 until (super.guiRows * 9)) {
-            guiItems.add(GuiItem(super.backgroundItem.buildItem()) { e -> e.isCancelled = true })
-        }
+        val guiItems = buildFullBackgroundItemlist()
         var slotListIndexesUsed = 0
         for (memberName in context.getIsland()!!.getAllMembers()) {
             if (slotListIndexesUsed >= Config.islandMemberGUIHeadSlots.size) {

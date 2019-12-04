@@ -17,13 +17,10 @@ class IslandQuestGUI :
     BaseGUI(Quests.islandQuestGUITitle, Quests.islandQuestGUIBackgroundItem, Quests.islandQuestGUIRows) {
 
     override fun populatePane(context: IPlayer) {
-        val guiItems = ArrayList<GuiItem>()
-        for (item in 0 until (super.guiRows * 9)) {
-            guiItems.add(GuiItem(super.backgroundItem.buildItem()) { e -> e.isCancelled = true })
-        }
+        val guiItems = buildFullBackgroundItemlist()
         for (quest in Quests.islandQuests) {
             guiItems[quest.guiDisplayIndex] =
-                (GuiItem(buildItem(context.getIsland()!!, quest.guiDisplayItem, quest)) { e ->
+                GuiItem(buildItem(context.getIsland()!!, quest.guiDisplayItem, quest)) { e ->
                     run {
                         e.isCancelled = true
                         val player = e.whoClicked as Player
@@ -37,8 +34,7 @@ class IslandQuestGUI :
                         player.sendMessage(color(Message.questActivationTrigger.replace("{quest}", quest.id)))
                         quest.executeActivationTrigger(context)
                     }
-                })
-
+                }
         }
         pane.populateWithGuiItems(guiItems)
     }

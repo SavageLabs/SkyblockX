@@ -1,6 +1,7 @@
 package io.illyria.skyblockx.gui
 
 import com.github.stefvanschie.inventoryframework.Gui
+import com.github.stefvanschie.inventoryframework.GuiItem
 import com.github.stefvanschie.inventoryframework.pane.PaginatedPane
 import io.illyria.skyblockx.Globals.skyblockX
 import io.illyria.skyblockx.core.IPlayer
@@ -18,6 +19,14 @@ abstract class BaseGUI(val title: String, val backgroundItem: SerializableItem, 
     val pane = PaginatedPane(0, 0, 9, guiRows)
 
     abstract fun populatePane(context: IPlayer)
+
+    fun buildFullBackgroundItemlist(): MutableList<GuiItem> {
+        val guiItems = ArrayList<GuiItem>()
+        for (item in 0 until (this.guiRows * 9)) {
+            guiItems.add(GuiItem(this.backgroundItem.buildItem()) { e -> e.isCancelled = true })
+        }
+        return guiItems
+    }
 
     fun showGui(humanEntity: HumanEntity) {
         populatePane(getIPlayer(humanEntity as Player))

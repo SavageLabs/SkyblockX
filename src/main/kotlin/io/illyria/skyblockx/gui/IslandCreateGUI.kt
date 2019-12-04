@@ -13,10 +13,7 @@ class IslandCreateGUI :
     BaseGUI(Config.islandCreateGUITitle, Config.islandCreateGUIBackgroundItem, Config.islandCreateGUIRows) {
 
     override fun populatePane(context: IPlayer) {
-        val guiItems = ArrayList<GuiItem>()
-        for (item in 0 until (super.guiRows * 9)) {
-            guiItems.add(GuiItem(super.backgroundItem.buildItem()) { e -> e.isCancelled = true })
-        }
+        val guiItems = buildFullBackgroundItemlist()
         for (island in Config.islandCreateGUIIslandTypes) {
             guiItems[island.guiIndex] = (GuiItem(island.item.buildItem()) { e ->
                 run {
@@ -27,7 +24,6 @@ class IslandCreateGUI :
                     }
                     createIsland(player, island.structureFile.replace(".structure", ""))
                     player.sendMessage(color(Message.messagePrefix + Message.commandCreateSuccess))
-
                 }
             })
         }

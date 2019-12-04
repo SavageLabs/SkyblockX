@@ -13,10 +13,7 @@ class IslandMemberActionGUI(val name: String) :
     BaseGUI(Config.islandMemberActionGUITitle.replace("{player}", name), Config.islandMemberActionGUIBackgroundItem, Config.islandMemberActionGUIRows) {
 
     override fun populatePane(context: IPlayer) {
-        val guiItems = ArrayList<GuiItem>()
-        for (item in 0 until (super.guiRows * 9)) {
-            guiItems.add(GuiItem(super.backgroundItem.buildItem()) { e -> e.isCancelled = true })
-        }
+        val guiItems = buildFullBackgroundItemlist()
 
         for (item in Config.islandMemberActionItems) {
             guiItems[item.slot] = GuiItem(buildMenuItem(item)) { e ->
@@ -24,7 +21,6 @@ class IslandMemberActionGUI(val name: String) :
                 executeCommands(item.commandsToExecute, context.getPlayer())
             }
         }
-
         pane.populateWithGuiItems(guiItems)
     }
 
