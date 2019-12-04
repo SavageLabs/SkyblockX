@@ -23,12 +23,12 @@ import kotlin.collections.HashSet
 import kotlin.streams.toList
 
 
-data class Island(val islandID: Int, val point: Point, var ownerUUID: String, var ownerTag: String) {
+data class Island(val islandID: Int, val point: Point, var ownerUUID: String, var ownerTag: String, var islandSize: Int) {
 
     val minLocation: SLocation = getSLocation(point.getLocation())
     val maxLocation: SLocation = getSLocation(
         point.getLocation()
-            .add(Config.islandMaxSizeInBlocks.toDouble(), 256.toDouble(), Config.islandMaxSizeInBlocks.toDouble())
+            .add(islandSize.toDouble(), 256.toDouble(), islandSize.toDouble())
     )
 
 
@@ -362,11 +362,13 @@ fun getIslandByOwnerTag(ownerTag: String): Island? {
 }
 
 fun createIsland(player: Player?, schematic: String, teleport: Boolean = true): Island {
+    val size = if (player == null)  Config.islandMaxSizeInBlocks else getMaxPermission(player, "skyblockx.size")
     val island = Island(
         Data.nextIslandID,
         spiral(Data.nextIslandID),
         player?.uniqueId.toString(),
-        player?.name ?: "player name was null :shrug:"
+        player?.name ?: "player name was null :shrug:",
+        if (size == -1 || size > Config.islandMaxSizeInBlocks) Config.islandMaxSizeInBlocks else size
     )
     Data.islands[Data.nextIslandID] = island
     Data.nextIslandID++
@@ -376,11 +378,13 @@ fun createIsland(player: Player?, schematic: String, teleport: Boolean = true): 
         val iPlayer = getIPlayer(player)
         iPlayer.assignIsland(island)
         if (teleport) player.teleport(island.getIslandCenter())
+
     }
     incrementQuestInOrder(island)
     if (player != null) updateWorldBorder(player, player.location, 10L)
     // Use deprecated method for 1.8 support.
     player?.sendTitle(color(Message.islandCreatedTitle), color(Message.islandCreatedSubtitle))
+    player?.sendMessage(color("${Message.messagePrefix}${Message}"))
     return island
 }
 
