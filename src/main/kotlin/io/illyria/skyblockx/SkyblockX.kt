@@ -31,7 +31,7 @@ class SkyblockX : SavagePlugin() {
             registerAllPermissions(server.pluginManager)
             loadWorld()
             loadDataFiles()
-            initWorldBorderUiltity()
+            initWorldBorderUtility()
             setupCommands()
             setupAdminCommands()
             setupOreGeneratorAlgorithm()
@@ -73,7 +73,7 @@ class SkyblockX : SavagePlugin() {
         Message.load()
     }
 
-    private fun initWorldBorderUiltity() {
+    private fun initWorldBorderUtility() {
         logger.info("Starting WorldBorder Packet Util.")
         Globals.worldBorderUtil = WorldBorderUtil(this)
     }
