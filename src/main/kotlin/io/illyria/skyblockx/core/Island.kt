@@ -375,7 +375,7 @@ fun createIsland(player: Player?, schematic: String, teleport: Boolean = true): 
     if (player != null) {
         val iPlayer = getIPlayer(player)
         iPlayer.assignIsland(island)
-        player.teleport(island.getIslandCenter())
+        if (teleport) player.teleport(island.getIslandCenter())
     }
     incrementQuestInOrder(island)
     if (player != null) updateWorldBorder(player, player.location, 10L)
