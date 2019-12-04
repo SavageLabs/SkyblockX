@@ -161,7 +161,7 @@ object Config {
         ),
         MenuItem(
             SerializableItem(
-                XMaterial.BLUE_BANNER,
+                XMaterial.PLAYER_HEAD,
                 "&bManage Members",
                 listOf("&7Click to manage island members"),
                 1
