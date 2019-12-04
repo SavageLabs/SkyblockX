@@ -33,7 +33,7 @@ fun updateWorldBorder(player: Player, location: Location, delay: Long) {
                         WorldBorderUtil(Globals.skyblockX).sendWorldBorder(
                             player,
                             iPlayer.borderColor,
-                            Config.islandMaxSizeInBlocks.toDouble(),
+                            islandFromLocation.islandSize.toDouble(),
                             islandFromLocation.getIslandCenter()
                         )
                     }
