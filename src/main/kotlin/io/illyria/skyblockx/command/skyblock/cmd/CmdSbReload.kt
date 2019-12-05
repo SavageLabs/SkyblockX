@@ -1,4 +1,4 @@
-package io.illyria.skyblockx.command.island.cmd
+package io.illyria.skyblockx.command.skyblock.cmd
 
 import io.illyria.skyblockx.Globals
 import io.illyria.skyblockx.command.CommandRequirementsBuilder
@@ -6,7 +6,7 @@ import io.illyria.skyblockx.core.Permission
 import io.illyria.skyblockx.persist.Data
 import io.illyria.skyblockx.persist.Message
 
-class CmdReload : io.illyria.skyblockx.command.SCommand() {
+class CmdSbReload : io.illyria.skyblockx.command.SCommand() {
 
     init {
         aliases.add("reload")
