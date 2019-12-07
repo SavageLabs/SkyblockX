@@ -39,6 +39,28 @@ object Config {
 
     var skyblockWorldBiome = Biome.PLAINS
 
+    var islandTopLineFormat = "&b{rank}&7. &7{leader}'s island &b(\${amount})&7."
+
+    var islandTopTooltip = listOf(
+        "&7Leader: &b{leader}",
+        "&7Dirt: &b{DIRT}",
+        "&7Diamond Block: &b{DIAMOND_BLOCK}",
+        "&7Grass Block: &b{GRASS_BLOCK}",
+        "&7Gold Block: &b{GOLD_BLOCK}",
+        "&7Iron Block: &b{IRON_BLOCK}",
+        "&7Lapis Block: &b{LAPIS_BLOCK}",
+        "&7Coal Block: &b{COAL_BLOCK}"
+        )
+
+    // amt x ticks/sec x sec/min
+    var islandTopCalcPeriodTicks = 15 * 20 * 60
+
+    var islandTopBroadcastMessage = true
+
+    var islandTopBroadcastMessageStart = "&7Starting IslandTOP Calculation."
+
+    var islandTopBroadcastMessageEnd = "&7Finished Calculation of %1\$s islands in %2\$s."
+
 
     var generatorProbability = hashMapOf(
         1 to arrayListOf(

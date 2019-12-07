@@ -4,10 +4,7 @@ import io.illyria.skyblockx.Globals
 import io.illyria.skyblockx.command.CommandInfo
 import io.illyria.skyblockx.command.CommandRequirementsBuilder
 import io.illyria.skyblockx.command.SCommand
-import io.illyria.skyblockx.command.skyblock.cmd.CmdSbReload
-import io.illyria.skyblockx.command.skyblock.cmd.CmdSbDelete
-import io.illyria.skyblockx.command.skyblock.cmd.CmdSbKick
-import io.illyria.skyblockx.command.skyblock.cmd.CmdSbOwner
+import io.illyria.skyblockx.command.skyblock.cmd.*
 import io.illyria.skyblockx.persist.Message
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
@@ -24,6 +21,7 @@ class SkyblockBaseCommand : SCommand(), CommandExecutor, TabCompleter {
         subCommands.add(CmdSbKick())
         subCommands.add(CmdSbOwner())
         subCommands.add(CmdSbReload())
+        subCommands.add(CmdSbCalc())
 
 
         Globals.skyblockBaseCommand = this

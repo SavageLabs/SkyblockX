@@ -42,7 +42,7 @@ class IslandBaseCommand : SCommand(), CommandExecutor, TabCompleter {
         subCommands.add(CmdPromote())
         subCommands.add(CmdReset())
         subCommands.add(CmdAllowVisitors())
-        subCommands.add(CmdReload())
+        subCommands.add(CmdTop())
 
         Globals.islandBaseCommand = this
     }

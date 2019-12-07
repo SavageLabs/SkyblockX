@@ -75,6 +75,10 @@ object Message {
     var commandBypassToggle = "&7You are now %1\$s bypass mode."
     var commandBypassHelp = "&7bypass island checks (For Server Administrators)."
 
+    var commandTopNotCalculated = "&7Island values have not been calculated yet. Run &b/sbx calc&7 to force calculation."
+    var commandTopHelp = "&7gets island top info"
+
+
 
     var commandCoopInvokerSuccess = "&7You have added %1\$s to your island as co-op"
     var commandCoopMessageRecipient = "&7You have been added as a co-op player to %1\$s's island."
@@ -175,6 +179,11 @@ object Message {
 
     var commandSkyblockNewOwnerSuccess = "&7New owner successfully set."
     var commandSkyblockNewOwnerHelp = "&7set a new owner for an island."
+
+    var commandSkyblockCalcDone = "&7Calculated %1\$s islands."
+    var commandSkyblockCalcStart = "&7Starting Calculation..."
+    var commandSkyblockCalcHelp = "&7Calculates every island's price"
+
 
 
 

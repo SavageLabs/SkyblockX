@@ -26,12 +26,15 @@ enum class Permission(val node: String, val description: String, val permissionD
     ALLOWVISITOR("allowvisitor", "allow visitors on your island.", PermissionDefault.TRUE),
     QUEST("quest", "opening the questing gui.", PermissionDefault.TRUE),
     OBSIDIANTOLAVA("obsidiantolava", "turn obsidian to lava with an empty bucket", PermissionDefault.FALSE),
+    CALC("calc", "calculate your island's value", PermissionDefault.TRUE),
+    INFO("info", "gets island top information", PermissionDefault.TRUE),
     SE_SAVESTUCT("se.savestructure", "administrator skyblock edit save", PermissionDefault.OP),
     SE_PASTESTRUCT("se.pastestructure", "administrator skyblock edit paste", PermissionDefault.OP),
     SE_REGIONS("se.regions", "set positions and make a region", PermissionDefault.OP),
     ADMIN_DELETEISLAND("admin.deleteisland", "delete island of a player", PermissionDefault.OP),
     ADMIN_NEWOWNER("admin.newowner", "change an island's owner", PermissionDefault.OP),
-    ADMIN_KICKFROMISLAND("admin.kickfromisland", "kick a player from their island.", PermissionDefault.OP);
+    ADMIN_KICKFROMISLAND("admin.kickfromisland", "kick a player from their island.", PermissionDefault.OP),
+    ADMIN_CALC("admin.calc", "calculate all island's value", PermissionDefault.OP);
 
 
     fun getFullPermissionNode(): String {

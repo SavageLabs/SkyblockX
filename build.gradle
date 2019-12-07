@@ -34,6 +34,8 @@ repositories {
 
 
 dependencies {
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.2'
+    implementation 'org.ocpsoft.prettytime:prettytime:4.0.1.Final'
     compileOnly 'me.clip:placeholderapi:2.9.2'
     compile 'com.github.stefvanschie.inventoryframework:IF:0.5.13'
     compileOnly ("org.spigotmc:spigot-api:1.14.2-R0.1-SNAPSHOT") {
@@ -120,3 +122,15 @@ task ci {
     dependsOn clean
     dependsOn shadowJar
 }
+
+def buildAliases = [
+        'fuckme' : [':shadowJar']
+]
+
+def expandedTaskList = []
+
+gradle.startParameter.taskNames.each {
+    expandedTaskList << (buildAliases[it] ? buildAliases[it] : it)
+}
+
+gradle.startParameter.taskNames = expandedTaskList.flatten()

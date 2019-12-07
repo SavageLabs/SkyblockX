@@ -1,9 +1,7 @@
 package io.illyria.skyblockx.core
 
-import io.illyria.skyblockx.persist.Config
-import io.illyria.skyblockx.persist.Data
-import io.illyria.skyblockx.persist.Message
-import io.illyria.skyblockx.persist.Quests
+import io.illyria.skyblockx.Globals
+import io.illyria.skyblockx.persist.*
 import io.illyria.skyblockx.persist.data.SLocation
 import io.illyria.skyblockx.persist.data.getSLocation
 import io.illyria.skyblockx.quest.Quest
@@ -11,19 +9,32 @@ import io.illyria.skyblockx.quest.incrementQuestInOrder
 import io.illyria.skyblockx.sedit.SkyblockEdit
 import io.illyria.skyblockx.world.Point
 import io.illyria.skyblockx.world.spiral
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import me.rayzr522.jsonmessage.JSONMessage
-import org.bukkit.Bukkit
-import org.bukkit.Location
-import org.bukkit.Material
+import net.prosavage.baseplugin.XMaterial
+import org.bukkit.*
 import org.bukkit.entity.Player
 import java.text.DecimalFormat
 import java.util.*
 import java.util.stream.Collectors
 import kotlin.collections.HashSet
 import kotlin.streams.toList
+import kotlin.system.measureTimeMillis
+import kotlin.time.Duration
+import kotlin.time.ExperimentalTime
+import kotlin.time.TimedValue
+import kotlin.time.measureTimedValue
 
 
-data class Island(val islandID: Int, val point: Point, var ownerUUID: String, var ownerTag: String, var islandSize: Int) {
+data class Island(
+    val islandID: Int,
+    val point: Point,
+    var ownerUUID: String,
+    var ownerTag: String,
+    var islandSize: Int
+) {
 
     val minLocation: SLocation = getSLocation(point.getLocation())
     val maxLocation: SLocation = getSLocation(
@@ -50,13 +61,53 @@ data class Island(val islandID: Int, val point: Point, var ownerUUID: String, va
     var currentQuestOrderIndex: Int? = 0
 
     fun isOneTimeQuestAlreadyCompleted(id: String): Boolean {
-        return oneTimeQuestsCompleted != null && oneTimeQuestsCompleted.isNotEmpty() && oneTimeQuestsCompleted.contains(id)
+        return oneTimeQuestsCompleted != null && oneTimeQuestsCompleted.isNotEmpty() && oneTimeQuestsCompleted.contains(
+            id
+        )
     }
 
     fun assignNewOwner(ownerIPlayer: IPlayer) {
         ownerUUID = ownerIPlayer.uuid
         ownerTag = ownerTag
     }
+
+
+    @ExperimentalTime
+    fun calcIsland(): CalcInfo {
+        var price = 0.0
+        val mapAmt = hashMapOf<XMaterial, Int>()
+        val time = measureTimedValue {
+            val chunks = mutableSetOf<Chunk>()
+            val world = Bukkit.getWorld(Config.skyblockWorldName)!!
+            for (x in minLocation.x.toInt()..maxLocation.x.toInt()) {
+                for (z in minLocation.z.toInt()..maxLocation.z.toInt()) {
+                    val chunkAt = world.getChunkAt(Location(world, x.toDouble(), 0.0, z.toDouble()))
+                    if (!chunkAt.isLoaded) chunkAt.load()
+                    chunks.add(chunkAt)
+                }
+            }
+            lateinit var chunkList: List<ChunkSnapshot>
+            chunkList = chunks.parallelStream().map { chunk -> chunk.chunkSnapshot }.collect(Collectors.toList())
+            chunkList.parallelStream().forEach { chunkSnapshot ->
+                for (x in 0 until 16) {
+                    for (y in 0 until 256) {
+                        for (z in 0 until 16) {
+                            val blockType = chunkSnapshot.getBlockType(x, y, z)
+                            if (blockType == Material.AIR) continue
+                            val xmat = XMaterial.matchXMaterial(blockType) ?: continue
+                            price += BlockValues.blockValues[xmat] ?: 0.0
+                            mapAmt[xmat] = mapAmt.getOrDefault(xmat, 0) + 1
+                        }
+                    }
+                }
+            }
+        }
+
+        return CalcInfo(time.duration, price, mapAmt, islandID)
+
+    }
+
+    data class CalcInfo @ExperimentalTime constructor(val timeDuration: Duration, val worth: Double, val matAmt: Map<XMaterial, Int>, val islandID: Int)
 
 
     fun messageAllOnlineIslandMembers(message: String) {
@@ -318,6 +369,7 @@ data class Island(val islandID: Int, val point: Point, var ownerUUID: String, va
     fun delete() {
         getIPlayerByUUID(ownerUUID)?.unassignIsland()
         getAllMemberUUIDs().forEach { memberUUID -> getIPlayerByUUID(memberUUID)?.unassignIsland() }
+        Data.islands.remove(islandID)
     }
 
     fun promoteNewLeader(name: String) {
@@ -362,13 +414,14 @@ fun getIslandByOwnerTag(ownerTag: String): Island? {
 }
 
 fun createIsland(player: Player?, schematic: String, teleport: Boolean = true): Island {
-    val size = if (player == null)  Config.islandMaxSizeInBlocks else getMaxPermission(player, "skyblockx.size")
+    var size = if (player == null) Config.islandMaxSizeInBlocks else getMaxPermission(player, "skyblockx.size")
+    size = if (size == -1 || size > Config.islandMaxSizeInBlocks) Config.islandMaxSizeInBlocks else size
     val island = Island(
         Data.nextIslandID,
         spiral(Data.nextIslandID),
         player?.uniqueId.toString(),
-        player?.name ?: "player name was null :shrug:",
-        if (size == -1 || size > Config.islandMaxSizeInBlocks) Config.islandMaxSizeInBlocks else size
+        player?.name ?: "SYSTEM_OWNED",
+        size
     )
     Data.islands[Data.nextIslandID] = island
     Data.nextIslandID++
@@ -384,7 +437,7 @@ fun createIsland(player: Player?, schematic: String, teleport: Boolean = true): 
     if (player != null) updateWorldBorder(player, player.location, 10L)
     // Use deprecated method for 1.8 support.
     player?.sendTitle(color(Message.islandCreatedTitle), color(Message.islandCreatedSubtitle))
-    player?.sendMessage(color("${Message.messagePrefix}${Message}"))
+    player?.sendMessage(color("${Message.messagePrefix}${String.format(Message.islandCreationMessage, size)}"))
     return island
 }
 
@@ -394,4 +447,15 @@ fun deleteIsland(player: Player) {
         Data.islands.remove(iPlayer.getIsland()!!.islandID)
         iPlayer.unassignIsland()
     }
+}
+
+data class IslandTopInfo(val map: Map<Int, Island.CalcInfo>, val time: Long)
+
+@ExperimentalTime
+fun runIslandCalc() {
+    val islandVals = hashMapOf<Int, Island.CalcInfo>()
+    for ((key, island) in Data.islands) {
+        islandVals[key] = island.calcIsland()
+    }
+    Globals.islandValues = IslandTopInfo(islandVals, System.currentTimeMillis())
 }

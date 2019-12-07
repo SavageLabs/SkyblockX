@@ -2,28 +2,30 @@ package io.illyria.skyblockx
 
 import io.illyria.skyblockx.command.island.IslandBaseCommand
 import io.illyria.skyblockx.command.skyblock.SkyblockBaseCommand
+import io.illyria.skyblockx.core.color
 import io.illyria.skyblockx.core.registerAllPermissions
+import io.illyria.skyblockx.core.runIslandCalc
 import io.illyria.skyblockx.hooks.PlacholderAPI
 import io.illyria.skyblockx.listener.*
-import io.illyria.skyblockx.persist.Config
-import io.illyria.skyblockx.persist.Data
-import io.illyria.skyblockx.persist.Message
-import io.illyria.skyblockx.persist.Quests
+import io.illyria.skyblockx.persist.*
 import io.illyria.skyblockx.persist.data.Items
 import io.illyria.skyblockx.world.VoidWorldGenerator
 import net.prosavage.baseplugin.SavagePlugin
 import net.prosavage.baseplugin.WorldBorderUtil
 import net.prosavage.baseplugin.XMaterial
+import org.bukkit.Bukkit
 import org.bukkit.ChatColor
 import org.bukkit.WorldCreator
 import org.bukkit.generator.ChunkGenerator
 import kotlin.system.measureTimeMillis
+import kotlin.time.ExperimentalTime
+import kotlin.time.measureTimedValue
 
 
 class SkyblockX : SavagePlugin() {
 
+    @ExperimentalTime
     override fun onEnable() {
-
         val startupTime = measureTimeMillis {
             super.onEnable()
             printHeader()
@@ -36,12 +38,24 @@ class SkyblockX : SavagePlugin() {
             setupAdminCommands()
             setupOreGeneratorAlgorithm()
             loadPlaceholderAPIHook()
+            startIslandTopTask()
             registerListeners(DataListener(), SEditListener(), BlockListener(), PlayerListener(), EntityListener())
             logger.info("Loaded ${Data.IPlayers.size} players")
             logger.info("Loaded ${Data.islands.size} islands")
         }
         logger.info("Startup Finished ($startupTime ms)")
 
+    }
+
+    @ExperimentalTime
+    private fun startIslandTopTask() {
+        Bukkit.getScheduler().runTaskTimerAsynchronously(this, Runnable {
+            if (Config.islandTopBroadcastMessage) Bukkit.broadcastMessage(color(Config.islandTopBroadcastMessageStart))
+            val time = measureTimedValue {
+                runIslandCalc()
+            }
+            if (Config.islandTopBroadcastMessage) Bukkit.broadcastMessage(color(String.format(Config.islandTopBroadcastMessageEnd, Globals.islandValues?.map?.size, time.duration)))
+        }, 20L, Config.islandTopCalcPeriodTicks.toLong())
     }
 
     private fun loadPlaceholderAPIHook() {
@@ -69,6 +83,7 @@ class SkyblockX : SavagePlugin() {
         logger.info("Loading data files.")
         Config.load()
         Data.load()
+        BlockValues.load()
         Quests.load()
         Message.load()
     }
@@ -119,6 +134,9 @@ class SkyblockX : SavagePlugin() {
 
         // Don't load this as people shouldn't be touching this file anyways.
         Data.save()
+
+        BlockValues.load()
+        BlockValues.save()
 
         // Load and save to take in account changes :P
         Message.load()
