@@ -108,6 +108,7 @@ object Message {
     var commandBorderHelp = "&7Change your border color."
 
     var commandHelpHelp = "&7view information about other commands."
+    var commandSkyblockHelpHelp = "&7view other admin command info."
 
     var commandRemoveInvokerSuccess = "&7You have removed %1\$s from your island."
     var commandRemoveInvokerCoopRemoved = "&7%1\$s's co-op status has been removed."

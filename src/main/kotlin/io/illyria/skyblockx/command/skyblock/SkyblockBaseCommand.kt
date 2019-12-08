@@ -21,6 +21,7 @@ class SkyblockBaseCommand : SCommand(), CommandExecutor, TabCompleter {
         subCommands.add(CmdSbKick())
         subCommands.add(CmdSbOwner())
         subCommands.add(CmdSbReload())
+        subCommands.add(CmdSbHelp())
         subCommands.add(CmdSbCalc())
 
 
