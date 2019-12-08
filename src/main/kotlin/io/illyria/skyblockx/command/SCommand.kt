@@ -43,7 +43,7 @@ abstract class SCommand {
             return
         }
 
-        if (this !is SkyblockBaseCommand) {
+        if (this !is SkyblockBaseCommand && this !is IslandBaseCommand) {
             if (!checkInput(info)) {
                 return
             }
