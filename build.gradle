@@ -123,14 +123,3 @@ task ci {
     dependsOn shadowJar
 }
 
-def buildAliases = [
-        'fuckme' : [':shadowJar']
-]
-
-def expandedTaskList = []
-
-gradle.startParameter.taskNames.each {
-    expandedTaskList << (buildAliases[it] ? buildAliases[it] : it)
-}
-
-gradle.startParameter.taskNames = expandedTaskList.flatten()
