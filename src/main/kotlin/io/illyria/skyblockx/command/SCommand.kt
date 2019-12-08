@@ -1,6 +1,7 @@
 package io.illyria.skyblockx.command
 
 import io.illyria.skyblockx.command.island.IslandBaseCommand
+import io.illyria.skyblockx.command.skyblock.SkyblockBaseCommand
 import io.illyria.skyblockx.core.IPlayer
 import io.illyria.skyblockx.core.color
 import io.illyria.skyblockx.core.getIPlayer
@@ -42,7 +43,7 @@ abstract class SCommand {
             return
         }
 
-        if (this !is IslandBaseCommand) {
+        if (this !is SkyblockBaseCommand) {
             if (!checkInput(info)) {
                 return
             }
