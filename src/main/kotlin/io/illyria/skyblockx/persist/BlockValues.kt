@@ -8,7 +8,7 @@ object BlockValues {
     @Transient
     private val instance = this
 
-    var blockValues = mapOf(
+    var blockValues = mutableMapOf(
         XMaterial.GRASS_BLOCK to 3.0,
         XMaterial.DIRT to 1.0,
         XMaterial.DIAMOND_BLOCK to 100.0,
@@ -21,11 +21,15 @@ object BlockValues {
 
 
 
+
+
+
     fun save() {
         Serializer().save(instance)
     }
 
     fun load() {
+        XMaterial.values().toList().forEach{ xmat -> blockValues.putIfAbsent(xmat, 0.0) }
         Serializer().load(instance, BlockValues::class.java, "blockvalues")
     }
 }
