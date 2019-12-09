@@ -79,10 +79,10 @@ abstract class SCommand {
         }
     }
 
-    fun generateHelp(page: Int, player: Player) {
+    fun generateHelp(page: Int, commandSender: CommandSender) {
         val pageStartEntry = Config.helpGeneratorPageEntries * (page - 1)
         if (page <= 0 || pageStartEntry >= subCommands.size) {
-            player.sendMessage(
+            commandSender.sendMessage(
                 color(
                     Message.messagePrefix + String.format(
                         Message.commandHelpGeneratorPageInvalid,
@@ -103,19 +103,25 @@ abstract class SCommand {
                 Message.commandHelpGeneratorIslandRequired,
                 (if (command.commandRequirements.asIslandMember) Message.commandHelpGeneratorRequires else Message.commandHelpGeneratorNotRequired)
             ) + "\n" + Message.commandHelpGeneratorClickMeToPaste
+            if (commandSender is Player) {
+                JSONMessage.create(color(String.format(Message.commandHelpGeneratorFormat, prefix, base, command.getHelpInfo())))
+                    .color(Message.commandHelpGeneratorBackgroundColor)
+                    .tooltip(color(tooltip)).suggestCommand("/$prefix $base").send(commandSender)
+            } else commandSender.sendMessage(color(String.format(Message.commandHelpGeneratorFormat, prefix, base, command.getHelpInfo())))
 
-            JSONMessage.create(color(String.format(Message.commandHelpGeneratorFormat, prefix, base, command.getHelpInfo())))
-                .color(Message.commandHelpGeneratorBackgroundColor)
-                .tooltip(color(tooltip)).suggestCommand("/$prefix $base").send(player)
+
         }
-        val pageNav = JSONMessage.create("       ")
-        if (page > 1) pageNav.then(color(Message.commandHelpGeneratorPageNavBack)).tooltip("Go to Page ${page - 1}").runCommand(
-            "/$prefix help ${page - 1}"
-        ).then("       ")
-        if (page < subCommands.size) pageNav.then(color(Message.commandHelpGeneratorPageNavNext)).tooltip("Go to Page ${page + 1}").runCommand(
-            "/$prefix help ${page + 1}"
-        )
-        pageNav.send(player)
+        if (commandSender is Player) {
+            val pageNav = JSONMessage.create("       ")
+            if (page > 1) pageNav.then(color(Message.commandHelpGeneratorPageNavBack)).tooltip("Go to Page ${page - 1}").runCommand(
+                "/$prefix help ${page - 1}"
+            ).then("       ")
+            if (page < subCommands.size) pageNav.then(color(Message.commandHelpGeneratorPageNavNext)).tooltip("Go to Page ${page + 1}").runCommand(
+                "/$prefix help ${page + 1}"
+            )
+            pageNav.send(commandSender)
+        }
+
     }
 
     private fun sendCommandFormat(info: CommandInfo, useJSON: Boolean = true) {

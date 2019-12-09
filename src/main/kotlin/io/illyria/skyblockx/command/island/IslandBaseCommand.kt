@@ -60,7 +60,7 @@ class IslandBaseCommand : SCommand(), CommandExecutor, TabCompleter {
         // If console
         if (info.player == null) {
             info.message(Message.commandBaseHelpMessage)
-            generateHelp(1, info.player!!)
+            generateHelp(1, info.commandSender)
             return
         }
 

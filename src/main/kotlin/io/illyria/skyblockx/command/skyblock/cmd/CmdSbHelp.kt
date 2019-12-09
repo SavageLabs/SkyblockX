@@ -19,7 +19,7 @@ class CmdSbHelp: SCommand() {
 
     override fun perform(info: CommandInfo) {
         val page = info.getArgAsInt(0) ?: return
-        Globals.islandBaseCommand.generateHelp(page, info.player!!)
+        Globals.skyblockBaseCommand.generateHelp(page, info.player!!)
     }
 
     override fun getHelpInfo(): String {

@@ -39,7 +39,7 @@ class SkyblockBaseCommand : SCommand(), CommandExecutor, TabCompleter {
 
     override fun perform(info: CommandInfo) {
         info.message(Message.commandSkyblockBaseHelpMessage)
-        generateHelp(1, info.player!!)
+        generateHelp(1, info.commandSender)
     }
 
     override fun onTabComplete(
