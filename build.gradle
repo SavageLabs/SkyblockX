@@ -38,7 +38,7 @@ dependencies {
     implementation 'org.ocpsoft.prettytime:prettytime:4.0.1.Final'
     compileOnly 'me.clip:placeholderapi:2.9.2'
     compile 'com.github.stefvanschie.inventoryframework:IF:0.5.13'
-    compileOnly ("org.spigotmc:spigot-api:1.14.2-R0.1-SNAPSHOT") {
+    compileOnly("org.spigotmc:spigot-api:1.14.2-R0.1-SNAPSHOT") {
         exclude group: 'net.md-5', module: 'bungeecord-chat'
         exclude group: 'javax.persistence', module: 'persistence-api'
         exclude group: 'junit', module: 'junit'
@@ -47,14 +47,14 @@ dependencies {
     }
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
-    implementation 'net.prosavage:BasePlugin:1.5'
+    implementation 'net.prosavage:BasePlugin:1.5.1'
     compileOnly group: "com.comphenix.protocol", name: "ProtocolLib", version: "4.4.0"
     compile 'me.rayzr522:jsonmessage:1.2.0'
 }
 processResources {
     eachFile { details ->
         if (details.name.endsWith('.yml')) { // or whatever pattern/criteria is appropriate
-            filter{
+            filter {
                 String line -> line.replaceAll('\\$\\{project.version\\}', version)
             }
         }
@@ -99,7 +99,7 @@ task updatePermissionsList {
         String[] permissionSplit = permissionRaw.split(",")
         String permissionName = permissionSplit[0].replace(" ", "")
         String permissionDesc = permissionSplit[1].replace("\"", "")
-        String permissionNode = "skyblockx." + permissionName.split("\\(\"")[1].replace("\"","")
+        String permissionNode = "skyblockx." + permissionName.split("\\(\"")[1].replace("\"", "")
         String permissionDefault = permissionSplit[2].replace("\"", "").replace("PermissionDefault.", "")
         table.append("${permissionName.split("\\(\"")[0]} | `$permissionNode` | $permissionDesc | $permissionDefault")
     }

@@ -9,23 +9,20 @@ import io.illyria.skyblockx.quest.incrementQuestInOrder
 import io.illyria.skyblockx.sedit.SkyblockEdit
 import io.illyria.skyblockx.world.Point
 import io.illyria.skyblockx.world.spiral
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import me.rayzr522.jsonmessage.JSONMessage
 import net.prosavage.baseplugin.XMaterial
 import org.bukkit.*
 import org.bukkit.entity.Player
+import java.lang.reflect.InvocationTargetException
 import java.text.DecimalFormat
 import java.util.*
 import java.util.stream.Collectors
 import kotlin.collections.HashSet
 import kotlin.streams.toList
-import kotlin.system.measureTimeMillis
 import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
-import kotlin.time.TimedValue
 import kotlin.time.measureTimedValue
+
 
 
 data class Island(
@@ -88,11 +85,12 @@ data class Island(
             }
             lateinit var chunkList: List<ChunkSnapshot>
             chunkList = chunks.parallelStream().map { chunk -> chunk.chunkSnapshot }.collect(Collectors.toList())
+            val useNewGetBlockTypeSnapshotMethod =  XMaterial.isVersionOrHigher(XMaterial.MinecraftVersion.VERSION_1_12)
             chunkList.parallelStream().forEach { chunkSnapshot ->
                 for (x in 0 until 16) {
                     for (y in 0 until 256) {
                         for (z in 0 until 16) {
-                            val blockType = chunkSnapshot.getBlockType(x, y, z)
+                            val blockType = getChunkSnapshotBlockType(useNewGetBlockTypeSnapshotMethod, chunkSnapshot, x, y, z)!!
                             if (blockType == Material.AIR) continue
                             val xmat = XMaterial.matchXMaterial(blockType) ?: continue
                             price += BlockValues.blockValues[xmat] ?: 0.0
@@ -102,13 +100,34 @@ data class Island(
                 }
             }
         }
-
         return CalcInfo(time.duration, price, mapAmt, islandID)
-
     }
 
     data class CalcInfo @ExperimentalTime constructor(val timeDuration: Duration, val worth: Double, val matAmt: Map<XMaterial, Int>, val islandID: Int)
 
+    /**
+     * Gets the chunksnapshot's block type.
+     *
+     * @param useNew        - use the new method or not, this is only here as this method is designed to be called a lot,
+     * and I dont want to do the processing over and over.
+     * @param chunkSnapshot - the chunksnapshot to calculate.
+     * @param x             - the x to get the block of
+     * @param y             - the y to get the block of
+     * @param z             - the z to get the block of
+     * @return - the Material it gets.
+     */
+    @Throws(NoSuchMethodException::class, InvocationTargetException::class, IllegalAccessException::class)
+    fun getChunkSnapshotBlockType(useNew: Boolean, chunkSnapshot: ChunkSnapshot, x: Int, y: Int, z: Int): Material? {
+        return if (useNew) chunkSnapshot.getBlockType(x, y, z)
+        // TODO: Optimize this by caching the methods as this is reflection being called for EVERY block.
+        else {
+            val id = chunkSnapshot.javaClass.getMethod("getBlockTypeId", Int::class.javaPrimitiveType, Int::class.javaPrimitiveType, Int::class.javaPrimitiveType)
+                .invoke(chunkSnapshot, x, y, z) as Int
+            return  Class.forName("org.bukkit.Material").getMethod("getMaterial", Int::class.javaPrimitiveType).invoke(null, id) as Material
+        }
+
+
+    }
 
     fun messageAllOnlineIslandMembers(message: String) {
         // Color message in case.
