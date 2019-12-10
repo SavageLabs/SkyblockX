@@ -21,6 +21,7 @@ class IslandCreateGUI :
                     val player = e.whoClicked as Player
                     if (!hasPermission(player, island.requirementPermission)) {
                         player.sendMessage(color(Message.messagePrefix + Message.islandCreateGUIYouDontHavePermission))
+                        return@run
                     }
                     createIsland(player, island.structureFile.replace(".structure", ""))
                     player.sendMessage(color(Message.messagePrefix + Message.commandCreateSuccess))
