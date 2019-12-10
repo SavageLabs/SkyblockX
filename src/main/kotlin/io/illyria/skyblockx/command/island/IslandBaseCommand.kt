@@ -26,7 +26,6 @@ class IslandBaseCommand : SCommand(), CommandExecutor, TabCompleter {
         subCommands.add(CmdSEPosition())
         subCommands.add(CmdSESaveStructure())
         subCommands.add(CmdSEPasteStructure())
-        subCommands.add(CmdSbBypass())
         subCommands.add(CmdCoop())
         subCommands.add(CmdRemove())
         subCommands.add(CmdTeleport())
