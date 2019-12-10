@@ -17,12 +17,14 @@ class SkyblockBaseCommand : SCommand(), CommandExecutor, TabCompleter {
 
     init {
         this.commandRequirements = CommandRequirementsBuilder().build()
+
         subCommands.add(CmdSbDelete())
         subCommands.add(CmdSbKick())
         subCommands.add(CmdSbOwner())
         subCommands.add(CmdSbReload())
         subCommands.add(CmdSbHelp())
         subCommands.add(CmdSbCalc())
+        subCommands.add(CmdSbBypass())
 
 
         Globals.skyblockBaseCommand = this

@@ -14,7 +14,6 @@ enum class Permission(val node: String, val description: String, val permissionD
     RELOAD("reload", "reload the plugin", PermissionDefault.OP),
     GO("go", "go to your island.", PermissionDefault.TRUE),
     DELETE("delete", "delete your island.", PermissionDefault.TRUE),
-    BYPASS("bypass", "administrator bypass permisssions.", PermissionDefault.OP),
     BORDER("border", "update your island border.", PermissionDefault.TRUE),
     COOP("coop", "co-op a player.", PermissionDefault.TRUE),
     MEMBER("member", "manage island members.", PermissionDefault.TRUE),
@@ -34,6 +33,7 @@ enum class Permission(val node: String, val description: String, val permissionD
     ADMIN_DELETEISLAND("admin.deleteisland", "delete island of a player", PermissionDefault.OP),
     ADMIN_NEWOWNER("admin.newowner", "change an island's owner", PermissionDefault.OP),
     ADMIN_KICKFROMISLAND("admin.kickfromisland", "kick a player from their island.", PermissionDefault.OP),
+    ADMIN_BYPASS("admin.bypass", "bypass any island restrictions", PermissionDefault.OP),
     ADMIN_CALC("admin.calc", "calculate all island's value", PermissionDefault.OP);
 
 

@@ -64,7 +64,7 @@ class QuestActions(val actions: List<String>) {
     }
     fun doTitle(context: QuestContext, actionParams: List<String>) {
         // Not using new method with the time cuz 1.8 :/
-        context.contextIPlayer.getPlayer()?.sendTitle(color(actionParams[0] ?: ""), color(actionParams[1] ?: ""))
+        context.contextIPlayer.getPlayer().sendTitle(color(actionParams[0] ?: ""), color(actionParams[1] ?: ""))
     }
     fun doCommand(context: QuestContext, actionParams: List<String>) {
         actionParams.forEach { commandParam -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), commandParam) }

@@ -1,20 +1,22 @@
-package io.illyria.skyblockx.command.island.cmd
+package io.illyria.skyblockx.command.skyblock.cmd
 
+import io.illyria.skyblockx.command.CommandInfo
+import io.illyria.skyblockx.command.SCommand
 import io.illyria.skyblockx.core.Permission
 import io.illyria.skyblockx.persist.Message
 
-class CmdBypass : io.illyria.skyblockx.command.SCommand() {
+class CmdSbBypass : SCommand() {
 
     init {
         aliases.add("bypass")
 
         commandRequirements =
-            io.illyria.skyblockx.command.CommandRequirementsBuilder().asPlayer(true).withPermission(Permission.BYPASS)
+            io.illyria.skyblockx.command.CommandRequirementsBuilder().asPlayer(true).withPermission(Permission.ADMIN_BYPASS)
                 .build()
     }
 
 
-    override fun perform(info: io.illyria.skyblockx.command.CommandInfo) {
+    override fun perform(info: CommandInfo) {
         info.iPlayer!!.inBypass = !info.isBypassing()
         info.message(String.format(Message.commandBypassToggle, if (info.iPlayer!!.inBypass) "in" else "out of"))
     }
