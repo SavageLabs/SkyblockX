@@ -91,6 +91,8 @@ object Config {
     var islandMemberGUIBackgroundItem = SerializableItem(XMaterial.GRAY_STAINED_GLASS_PANE, "&7", listOf(""), 1)
     var islandMemberGUIHeadSlots = listOf(10, 13, 16)
     var islandMemberGUIItemMeta = HeadFormat("&b&l{player}", listOf("&7Click for more info"))
+    var islandMemberGUINoMemberName = "&b&lInvite Another Island Member!"
+    var islandMemberGUINoMemberLore = listOf("&7Invite another island member to manage them.", "&7Format: &b/is members invite <player>")
 
     var islandMemberActionGUITitle = "&b&l{player}"
     var islandMemberActionGUIBackgroundItem = SerializableItem(XMaterial.GRAY_STAINED_GLASS_PANE, "&7", listOf(""), 1)
