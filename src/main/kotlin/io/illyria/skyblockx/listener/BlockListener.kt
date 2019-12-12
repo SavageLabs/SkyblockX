@@ -32,8 +32,9 @@ class BlockListener : Listener {
         // We're gonna need this.
         val iPlayer = getIPlayer(event.player)
 
+
         // Check if they dont have an island or a co-op island, if not, deny.
-        if (!iPlayer.hasCoopIsland() && !iPlayer.hasIsland()) {
+        if (!iPlayer.hasCoopIsland() && !iPlayer.hasIsland() && !iPlayer.inBypass) {
             iPlayer.message(Message.listenerActionDeniedCreateAnIslandFirst)
             event.isCancelled = true
             return
@@ -48,9 +49,9 @@ class BlockListener : Listener {
         }
 
         // We're gonna need this more than once here, store to prevent lookups.
-        val island = iPlayer.getIsland()!!
+        val island = iPlayer.getIsland()
         // Quest checking block.
-        if (iPlayer.hasIsland() && island.currentQuest != null) {
+        if (iPlayer.hasIsland() && island!!.currentQuest != null) {
             // Assert non-null because the if check for this block will trigger.
             val currentQuest = island.currentQuest!!
             // Find the quest that the island has activated.
@@ -92,8 +93,11 @@ class BlockListener : Listener {
         // Need this a lot.
         val iPlayer = getIPlayer(event.player)
 
+        if (iPlayer.inBypass) return
+
+
         // Check if they have an island or co-op island, if not, deny.
-        if (!iPlayer.hasCoopIsland() && !iPlayer.hasIsland()) {
+        if (!iPlayer.hasCoopIsland() && !iPlayer.hasIsland() && !iPlayer.inBypass) {
             iPlayer.message(Message.listenerActionDeniedCreateAnIslandFirst)
             event.isCancelled = true
             return

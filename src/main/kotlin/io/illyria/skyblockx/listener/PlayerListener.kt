@@ -234,7 +234,7 @@ class PlayerListener : Listener {
 
 
         // Check if they have an island or co-op island, if not, deny.
-        if (!iPlayer.hasCoopIsland() && !iPlayer.hasIsland()) {
+        if (!iPlayer.hasCoopIsland() && !iPlayer.hasIsland() && !iPlayer.inBypass) {
             iPlayer.message(Message.listenerActionDeniedCreateAnIslandFirst)
             event.isCancelled = true
             return
