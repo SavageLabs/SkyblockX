@@ -39,11 +39,21 @@ class SkyblockX : SavagePlugin() {
             setupOreGeneratorAlgorithm()
             loadPlaceholderAPIHook()
             startIslandTopTask()
+            startAutoSaveTask()
             registerListeners(DataListener(), SEditListener(), BlockListener(), PlayerListener(), EntityListener())
             logger.info("Loaded ${Data.IPlayers.size} players")
             logger.info("Loaded ${Data.islands.size} islands")
         }
         logger.info("Startup Finished ($startupTime ms)")
+    }
+
+    @ExperimentalTime
+    private fun startAutoSaveTask() {
+        Bukkit.getScheduler().runTaskTimerAsynchronously(this, Runnable {
+            if (Config.islandSaveBroadcastMessage) Bukkit.broadcastMessage(color(Config.islandSaveBroadcastMessageStart))
+            val time = measureTimedValue {  Data.save() }
+            if (Config.islandSaveBroadcastMessage) Bukkit.broadcastMessage(color(String.format(Config.islandSaveBroadcastMessageEnd, time.duration)))
+        }, 20L, Config.islandSaveTaskPeriodTicks.toLong())
     }
 
     @ExperimentalTime

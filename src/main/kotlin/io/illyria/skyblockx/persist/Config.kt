@@ -52,7 +52,7 @@ object Config {
         "&7Coal Block: &b{COAL_BLOCK}"
         )
 
-    // amt x ticks/sec x sec/min
+    // amt x ticks/sec x sec/min: 15 min
     var islandTopCalcPeriodTicks = 15 * 20 * 60
 
     var islandTopBroadcastMessage = true
@@ -60,6 +60,15 @@ object Config {
     var islandTopBroadcastMessageStart = "&7Starting IslandTOP Calculation."
 
     var islandTopBroadcastMessageEnd = "&7Finished Calculation of %1\$s islands in %2\$s."
+
+    // amt x ticks/sec x sec/min: 30 min
+    var islandSaveTaskPeriodTicks = 30 * 20 * 60
+
+    var islandSaveBroadcastMessage = true
+
+    var islandSaveBroadcastMessageStart = "&7Saving Data..."
+
+    var islandSaveBroadcastMessageEnd = "&7Finished Saving data ( %1\$s )."
 
 
     var generatorProbability = hashMapOf(
