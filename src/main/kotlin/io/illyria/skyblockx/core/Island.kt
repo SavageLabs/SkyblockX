@@ -125,8 +125,6 @@ data class Island(
                 .invoke(chunkSnapshot, x, y, z) as Int
             return  Class.forName("org.bukkit.Material").getMethod("getMaterial", Int::class.javaPrimitiveType).invoke(null, id) as Material
         }
-
-
     }
 
     fun messageAllOnlineIslandMembers(message: String) {
@@ -143,12 +141,12 @@ data class Island(
     }
 
     fun getAllMembers(): Set<String> {
-        if (members == null) return emptySet()
+        if (members == null || members.size == 0) return emptySet()
         return members.stream().map { uuid -> getIPlayerByUUID(uuid)?.name!! }?.toList()?.toSet() as Set<String>
     }
 
     fun getAllMemberUUIDs(): Set<String> {
-        if (members == null) return emptySet()
+        if (members == null || members.size == 0) return emptySet()
         return members
     }
 
@@ -395,10 +393,10 @@ data class Island(
         // Get new leader.
         val newLeader = getIPlayerByName(name)!!
         // remove new leader from member list.
-        members.remove(name)
+        members.remove(Bukkit.getPlayer(name)?.uniqueId.toString())
         // Make old leader a member
         val oldleader = getIPlayerByName(ownerTag)!!
-        members.add(oldleader.getPlayer().name)
+        members.add(oldleader.getPlayer().uniqueId.toString())
         // Assign again just in case :P
         oldleader.assignIsland(this)
         // Actually make the leader the leader of the island
