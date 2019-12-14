@@ -8,7 +8,7 @@ import java.text.DecimalFormat
 import java.util.stream.Collectors.joining
 
 
-class PlacholderAPI : PlaceholderExpansion() {
+class PlacholderAPIIntegration : PlaceholderExpansion() {
 
     val decimalFormat = DecimalFormat()
 

@@ -5,7 +5,7 @@ import io.illyria.skyblockx.command.skyblock.SkyblockBaseCommand
 import io.illyria.skyblockx.core.color
 import io.illyria.skyblockx.core.registerAllPermissions
 import io.illyria.skyblockx.core.runIslandCalc
-import io.illyria.skyblockx.hooks.PlacholderAPI
+import io.illyria.skyblockx.hooks.PlacholderAPIIntegration
 import io.illyria.skyblockx.listener.*
 import io.illyria.skyblockx.persist.*
 import io.illyria.skyblockx.persist.data.Items
@@ -70,7 +70,7 @@ class SkyblockX : SavagePlugin() {
     private fun loadPlaceholderAPIHook() {
         if (server.pluginManager.getPlugin("PlaceholderAPI") != null) {
             server.consoleSender.sendMessage(ChatColor.YELLOW.toString() + "Loading Placeholders...")
-            PlacholderAPI().register()
+            PlacholderAPIIntegration().register()
         }
     }
 
