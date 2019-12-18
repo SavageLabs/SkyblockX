@@ -20,7 +20,7 @@ object Message {
     var commandRequirementsNotAnIslandLeader = "&cThis command requires the executor to be an island leader."
     var commandRequirementsPlayerDoesNotHavePermission = "&cThis command requires the permission %1\$s"
 
-    var commandHelpGeneratorPageInvalid = "&cThe page %1\$s is invalid."
+    var commandHelpGeneratorPageInvalid = "&cThe page %1\$s does not exist."
     var commandHelpGeneratorFormat = "&b/%1\$s %2\$s &8> &7 %3\$s"
     var commandHelpGeneratorBackgroundColor = ChatColor.GRAY
     var commandHelpGeneratorNotRequired = "&cNo&r"
