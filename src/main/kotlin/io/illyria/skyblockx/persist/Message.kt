@@ -73,7 +73,7 @@ object Message {
     var commandSEPasteStructurePasted = "&7Structure pasted successfully."
 
     var commandBypassToggle = "&7You are now %1\$s bypass mode."
-    var commandBypassHelp = "&7bypass island checks (For Server Administrators)."
+    var commandBypassHelp = "&7bypass island checks."
 
     var commandTopNotCalculated = "&7Island values have not been calculated yet. Run &b/sbx calc&7 to force calculation."
     var commandTopHelp = "&7gets island top info"
