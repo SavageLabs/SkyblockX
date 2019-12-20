@@ -9,6 +9,7 @@ import net.prosavage.baseplugin.WorldBorderUtil
 import net.prosavage.baseplugin.XMaterial
 import net.prosavage.baseplugin.serializer.Serializer
 import net.prosavage.baseplugin.serializer.commonobjects.SerializableItem
+import org.bukkit.ChatColor
 import org.bukkit.block.Biome
 
 object Config {
@@ -40,6 +41,16 @@ object Config {
     var skyblockWorldBiome = Biome.PLAINS
 
     var islandTopLineFormat = "&b{rank}&7. &7{leader}'s island &b(\${amount})&7."
+
+    var useIslandTopHeadMessage = true
+
+    var islandTopHeadMessage = "&b&lTop Islands &7&o((By block Value))"
+
+    var useIslandTopHeaderBar = true
+
+    var barLength = 50
+
+    var islandTopbarElement = "&8&m="
 
     var islandTopTooltip = listOf(
         "&7Leader: &b{leader}",
