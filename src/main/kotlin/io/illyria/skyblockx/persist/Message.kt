@@ -104,6 +104,9 @@ object Message {
     var commandHomeGoHelp = "&7go to your homes."
     var commandHomeList = "&7list island homes."
 
+    var commandCalcMessage = "&7Calculated Island."
+    var commandCalcCooldown = "&7You are trying to calculate the island value too often, Cooldown: &b%1\$s seconds left."
+    var commandCalcHelp = "&7Calculate your own island's value."
 
     var commandBorderHelp = "&7Change your border color."
 

@@ -11,6 +11,7 @@ import net.prosavage.baseplugin.serializer.Serializer
 import net.prosavage.baseplugin.serializer.commonobjects.SerializableItem
 import org.bukkit.ChatColor
 import org.bukkit.block.Biome
+import kotlin.time.Duration
 
 object Config {
 
@@ -65,6 +66,8 @@ object Config {
 
     // amt x ticks/sec x sec/min: 15 min
     var islandTopCalcPeriodTicks = 15 * 20 * 60
+
+    var islandTopManualCalcCooldownMiliseconds = 1 * 1000 * 60 * 5
 
     var islandTopBroadcastMessage = true
 

@@ -39,6 +39,13 @@ data class Island(
             .add(islandSize.toDouble(), 256.toDouble(), islandSize.toDouble())
     )
 
+    var lastManualCalc: Long = -1L
+
+    fun canManualCalc(): Boolean {
+        return lastManualCalc == -1L || System.currentTimeMillis() - lastManualCalc > Config.islandTopManualCalcCooldownMiliseconds
+    }
+
+
 
     var maxCoopPlayers = Config.defaultMaxCoopPlayers
     var maxIslandHomes = Config.defaultMaxIslandHomes
@@ -466,7 +473,7 @@ fun deleteIsland(player: Player) {
     }
 }
 
-data class IslandTopInfo(val map: Map<Int, Island.CalcInfo>, val time: Long)
+data class IslandTopInfo(val map: HashMap<Int, Island.CalcInfo>, val time: Long)
 
 @ExperimentalTime
 fun runIslandCalc() {
