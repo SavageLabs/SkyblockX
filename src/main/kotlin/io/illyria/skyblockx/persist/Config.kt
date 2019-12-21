@@ -85,7 +85,7 @@ object Config {
 
     var islandSaveBroadcastMessageEnd = "&7Finished Saving data ( %1\$s )."
 
-    var numberFormatLocale = Locale.US
+    var numberFormatLocale: Locale = Locale.US
 
     var generatorProbability = hashMapOf(
         1 to arrayListOf(
