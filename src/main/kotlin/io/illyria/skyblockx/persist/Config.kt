@@ -11,6 +11,7 @@ import net.prosavage.baseplugin.serializer.Serializer
 import net.prosavage.baseplugin.serializer.commonobjects.SerializableItem
 import org.bukkit.ChatColor
 import org.bukkit.block.Biome
+import java.util.*
 import kotlin.time.Duration
 
 object Config {
@@ -84,6 +85,7 @@ object Config {
 
     var islandSaveBroadcastMessageEnd = "&7Finished Saving data ( %1\$s )."
 
+    var numberFormatLocale = Locale.US
 
     var generatorProbability = hashMapOf(
         1 to arrayListOf(

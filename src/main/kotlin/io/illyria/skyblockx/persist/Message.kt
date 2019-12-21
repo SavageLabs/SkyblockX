@@ -170,6 +170,9 @@ object Message {
 
     var commandResetHelp = "&7reset your island."
 
+    var commandValueInfo = "&7The value of this block is &b%1\$s"
+    var commandValueHelp = "&7get the monetary value of a block you're holding."
+
     var commandSkyblockRemoveHelp = "&7delete a player's island."
     var commandSkyblockRemoveNotAnIslandOwner = "&7This player is &bnot&7 an island member."
     var commandSkyblockRemoveSuccess = "&7The island was successfully deleted."
@@ -187,7 +190,6 @@ object Message {
     var commandSkyblockCalcDone = "&7Calculated %1\$s islands."
     var commandSkyblockCalcStart = "&7Starting Calculation..."
     var commandSkyblockCalcHelp = "&7Calculates every island's price"
-
 
 
 
