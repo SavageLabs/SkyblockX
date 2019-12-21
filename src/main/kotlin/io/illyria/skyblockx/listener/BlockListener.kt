@@ -76,9 +76,7 @@ class BlockListener : Listener {
 
 
         // Anti-abuse for skyblock.
-        event.block.setMetadata(
-            "skyblock-placed-by-player",
-            FixedMetadataValue(io.illyria.skyblockx.Globals.skyblockX, true)
+        event.block.setMetadata("skyblock-placed-by-player", FixedMetadataValue(Globals.skyblockX, true)
         )
     }
 

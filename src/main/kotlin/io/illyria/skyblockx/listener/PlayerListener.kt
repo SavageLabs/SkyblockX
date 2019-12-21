@@ -9,6 +9,7 @@ import io.illyria.skyblockx.quest.failsQuestCheckingPreRequisites
 import net.prosavage.baseplugin.XMaterial
 import org.bukkit.Bukkit
 import org.bukkit.Material
+import org.bukkit.World
 import org.bukkit.enchantments.Enchantment
 import org.bukkit.entity.Item
 import org.bukkit.entity.Player
@@ -19,9 +20,7 @@ import org.bukkit.event.inventory.CraftItemEvent
 import org.bukkit.event.inventory.InventoryAction
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.inventory.InventoryType
-import org.bukkit.event.player.PlayerFishEvent
-import org.bukkit.event.player.PlayerInteractEvent
-import org.bukkit.event.player.PlayerTeleportEvent
+import org.bukkit.event.player.*
 
 class PlayerListener : Listener {
 
@@ -67,6 +66,23 @@ class PlayerListener : Listener {
     @EventHandler
     fun onPlayerTeleport(event: PlayerTeleportEvent) {
         updateWorldBorder(event.player, event.to!!, 10L)
+    }
+
+    @EventHandler
+    fun onPlayerChangeWorldEvent(event: PlayerPortalEvent) {
+
+        if (event.from.world?.name != Config.skyblockWorldName && event.to?.world?.environment != World.Environment.NETHER) {
+            return
+        }
+        event.player.sendMessage("${event.from.world!!.name} ${event.to?.world?.environment}")
+        val iPlayer = getIPlayer(event.player)
+        iPlayer.message("teleporting to nether")
+        event.isCancelled = true
+        val newLoc = getIslandFromLocation(event.from)!!.getIslandCenter().clone()
+        newLoc.world = Bukkit.getWorld(Config.skyblockWorldNameNether)
+        newLoc.add(0.0, -1.0, 0.0).block.setType(Material.BEDROCK, false)
+        event.player.teleport(newLoc)
+
     }
 
 
@@ -217,6 +233,8 @@ class PlayerListener : Listener {
             island.completeQuest(iPlayer, targetQuest)
         }
     }
+
+
 
 
     @EventHandler

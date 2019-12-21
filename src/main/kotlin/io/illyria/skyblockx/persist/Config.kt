@@ -28,6 +28,8 @@ object Config {
 
     var skyblockWorldName = "skyblockx"
 
+    var skyblockWorldNameNether = "skyblockx_nether"
+
     var preventFallingDeaths = true
 
     var defaultMaxCoopPlayers = 3
