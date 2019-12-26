@@ -25,7 +25,7 @@ class SkyblockBaseCommand : SCommand(), CommandExecutor, TabCompleter {
         subCommands.add(CmdSbHelp())
         subCommands.add(CmdSbCalc())
         subCommands.add(CmdSbBypass())
-
+        prefix = "/sbx"
 
         Globals.skyblockBaseCommand = this
     }

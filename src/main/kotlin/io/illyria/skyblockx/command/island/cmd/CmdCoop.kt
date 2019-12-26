@@ -1,9 +1,10 @@
 package io.illyria.skyblockx.command.island.cmd
 
+import io.illyria.skyblockx.command.SCommand
 import io.illyria.skyblockx.core.Permission
 import io.illyria.skyblockx.persist.Message
 
-class CmdCoop : io.illyria.skyblockx.command.SCommand() {
+class CmdCoop : SCommand() {
 
     init {
         aliases.add("co-op")

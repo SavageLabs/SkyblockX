@@ -5,6 +5,7 @@ import io.illyria.skyblockx.command.CommandInfo
 import io.illyria.skyblockx.command.CommandRequirementsBuilder
 import io.illyria.skyblockx.command.SCommand
 import io.illyria.skyblockx.core.Permission
+import io.illyria.skyblockx.core.buildBar
 import io.illyria.skyblockx.core.color
 import io.illyria.skyblockx.persist.Config
 import io.illyria.skyblockx.persist.Data
@@ -28,13 +29,17 @@ class CmdTop : SCommand() {
 
     @ExperimentalTime
     override fun perform(info: CommandInfo) {
-        if (Globals.islandValues == null) {
+        if (Globals.islandValues == null || Globals.islandValues!!.map.isEmpty()) {
             info.message(Message.commandTopNotCalculated)
             return
         }
         val decimalFormat = DecimalFormat()
         val sortedBy = Globals.islandValues!!.map.values.sortedByDescending { entry -> entry.worth }
         var counter = 0
+        if (Config.useIslandTopHeadMessage) info.message(Config.islandTopHeadMessage)
+        if (Config.useIslandTopHeaderBar) {
+            info.message(buildBar(Config.islandTopbarElement))
+        }
         sortedBy.forEach { entry ->
             counter++
             val builder = StringBuilder()

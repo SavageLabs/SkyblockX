@@ -7,10 +7,20 @@ import org.bukkit.Bukkit
 import org.bukkit.ChatColor
 import org.bukkit.Location
 import org.bukkit.entity.Player
+import java.lang.StringBuilder
 
 fun color(message: String): String {
     return ChatColor.translateAlternateColorCodes('&', message)
 }
+
+fun buildBar(element: String, barLength: Int = Config.barLength): String {
+    val bar = StringBuilder()
+    repeat(barLength) {
+        bar.append(element)
+    }
+    return color(bar.toString())
+}
+
 
 fun updateWorldBorder(player: Player, location: Location, delay: Long) {
     if (location.world?.name != Config.skyblockWorldName) {

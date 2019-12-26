@@ -69,7 +69,7 @@ class SkyblockX : SavagePlugin() {
 
     private fun loadPlaceholderAPIHook() {
         if (server.pluginManager.getPlugin("PlaceholderAPI") != null) {
-            server.consoleSender.sendMessage(ChatColor.YELLOW.toString() + "Loading Placeholders...")
+            logger.info(ChatColor.YELLOW.toString() + "Loading Placeholders...")
             PlacholderAPIIntegration().register()
         }
     }

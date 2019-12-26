@@ -71,7 +71,6 @@ class EntityListener : Listener {
         if (!Config.preventFallingDeaths
             || event.entity !is Player
             || event.entity.location.world?.name != Config.skyblockWorldName
-            || event.entity.location.y > 0
         ) {
             return
         }
@@ -80,7 +79,7 @@ class EntityListener : Listener {
         val iPlayer = getIPlayer(player)
 
         // Triggers when they fall into the void.
-        if (event.cause == EntityDamageEvent.DamageCause.VOID) {
+        if (event.cause == EntityDamageEvent.DamageCause.VOID && event.entity.location.y <= 0) {
             iPlayer.falling = true
             player.sendMessage(color(Message.messagePrefix + Message.listenerVoidDeathPrevented))
             if (iPlayer.hasIsland()) {

@@ -9,7 +9,10 @@ import net.prosavage.baseplugin.WorldBorderUtil
 import net.prosavage.baseplugin.XMaterial
 import net.prosavage.baseplugin.serializer.Serializer
 import net.prosavage.baseplugin.serializer.commonobjects.SerializableItem
+import org.bukkit.ChatColor
 import org.bukkit.block.Biome
+import java.util.*
+import kotlin.time.Duration
 
 object Config {
 
@@ -41,6 +44,16 @@ object Config {
 
     var islandTopLineFormat = "&b{rank}&7. &7{leader}'s island &b(\${amount})&7."
 
+    var useIslandTopHeadMessage = true
+
+    var islandTopHeadMessage = "&b&lTop Islands &7&o((By block Value))"
+
+    var useIslandTopHeaderBar = true
+
+    var barLength = 50
+
+    var islandTopbarElement = "&8&m="
+
     var islandTopTooltip = listOf(
         "&7Leader: &b{leader}",
         "&7Dirt: &b{DIRT}",
@@ -54,6 +67,8 @@ object Config {
 
     // amt x ticks/sec x sec/min: 15 min
     var islandTopCalcPeriodTicks = 15 * 20 * 60
+
+    var islandTopManualCalcCooldownMiliseconds = 1 * 1000 * 60 * 5
 
     var islandTopBroadcastMessage = true
 
@@ -70,6 +85,7 @@ object Config {
 
     var islandSaveBroadcastMessageEnd = "&7Finished Saving data ( %1\$s )."
 
+    var numberFormatLocale: Locale = Locale.US
 
     var generatorProbability = hashMapOf(
         1 to arrayListOf(

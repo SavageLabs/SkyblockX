@@ -33,8 +33,6 @@ class CmdHomeSet : io.illyria.skyblockx.command.SCommand() {
             info.message(Message.commandHomeSetNotInIsland)
             return
         }
-
-
         info.iPlayer!!.getIsland()!!.addHome(homeName, getSLocation(playerLocation))
         info.message(String.format(Message.commandHomeHomeSet, homeName))
     }
