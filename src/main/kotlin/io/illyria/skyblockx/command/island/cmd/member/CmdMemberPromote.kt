@@ -6,6 +6,7 @@ import io.illyria.skyblockx.command.CommandRequirementsBuilder
 import io.illyria.skyblockx.command.SCommand
 import io.illyria.skyblockx.core.Permission
 import io.illyria.skyblockx.core.color
+import io.illyria.skyblockx.core.getIPlayerByName
 import io.illyria.skyblockx.persist.Message
 import org.bukkit.Bukkit
 
@@ -22,17 +23,19 @@ class CmdMemberPromote : SCommand() {
 
     override fun perform(info: CommandInfo) {
         val island = info.island!!
-        if (island.getAllMembers().isEmpty()) {
+        if (island.getIslandMembers().isEmpty()) {
             info.message(Message.commandMemberNoMembers)
             return
         }
+
+
         val playerNameToPromote = info.args[0]
         if (playerNameToPromote == info.player!!.name) {
             info.message(Message.genericCannotReferenceYourSelf)
             return
         }
 
-        if (!info.island!!.getAllMembers().contains(playerNameToPromote)) {
+        if (!info.island!!.getIslandMembers().contains(getIPlayerByName(playerNameToPromote))) {
             info.message(Message.commandMemberPromoteNotFound)
             return
         }

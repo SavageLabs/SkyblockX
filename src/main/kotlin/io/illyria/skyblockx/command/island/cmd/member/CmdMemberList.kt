@@ -26,9 +26,9 @@ class CmdMemberList : SCommand() {
             .runCommand("/is member kick ${info.island!!.ownerTag}")
             .send(info.player!!)
 
-        for ((index, member) in info.iPlayer!!.getIsland()!!.getAllMembers().withIndex()) {
-            JSONMessage.create(color(String.format(Message.commandMemberListFormat, index + 2, member)))
-                .tooltip(color(Message.commandMemberListRemoveTooltip)).runCommand("/is member kick $member")
+        for ((index, member) in info.iPlayer!!.getIsland()!!.getIslandMembers().withIndex()) {
+            JSONMessage.create(color(String.format(Message.commandMemberListFormat, index + 2, member.name)))
+                .tooltip(color(Message.commandMemberListRemoveTooltip)).runCommand("/is member kick ${member.name}")
                 .send(info.player!!)
         }
 

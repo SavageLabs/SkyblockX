@@ -32,8 +32,8 @@ class PlacholderAPIIntegration : PlaceholderExpansion() {
         val iPlayer = getIPlayer(player)
         return when (s) {
             "island_owner" -> iPlayer.getIsland()?.ownerTag ?: "N/A"
-            "island_member_amount", "island_member_count" -> iPlayer.getIsland()?.getAllMembers()?.size.toString() ?: "0"
-            "island_member_list" -> iPlayer.getIsland()?.getAllMembers()?.stream()!!.collect(joining(", ")) ?: "N/A"
+            "island_member_amount", "island_member_count" -> iPlayer.getIsland()?.getIslandMembers()?.size.toString() ?: "0"
+            "island_member_list" -> iPlayer.getIsland()?.getIslandMembers()?.stream()!!.map { member -> member.name }.collect(joining(", ")) ?: "N/A"
             "island_worth" -> Globals.islandValues?.map?.get(iPlayer.getIsland()?.islandID)?.worth.toString() ?: "0"
             "island_worth_formatted" -> decimalFormat.format(Globals.islandValues?.map?.get(iPlayer.getIsland()?.islandID)?.worth ?: 0)
             else -> null

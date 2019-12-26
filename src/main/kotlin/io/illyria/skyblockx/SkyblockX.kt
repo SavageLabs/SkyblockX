@@ -44,7 +44,7 @@ class SkyblockX : SavagePlugin() {
             logger.info("Loaded ${Data.IPlayers.size} players")
             logger.info("Loaded ${Data.islands.size} islands")
         }
-        logger.info("Startup Finished ($startupTime ms)")
+        logger.info("Startup Finished (${startupTime}ms)")
     }
 
     @ExperimentalTime

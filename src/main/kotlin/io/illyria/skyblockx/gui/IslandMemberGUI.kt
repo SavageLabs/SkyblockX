@@ -21,16 +21,16 @@ class IslandMemberGUI :
     override fun populatePane(context: IPlayer) {
         val guiItems = buildFullBackgroundItemlist()
         var slotListIndexesUsed = 0
-        for (memberName in context.getIsland()!!.getAllMembers()) {
+        for (memberName in context.getIsland()!!.getIslandMembers()) {
             if (slotListIndexesUsed >= Config.islandMemberGUIHeadSlots.size) {
                 Globals.skyblockX.logger.info("Skipping for $memberName due to not having a configured slot for the ${slotListIndexesUsed + 1}th member.")
                 continue
             }
             guiItems[Config.islandMemberGUIHeadSlots[slotListIndexesUsed]] =
-                GuiItem(getSkullOfPlayer(memberName, Config.islandMemberGUIItemMeta)!!) { e ->
+                GuiItem(getSkullOfPlayer(memberName.name, Config.islandMemberGUIItemMeta)!!) { e ->
                     run {
                         e.isCancelled = true
-                        IslandMemberActionGUI(memberName).showGui(context.getPlayer())
+                        IslandMemberActionGUI(memberName.name).showGui(context.getPlayer())
                     }
                 }
             slotListIndexesUsed++

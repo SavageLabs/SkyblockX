@@ -104,10 +104,28 @@ abstract class SCommand {
                 (if (command.commandRequirements.asIslandMember) Message.commandHelpGeneratorRequires else Message.commandHelpGeneratorNotRequired)
             ) + "\n" + Message.commandHelpGeneratorClickMeToPaste
             if (commandSender is Player) {
-                JSONMessage.create(color(String.format(Message.commandHelpGeneratorFormat, prefix, base, command.getHelpInfo())))
+                JSONMessage.create(
+                    color(
+                        String.format(
+                            Message.commandHelpGeneratorFormat,
+                            prefix,
+                            base,
+                            command.getHelpInfo()
+                        )
+                    )
+                )
                     .color(Message.commandHelpGeneratorBackgroundColor)
                     .tooltip(color(tooltip)).suggestCommand("/$prefix $base").send(commandSender)
-            } else commandSender.sendMessage(color(String.format(Message.commandHelpGeneratorFormat, prefix, base, command.getHelpInfo())))
+            } else commandSender.sendMessage(
+                color(
+                    String.format(
+                        Message.commandHelpGeneratorFormat,
+                        prefix,
+                        base,
+                        command.getHelpInfo()
+                    )
+                )
+            )
 
 
         }
@@ -208,7 +226,7 @@ abstract class SCommand {
 
     class MemberArgument : ArgumentType() {
         override fun getPossibleValues(iPlayer: IPlayer?): List<String> {
-            return if (iPlayer != null && iPlayer.hasIsland()) iPlayer.getIsland()!!.getAllMembers().toList() else emptyList()
+            return if (iPlayer != null && iPlayer.hasIsland()) iPlayer.getIsland()!!.getIslandMembers().map { member -> member.name } else emptyList()
         }
     }
 

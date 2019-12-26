@@ -1,6 +1,8 @@
 package io.illyria.skyblockx.core
 
 import io.illyria.skyblockx.Globals
+import io.illyria.skyblockx.event.IslandPostLevelCalcEvent
+import io.illyria.skyblockx.event.IslandPreLevelCalcEvent
 import io.illyria.skyblockx.persist.*
 import io.illyria.skyblockx.persist.data.SLocation
 import io.illyria.skyblockx.persist.data.getSLocation
@@ -25,6 +27,7 @@ import kotlin.time.measureTimedValue
 
 
 
+@Suppress("UNCHECKED_CAST")
 data class Island(
     val islandID: Int,
     val point: Point,
@@ -103,7 +106,7 @@ data class Island(
         return CalcInfo(time.duration, price, mapAmt, islandID)
     }
 
-    data class CalcInfo @ExperimentalTime constructor(val timeDuration: Duration, val worth: Double, val matAmt: Map<XMaterial, Int>, val islandID: Int)
+    data class CalcInfo @ExperimentalTime constructor(val timeDuration: Duration, var worth: Double, val matAmt: Map<XMaterial, Int>, val islandID: Int)
 
     /**
      * Gets the chunksnapshot's block type.
@@ -140,9 +143,10 @@ data class Island(
         }
     }
 
-    fun getAllMembers(): Set<String> {
+
+    fun getIslandMembers(): Set<IPlayer> {
         if (members == null || members.size == 0) return emptySet()
-        return members.stream().map { uuid -> getIPlayerByUUID(uuid)?.name!! }?.toList()?.toSet() as Set<String>
+        return members.stream().map { uuid -> getIPlayerByUUID(uuid) }?.toList()?.toSet() as Set<IPlayer>
     }
 
     fun getAllMemberUUIDs(): Set<String> {
@@ -177,6 +181,9 @@ data class Island(
         getIPlayerByName(name)?.assignIsland(-1)
     }
 
+    fun getLevel(): Double? {
+        return Globals.islandValues?.map?.get(islandID)?.worth
+    }
 
     /**
      * This set does not have methods on purpose to discourage developers from modifying it, as we need a player to authorize the co-op procedure and because it won't actually affect the co-op status of a player.
@@ -471,8 +478,16 @@ data class IslandTopInfo(val map: Map<Int, Island.CalcInfo>, val time: Long)
 @ExperimentalTime
 fun runIslandCalc() {
     val islandVals = hashMapOf<Int, Island.CalcInfo>()
+    val pluginManager = Bukkit.getPluginManager()
     for ((key, island) in Data.islands) {
-        islandVals[key] = island.calcIsland()
+        val islandPreCalcEvent = IslandPreLevelCalcEvent(island, island.getLevel())
+        pluginManager.callEvent(islandPreCalcEvent)
+        if (islandPreCalcEvent.isCancelled) continue
+        val worth = island.calcIsland()
+        val islandPostCalcEvent = IslandPostLevelCalcEvent(island, worth.worth)
+        pluginManager.callEvent(islandPostCalcEvent)
+        worth.worth = islandPostCalcEvent.levelAfterCalc ?: worth.worth
+
     }
     Globals.islandValues = IslandTopInfo(islandVals, System.currentTimeMillis())
 }
