@@ -5,7 +5,7 @@ import org.bukkit.event.Cancellable
 import org.bukkit.event.Event
 import org.bukkit.event.HandlerList
 
-class IslandPostLevelCalcEvent(val island: Island, val levelAfterCalc: Double?) : Event(true) {
+class IslandPostLevelCalcEvent(val island: Island, var levelAfterCalc: Double?) : Event(true) {
 
     private val HANDLERS = HandlerList()
     private var isCancelled = false
