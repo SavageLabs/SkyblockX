@@ -4,6 +4,7 @@ import com.github.stefvanschie.inventoryframework.GuiItem
 import io.illyria.skyblockx.Globals
 import io.illyria.skyblockx.core.IPlayer
 import io.illyria.skyblockx.core.color
+import io.illyria.skyblockx.core.isPlaceholderAPIPresent
 import io.illyria.skyblockx.persist.Config
 import me.clip.placeholderapi.PlaceholderAPI
 import net.prosavage.baseplugin.ItemBuilder
@@ -62,7 +63,7 @@ class IslandMemberGUI :
         )
         val lore: MutableList<String> = ArrayList()
         for (line in headFormat.lore) {
-            lore.add(PlaceholderAPI.setPlaceholders(offlinePlayer, color(line)))
+            lore.add(if (isPlaceholderAPIPresent()) PlaceholderAPI.setPlaceholders(offlinePlayer, color(line)) else color(line))
         }
         skullMeta.lore = lore
         itemStack.itemMeta = skullMeta

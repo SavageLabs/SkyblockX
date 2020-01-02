@@ -7,7 +7,6 @@ import org.bukkit.Bukkit
 import org.bukkit.ChatColor
 import org.bukkit.Location
 import org.bukkit.entity.Player
-import java.lang.StringBuilder
 
 fun color(message: String): String {
     return ChatColor.translateAlternateColorCodes('&', message)
@@ -32,7 +31,6 @@ fun updateWorldBorder(player: Player, location: Location, delay: Long) {
             worldBorder.center
         )
     } else {
-
         Bukkit.getScheduler()
             .runTaskLater(
                 Globals.skyblockX,
@@ -51,4 +49,8 @@ fun updateWorldBorder(player: Player, location: Location, delay: Long) {
                 delay
             )
     }
+}
+
+fun isPlaceholderAPIPresent(): Boolean {
+    return Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null
 }
