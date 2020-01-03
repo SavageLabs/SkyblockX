@@ -1,6 +1,7 @@
 package io.illyria.skyblockx.sedit
 
 
+import io.illyria.skyblockx.Globals
 import io.illyria.skyblockx.core.color
 import io.illyria.skyblockx.persist.Message
 import io.illyria.skyblockx.sbf.*
@@ -74,7 +75,7 @@ class SkyblockEdit {
                 }
             }
         }
-        val structuresDir = File(io.illyria.skyblockx.Globals.skyblockX.dataFolder, "structures")
+        val structuresDir = File(Globals.skyblockX.dataFolder, "structures")
         structuresDir.mkdirs()
         SbfWriter(container).write(File(structuresDir, "${name}.structure"))
         player.sendMessage(
@@ -88,18 +89,17 @@ class SkyblockEdit {
     }
 
     fun pasteIsland(name: String, location: Location, player: Player?) {
-        var file = File(File(io.illyria.skyblockx.Globals.skyblockX.dataFolder, "structures"), "$name.structure")
+        var file = File(File(Globals.skyblockX.dataFolder, "structures"), "$name.structure")
         if (!file.exists()) {
             player?.sendMessage("$name does not exist, using default file: island.structure")
-            val file1 = File(io.illyria.skyblockx.Globals.skyblockX.dataFolder, "island.structure")
-            io.illyria.skyblockx.Globals.skyblockX.saveResource("island.structure", false)
-            file1.copyTo(
-                File(
-                    File(io.illyria.skyblockx.Globals.skyblockX.dataFolder, "structures"),
-                    "island.structure"
-                )
-            )
-            file1.delete()
+            val fileIsland = File(Globals.skyblockX.dataFolder, "island.structure")
+            val fileNether = File(Globals.skyblockX.dataFolder, "nether-island.structure")
+            Globals.skyblockX.saveResource("island.structure", false)
+            Globals.skyblockX.saveResource("nether-island.structure", false)
+            fileIsland.copyTo(File(File(Globals.skyblockX.dataFolder, "structures"), "island.structure"))
+            fileNether.copyTo(File(File(Globals.skyblockX.dataFolder, "structures"), "nether-island.structure"))
+            fileNether.delete()
+            fileIsland.delete()
         }
         pasteStructure(file, location, player)
     }

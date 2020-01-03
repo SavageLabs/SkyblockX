@@ -33,6 +33,8 @@ data class Island(
     var islandSize: Int
 ) {
 
+    var beenToNether = false
+
     val minLocation: SLocation = getSLocation(point.getLocation())
     val maxLocation: SLocation = getSLocation(
         point.getLocation()

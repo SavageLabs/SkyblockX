@@ -6,6 +6,7 @@ import io.illyria.skyblockx.persist.Message
 import io.illyria.skyblockx.persist.Quests
 import io.illyria.skyblockx.quest.QuestGoal
 import io.illyria.skyblockx.quest.failsQuestCheckingPreRequisites
+import io.illyria.skyblockx.sedit.SkyblockEdit
 import net.prosavage.baseplugin.XMaterial
 import org.bukkit.Bukkit
 import org.bukkit.Material
@@ -70,19 +71,18 @@ class PlayerListener : Listener {
 
     @EventHandler
     fun onPlayerChangeWorldEvent(event: PlayerPortalEvent) {
-
         if (event.from.world?.name != Config.skyblockWorldName && event.to?.world?.environment != World.Environment.NETHER) {
             return
         }
-        event.player.sendMessage("${event.from.world!!.name} ${event.to?.world?.environment}")
         val iPlayer = getIPlayer(event.player)
-        iPlayer.message("teleporting to nether")
         event.isCancelled = true
-        val newLoc = getIslandFromLocation(event.from)!!.getIslandCenter().clone()
+        val islandFromLocation = getIslandFromLocation(event.from)
+        val newLoc = islandFromLocation!!.getIslandCenter().clone()
         newLoc.world = Bukkit.getWorld(Config.skyblockWorldNameNether)
-        newLoc.add(0.0, -1.0, 0.0).block.setType(Material.BEDROCK, false)
+        if (!islandFromLocation.beenToNether) {
+            SkyblockEdit().pasteIsland("nether-island", newLoc, null)
+        }
         event.player.teleport(newLoc)
-
     }
 
 

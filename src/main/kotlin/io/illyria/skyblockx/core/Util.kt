@@ -32,7 +32,6 @@ fun updateWorldBorder(player: Player, location: Location, delay: Long) {
             worldBorder.center
         )
     } else {
-
         Bukkit.getScheduler()
             .runTaskLater(
                 Globals.skyblockX,
