@@ -28,6 +28,8 @@ object Config {
 
     var skyblockWorldName = "skyblockx"
 
+    var skyblockWorldNameNether = "skyblockx_nether"
+
     var preventFallingDeaths = true
 
     var defaultMaxCoopPlayers = 3
@@ -232,7 +234,8 @@ object Config {
                 "&aBasic Island",
                 listOf("&aThis is the basic starter island", "&aComes with everything you need to get started."),
                 1
-            ), "island.structure"
+            ), "island.structure",
+            "nether-island.structure"
         ),
         IslandCreateInfo(
             "bedrock",
@@ -241,7 +244,8 @@ object Config {
                 "&aBedrock Island",
                 listOf("&aThis is the basic starter island", "&aComes with everything you need to get started."),
                 1
-            ), "island.structure"
+            ), "island.structure",
+            "nether-island.structure"
         )
     )
 

@@ -15,8 +15,11 @@ import net.prosavage.baseplugin.WorldBorderUtil
 import net.prosavage.baseplugin.XMaterial
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor
+import org.bukkit.World
 import org.bukkit.WorldCreator
 import org.bukkit.generator.ChunkGenerator
+import java.util.*
+import kotlin.collections.HashMap
 import kotlin.system.measureTimeMillis
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTimedValue
@@ -76,7 +79,14 @@ class SkyblockX : SavagePlugin() {
 
     private fun loadWorld() {
         logger.info("Loading World ${Config.skyblockWorldName}")
-        WorldCreator(Config.skyblockWorldName).generator(VoidWorldGenerator()).createWorld()
+        WorldCreator(Config.skyblockWorldName)
+            .generator(VoidWorldGenerator())
+            .createWorld()
+        WorldCreator(Config.skyblockWorldNameNether)
+            .generator(VoidWorldGenerator())
+            .environment(World.Environment.NETHER)
+            .generateStructures(false)
+            .createWorld()
     }
 
     override fun getDefaultWorldGenerator(worldName: String, id: String?): ChunkGenerator? {

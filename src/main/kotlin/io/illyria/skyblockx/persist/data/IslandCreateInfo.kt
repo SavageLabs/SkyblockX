@@ -7,5 +7,6 @@ data class IslandCreateInfo(
     val requirementPermission: String,
     val guiIndex: Int,
     val item: SerializableItem,
-    val structureFile: String
+    val structureFile: String,
+    val netherFile: String
 )

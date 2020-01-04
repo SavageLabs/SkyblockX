@@ -6,6 +6,7 @@ import net.prosavage.baseplugin.WorldBorderUtil
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor
 import org.bukkit.Location
+import org.bukkit.World
 import org.bukkit.entity.Player
 
 fun color(message: String): String {
@@ -20,9 +21,17 @@ fun buildBar(element: String, barLength: Int = Config.barLength): String {
     return color(bar.toString())
 }
 
+fun broadcastDebug(message: String) {
+    Bukkit.broadcastMessage(color(message))
+}
+
+fun isNotInSkyblockWorld(world: World): Boolean {
+    return world.name != Config.skyblockWorldName && world.name != Config.skyblockWorldNameNether
+}
+
 
 fun updateWorldBorder(player: Player, location: Location, delay: Long) {
-    if (location.world?.name != Config.skyblockWorldName) {
+    if (isNotInSkyblockWorld(location.world!!)) {
         val worldBorder = location.world?.worldBorder
         Globals.worldBorderUtil.sendWorldBorder(
             player,
@@ -38,11 +47,13 @@ fun updateWorldBorder(player: Player, location: Location, delay: Long) {
                     val islandFromLocation = getIslandFromLocation(location)
                     val iPlayer = getIPlayer(player)
                     if (islandFromLocation != null) {
+                        val wbCenter = islandFromLocation.getIslandCenter()
+                        wbCenter.world = player.world
                         WorldBorderUtil(Globals.skyblockX).sendWorldBorder(
                             player,
                             iPlayer.borderColor,
                             islandFromLocation.islandSize.toDouble(),
-                            islandFromLocation.getIslandCenter()
+                            wbCenter
                         )
                     }
                 },

@@ -36,6 +36,9 @@ data class Island(
     var islandSize: Int
 ) {
 
+    var beenToNether = false
+    var netherFilePath = "nether-island.structure"
+
     val minLocation: SLocation = getSLocation(point.getLocation())
     val maxLocation: SLocation = getSLocation(
         point.getLocation()

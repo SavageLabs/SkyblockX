@@ -6,9 +6,11 @@ import io.illyria.skyblockx.persist.Message
 import io.illyria.skyblockx.persist.Quests
 import io.illyria.skyblockx.quest.QuestGoal
 import io.illyria.skyblockx.quest.failsQuestCheckingPreRequisites
+import io.illyria.skyblockx.sedit.SkyblockEdit
 import net.prosavage.baseplugin.XMaterial
 import org.bukkit.Bukkit
 import org.bukkit.Material
+import org.bukkit.World
 import org.bukkit.enchantments.Enchantment
 import org.bukkit.entity.Item
 import org.bukkit.entity.Player
@@ -19,9 +21,7 @@ import org.bukkit.event.inventory.CraftItemEvent
 import org.bukkit.event.inventory.InventoryAction
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.inventory.InventoryType
-import org.bukkit.event.player.PlayerFishEvent
-import org.bukkit.event.player.PlayerInteractEvent
-import org.bukkit.event.player.PlayerTeleportEvent
+import org.bukkit.event.player.*
 
 class PlayerListener : Listener {
 
@@ -69,11 +69,28 @@ class PlayerListener : Listener {
         updateWorldBorder(event.player, event.to!!, 10L)
     }
 
+    @EventHandler
+    fun onPlayerChangeWorldEvent(event: PlayerPortalEvent) {
+        if (event.from.world?.name != Config.skyblockWorldName && event.to?.world?.environment != World.Environment.NETHER) {
+            return
+        }
+        val iPlayer = getIPlayer(event.player)
+        event.isCancelled = true
+        val islandFromLocation = getIslandFromLocation(event.from)
+        val newLoc = islandFromLocation!!.getIslandCenter().clone()
+        newLoc.world = Bukkit.getWorld(Config.skyblockWorldNameNether)
+        if (!islandFromLocation.beenToNether) {
+            SkyblockEdit().pasteIsland(islandFromLocation.netherFilePath.replace(".structure", ""), newLoc, null)
+        }
+        event.player.teleport(newLoc)
+        iPlayer.message(Message.islandNetherTeleported)
+    }
+
 
     @EventHandler
     fun onPlayerFish(event: PlayerFishEvent) {
         // Event fires for all other times the rod is thrown, so we need to check the state of the event, along with the world it self right after.
-        if (event.state != PlayerFishEvent.State.CAUGHT_FISH || event.caught !is Item || event.hook.location.world?.name != Config.skyblockWorldName) {
+        if (event.state != PlayerFishEvent.State.CAUGHT_FISH || event.caught !is Item || isNotInSkyblockWorld(event.hook.world)) {
             return
         }
 
@@ -108,7 +125,7 @@ class PlayerListener : Listener {
 
     @EventHandler
     fun onPlayerInventoryClick(event: InventoryClickEvent) {
-        if (event.whoClicked.location.world?.name != Config.skyblockWorldName
+        if (isNotInSkyblockWorld(event.whoClicked.world)
             // Slot -999 is not in the inventory so return :P
             || event.slot == -999
         ) {
@@ -181,7 +198,7 @@ class PlayerListener : Listener {
 
     @EventHandler
     fun onPlayerEnchant(event: EnchantItemEvent) {
-        if (event.enchantBlock.world.name != Config.skyblockWorldName) {
+        if (isNotInSkyblockWorld(event.enchanter.world)) {
             return
         }
 
@@ -219,13 +236,15 @@ class PlayerListener : Listener {
     }
 
 
+
+
     @EventHandler
     fun onPlayerInteract(event: PlayerInteractEvent) {
         // FUTURE CONTRIBUTORS: TRY TO SPLIT CHECKS INTO SMALLER BLOCKS.
 
         if (event.item == null
             || event.clickedBlock == null
-            || event.clickedBlock?.location?.world?.name != Config.skyblockWorldName
+            || isNotInSkyblockWorld(event.clickedBlock!!.world)
         ) {
             return
         }
