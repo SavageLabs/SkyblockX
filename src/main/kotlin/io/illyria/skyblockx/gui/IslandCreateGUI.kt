@@ -23,7 +23,8 @@ class IslandCreateGUI :
                         player.sendMessage(color(Message.messagePrefix + Message.islandCreateGUIYouDontHavePermission))
                         return@run
                     }
-                    createIsland(player, island.structureFile.replace(".structure", ""))
+                    val createdIsland = createIsland(player, island.structureFile.replace(".structure", ""))
+                    createdIsland.netherFilePath = island.netherFile
                     player.sendMessage(color(Message.messagePrefix + Message.commandCreateSuccess))
                 }
             })

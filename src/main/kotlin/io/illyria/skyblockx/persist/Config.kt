@@ -234,7 +234,8 @@ object Config {
                 "&aBasic Island",
                 listOf("&aThis is the basic starter island", "&aComes with everything you need to get started."),
                 1
-            ), "island.structure"
+            ), "island.structure",
+            "nether-island.structure"
         ),
         IslandCreateInfo(
             "bedrock",
@@ -243,7 +244,8 @@ object Config {
                 "&aBedrock Island",
                 listOf("&aThis is the basic starter island", "&aComes with everything you need to get started."),
                 1
-            ), "island.structure"
+            ), "island.structure",
+            "nether-island.structure"
         )
     )
 

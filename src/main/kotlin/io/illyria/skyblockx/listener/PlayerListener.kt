@@ -80,7 +80,7 @@ class PlayerListener : Listener {
         val newLoc = islandFromLocation!!.getIslandCenter().clone()
         newLoc.world = Bukkit.getWorld(Config.skyblockWorldNameNether)
         if (!islandFromLocation.beenToNether) {
-            SkyblockEdit().pasteIsland("nether-island", newLoc, null)
+            SkyblockEdit().pasteIsland(islandFromLocation.netherFilePath.replace(".structure", ""), newLoc, null)
         }
         event.player.teleport(newLoc)
         iPlayer.message(Message.islandNetherTeleported)
