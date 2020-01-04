@@ -2,6 +2,7 @@ package io.illyria.skyblockx.listener
 
 import io.illyria.skyblockx.core.color
 import io.illyria.skyblockx.core.getIPlayer
+import io.illyria.skyblockx.core.isNotInSkyblockWorld
 import io.illyria.skyblockx.persist.Config
 import io.illyria.skyblockx.persist.Message
 import io.illyria.skyblockx.persist.Quests
@@ -22,7 +23,7 @@ class EntityListener : Listener {
     @EventHandler(priority = EventPriority.HIGH)
     fun onEntityDamage(event: EntityDeathEvent) {
         // Return if the entity taking the damage is player, or if the damager is NOT a player.
-        if (event.entity is Player || event.entity.killer == null || event.entity.killer !is Player) {
+        if (event.entity is Player || event.entity.killer == null || event.entity.killer !is Player || isNotInSkyblockWorld(event.entity.world)) {
             return
         }
 
@@ -57,7 +58,7 @@ class EntityListener : Listener {
     @EventHandler
     fun onPlayerTakingDamage(event: EntityDamageByEntityEvent) {
         // If they're not a player or if the entity is not in the skyblock world, we do not care.
-        if (event.entity !is Player || event.entity.location.world?.name != Config.skyblockWorldName) {
+        if (event.entity !is Player || isNotInSkyblockWorld(event.entity.world)) {
             return
         }
         val iPlayer = getIPlayer(event.entity as Player)
@@ -70,7 +71,7 @@ class EntityListener : Listener {
     fun onPlayerDamage(event: EntityDamageEvent) {
         if (!Config.preventFallingDeaths
             || event.entity !is Player
-            || event.entity.location.world?.name != Config.skyblockWorldName
+            || isNotInSkyblockWorld(event.entity.world)
         ) {
             return
         }

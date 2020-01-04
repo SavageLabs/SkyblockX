@@ -74,7 +74,7 @@ class PlayerListener : Listener {
         if (event.from.world?.name != Config.skyblockWorldName && event.to?.world?.environment != World.Environment.NETHER) {
             return
         }
-        val iPlayer = getIPlayer(event.player)
+//        val iPlayer = getIPlayer(event.player)
         event.isCancelled = true
         val islandFromLocation = getIslandFromLocation(event.from)
         val newLoc = islandFromLocation!!.getIslandCenter().clone()
@@ -89,7 +89,7 @@ class PlayerListener : Listener {
     @EventHandler
     fun onPlayerFish(event: PlayerFishEvent) {
         // Event fires for all other times the rod is thrown, so we need to check the state of the event, along with the world it self right after.
-        if (event.state != PlayerFishEvent.State.CAUGHT_FISH || event.caught !is Item || event.hook.location.world?.name != Config.skyblockWorldName) {
+        if (event.state != PlayerFishEvent.State.CAUGHT_FISH || event.caught !is Item || isNotInSkyblockWorld(event.hook.world)) {
             return
         }
 
@@ -124,7 +124,7 @@ class PlayerListener : Listener {
 
     @EventHandler
     fun onPlayerInventoryClick(event: InventoryClickEvent) {
-        if (event.whoClicked.location.world?.name != Config.skyblockWorldName
+        if (isNotInSkyblockWorld(event.whoClicked.world)
             // Slot -999 is not in the inventory so return :P
             || event.slot == -999
         ) {
@@ -197,7 +197,7 @@ class PlayerListener : Listener {
 
     @EventHandler
     fun onPlayerEnchant(event: EnchantItemEvent) {
-        if (event.enchantBlock.world.name != Config.skyblockWorldName) {
+        if (isNotInSkyblockWorld(event.enchanter.world)) {
             return
         }
 
@@ -243,7 +243,7 @@ class PlayerListener : Listener {
 
         if (event.item == null
             || event.clickedBlock == null
-            || event.clickedBlock?.location?.world?.name != Config.skyblockWorldName
+            || isNotInSkyblockWorld(event.clickedBlock!!.world)
         ) {
             return
         }

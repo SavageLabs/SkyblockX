@@ -3,6 +3,7 @@ package io.illyria.skyblockx.listener
 import io.illyria.skyblockx.Globals
 import io.illyria.skyblockx.core.canUseBlockAtLocation
 import io.illyria.skyblockx.core.getIPlayer
+import io.illyria.skyblockx.core.isNotInSkyblockWorld
 import io.illyria.skyblockx.persist.Config
 import io.illyria.skyblockx.persist.Message
 import io.illyria.skyblockx.persist.Quests
@@ -25,7 +26,7 @@ class BlockListener : Listener {
     @EventHandler
     fun onBlockBreak(event: BlockPlaceEvent) {
         // FUTURE CONTRIBUTIONS: Attempt to split checks into small blocks.
-        if (event.block.location.world?.name != Config.skyblockWorldName) {
+        if (isNotInSkyblockWorld(event.blockPlaced.world)) {
             return
         }
 
@@ -83,7 +84,7 @@ class BlockListener : Listener {
     @EventHandler
     fun onBlockBreak(event: BlockBreakEvent) {
         // FUTURE CONTRIBUTIONS: Attempt to split checks into small blocks.
-        if (event.block.location.world?.name != Config.skyblockWorldName) {
+        if (isNotInSkyblockWorld(event.block.world)) {
             return
         }
 
@@ -141,7 +142,7 @@ class BlockListener : Listener {
     @EventHandler
     fun onBlockFromToEvent(event: BlockFromToEvent) {
         // No skyblock world or generating from down block face.
-        if (!Config.islandOreGeneratorEnabled || event.face == BlockFace.DOWN || event.block.location.world?.name != Config.skyblockWorldName) return
+        if (!Config.islandOreGeneratorEnabled || event.face == BlockFace.DOWN || isNotInSkyblockWorld(event.block.world)) return
 
         Bukkit.getScheduler().runTask(Globals.skyblockX, Runnable {
             run {
