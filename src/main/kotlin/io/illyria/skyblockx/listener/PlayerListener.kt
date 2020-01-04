@@ -74,7 +74,7 @@ class PlayerListener : Listener {
         if (event.from.world?.name != Config.skyblockWorldName && event.to?.world?.environment != World.Environment.NETHER) {
             return
         }
-//        val iPlayer = getIPlayer(event.player)
+        val iPlayer = getIPlayer(event.player)
         event.isCancelled = true
         val islandFromLocation = getIslandFromLocation(event.from)
         val newLoc = islandFromLocation!!.getIslandCenter().clone()
@@ -83,6 +83,7 @@ class PlayerListener : Listener {
             SkyblockEdit().pasteIsland("nether-island", newLoc, null)
         }
         event.player.teleport(newLoc)
+        iPlayer.message(Message.islandNetherTeleported)
     }
 
 

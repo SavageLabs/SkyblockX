@@ -217,6 +217,8 @@ object Message {
     var questProgressInCompleteChar = "&7="
     var questProgressBarMessage = "&b&l{quest-name} {progress-bar} &b{percentage}%"
 
+    var islandNetherTeleported = "&7You have been teleported to your nether island."
+
 
     var islandCreatedTitle = "&9SkyblockX"
     var islandCreatedSubtitle = "&7By: ProSavage"

@@ -22,6 +22,10 @@ fun buildBar(element: String, barLength: Int = Config.barLength): String {
     return color(bar.toString())
 }
 
+fun broadcastDebug(message: String) {
+    Bukkit.broadcastMessage(color(message))
+}
+
 fun isNotInSkyblockWorld(world: World): Boolean {
     return world.name != Config.skyblockWorldName && world.name != Config.skyblockWorldNameNether
 }
@@ -52,8 +56,6 @@ fun updateWorldBorder(player: Player, location: Location, delay: Long) {
                             islandFromLocation.islandSize.toDouble(),
                             wbCenter
                         )
-                    } else {
-                        Bukkit.broadcastMessage("was null lmao");
                     }
                 },
                 delay
