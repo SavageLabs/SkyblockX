@@ -497,6 +497,7 @@ fun runIslandCalc() {
         val islandPostCalcEvent = IslandPostLevelCalcEvent(island, worth.worth)
         pluginManager.callEvent(islandPostCalcEvent)
         worth.worth = islandPostCalcEvent.levelAfterCalc ?: worth.worth
+        islandVals[key] = worth
 
     }
     Globals.islandValues = IslandTopInfo(islandVals, System.currentTimeMillis())
