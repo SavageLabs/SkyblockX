@@ -36,6 +36,8 @@ data class Island(
     var islandSize: Int
 ) {
 
+    var inventory = Bukkit.createInventory(null, (Config.chestRows[1] ?: 3) * 9)
+
     var beenToNether = false
     var netherFilePath = "nether-island.structure"
 
