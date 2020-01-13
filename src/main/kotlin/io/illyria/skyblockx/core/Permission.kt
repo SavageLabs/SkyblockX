@@ -26,6 +26,7 @@ enum class Permission(val node: String, val description: String, val permissionD
     QUEST("quest", "opening the questing gui.", PermissionDefault.TRUE),
     OBSIDIANTOLAVA("obsidiantolava", "turn obsidian to lava with an empty bucket", PermissionDefault.FALSE),
     CALC("calc", "calculate your island's value", PermissionDefault.TRUE),
+    CHEST("chest", "open your island chest", PermissionDefault.TRUE),
     INFO("info", "gets island top information", PermissionDefault.TRUE),
     SE_SAVESTUCT("se.savestructure", "administrator skyblock edit save", PermissionDefault.OP),
     SE_PASTESTRUCT("se.pastestructure", "administrator skyblock edit paste", PermissionDefault.OP),

@@ -56,6 +56,9 @@ object Message {
     var commandCreateAlreadyHaveAnIsland = "&7You already have an island, use /is delete to delete your island."
     var commandCreateSuccess = "&7Your island was successfully created."
 
+    var commandChestOpening = "&7Opening the island chest."
+    var commandChestHelp = "&7Open the island's virtual chest."
+
     var commandGoHelp = "&7Takes you to an island."
     var commandGoTeleporting = "&7Taking you to your island..."
 
@@ -218,6 +221,7 @@ object Message {
     var questProgressBarMessage = "&b&l{quest-name} {progress-bar} &b{percentage}%"
 
     var islandNetherTeleported = "&7You have been teleported to your nether island."
+
 
 
     var islandCreatedTitle = "&9SkyblockX"
