@@ -23,10 +23,6 @@ class CmdChest : SCommand() {
 
     override fun perform(info: CommandInfo) {
         var inventory = info.island?.inventory
-//        if (inventory == null) {
-//            info.island?.inventory = Bukkit.createInventory(null, (Config.chestRows[1] ?: 3) * 9)
-//            inventory = info.island?.inventory
-//        }
         info.player?.openInventory(inventory!!)
     }
 
