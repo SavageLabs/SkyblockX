@@ -55,15 +55,20 @@ class IslandMemberGUI :
         skullMeta.owner = name
         skullMeta.setDisplayName(
             color(
-                PlaceholderAPI.setPlaceholders(
+                if (isPlaceholderAPIPresent()) PlaceholderAPI.setPlaceholders(
                     offlinePlayer,
                     headFormat.name.replace("{player}", name)
-                )
+                ) else headFormat.name.replace("{player}", name)
             )
         )
         val lore: MutableList<String> = ArrayList()
         for (line in headFormat.lore) {
-            lore.add(if (isPlaceholderAPIPresent()) PlaceholderAPI.setPlaceholders(offlinePlayer, color(line)) else color(line))
+            lore.add(
+                if (isPlaceholderAPIPresent()) PlaceholderAPI.setPlaceholders(
+                    offlinePlayer,
+                    color(line)
+                ) else color(line)
+            )
         }
         skullMeta.lore = lore
         itemStack.itemMeta = skullMeta
