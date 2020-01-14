@@ -123,13 +123,13 @@ object Message {
     var commandRemoveHelp =
         "&7removes island/co-op member."
 
-    var commandTpHelp = "&7teleport to islands of other players."
-    var commandTpPossibleLocationsHeader = "&7You can teleport to the following locations..."
-    var commandTpPossibleLocationsFormat = "&7%1\$s. &b%2\$s's island."
-    var commandTpThisIslandIsNotValid =
+    var commandVisitHelp = "&7teleport to islands of other players."
+    var commandVisitPossibleLocationsHeader = "&7You can teleport to the following locations..."
+    var commandVisitPossibleLocationsFormat = "&7%1\$s. &b%2\$s's island."
+    var commandVisitThisIslandIsNotValid =
         "&7The player %1\$s does not own an island. Type &b/is tp &r&7to list possible locations."
-    var commandTpTeleporting = "&7Teleporting you to %1\$s's island."
-    var commandTpNoPermission = "&7The specified island does not have you as co-op, an island member, or allow visitors."
+    var commandVisitTeleporting = "&7Teleporting you to %1\$s's island."
+    var commandVisitNoPermission = "&7The specified island does not have you as co-op, an island member, or allow visitors."
 
 
     var commandJoinNotInvited = "&7You have not been invited to %1\$s's island."
