@@ -1,10 +1,12 @@
 package io.illyria.skyblockx.command.island.cmd
 
 import io.illyria.skyblockx.command.CommandInfo
+import io.illyria.skyblockx.command.CommandRequirementsBuilder
+import io.illyria.skyblockx.command.SCommand
 import io.illyria.skyblockx.core.Permission
 import io.illyria.skyblockx.persist.Message
 
-class CmdGo : io.illyria.skyblockx.command.SCommand() {
+class CmdGo : SCommand() {
 
 
     init {
@@ -12,7 +14,7 @@ class CmdGo : io.illyria.skyblockx.command.SCommand() {
 
 
         commandRequirements =
-            io.illyria.skyblockx.command.CommandRequirementsBuilder().asIslandMember(true).asPlayer(true)
+           CommandRequirementsBuilder().asIslandMember(true).asPlayer(true)
                 .withPermission(Permission.GO).build()
     }
 

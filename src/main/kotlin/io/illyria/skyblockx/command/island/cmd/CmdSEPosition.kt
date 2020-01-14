@@ -1,10 +1,12 @@
 package io.illyria.skyblockx.command.island.cmd
 
+import io.illyria.skyblockx.command.CommandRequirementsBuilder
+import io.illyria.skyblockx.command.SCommand
 import io.illyria.skyblockx.core.Permission
 import io.illyria.skyblockx.persist.Message
 import io.illyria.skyblockx.sedit.Position
 
-class CmdSEPosition : io.illyria.skyblockx.command.SCommand() {
+class CmdSEPosition : SCommand() {
 
     init {
         aliases.add("pos")
@@ -13,7 +15,7 @@ class CmdSEPosition : io.illyria.skyblockx.command.SCommand() {
         requiredArgs.add(Argument("positionIndex", 0, PosArgument()))
 
         commandRequirements =
-            io.illyria.skyblockx.command.CommandRequirementsBuilder().asPlayer(true)
+            CommandRequirementsBuilder().asPlayer(true)
                 .withPermission(Permission.SE_REGIONS).build()
     }
 

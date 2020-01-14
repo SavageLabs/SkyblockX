@@ -2,11 +2,12 @@ package io.illyria.skyblockx.command.island.cmd
 
 
 import io.illyria.skyblockx.command.CommandRequirementsBuilder
+import io.illyria.skyblockx.command.SCommand
 import io.illyria.skyblockx.core.Permission
 import io.illyria.skyblockx.gui.IslandQuestGUI
 import io.illyria.skyblockx.persist.Message
 
-class CmdQuest : io.illyria.skyblockx.command.SCommand() {
+class CmdQuest : SCommand() {
 
     init {
         aliases.add("quest")

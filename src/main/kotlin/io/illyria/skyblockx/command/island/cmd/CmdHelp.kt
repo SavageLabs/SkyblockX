@@ -1,8 +1,10 @@
 package io.illyria.skyblockx.command.island.cmd
 
+import io.illyria.skyblockx.command.CommandRequirementsBuilder
+import io.illyria.skyblockx.command.SCommand
 import io.illyria.skyblockx.persist.Message
 
-class CmdHelp : io.illyria.skyblockx.command.SCommand() {
+class CmdHelp : SCommand() {
 
 
     init {
@@ -10,7 +12,7 @@ class CmdHelp : io.illyria.skyblockx.command.SCommand() {
 
         requiredArgs.add(Argument("page-number", 0, IntArgument()))
 
-        commandRequirements = io.illyria.skyblockx.command.CommandRequirementsBuilder().build()
+        commandRequirements = CommandRequirementsBuilder().build()
     }
 
     override fun perform(info: io.illyria.skyblockx.command.CommandInfo) {

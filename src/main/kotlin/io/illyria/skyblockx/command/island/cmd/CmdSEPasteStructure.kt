@@ -1,10 +1,12 @@
 package io.illyria.skyblockx.command.island.cmd
 
+import io.illyria.skyblockx.command.CommandRequirementsBuilder
+import io.illyria.skyblockx.command.SCommand
 import io.illyria.skyblockx.core.Permission
 import io.illyria.skyblockx.persist.Message
 import io.illyria.skyblockx.sedit.SkyblockEdit
 
-class CmdSEPasteStructure : io.illyria.skyblockx.command.SCommand() {
+class CmdSEPasteStructure : SCommand() {
 
     init {
         aliases.add("paste-struct")
@@ -12,7 +14,7 @@ class CmdSEPasteStructure : io.illyria.skyblockx.command.SCommand() {
 
         requiredArgs.add(Argument("filename", 0, StringArgument()))
 
-        commandRequirements = io.illyria.skyblockx.command.CommandRequirementsBuilder().asPlayer(true)
+        commandRequirements = CommandRequirementsBuilder().asPlayer(true)
             .withPermission(Permission.SE_PASTESTRUCT).build()
     }
 
