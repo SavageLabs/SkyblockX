@@ -272,12 +272,8 @@ abstract class SCommand {
             // Predicate for filtering our command.
             // If command is not found return empty list.
             while (commandToTab.subCommands.isNotEmpty()) {
-                val findCommand = commandToTab.subCommands.find { subCommand ->
-                    subCommand.aliases[0].equals(
-                        args[subCommandIndex],
-                        true
-                    )
-                }
+                var findCommand: SCommand? = null
+                findCommand = commandToTab.subCommands.find { subCommand -> subCommand.aliases.contains(args[subCommandIndex].toLowerCase()) }
                 subCommandIndex++
                 if (findCommand != null) commandToTab = findCommand else break
                 relativeArgIndex++
