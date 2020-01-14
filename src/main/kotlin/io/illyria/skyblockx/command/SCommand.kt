@@ -51,6 +51,12 @@ abstract class SCommand {
         perform(info)
     }
 
+    fun initializeSubCommandData() {
+        for (subCommand in subCommands) {
+            subCommand.prefix = prefix.replace("/", "")
+        }
+    }
+
 
     private fun checkRequirements(info: CommandInfo): Boolean {
         return commandRequirements.computeRequirements(info)
