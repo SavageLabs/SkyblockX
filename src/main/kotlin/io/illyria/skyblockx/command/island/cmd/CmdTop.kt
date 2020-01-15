@@ -20,6 +20,7 @@ class CmdTop : SCommand() {
 
     init {
         aliases.add("top")
+        aliases.add("worth")
 
         commandRequirements =
             CommandRequirementsBuilder().withPermission(Permission.INFO)

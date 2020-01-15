@@ -60,7 +60,8 @@ class CmdVisit : SCommand() {
         }
 
         // Check if they can actually go to the location
-        if (!targetLocation.allowVisitors && info.iPlayer!!.islandID != targetLocation.islandID && !info.iPlayer!!.isCoopedIsland(targetLocation.islandID)) {
+        if (!targetLocation.allowVisitors && info.iPlayer!!.islandID != targetLocation.islandID
+            && !info.iPlayer!!.isCoopedIsland(targetLocation.islandID)) {
             info.message(Message.commandVisitNoPermission)
             return
         }
