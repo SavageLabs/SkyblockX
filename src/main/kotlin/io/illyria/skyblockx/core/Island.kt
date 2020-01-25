@@ -48,7 +48,7 @@ data class Island(
     val minLocation: SLocation = getSLocation(point.getLocation())
     val maxLocation: SLocation = getSLocation(
         point.getLocation()
-            .add(islandSize.toDouble(), 256D, islandSize.toDouble())
+            .add(islandSize.toDouble(), 256.0, islandSize.toDouble())
     )
 
     var lastManualCalc: Long = -1L
