@@ -77,7 +77,7 @@ class PlayerListener : Listener {
         val iPlayer = getIPlayer(event.player)
         event.isCancelled = true
         val islandFromLocation = getIslandFromLocation(event.from)
-        val newLoc = islandFromLocation!!.getIslandCenter().clone()
+        val newLoc = islandFromLocation?.getIslandCenter()?.clone() ?: return
         newLoc.world = Bukkit.getWorld(Config.skyblockWorldNameNether)
         if (!islandFromLocation.beenToNether) {
             SkyblockEdit().pasteIsland(islandFromLocation.netherFilePath.replace(".structure", ""), newLoc, null)
