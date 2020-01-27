@@ -109,7 +109,6 @@ class PlayerListener : Listener {
                 ?: return
         // Use the FISH caught and parse for the version that we need it for.
         val fishNeededForQuest = XMaterial.valueOf(targetQuest.goalParameter)
-        Bukkit.broadcastMessage(XMaterial.matchXMaterial((event.caught!! as Item).itemStack)!!.name)
         if (fishNeededForQuest != XMaterial.matchXMaterial((event.caught!! as Item).itemStack)) {
             return
         }
