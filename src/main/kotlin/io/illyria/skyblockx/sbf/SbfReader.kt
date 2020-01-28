@@ -1,5 +1,6 @@
 package io.illyria.skyblockx.sbf
 
+import io.illyria.skyblockx.core.broadcastDebug
 import java.io.DataInputStream
 import java.io.File
 import java.io.FileInputStream
@@ -21,6 +22,7 @@ class SbfReader {
         for (x in 0 until typesSize) {
             types.addElement(stream.readUTF())
         }
+
 
         val container = SbfContainer(version, offsetX, offsetY, offsetZ)
         val am = stream.readInt()

@@ -77,7 +77,7 @@ class PlayerListener : Listener {
         val iPlayer = getIPlayer(event.player)
         event.isCancelled = true
         val islandFromLocation = getIslandFromLocation(event.from)
-        val newLoc = islandFromLocation!!.getIslandCenter().clone()
+        val newLoc = islandFromLocation?.getIslandCenter()?.clone() ?: return
         newLoc.world = Bukkit.getWorld(Config.skyblockWorldNameNether)
         if (!islandFromLocation.beenToNether) {
             SkyblockEdit().pasteIsland(islandFromLocation.netherFilePath.replace(".structure", ""), newLoc, null)
@@ -109,7 +109,6 @@ class PlayerListener : Listener {
                 ?: return
         // Use the FISH caught and parse for the version that we need it for.
         val fishNeededForQuest = XMaterial.valueOf(targetQuest.goalParameter)
-        Bukkit.broadcastMessage(XMaterial.matchXMaterial((event.caught!! as Item).itemStack)!!.name)
         if (fishNeededForQuest != XMaterial.matchXMaterial((event.caught!! as Item).itemStack)) {
             return
         }

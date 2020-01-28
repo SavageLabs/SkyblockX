@@ -2,11 +2,13 @@ package io.illyria.skyblockx.sedit
 
 
 import io.illyria.skyblockx.Globals
+import io.illyria.skyblockx.core.broadcastDebug
 import io.illyria.skyblockx.core.color
 import io.illyria.skyblockx.persist.Message
 import io.illyria.skyblockx.sbf.*
 import net.prosavage.baseplugin.ItemBuilder
 import net.prosavage.baseplugin.XMaterial
+import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.block.Chest
@@ -42,9 +44,9 @@ class SkyblockEdit {
         val yEnd = if (pos1.y < pos2.y) pos2.y else pos1.y
         val zEnd = if (pos1.z < pos2.z) pos2.z else pos1.z
 
-        for (x in xStart.toInt() until xEnd.toInt()) {
-            for (y in yStart.toInt() until yEnd.toInt()) {
-                for (z in zStart.toInt() until zEnd.toInt()) {
+        for (x in xStart.toInt() - 1  until xEnd.toInt() + 1) {
+            for (y in yStart.toInt() - 1 until yEnd.toInt() + 1) {
+                for (z in zStart.toInt() - 1 until zEnd.toInt() + 1) {
                     val block = world!!.getBlockAt(x, y, z)
                     if (skipAir && block.type == Material.AIR) {
                         continue
@@ -90,6 +92,7 @@ class SkyblockEdit {
 
     fun pasteIsland(name: String, location: Location, player: Player?) {
         var file = File(File(Globals.skyblockX.dataFolder, "structures"), "$name.structure")
+
         if (!file.exists()) {
             player?.sendMessage("$name does not exist, using default file: island.structure")
             val fileIsland = File(Globals.skyblockX.dataFolder, "island.structure")
@@ -101,6 +104,7 @@ class SkyblockEdit {
             fileNether.delete()
             fileIsland.delete()
         }
+
         pasteStructure(file, location, player)
     }
 
