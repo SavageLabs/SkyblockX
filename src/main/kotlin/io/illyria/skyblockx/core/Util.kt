@@ -8,7 +8,6 @@ import org.bukkit.ChatColor
 import org.bukkit.Location
 import org.bukkit.World
 import org.bukkit.entity.Player
-import java.lang.StringBuilder
 
 fun color(message: String): String {
     return ChatColor.translateAlternateColorCodes('&', message)
@@ -61,4 +60,8 @@ fun updateWorldBorder(player: Player, location: Location, delay: Long) {
                 delay
             )
     }
+}
+
+fun isPlaceholderAPIPresent(): Boolean {
+    return Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null
 }

@@ -51,6 +51,12 @@ abstract class SCommand {
         perform(info)
     }
 
+    fun initializeSubCommandData() {
+        for (subCommand in subCommands) {
+            subCommand.prefix = prefix.replace("/", "")
+        }
+    }
+
 
     private fun checkRequirements(info: CommandInfo): Boolean {
         return commandRequirements.computeRequirements(info)
@@ -104,10 +110,28 @@ abstract class SCommand {
                 (if (command.commandRequirements.asIslandMember) Message.commandHelpGeneratorRequires else Message.commandHelpGeneratorNotRequired)
             ) + "\n" + Message.commandHelpGeneratorClickMeToPaste
             if (commandSender is Player) {
-                JSONMessage.create(color(String.format(Message.commandHelpGeneratorFormat, prefix, base, command.getHelpInfo())))
+                JSONMessage.create(
+                    color(
+                        String.format(
+                            Message.commandHelpGeneratorFormat,
+                            prefix,
+                            base,
+                            command.getHelpInfo()
+                        )
+                    )
+                )
                     .color(Message.commandHelpGeneratorBackgroundColor)
                     .tooltip(color(tooltip)).suggestCommand("/$prefix $base").send(commandSender)
-            } else commandSender.sendMessage(color(String.format(Message.commandHelpGeneratorFormat, prefix, base, command.getHelpInfo())))
+            } else commandSender.sendMessage(
+                color(
+                    String.format(
+                        Message.commandHelpGeneratorFormat,
+                        prefix,
+                        base,
+                        command.getHelpInfo()
+                    )
+                )
+            )
 
 
         }
@@ -208,7 +232,7 @@ abstract class SCommand {
 
     class MemberArgument : ArgumentType() {
         override fun getPossibleValues(iPlayer: IPlayer?): List<String> {
-            return if (iPlayer != null && iPlayer.hasIsland()) iPlayer.getIsland()!!.getAllMembers().toList() else emptyList()
+            return if (iPlayer != null && iPlayer.hasIsland()) iPlayer.getIsland()!!.getIslandMembers().map { member -> member.name } else emptyList()
         }
     }
 
@@ -248,12 +272,8 @@ abstract class SCommand {
             // Predicate for filtering our command.
             // If command is not found return empty list.
             while (commandToTab.subCommands.isNotEmpty()) {
-                val findCommand = commandToTab.subCommands.find { subCommand ->
-                    subCommand.aliases[0].equals(
-                        args[subCommandIndex],
-                        true
-                    )
-                }
+                var findCommand: SCommand? = null
+                findCommand = commandToTab.subCommands.find { subCommand -> subCommand.aliases.contains(args[subCommandIndex].toLowerCase()) }
                 subCommandIndex++
                 if (findCommand != null) commandToTab = findCommand else break
                 relativeArgIndex++

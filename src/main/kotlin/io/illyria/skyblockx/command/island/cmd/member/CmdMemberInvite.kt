@@ -24,7 +24,7 @@ class CmdMemberInvite : SCommand() {
 
     override fun perform(info: CommandInfo) {
         val island = info.island!!
-        if (island.memberLimit <= island.getAllMembers().size) {
+        if (island.memberLimit <= island.getIslandMembers().size) {
             info.message(String.format(Message.commandMemberInviteLimit, island.memberLimit))
             return
         }

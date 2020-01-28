@@ -1,5 +1,6 @@
 package io.illyria.skyblockx.command.island.cmd
 
+import io.illyria.skyblockx.command.CommandRequirementsBuilder
 import io.illyria.skyblockx.core.Permission
 import io.illyria.skyblockx.core.color
 import io.illyria.skyblockx.core.createIsland
@@ -17,7 +18,7 @@ class CmdCreate : io.illyria.skyblockx.command.SCommand() {
         optionalArgs.add(Argument("island-type", 0, StringArgument()))
 
         commandRequirements =
-            io.illyria.skyblockx.command.CommandRequirementsBuilder().asIslandMember(false).asPlayer(true)
+           CommandRequirementsBuilder().asIslandMember(false).asPlayer(true)
                 .withPermission(Permission.CREATE).build()
     }
 

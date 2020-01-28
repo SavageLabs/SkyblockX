@@ -32,6 +32,14 @@ object Config {
 
     var preventFallingDeaths = true
 
+    var useFallingDeathCommands = false
+
+    var fallingDeathPreventionCommands = listOf(
+        "eco take {player} 100"
+    )
+
+    var chestRows = mapOf(1 to 3, 2 to 4, 3 to 5, 4 to 5, 5 to 6)
+
     var defaultMaxCoopPlayers = 3
 
     var defaultMaxIslandHomes = 3

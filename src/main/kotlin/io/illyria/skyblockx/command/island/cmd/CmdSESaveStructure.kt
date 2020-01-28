@@ -1,11 +1,13 @@
 package io.illyria.skyblockx.command.island.cmd
 
+import io.illyria.skyblockx.command.CommandInfo
 import io.illyria.skyblockx.command.CommandRequirementsBuilder
+import io.illyria.skyblockx.command.SCommand
 import io.illyria.skyblockx.core.Permission
 import io.illyria.skyblockx.persist.Message
 import io.illyria.skyblockx.sedit.SkyblockEdit
 
-class CmdSESaveStructure : io.illyria.skyblockx.command.SCommand() {
+class CmdSESaveStructure : SCommand() {
 
     init {
         aliases.add("save-struct")
@@ -19,7 +21,7 @@ class CmdSESaveStructure : io.illyria.skyblockx.command.SCommand() {
     }
 
 
-    override fun perform(info: io.illyria.skyblockx.command.CommandInfo) {
+    override fun perform(info: CommandInfo) {
         if (info.iPlayer!!.pos1 == null || info.iPlayer!!.pos2 == null) {
             info.message(Message.commandSESaveStructurePositionsNotSet)
             return

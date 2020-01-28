@@ -4,30 +4,29 @@ import io.illyria.skyblockx.command.CommandInfo
 import io.illyria.skyblockx.command.CommandRequirementsBuilder
 import io.illyria.skyblockx.command.SCommand
 import io.illyria.skyblockx.core.Permission
+import io.illyria.skyblockx.persist.Config
 import io.illyria.skyblockx.persist.Message
+import org.bukkit.Bukkit
 
-class CmdGo : SCommand() {
-
+class CmdChest : SCommand() {
 
     init {
-        aliases.add("go")
+        aliases.add("chest")
+        aliases.add("inventory")
+        aliases.add("inv")
 
 
         commandRequirements =
-           CommandRequirementsBuilder().asIslandMember(true).asPlayer(true)
-                .withPermission(Permission.GO).build()
+            CommandRequirementsBuilder().withPermission(Permission.CHEST).asIslandMember(true).build()
     }
 
 
     override fun perform(info: CommandInfo) {
-        val island = info.iPlayer!!.getIsland()!!
-        info.message(Message.commandGoTeleporting)
-        info.player!!.teleport(island.getIslandCenter())
+        var inventory = info.island?.inventory
+        info.player?.openInventory(inventory!!)
     }
-
 
     override fun getHelpInfo(): String {
-        return Message.commandGoHelp
+        return Message.commandChestHelp
     }
-
 }

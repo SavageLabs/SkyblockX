@@ -56,6 +56,9 @@ object Message {
     var commandCreateAlreadyHaveAnIsland = "&7You already have an island, use /is delete to delete your island."
     var commandCreateSuccess = "&7Your island was successfully created."
 
+    var commandChestOpening = "&7Opening the island chest."
+    var commandChestHelp = "&7Open the island's virtual chest."
+
     var commandGoHelp = "&7Takes you to an island."
     var commandGoTeleporting = "&7Taking you to your island..."
 
@@ -120,13 +123,13 @@ object Message {
     var commandRemoveHelp =
         "&7removes island/co-op member."
 
-    var commandTpHelp = "&7teleport to islands of other players."
-    var commandTpPossibleLocationsHeader = "&7You can teleport to the following locations..."
-    var commandTpPossibleLocationsFormat = "&7%1\$s. &b%2\$s's island."
-    var commandTpThisIslandIsNotValid =
+    var commandVisitHelp = "&7teleport to islands of other players."
+    var commandVisitPossibleLocationsHeader = "&7You can teleport to the following locations..."
+    var commandVisitPossibleLocationsFormat = "&7%1\$s. &b%2\$s's island."
+    var commandVisitThisIslandIsNotValid =
         "&7The player %1\$s does not own an island. Type &b/is tp &r&7to list possible locations."
-    var commandTpTeleporting = "&7Teleporting you to %1\$s's island."
-    var commandTpNoPermission = "&7The specified island does not have you as co-op, an island member, or allow visitors."
+    var commandVisitTeleporting = "&7Teleporting you to %1\$s's island."
+    var commandVisitNoPermission = "&7The specified island does not have you as co-op, an island member, or allow visitors."
 
 
     var commandJoinNotInvited = "&7You have not been invited to %1\$s's island."
@@ -218,6 +221,7 @@ object Message {
     var questProgressBarMessage = "&b&l{quest-name} {progress-bar} &b{percentage}%"
 
     var islandNetherTeleported = "&7You have been teleported to your nether island."
+
 
 
     var islandCreatedTitle = "&9SkyblockX"

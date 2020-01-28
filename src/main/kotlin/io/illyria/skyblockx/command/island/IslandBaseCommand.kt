@@ -7,7 +7,6 @@ import io.illyria.skyblockx.command.SCommand
 import io.illyria.skyblockx.command.island.cmd.*
 import io.illyria.skyblockx.command.island.cmd.home.CmdHome
 import io.illyria.skyblockx.command.island.cmd.member.*
-import io.illyria.skyblockx.command.skyblock.cmd.CmdSbBypass
 import io.illyria.skyblockx.persist.Message
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
@@ -28,7 +27,7 @@ class IslandBaseCommand : SCommand(), CommandExecutor, TabCompleter {
         subCommands.add(CmdSEPasteStructure())
         subCommands.add(CmdCoop())
         subCommands.add(CmdRemove())
-        subCommands.add(CmdTeleport())
+        subCommands.add(CmdVisit())
         subCommands.add(CmdHome())
         subCommands.add(CmdHelp())
         subCommands.add(CmdQuest())
@@ -45,8 +44,10 @@ class IslandBaseCommand : SCommand(), CommandExecutor, TabCompleter {
         subCommands.add(CmdTop())
         subCommands.add(CmdCalc())
         subCommands.add(CmdValue())
+        subCommands.add(CmdChest())
         prefix = "/is"
 
+        initializeSubCommandData()
         Globals.islandBaseCommand = this
     }
 

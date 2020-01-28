@@ -29,7 +29,7 @@ class CmdSbKick : SCommand() {
         // They're not the owner so we process removing the member.
         val island = iPlayerByName.getIsland()!!
         if (island.getOwnerIPlayer() != iPlayerByName) {
-            if (!island.getAllMembers().contains(iPlayerByName.name)) {
+            if (!island.getIslandMembers().contains(iPlayerByName)) {
                 info.message(Message.commandMemberKickNotFound)
                 return
             }

@@ -4,6 +4,7 @@ import com.github.stefvanschie.inventoryframework.GuiItem
 import io.illyria.skyblockx.Globals
 import io.illyria.skyblockx.core.IPlayer
 import io.illyria.skyblockx.core.color
+import io.illyria.skyblockx.core.isPlaceholderAPIPresent
 import io.illyria.skyblockx.persist.Config
 import me.clip.placeholderapi.PlaceholderAPI
 import net.prosavage.baseplugin.ItemBuilder
@@ -21,16 +22,16 @@ class IslandMemberGUI :
     override fun populatePane(context: IPlayer) {
         val guiItems = buildFullBackgroundItemlist()
         var slotListIndexesUsed = 0
-        for (memberName in context.getIsland()!!.getAllMembers()) {
+        for (memberName in context.getIsland()!!.getIslandMembers()) {
             if (slotListIndexesUsed >= Config.islandMemberGUIHeadSlots.size) {
                 Globals.skyblockX.logger.info("Skipping for $memberName due to not having a configured slot for the ${slotListIndexesUsed + 1}th member.")
                 continue
             }
             guiItems[Config.islandMemberGUIHeadSlots[slotListIndexesUsed]] =
-                GuiItem(getSkullOfPlayer(memberName, Config.islandMemberGUIItemMeta)!!) { e ->
+                GuiItem(getSkullOfPlayer(memberName.name, Config.islandMemberGUIItemMeta)!!) { e ->
                     run {
                         e.isCancelled = true
-                        IslandMemberActionGUI(memberName).showGui(context.getPlayer())
+                        IslandMemberActionGUI(memberName.name).showGui(context.getPlayer())
                     }
                 }
             slotListIndexesUsed++
@@ -54,15 +55,20 @@ class IslandMemberGUI :
         skullMeta.owner = name
         skullMeta.setDisplayName(
             color(
-                PlaceholderAPI.setPlaceholders(
+                if (isPlaceholderAPIPresent()) PlaceholderAPI.setPlaceholders(
                     offlinePlayer,
                     headFormat.name.replace("{player}", name)
-                )
+                ) else headFormat.name.replace("{player}", name)
             )
         )
         val lore: MutableList<String> = ArrayList()
         for (line in headFormat.lore) {
-            lore.add(PlaceholderAPI.setPlaceholders(offlinePlayer, color(line)))
+            lore.add(
+                if (isPlaceholderAPIPresent()) PlaceholderAPI.setPlaceholders(
+                    offlinePlayer,
+                    color(line)
+                ) else color(line)
+            )
         }
         skullMeta.lore = lore
         itemStack.itemMeta = skullMeta

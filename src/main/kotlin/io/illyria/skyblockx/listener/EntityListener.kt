@@ -94,6 +94,11 @@ class EntityListener : Listener {
         // Triggers when they fall and the VOID damage registers falling to cancel.
         if (event.cause == EntityDamageEvent.DamageCause.FALL && iPlayer.falling) {
             iPlayer.falling = false
+            if (Config.useFallingDeathCommands && Config.fallingDeathPreventionCommands.isNotEmpty()) {
+                for (command in Config.fallingDeathPreventionCommands) {
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), color(command.replace("{player}", player.name)))
+                }
+            }
             event.isCancelled = true
         }
 
