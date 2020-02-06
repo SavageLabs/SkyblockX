@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'io.illyria'
-version 'v1.3.3-alpha'
+version 'v1.3.4-alpha'
 
 
 sourceCompatibility = 1.8
@@ -16,7 +16,7 @@ repositories {
         url "https://hub.spigotmc.org/nexus/content/repositories/snapshots"
     }
     maven {
-        url 'https://nexus.illyria.io/repository/maven-public/'
+        url 'https://nexus.savagelabs.net/repository/maven-public/'
     }
     maven {
         url 'https://rayzr.dev/repo/'
@@ -48,7 +48,7 @@ dependencies {
     implementation 'me.clip:placeholderapi:2.0.6'
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
-    implementation 'net.prosavage:BasePlugin:1.5.1'
+    implementation 'net.prosavage:BasePlugin:1.5.4'
     compileOnly group: "com.comphenix.protocol", name: "ProtocolLib", version: "4.4.0"
     compile 'me.rayzr522:jsonmessage:1.2.0'
 }
