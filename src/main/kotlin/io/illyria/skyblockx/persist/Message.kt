@@ -176,6 +176,10 @@ object Message {
     var commandValueInfo = "&7The value of this block is &b%1\$s"
     var commandValueHelp = "&7get the monetary value of a block you're holding."
 
+    var commandSkyblockOpenChestNotAnIslandMember = "&7This player is &bnot&7 an island member."
+    var commandSkyblockOpenChestOpening = "&7Opening target island's chest..."
+    var commandSkyblockOpenChestHelp = "open an island chest."
+
     var commandSkyblockRemoveHelp = "&7delete a player's island."
     var commandSkyblockRemoveNotAnIslandOwner = "&7This player is &bnot&7 an island member."
     var commandSkyblockRemoveSuccess = "&7The island was successfully deleted."

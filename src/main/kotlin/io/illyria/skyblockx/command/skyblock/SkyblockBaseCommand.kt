@@ -25,6 +25,7 @@ class SkyblockBaseCommand : SCommand(), CommandExecutor, TabCompleter {
         subCommands.add(CmdSbHelp())
         subCommands.add(CmdSbCalc())
         subCommands.add(CmdSbBypass())
+        subCommands.add(CmdSbChest())
         prefix = "/sbx"
 
         initializeSubCommandData()
