@@ -267,8 +267,8 @@ class PlayerListener : Listener {
 
         // Obsidian to Lava Bucket Check
         if (event.clickedBlock?.type == XMaterial.OBSIDIAN.parseMaterial()
-            && event.item?.type == XMaterial.BUCKET.parseMaterial()
-        ) {
+            && event.item?.type == XMaterial.BUCKET.parseMaterial())
+        {
             if (!hasPermission(event.player, Permission.OBSIDIANTOLAVA)) {
                 iPlayer.message(
                     String.format(

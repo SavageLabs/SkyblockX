@@ -57,6 +57,7 @@ fun registerAllPermissions(pluginManager: PluginManager) {
 }
 
 fun hasPermission(humanEntity: HumanEntity, permission: Permission): Boolean {
+    if (humanEntity.isOp) return true
     return humanEntity.hasPermission(permission.getFullPermissionNode())
 }
 
