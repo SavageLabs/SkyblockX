@@ -30,7 +30,7 @@ class IslandMemberActionGUI(val name: String) :
 
     private fun executeCommands(commands: List<String>, player: Player) {
         for (command in commands) {
-            player.performCommand(command.replace("{player}", player.name))
+            player.performCommand(command.replace("{player}", name))
         }
     }
 
