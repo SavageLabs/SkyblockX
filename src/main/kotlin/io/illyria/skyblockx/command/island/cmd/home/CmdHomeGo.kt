@@ -2,6 +2,7 @@ package io.illyria.skyblockx.command.island.cmd.home
 
 import io.illyria.skyblockx.command.CommandRequirementsBuilder
 import io.illyria.skyblockx.persist.Message
+import org.bukkit.event.player.PlayerTeleportEvent
 
 class CmdHomeGo : io.illyria.skyblockx.command.SCommand() {
 
@@ -20,7 +21,7 @@ class CmdHomeGo : io.illyria.skyblockx.command.SCommand() {
             return
         }
 
-        info.player!!.teleport(info.island!!.getHome(home)!!.getLocation())
+        info.player!!.teleport(info.island!!.getHome(home)!!.getLocation(), PlayerTeleportEvent.TeleportCause.PLUGIN)
         info.message(String.format(Message.commandHomeGoSuccess, home))
     }
 

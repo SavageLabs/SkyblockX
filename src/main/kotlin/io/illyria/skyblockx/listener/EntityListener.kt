@@ -15,6 +15,7 @@ import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.event.entity.EntityDeathEvent
+import org.bukkit.event.player.PlayerTeleportEvent
 
 class EntityListener : Listener {
 
@@ -84,9 +85,9 @@ class EntityListener : Listener {
             iPlayer.falling = true
             player.sendMessage(color(Message.messagePrefix + Message.listenerVoidDeathPrevented))
             if (iPlayer.hasIsland()) {
-                player.teleport(iPlayer.getIsland()!!.getIslandCenter())
+                player.teleport(iPlayer.getIsland()!!.getIslandCenter(), PlayerTeleportEvent.TeleportCause.PLUGIN)
             } else {
-                player.teleport(Bukkit.getWorld("world")!!.spawnLocation)
+                player.teleport(Bukkit.getWorld("world")!!.spawnLocation, PlayerTeleportEvent.TeleportCause.PLUGIN)
             }
             event.isCancelled = true
         }

@@ -82,7 +82,7 @@ class PlayerListener : Listener {
         if (!islandFromLocation.beenToNether) {
             SkyblockEdit().pasteIsland(islandFromLocation.netherFilePath.replace(".structure", ""), newLoc, null)
         }
-        event.player.teleport(newLoc)
+        event.player.teleport(newLoc, PlayerTeleportEvent.TeleportCause.PLUGIN)
         iPlayer.message(Message.islandNetherTeleported)
     }
 
@@ -149,7 +149,7 @@ class PlayerListener : Listener {
             val materialSmelted =
                 XMaterial.matchXMaterial(targetQuest.goalParameter) ?: Material.valueOf(targetQuest.goalParameter)
 
-            if (materialSmelted.name != targetQuest.goalParameter) {
+            if (materialSmelted.toString() != targetQuest.goalParameter) {
                 return
             }
 
@@ -180,7 +180,7 @@ class PlayerListener : Listener {
             val materialToRepair =
                 XMaterial.matchXMaterial(targetQuest.goalParameter) ?: Material.valueOf(targetQuest.goalParameter)
 
-            if (materialToRepair.name != targetQuest.goalParameter) {
+            if (materialToRepair.toString() != targetQuest.goalParameter) {
                 return
             }
 

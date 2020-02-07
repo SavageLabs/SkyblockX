@@ -5,6 +5,7 @@ import io.illyria.skyblockx.command.CommandRequirementsBuilder
 import io.illyria.skyblockx.command.SCommand
 import io.illyria.skyblockx.core.Permission
 import io.illyria.skyblockx.persist.Message
+import org.bukkit.event.player.PlayerTeleportEvent
 
 class CmdGo : SCommand() {
 
@@ -22,7 +23,7 @@ class CmdGo : SCommand() {
     override fun perform(info: CommandInfo) {
         val island = info.iPlayer!!.getIsland()!!
         info.message(Message.commandGoTeleporting)
-        info.player!!.teleport(island.getIslandCenter())
+        info.player!!.teleport(island.getIslandCenter(), PlayerTeleportEvent.TeleportCause.PLUGIN)
     }
 
 

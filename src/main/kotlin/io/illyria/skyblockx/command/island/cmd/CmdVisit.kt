@@ -9,6 +9,7 @@ import io.illyria.skyblockx.core.getIslandById
 import io.illyria.skyblockx.core.getIslandByOwnerTag
 import io.illyria.skyblockx.persist.Message
 import me.rayzr522.jsonmessage.JSONMessage
+import org.bukkit.event.player.PlayerTeleportEvent
 
 class CmdVisit : SCommand() {
 
@@ -67,7 +68,7 @@ class CmdVisit : SCommand() {
         }
 
         // TODO: Allow them to set island teleport location maybe? idk.
-        info.player!!.teleport(targetLocation.getIslandCenter())
+        info.player!!.teleport(targetLocation.getIslandCenter(), PlayerTeleportEvent.TeleportCause.PLUGIN)
         info.message(String.format(Message.commandVisitTeleporting, targetLocation.ownerTag))
 
 

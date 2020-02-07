@@ -15,6 +15,7 @@ import me.rayzr522.jsonmessage.JSONMessage
 import net.prosavage.baseplugin.XMaterial
 import org.bukkit.*
 import org.bukkit.entity.Player
+import org.bukkit.event.player.PlayerTeleportEvent
 import java.lang.reflect.InvocationTargetException
 import java.text.DecimalFormat
 import java.util.*
@@ -104,7 +105,7 @@ data class Island(
             }
             lateinit var chunkList: List<ChunkSnapshot>
             chunkList = chunks.parallelStream().map { chunk -> chunk.chunkSnapshot }.collect(Collectors.toList())
-            val useNewGetBlockTypeSnapshotMethod =  XMaterial.isVersionOrHigher(XMaterial.MinecraftVersion.VERSION_1_12)
+            val useNewGetBlockTypeSnapshotMethod = XMaterial.getVersion() >= 12.0
             chunkList.parallelStream().forEach { chunkSnapshot ->
                 for (x in 0 until 16) {
                     for (y in 0 until 256) {
@@ -455,14 +456,9 @@ fun getIslandByOwnerTag(ownerTag: String): Island? {
 
 fun createIsland(player: Player?, schematic: String, teleport: Boolean = true): Island {
     var size = if (player == null) Config.islandMaxSizeInBlocks else getMaxPermission(player, "skyblockx.size")
-    size = if (size == -1 || size > Config.islandMaxSizeInBlocks) Config.islandMaxSizeInBlocks else size
-    val island = Island(
-        Data.nextIslandID,
-        spiral(Data.nextIslandID),
-        player?.uniqueId.toString(),
-        player?.name ?: "SYSTEM_OWNED",
-        size
-    )
+    size = if (size < 0 || size > Config.islandMaxSizeInBlocks) Config.islandMaxSizeInBlocks else size
+    val island =
+        Island(Data.nextIslandID, spiral(Data.nextIslandID), player?.uniqueId.toString(), player?.name ?: "SYSTEM_OWNED", size)
     Data.islands[Data.nextIslandID] = island
     Data.nextIslandID++
     // Make player null because we dont want to send them the SkyblockEdit Engine's success upon pasting the island.
@@ -470,7 +466,7 @@ fun createIsland(player: Player?, schematic: String, teleport: Boolean = true): 
     if (player != null) {
         val iPlayer = getIPlayer(player)
         iPlayer.assignIsland(island)
-        if (teleport) player.teleport(island.getIslandCenter())
+        if (teleport) player.teleport(island.getIslandCenter(), PlayerTeleportEvent.TeleportCause.PLUGIN)
 
     }
     incrementQuestInOrder(island)

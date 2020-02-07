@@ -5,6 +5,7 @@ import io.illyria.skyblockx.command.SCommand
 import io.illyria.skyblockx.core.Permission
 import io.illyria.skyblockx.persist.Message
 import org.bukkit.Bukkit
+import org.bukkit.event.player.PlayerTeleportEvent
 
 class CmdRemove : SCommand() {
 
@@ -39,7 +40,7 @@ class CmdRemove : SCommand() {
         }
 
         // Teleport them cuz they're on the island.
-        target.getPlayer().teleport(targetNewLocation)
+        target.getPlayer().teleport(targetNewLocation, PlayerTeleportEvent.TeleportCause.PLUGIN)
         info.message(String.format(Message.commandRemoveInvokerSuccess, target.getPlayer().name))
 
 

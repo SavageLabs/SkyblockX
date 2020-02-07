@@ -60,7 +60,7 @@ class SkyblockEdit {
                         val chest = block.state as Chest
                         for (slot in 0 until chest.blockInventory.size) {
                             val item = chest.blockInventory.getItem(slot) ?: continue
-                            items.add(SbfChestItem(slot, item.amount, XMaterial.matchXMaterial(item.type.name)!!.name))
+                            items.add(SbfChestItem(slot, item.amount, XMaterial.matchXMaterial(item.type.name).toString()))
                         }
 //                        val directionalState = chest.blockData as Directional
 //                        val direction = when (directionalState.facing) {
@@ -73,7 +73,7 @@ class SkyblockEdit {
                         container.chests.addElement(SbfChest(xRel, yRel, zRel, 0, chest.blockInventory.size, items))
                         continue
                     }
-                    container.blocks.add(SbfBlock(xRel, yRel, zRel, XMaterial.matchXMaterial(block.type.name)!!.name))
+                    container.blocks.add(SbfBlock(xRel, yRel, zRel, XMaterial.matchXMaterial(block.type.name).toString()))
                 }
             }
         }
