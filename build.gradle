@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'io.illyria'
-version 'v1.3.4-alpha'
+version 'v1.3.5-alpha'
 
 
 sourceCompatibility = 1.8
