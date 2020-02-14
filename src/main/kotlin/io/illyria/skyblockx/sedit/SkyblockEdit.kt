@@ -116,7 +116,7 @@ class SkyblockEdit {
                 block.x.toInt() + relativeLocation.x.toInt() + reader.offsetx,
                 block.y.toInt() + relativeLocation.y.toInt() + reader.offsety,
                 block.z.toInt() + relativeLocation.z.toInt() + reader.offsetz
-            ).type = XMaterial.valueOf(block.type).parseMaterial()!!
+            ).type = XMaterial.valueOf(block.type).parseMaterial() ?: Material.AIR
         }
         for (chest in reader.chests) {
             val blockAt = relativeLocation.world!!.getBlockAt(
