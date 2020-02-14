@@ -22,4 +22,4 @@ The plugin's primary deployment and testing version is the latest version of spi
 * This plugin is built using [Kotlin](https://kotlinlang.org/) which can compile to jvm bytecode.
 * [SavageFramework](https://github.com/illyria-io/SavageFramework) for storage management & a collection of tools for cross version support.
 * [Gradle](https://gradle.org/) is used for dependency management.
-
+ 
