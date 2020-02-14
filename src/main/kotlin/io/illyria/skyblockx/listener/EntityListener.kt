@@ -63,7 +63,7 @@ class EntityListener : Listener {
             return
         }
         val iPlayer = getIPlayer(event.entity as Player)
-        if (!iPlayer.isOnOwnIsland()) {
+        if (Config.disableMobDamageWhenIslandVisitor && !iPlayer.isOnOwnIsland()) {
             event.isCancelled = true
         }
     }

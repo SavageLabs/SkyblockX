@@ -26,7 +26,7 @@ class CmdSbCalc : SCommand() {
     @ExperimentalTime
     override fun perform(info: CommandInfo) {
         info.message(Message.commandSkyblockCalcStart)
-        Bukkit.getScheduler().runTaskAsynchronously(Globals.skyblockX, Runnable {
+        Bukkit.getScheduler().runTask(Globals.skyblockX, Runnable {
             runIslandCalc()
             info.message(String.format(Message.commandSkyblockCalcDone, Globals.islandValues?.map?.size ?: "N/A"))
         })

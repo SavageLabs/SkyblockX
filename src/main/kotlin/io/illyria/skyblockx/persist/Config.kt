@@ -75,6 +75,10 @@ object Config {
         "&7Coal Block: &b{COAL_BLOCK}"
         )
 
+
+
+    var disableMobDamageWhenIslandVisitor = true
+
     // amt x ticks/sec x sec/min: 15 min
     var islandTopCalcPeriodTicks = 15 * 20 * 60
 

@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'io.illyria'
-version 'v1.3.4-alpha'
+version 'v1.3.5-alpha'
 
 
 sourceCompatibility = 1.8
@@ -83,41 +83,44 @@ shadowJar {
     archiveName 'SkyblockX.jar'
 }
 
-//task updatePermissionsList {
-//    File permissionsFile = file(".\\src\\main\\kotlin\\io\\illyria\\skyblockx\\core\\Permission.kt")
-//    String text = permissionsFile.text
-//    // Splits the file's text @ `{`.
-//    // The first one should show the beginning of the class.
-//    String[] textSplit = text.split("\\{")
-//    String permissionsEnumText = textSplit[1].split(";")[0]
-//    String[] permissionsListRaw = permissionsEnumText.split("\\),")
-//    println permissionsListRaw.size()
-//    // Process each permission.
-//    StringBuilder table = new StringBuilder()
-//    table.append("Permission Name | Permission Node | Permission Description | Permission Default \n")
-//    table.append("--- | --- | --- | ---")
-//    for (String permissionRaw : permissionsListRaw) {
-//        String[] permissionSplit = permissionRaw.split(",")
-//        String permissionName = permissionSplit[0].replace(" ", "")
-//        String permissionDesc = permissionSplit[1].replace("\"", "")
-//        String permissionNode = "skyblockx." + permissionName.split("\\(\"")[1].replace("\"", "")
-//        String permissionDefault = permissionSplit[2].replace("\"", "").replace("PermissionDefault.", "")
-//        table.append("${permissionName.split("\\(\"")[0]} | `$permissionNode` | $permissionDesc | $permissionDefault")
-//    }
-//    println("File Processed.")
-//    // Clone and update wiki.
-//    delete "./Wiki"
-//    println("Deleted Wiki Folder.")
-//    exec { commandLine 'git', 'clone', 'https://github.com/illyria-io/SkyblockX.wiki.git', 'Wiki' }
-//    println("Wiki Cloned")
-//    File permissionsWikiFile = file(".\\Wiki\\Permissions.md")
-//    delete "./Wiki/Permissions.md"
-//    println("Old Permissions.md Deleted.")
-//    permissionsWikiFile.createNewFile()
-//    println("New Permissions.md Created.")
-//    permissionsWikiFile.text = table.toString()
-//    println("Permissions.md file content set.")
-//}
+
+task updatePermissionsList {
+    doLast {
+        File permissionsFile = file(".\\src\\main\\kotlin\\io\\illyria\\skyblockx\\core\\Permission.kt")
+        String text = permissionsFile.text
+        // Splits the file's text @ `{`.
+        // The first one should show the beginning of the class.
+        String[] textSplit = text.split("\\{")
+        String permissionsEnumText = textSplit[1].split(";")[0]
+        String[] permissionsListRaw = permissionsEnumText.split("\\),")
+        println permissionsListRaw.size()
+        // Process each permission.
+        StringBuilder table = new StringBuilder()
+        table.append("Permission Name | Permission Node | Permission Description | Permission Default \n")
+        table.append("--- | --- | --- | ---")
+        for (String permissionRaw : permissionsListRaw) {
+            String[] permissionSplit = permissionRaw.split(",")
+            String permissionName = permissionSplit[0].replace(" ", "")
+            String permissionDesc = permissionSplit[1].replace("\"", "")
+            String permissionNode = "skyblockx." + permissionName.split("\\(\"")[1].replace("\"", "")
+            String permissionDefault = permissionSplit[2].replace("\"", "").replace("PermissionDefault.", "")
+            table.append("${permissionName.split("\\(\"")[0]} | `$permissionNode` | $permissionDesc | $permissionDefault")
+        }
+        println("File Processed.")
+        // Clone and update wiki.
+        delete "./Wiki"
+        println("Deleted Wiki Folder.")
+        exec { commandLine 'git', 'clone', 'https://github.com/illyria-io/SkyblockX.wiki.git', 'Wiki' }
+        println("Wiki Cloned")
+        File permissionsWikiFile = file(".\\Wiki\\Permissions.md")
+        delete "./Wiki/Permissions.md"
+        println("Old Permissions.md Deleted.")
+        permissionsWikiFile.createNewFile()
+        println("New Permissions.md Created.")
+        permissionsWikiFile.text = table.toString()
+        println("Permissions.md file content set.")
+    }
+}
 
 task ci {
     dependsOn clean
