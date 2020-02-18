@@ -22,7 +22,7 @@ fun buildBar(element: String, barLength: Int = Config.barLength): String {
 }
 
 fun broadcastDebug(message: String) {
-    Bukkit.broadcastMessage(color(message))
+    Bukkit.broadcastMessage(color("Debug -> $message"))
 }
 
 fun isNotInSkyblockWorld(world: World): Boolean {

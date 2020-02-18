@@ -401,7 +401,6 @@ data class Island(
         val x = v.x
         val z = v.z
         return x >= minLocation.x && x < maxLocation.x + 1 && z >= minLocation.z && z < maxLocation.z + 1
-
     }
 
     /**
@@ -456,7 +455,7 @@ fun getIslandByOwnerTag(ownerTag: String): Island? {
 
 fun createIsland(player: Player?, schematic: String, teleport: Boolean = true): Island {
     var size = if (player == null) Config.islandMaxSizeInBlocks else getMaxPermission(player, "skyblockx.size")
-    size = if (size < 0 || size > Config.islandMaxSizeInBlocks) Config.islandMaxSizeInBlocks else size
+    size = if (size <= 0 || size > Config.islandMaxSizeInBlocks) Config.islandMaxSizeInBlocks else size
     val island =
         Island(Data.nextIslandID, spiral(Data.nextIslandID), player?.uniqueId.toString(), player?.name ?: "SYSTEM_OWNED", size)
     Data.islands[Data.nextIslandID] = island
@@ -467,13 +466,12 @@ fun createIsland(player: Player?, schematic: String, teleport: Boolean = true): 
         val iPlayer = getIPlayer(player)
         iPlayer.assignIsland(island)
         if (teleport) player.teleport(island.getIslandCenter(), PlayerTeleportEvent.TeleportCause.PLUGIN)
-
     }
     incrementQuestInOrder(island)
-    if (player != null) updateWorldBorder(player, player.location, 10L)
     // Use deprecated method for 1.8 support.
     player?.sendTitle(color(Message.islandCreatedTitle), color(Message.islandCreatedSubtitle))
     player?.sendMessage(color("${Message.messagePrefix}${String.format(Message.islandCreationMessage, size)}"))
+    if (player != null) updateWorldBorder(player, player.location, 10L)
     return island
 }
 
