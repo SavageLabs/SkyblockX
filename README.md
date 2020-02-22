@@ -23,3 +23,36 @@ The plugin's primary deployment and testing version is the latest version of spi
 * [SavageFramework](https://github.com/illyria-io/SavageFramework) for storage management & a collection of tools for cross version support.
 * [Gradle](https://gradle.org/) is used for dependency management.
  
+### Developers
+
+The plugin is available on our Nexus Repository.
+<br/>
+**Maven**
+```xml
+<!-- SavageLabs repository -->
+<repository>
+    <id>savagelabs</id>
+    <url>https://nexus.savagelabs.net/repository/maven-public/</url>
+</repository>
+
+<dependency>
+  <groupId>io.illyria</groupId>
+  <artifactId>SkyblockX</artifactId>
+  <version>v1.3.6-alpha</version>
+</dependency>
+```
+**Gradle**
+```groovy
+repositories {
+  maven {
+        url 'https://nexus.savagelabs.net/repository/maven-public/'
+  }
+}
+
+dependencies {
+  implementation 'io.illyria:SkyblockX:v1.3.6-alpha'
+}
+```
+
+
+
