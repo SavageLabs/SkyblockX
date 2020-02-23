@@ -408,7 +408,11 @@ data class Island(
      */
     fun delete() {
         getIPlayerByUUID(ownerUUID)?.unassignIsland()
-        getAllMemberUUIDs().forEach { memberUUID -> getIPlayerByUUID(memberUUID)?.unassignIsland() }
+        getAllMemberUUIDs().forEach { memberUUID ->
+            getIPlayerByUUID(memberUUID)?.unassignIsland()
+            val player = Bukkit.getPlayer(memberUUID)
+            player!!.teleport(Bukkit.getWorld(Config.defaultWorld)!!.spawnLocation)
+        }
         Data.islands.remove(islandID)
     }
 
