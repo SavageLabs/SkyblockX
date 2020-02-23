@@ -414,6 +414,22 @@ data class Island(
             player!!.teleport(Bukkit.getWorld(Config.defaultWorld)!!.spawnLocation)
         }
         Data.islands.remove(islandID)
+        deleteIslandBlocks()
+    }
+
+    fun deleteIslandBlocks() {
+        if (!Config.removeBlocksOnIslandDelete) return
+        val start = minLocation.getLocation()
+        val end = maxLocation.getLocation()
+        val world = Bukkit.getWorld(start.world!!.name)!!
+
+        for (x in start.x.toInt()..end.x.toInt()) {
+            for (y in start.y.toInt()..end.y.toInt()) {
+                for (z in start.z.toInt()..end.z.toInt()) {
+                    world.getBlockAt(x, y, z).type = Material.AIR
+                }
+            }
+        }
     }
 
     fun promoteNewLeader(name: String) {
