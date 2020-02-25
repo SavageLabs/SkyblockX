@@ -511,11 +511,11 @@ fun runIslandCalc() {
     val pluginManager = Bukkit.getPluginManager()
     for ((key, island) in Data.islands) {
         val islandPreCalcEvent = IslandPreLevelCalcEvent(island, island.getLevel())
-        Bukkit.getScheduler().runTask(Globals.skyblockX, Runnable { pluginManager.callEvent(islandPreCalcEvent) })
+        Bukkit.getScheduler().callSyncMethod(Globals.skyblockX) { pluginManager.callEvent(islandPreCalcEvent) }
         if (islandPreCalcEvent.isCancelled) continue
         val worth = island.calcIsland()
         val islandPostCalcEvent = IslandPostLevelCalcEvent(island, worth.worth)
-        Bukkit.getScheduler().runTask(Globals.skyblockX, Runnable { pluginManager.callEvent(islandPostCalcEvent) })
+        Bukkit.getScheduler().callSyncMethod(Globals.skyblockX) { pluginManager.callEvent(islandPostCalcEvent) }
         worth.worth = islandPostCalcEvent.levelAfterCalc ?: worth.worth
         islandVals[key] = worth
 
