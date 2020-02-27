@@ -5,7 +5,7 @@ import org.bukkit.event.Cancellable
 import org.bukkit.event.Event
 import org.bukkit.event.HandlerList
 
-class IslandPostLevelCalcEvent(val island: Island, var levelAfterCalc: Double?) : Event(true) {
+class IslandPostLevelCalcEvent(val island: Island, var levelAfterCalc: Double?) : Event(false) {
 
     fun setLevelAfterCalc(levelAfterCalc: Double) {
         this.levelAfterCalc = levelAfterCalc

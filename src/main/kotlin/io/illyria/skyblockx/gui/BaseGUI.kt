@@ -25,6 +25,7 @@ abstract class BaseGUI(val title: String, val backgroundItem: SerializableItem, 
         for (item in 0 until (this.guiRows * 9)) {
             guiItems.add(GuiItem(this.backgroundItem.buildItem()) { e -> e.isCancelled = true })
         }
+
         return guiItems
     }
 
