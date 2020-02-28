@@ -9,7 +9,7 @@ The plugin's primary deployment and testing version is the latest version of spi
 ### Installation
 
 1. Get a skyblock release binary using one of the following options.
-   * Download from [our store](https://store.illyria.io/product/illyria_skyblock).
+   * Download from [our build server](https://dl.savagelabs.net).
    * Compile a binary file on your own, see the developers section.
 2. Get a spigot binary file.
     * Download [buildtools](https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar) and compile  a jar; Use the [wiki](https://www.spigotmc.org/wiki/buildtools/) if you're confused on how to do this.
