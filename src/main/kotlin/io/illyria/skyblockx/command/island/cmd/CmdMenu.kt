@@ -5,6 +5,7 @@ import io.illyria.skyblockx.command.CommandRequirementsBuilder
 import io.illyria.skyblockx.command.SCommand
 import io.illyria.skyblockx.core.Permission
 import io.illyria.skyblockx.gui.IslandMenuGUI
+import io.illyria.skyblockx.persist.Config
 import io.illyria.skyblockx.persist.Message
 
 class CmdMenu : SCommand() {
@@ -17,7 +18,7 @@ class CmdMenu : SCommand() {
     }
 
     override fun perform(info: CommandInfo) {
-        IslandMenuGUI().showGui(info.player!!)
+        if (Config.openIslandMenuOnBaseCommand) IslandMenuGUI().showGui(info.player!!)
     }
 
     override fun getHelpInfo(): String {

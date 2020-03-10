@@ -29,6 +29,8 @@ object Config {
 
     var islandPaddingSizeInBlocks = 20
 
+    var openIslandMenuOnBaseCommand = true
+
     var skyblockWorldName = "skyblockx"
 
     var skyblockWorldNameNether = "skyblockx_nether"

@@ -7,6 +7,7 @@ import io.illyria.skyblockx.command.SCommand
 import io.illyria.skyblockx.command.island.cmd.*
 import io.illyria.skyblockx.command.island.cmd.home.CmdHome
 import io.illyria.skyblockx.command.island.cmd.member.*
+import io.illyria.skyblockx.persist.Config
 import io.illyria.skyblockx.persist.Message
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
@@ -70,7 +71,7 @@ class IslandBaseCommand : SCommand(), CommandExecutor, TabCompleter {
         }
 
         if (info.args.isEmpty()) {
-            if (info.iPlayer!!.hasIsland()) {
+            if (Config.openIslandMenuOnBaseCommand && info.iPlayer!!.hasIsland()) {
                 // Execute command just to make a shorthand version for /is menu.
                 this.subCommands.find { command -> command is CmdMenu }?.perform(info)
             } else {
