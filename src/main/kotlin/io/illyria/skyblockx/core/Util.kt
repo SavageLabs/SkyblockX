@@ -30,6 +30,8 @@ fun isNotInSkyblockWorld(world: World): Boolean {
 }
 
 
+inline fun <reified T : Enum<*>> enumValueOrNull(name: String): T? = T::class.java.enumConstants.firstOrNull { it.name == name }
+
 fun updateWorldBorder(player: Player, location: Location, delay: Long) {
     if (isNotInSkyblockWorld(location.world!!)) {
         val worldBorder = location.world?.worldBorder

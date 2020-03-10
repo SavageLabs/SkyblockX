@@ -14,6 +14,7 @@ import io.illyria.skyblockx.world.spiral
 import me.rayzr522.jsonmessage.JSONMessage
 import net.prosavage.baseplugin.XMaterial
 import org.bukkit.*
+import org.bukkit.block.Biome
 import org.bukkit.entity.Player
 import org.bukkit.event.player.PlayerTeleportEvent
 import java.lang.reflect.InvocationTargetException
@@ -58,6 +59,17 @@ data class Island(
         return lastManualCalc == -1L || System.currentTimeMillis() - lastManualCalc > Config.islandTopManualCalcCooldownMiliseconds
     }
 
+
+    fun setBiome(biome: Biome) {
+        val world = Bukkit.getWorld(Config.skyblockWorldName)!!
+        for (x in minLocation.x.toInt()..maxLocation.x.toInt()) {
+            for (y in 0 until 256) {
+                for (z in minLocation.z.toInt()..maxLocation.z.toInt()) {
+                    world.getBlockAt(x, y, z).biome = biome
+                }
+            }
+        }
+    }
 
 
     var maxCoopPlayers = Config.defaultMaxCoopPlayers

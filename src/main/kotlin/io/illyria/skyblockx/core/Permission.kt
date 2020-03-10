@@ -18,6 +18,7 @@ enum class Permission(val node: String, val description: String, val permissionD
     COOP("coop", "co-op a player.", PermissionDefault.TRUE),
     MEMBER("member", "manage island members.", PermissionDefault.TRUE),
     REMOVE("remove", "remove/expel a player from your island.", PermissionDefault.TRUE),
+    BIOME("biome", "set the island biome", PermissionDefault.TRUE),
     TELEPORT("teleport", "teleport to another island.", PermissionDefault.TRUE),
     LEAVE("leave", "leave your island.", PermissionDefault.TRUE),
     MENU("menu", "open the island menu.", PermissionDefault.TRUE),

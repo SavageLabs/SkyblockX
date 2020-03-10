@@ -18,8 +18,6 @@ import org.bukkit.ChatColor
 import org.bukkit.World
 import org.bukkit.WorldCreator
 import org.bukkit.generator.ChunkGenerator
-import java.util.*
-import kotlin.collections.HashMap
 import kotlin.system.measureTimeMillis
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTimedValue
@@ -64,7 +62,7 @@ class SkyblockX : SavagePlugin() {
         Bukkit.getScheduler().runTaskTimer(this, Runnable {
             if (Config.islandTopBroadcastMessage) Bukkit.broadcastMessage(color(Config.islandTopBroadcastMessageStart))
             val time = measureTimedValue {
-                runIslandCalc()
+                Bukkit.getScheduler().runTask(this, Runnable { runIslandCalc() })
             }
             if (Config.islandTopBroadcastMessage) Bukkit.broadcastMessage(color(String.format(Config.islandTopBroadcastMessageEnd, Globals.islandValues?.map?.size, time.duration)))
         }, 20L, Config.islandTopCalcPeriodTicks.toLong())

@@ -9,6 +9,7 @@ import io.illyria.skyblockx.persist.Config
 import io.illyria.skyblockx.persist.Message
 import me.rayzr522.jsonmessage.JSONMessage
 import org.bukkit.Bukkit
+import org.bukkit.block.Biome
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
@@ -192,6 +193,13 @@ abstract class SCommand {
 
     abstract class ArgumentType {
         abstract fun getPossibleValues(iPlayer: IPlayer?): List<String>
+    }
+
+
+    class BiomeArgument : ArgumentType() {
+        override fun getPossibleValues(iPlayer: IPlayer?): List<String> {
+            return Biome.values().map { biome -> biome.name }.toList()
+        }
     }
 
     class HomeArgument : ArgumentType() {

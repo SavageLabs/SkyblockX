@@ -111,6 +111,10 @@ data class IPlayer(val uuid: String) {
     }
 
 
+    fun message(message: String, vararg args: String) {
+        message(String.format(message, *args))
+    }
+
 
 
     fun coopIslandsContainBlock(location: Location): Boolean {

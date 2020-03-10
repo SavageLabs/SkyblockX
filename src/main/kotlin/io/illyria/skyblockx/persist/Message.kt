@@ -213,6 +213,11 @@ object Message {
     var skyblockEditStructureSaved = "&7You have saved a structure to a file called %1\$s"
     var skyblockEditErrorPositionsNotInSameWorld = "&7Position 1 and position 2 are no in the same world."
 
+    var commandBiomeHelp = "change your island's biome";
+    var commandBiomeSuccess = "You have changed your island's biome to %1\$s, you need to re-log to see changes."
+    var commandBiomeInvalidBiome = "The specified biome is invalid."
+
+
     var questActivationTrigger = "&7You have activated the quest &b{quest}"
     var questIsOneTimeAndAlreadyCompleted = "&7This quest is a onetime quest and is already completed."
     var questOrderNoNextQuestWasFound = "&7No next quest was found."
