@@ -9,6 +9,7 @@ import net.prosavage.baseplugin.WorldBorderUtil
 import net.prosavage.baseplugin.XMaterial
 import net.prosavage.baseplugin.serializer.Serializer
 import net.prosavage.baseplugin.serializer.commonobjects.SerializableItem
+import org.bukkit.Bukkit
 import org.bukkit.ChatColor
 import org.bukkit.block.Biome
 import java.util.*
@@ -18,6 +19,8 @@ object Config {
 
     @Transient
     private val instance = this
+
+    var defaultWorld = Bukkit.getWorlds().first().name
 
     @Transient
     val skyblockPermissionPrefix = "skyblockx"
@@ -261,6 +264,8 @@ object Config {
         )
     )
 
+
+    var removeBlocksOnIslandDelete = false
 
     fun save() {
         Serializer().save(instance)

@@ -420,8 +420,28 @@ data class Island(
      */
     fun delete() {
         getIPlayerByUUID(ownerUUID)?.unassignIsland()
-        getAllMemberUUIDs().forEach { memberUUID -> getIPlayerByUUID(memberUUID)?.unassignIsland() }
+        getAllMemberUUIDs().forEach { memberUUID ->
+            getIPlayerByUUID(memberUUID)?.unassignIsland()
+            val player = Bukkit.getPlayer(memberUUID)
+            player!!.teleport(Bukkit.getWorld(Config.defaultWorld)!!.spawnLocation)
+        }
         Data.islands.remove(islandID)
+        deleteIslandBlocks()
+    }
+
+    fun deleteIslandBlocks() {
+        if (!Config.removeBlocksOnIslandDelete) return
+        val start = minLocation.getLocation()
+        val end = maxLocation.getLocation()
+        val world = Bukkit.getWorld(start.world!!.name)!!
+
+        for (x in start.x.toInt()..end.x.toInt()) {
+            for (y in start.y.toInt()..end.y.toInt()) {
+                for (z in start.z.toInt()..end.z.toInt()) {
+                    world.getBlockAt(x, y, z).type = Material.AIR
+                }
+            }
+        }
     }
 
     fun promoteNewLeader(name: String) {
@@ -503,11 +523,11 @@ fun runIslandCalc() {
     val pluginManager = Bukkit.getPluginManager()
     for ((key, island) in Data.islands) {
         val islandPreCalcEvent = IslandPreLevelCalcEvent(island, island.getLevel())
-        pluginManager.callEvent(islandPreCalcEvent)
+        Bukkit.getScheduler().callSyncMethod(Globals.skyblockX) { pluginManager.callEvent(islandPreCalcEvent) }
         if (islandPreCalcEvent.isCancelled) continue
         val worth = island.calcIsland()
         val islandPostCalcEvent = IslandPostLevelCalcEvent(island, worth.worth)
-        pluginManager.callEvent(islandPostCalcEvent)
+        Bukkit.getScheduler().callSyncMethod(Globals.skyblockX) { pluginManager.callEvent(islandPostCalcEvent) }
         worth.worth = islandPostCalcEvent.levelAfterCalc ?: worth.worth
         islandVals[key] = worth
 
