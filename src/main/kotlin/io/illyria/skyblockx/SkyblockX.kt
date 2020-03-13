@@ -44,6 +44,9 @@ class SkyblockX : SavagePlugin() {
             registerListeners(DataListener(), SEditListener(), BlockListener(), PlayerListener(), EntityListener())
             logger.info("Loaded ${Data.IPlayers.size} players")
             logger.info("Loaded ${Data.islands.size} islands")
+            logger.info("If you need help with the plugin check out our wiki: https://github.com/SavageLabs/SkyblockX/wiki")
+            logger.info("Join our discord: https://discordapp.com/invite/j8CW7x8")
+            logger.info("This plugin is open source: https://github.com/SavageLabs/SkyblockX")
         }
         logger.info("Startup Finished (${startupTime}ms)")
     }
