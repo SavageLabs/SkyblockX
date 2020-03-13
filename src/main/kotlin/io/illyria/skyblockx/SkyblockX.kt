@@ -42,8 +42,8 @@ class SkyblockX : SavagePlugin() {
             startIslandTopTask()
             startAutoSaveTask()
             registerListeners(DataListener(), SEditListener(), BlockListener(), PlayerListener(), EntityListener())
-            logInfo("Loaded ${Data.IPlayers.size} players")
-            logInfo("Loaded ${Data.islands.size} islands")
+            logInfo("Loaded ${Data.IPlayers.size} players.")
+            logInfo("Loaded ${Data.islands.size} islands.")
         }
         logInfo("Startup Finished (${startupTime}ms)")
         logInfo("If you need help with the plugin check out our wiki: https://github.com/SavageLabs/SkyblockX/wiki")
