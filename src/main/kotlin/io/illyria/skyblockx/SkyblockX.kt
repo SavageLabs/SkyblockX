@@ -18,6 +18,7 @@ import org.bukkit.ChatColor
 import org.bukkit.World
 import org.bukkit.WorldCreator
 import org.bukkit.generator.ChunkGenerator
+import kotlin.math.log
 import kotlin.system.measureTimeMillis
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTimedValue
@@ -32,7 +33,6 @@ class SkyblockX : SavagePlugin() {
             printHeader()
             Globals.skyblockX = this
             registerAllPermissions(server.pluginManager)
-            loadWorld()
             loadDataFiles()
             initWorldBorderUtility()
             setupCommands()
@@ -42,13 +42,22 @@ class SkyblockX : SavagePlugin() {
             startIslandTopTask()
             startAutoSaveTask()
             registerListeners(DataListener(), SEditListener(), BlockListener(), PlayerListener(), EntityListener())
-            logger.info("Loaded ${Data.IPlayers.size} players")
-            logger.info("Loaded ${Data.islands.size} islands")
-            logger.info("If you need help with the plugin check out our wiki: https://github.com/SavageLabs/SkyblockX/wiki")
-            logger.info("Join our discord: https://discordapp.com/invite/j8CW7x8")
-            logger.info("This plugin is open source: https://github.com/SavageLabs/SkyblockX")
+            logInfo("Loaded ${Data.IPlayers.size} players")
+            logInfo("Loaded ${Data.islands.size} islands")
         }
-        logger.info("Startup Finished (${startupTime}ms)")
+        logInfo("Startup Finished (${startupTime}ms)")
+        logInfo("If you need help with the plugin check out our wiki: https://github.com/SavageLabs/SkyblockX/wiki")
+        logInfo("Join our discord: https://discordapp.com/invite/j8CW7x8")
+        logInfo("This plugin is open source: https://github.com/SavageLabs/SkyblockX")
+        logInfo("If you want to support my work consider the following:", ChatColor.GREEN)
+        logInfo("\t- Patreon: https://patreon.com/ProSavage", ChatColor.GREEN)
+        logInfo("\t- Leave a Star on Github: https://github.com/SavageLabs/SkyblockX", ChatColor.GREEN)
+        logInfo("\t- Review the plugin on Spigot: https://www.spigotmc.org/resources/73135/", ChatColor.GREEN)
+        loadWorlds()
+    }
+
+    private fun logInfo(message: String, color: ChatColor = ChatColor.YELLOW) {
+        logger.info("$color$message")
     }
 
     @ExperimentalTime
@@ -73,16 +82,17 @@ class SkyblockX : SavagePlugin() {
 
     private fun loadPlaceholderAPIHook() {
         if (server.pluginManager.getPlugin("PlaceholderAPI") != null) {
-            logger.info(ChatColor.YELLOW.toString() + "Loading Placeholders...")
+            logInfo(ChatColor.YELLOW.toString() + "Loading Placeholders...")
             PlacholderAPIIntegration().register()
         }
     }
 
-    private fun loadWorld() {
-        logger.info("Loading World ${Config.skyblockWorldName}")
+    private fun loadWorlds() {
+        logInfo("Loading World: ${Config.skyblockWorldName}")
         WorldCreator(Config.skyblockWorldName)
             .generator(VoidWorldGenerator())
             .createWorld()
+        logInfo("Loading World: ${Config.skyblockWorldNameNether}")
         WorldCreator(Config.skyblockWorldNameNether)
             .generator(VoidWorldGenerator())
             .environment(World.Environment.NETHER)
@@ -100,7 +110,7 @@ class SkyblockX : SavagePlugin() {
     }
 
     fun loadDataFiles() {
-        logger.info("Loading data files.")
+        logInfo("Loading data files.")
         Config.load()
         Data.load()
         BlockValues.load()
@@ -109,28 +119,28 @@ class SkyblockX : SavagePlugin() {
     }
 
     private fun initWorldBorderUtility() {
-        logger.info("Starting WorldBorder Packet Util.")
+        logInfo("Starting WorldBorder Packet Util.")
         Globals.worldBorderUtil = WorldBorderUtil(this)
     }
 
     private fun setupCommands() {
-        logger.info("Setting up Commands.")
+        logInfo("Setting up Commands.")
         val baseCommand = IslandBaseCommand()
         baseCommand.prefix = "is"
         val command = this.getCommand("is")!!
         command.setExecutor(baseCommand)
         command.tabCompleter = baseCommand
-        logger.info("${baseCommand.subCommands.size} commands registered.")
+        logInfo("${baseCommand.subCommands.size} commands registered.")
     }
 
     private fun setupAdminCommands() {
-        logger.info("Setting up administrator Commands.")
+        logInfo("Setting up administrator Commands.")
         val baseCommand = SkyblockBaseCommand()
         baseCommand.prefix = "sbx"
         val command = this.getCommand("skyblockx")!!
         command.setExecutor(baseCommand)
         command.tabCompleter = baseCommand
-        logger.info("${baseCommand.subCommands.size} admin commands registered.")
+        logInfo("${baseCommand.subCommands.size} admin commands registered.")
     }
 
     fun setupOreGeneratorAlgorithm() {
@@ -164,7 +174,7 @@ class SkyblockX : SavagePlugin() {
     }
 
     private fun printHeader() {
-        logger.info(
+        logInfo(
             "\n" +
                     "   ▄████████    ▄█   ▄█▄ ▄██   ▄   ▀█████████▄   ▄█        ▄██████▄   ▄████████    ▄█   ▄█▄ ▀████    ▐████▀ \n" +
                     "  ███    ███   ███ ▄███▀ ███   ██▄   ███    ███ ███       ███    ███ ███    ███   ███ ▄███▀   ███▌   ████▀  \n" +
@@ -175,8 +185,8 @@ class SkyblockX : SavagePlugin() {
                     "   ▄█    ███   ███ ▀███▄ ███   ███   ███    ███ ███▌    ▄ ███    ███ ███    ███   ███ ▀███▄  ▄███     ███▄  \n" +
                     " ▄████████▀    ███   ▀█▀  ▀█████▀  ▄█████████▀  █████▄▄██  ▀██████▀  ████████▀    ███   ▀█▀ ████       ███▄ \n" +
                     "               ▀                                ▀                                 ▀                         \n" +
-                    "By: ProSavage - https://github.com/ProSavage - https://illyria.io"
-        )
+                    "By: ProSavage - https://github.com/ProSavage - https://savagelabs.net"
+        , ChatColor.AQUA)
     }
 
 
