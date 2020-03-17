@@ -87,7 +87,7 @@ class EntityListener : Listener {
             if (iPlayer.hasIsland()) {
                 player.teleport(iPlayer.getIsland()!!.getIslandCenter().add(0.0, 1.0, 0.0), PlayerTeleportEvent.TeleportCause.PLUGIN)
             } else {
-                player.teleport(Bukkit.getWorld("world")!!.spawnLocation.add(0.0, 1.0, 0.0), PlayerTeleportEvent.TeleportCause.PLUGIN)
+                player.teleport(Bukkit.getWorld(Config.defaultWorld)!!.spawnLocation.add(0.0, 1.0, 0.0), PlayerTeleportEvent.TeleportCause.PLUGIN)
             }
             event.isCancelled = true
         }
