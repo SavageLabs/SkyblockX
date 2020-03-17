@@ -419,7 +419,9 @@ data class Island(
      * Delete the players island by removing the whole team, Deleting the actual blocks is too intensive.
      */
     fun delete() {
-        getIPlayerByUUID(ownerUUID)?.unassignIsland()
+        val iPlayerByUUID = getIPlayerByUUID(ownerUUID)
+        iPlayerByUUID?.unassignIsland()
+        Bukkit.getPlayer(ownerUUID)?.teleport(Bukkit.getWorld(Config.defaultWorld)!!.spawnLocation)
         getAllMemberUUIDs().forEach { memberUUID ->
             getIPlayerByUUID(memberUUID)?.unassignIsland()
             val player = Bukkit.getPlayer(memberUUID)
