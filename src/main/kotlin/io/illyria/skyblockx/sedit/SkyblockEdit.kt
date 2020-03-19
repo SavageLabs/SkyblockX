@@ -23,6 +23,25 @@ import java.util.*
  */
 class SkyblockEdit {
 
+    fun normalizeBlockName(xmaterialDefaultName: String): String {
+        /*
+        * This function is returning the right syntax of item names
+        *
+        * @inputName string that need to be translated
+        * */
+        val regex = """(Optional|optional)\[(\w+\s\w+|\w+)]""".toRegex()
+        if(regex.matches(xmaterialDefaultName)){
+          return xmaterialDefaultName
+              .toUpperCase()
+              .replace("OPTIONAL", "")
+              .replace(" ", "_")
+              .replace("[", "")
+              .replace("]", "")
+        }else{
+          return xmaterialDefaultName
+        }
+    }
+
     fun saveStructure(pos1: Location, pos2: Location, player: Player, name: String, skipAir: Boolean = false) {
         if (pos1.world != pos2.world) {
             player.sendMessage(Message.messagePrefix + Message.skyblockEditErrorPositionsNotInSameWorld)
@@ -61,7 +80,8 @@ class SkyblockEdit {
                         val chest = block.state as Chest
                         for (slot in 0 until chest.blockInventory.size) {
                             val item = chest.blockInventory.getItem(slot) ?: continue
-                            items.add(SbfChestItem(slot, item.amount, XMaterial.matchXMaterial(item.type.name).toString()))
+
+                            items.add(SbfChestItem(slot, item.amount, normalizeBlockName(XMaterial.matchXMaterial(item.type.name).toString()) ))
                         }
 //                        val directionalState = chest.blockData as Directional
 //                        val direction = when (directionalState.facing) {
@@ -74,7 +94,8 @@ class SkyblockEdit {
                         container.chests.addElement(SbfChest(xRel, yRel, zRel, 0, chest.blockInventory.size, items))
                         continue
                     }
-                    container.blocks.add(SbfBlock(xRel, yRel, zRel, XMaterial.matchXMaterial(block.type.name).toString()))
+
+                    container.blocks.add(SbfBlock(xRel, yRel, zRel, normalizeBlockName(XMaterial.matchXMaterial(block.type.name).toString()) ))
                 }
             }
         }
