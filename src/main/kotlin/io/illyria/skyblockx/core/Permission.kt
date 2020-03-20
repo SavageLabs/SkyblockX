@@ -22,6 +22,7 @@ enum class Permission(val node: String, val description: String, val permissionD
     TELEPORT("teleport", "teleport to another island.", PermissionDefault.TRUE),
     LEAVE("leave", "leave your island.", PermissionDefault.TRUE),
     MENU("menu", "open the island menu.", PermissionDefault.TRUE),
+    RESET("reset", "reset your island.", PermissionDefault.TRUE),
     HOME("home", "manage island homes.", PermissionDefault.TRUE),
     ALLOWVISITOR("allowvisitor", "allow visitors on your island.", PermissionDefault.TRUE),
     QUEST("quest", "opening the questing gui.", PermissionDefault.TRUE),
