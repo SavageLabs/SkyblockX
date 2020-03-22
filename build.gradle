@@ -3,7 +3,7 @@ plugins {
     id 'com.github.johnrengelman.shadow' version '5.1.0'
 }
 
-group 'io.illyria'
+group 'net.savagelabs'
 version 'v1.4-alpha'
 
 

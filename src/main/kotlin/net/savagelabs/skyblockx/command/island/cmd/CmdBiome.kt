@@ -1,0 +1,39 @@
+package net.savagelabs.skyblockx.command.island.cmd
+
+import net.savagelabs.skyblockx.command.CommandInfo
+import net.savagelabs.skyblockx.command.CommandRequirementsBuilder
+import net.savagelabs.skyblockx.command.SCommand
+import io.illyria.skyblockx.core.Permission
+import io.illyria.skyblockx.core.enumValueOrNull
+import io.illyria.skyblockx.persist.Message
+import org.bukkit.block.Biome
+
+class CmdBiome : _root_ide_package_.net.savagelabs.skyblockx.command.SCommand() {
+
+    init {
+        aliases.add("biome")
+        aliases.add("setbiome")
+
+
+        requiredArgs.add(Argument("biome-type", 0, BiomeArgument()))
+
+        commandRequirements = _root_ide_package_.net.savagelabs.skyblockx.command.CommandRequirementsBuilder()
+            .asIslandMember(true)
+            .withPermission(Permission.BIOME)
+            .build()
+    }
+
+
+    override fun perform(info: _root_ide_package_.net.savagelabs.skyblockx.command.CommandInfo) {
+        val biome = enumValueOrNull<Biome>(info.args[0]) ?: run {
+            info.message(Message.commandBiomeInvalidBiome)
+            return
+        }
+        info.island?.setBiome(biome)
+        info.message(Message.commandBiomeSuccess, biome.name)
+    }
+
+    override fun getHelpInfo(): String {
+        return Message.commandBiomeHelp
+    }
+}
