@@ -85,7 +85,7 @@ shadowJar {
 
 task updatePermissionsList {
     doLast {
-        File permissionsFile = file(".\\src\\main\\kotlin\\net\\skyblock\\skyblockx\\core\\Permission.kt")
+        File permissionsFile = file(".\\src\\main\\kotlin\\net\\savagelabs\\skyblockx\\core\\Permission.kt")
         String text = permissionsFile.text
         // Splits the file's text @ `{`.
         // The first one should show the beginning of the class.
