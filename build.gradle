@@ -85,7 +85,7 @@ shadowJar {
 
 task updatePermissionsList {
     doLast {
-        File permissionsFile = file(".\\src\\main\\kotlin\\io\\illyria\\skyblockx\\core\\Permission.kt")
+        File permissionsFile = file(".\\src\\main\\kotlin\\net\\skyblock\\skyblockx\\core\\Permission.kt")
         String text = permissionsFile.text
         // Splits the file's text @ `{`.
         // The first one should show the beginning of the class.
@@ -109,7 +109,7 @@ task updatePermissionsList {
         // Clone and update wiki.
         delete "./Wiki"
         println("Deleted Wiki Folder.")
-        exec { commandLine 'git', 'clone', 'https://github.com/illyria-io/SkyblockX.wiki.git', 'Wiki' }
+        exec { commandLine 'git', 'clone', 'https://github.com/SavageLabs/SkyblockX.wiki.git', 'Wiki' }
         println("Wiki Cloned")
         File permissionsWikiFile = file(".\\Wiki\\Permissions.md")
         delete "./Wiki/Permissions.md"
