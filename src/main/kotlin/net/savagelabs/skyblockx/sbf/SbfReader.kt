@@ -1,6 +1,6 @@
 package net.savagelabs.skyblockx.sbf
 
-import io.illyria.skyblockx.core.broadcastDebug
+import net.savagelabs.skyblockx.core.broadcastDebug
 import java.io.DataInputStream
 import java.io.File
 import java.io.FileInputStream

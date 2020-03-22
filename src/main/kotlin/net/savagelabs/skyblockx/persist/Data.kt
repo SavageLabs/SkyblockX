@@ -1,7 +1,7 @@
 package net.savagelabs.skyblockx.persist
 
-import io.illyria.skyblockx.core.IPlayer
-import io.illyria.skyblockx.core.Island
+import net.savagelabs.skyblockx.core.IPlayer
+import net.savagelabs.skyblockx.core.Island
 import net.prosavage.baseplugin.serializer.Serializer
 
 object Data {

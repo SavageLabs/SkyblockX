@@ -1,12 +1,13 @@
 package net.savagelabs.skyblockx.command.island.cmd
 
+import net.savagelabs.skyblockx.command.CommandInfo
 import net.savagelabs.skyblockx.command.CommandRequirementsBuilder
 import net.savagelabs.skyblockx.command.SCommand
-import io.illyria.skyblockx.core.Permission
-import io.illyria.skyblockx.persist.Message
-import io.illyria.skyblockx.sedit.SkyblockEdit
+import net.savagelabs.skyblockx.core.Permission
+import net.savagelabs.skyblockx.persist.Message
+import net.savagelabs.skyblockx.sedit.SkyblockEdit
 
-class CmdSEPasteStructure : _root_ide_package_.net.savagelabs.skyblockx.command.SCommand() {
+class CmdSEPasteStructure : SCommand() {
 
     init {
         aliases.add("paste-struct")
@@ -14,12 +15,12 @@ class CmdSEPasteStructure : _root_ide_package_.net.savagelabs.skyblockx.command.
 
         requiredArgs.add(Argument("filename", 0, StringArgument()))
 
-        commandRequirements = _root_ide_package_.net.savagelabs.skyblockx.command.CommandRequirementsBuilder().asPlayer(true)
+        commandRequirements = CommandRequirementsBuilder().asPlayer(true)
             .withPermission(Permission.SE_PASTESTRUCT).build()
     }
 
 
-    override fun perform(info: _root_ide_package_.net.savagelabs.skyblockx.command.CommandInfo) {
+    override fun perform(info: CommandInfo) {
         SkyblockEdit().pasteIsland(info.args[0], info.player!!.location, info.player!!)
     }
 

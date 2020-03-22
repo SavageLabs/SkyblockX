@@ -2,11 +2,11 @@ package net.savagelabs.skyblockx.command
 
 import net.savagelabs.skyblockx.command.island.IslandBaseCommand
 import net.savagelabs.skyblockx.command.skyblock.SkyblockBaseCommand
-import io.illyria.skyblockx.core.IPlayer
-import io.illyria.skyblockx.core.color
-import io.illyria.skyblockx.core.getIPlayer
-import io.illyria.skyblockx.persist.Config
-import io.illyria.skyblockx.persist.Message
+import net.savagelabs.skyblockx.core.IPlayer
+import net.savagelabs.skyblockx.core.color
+import net.savagelabs.skyblockx.core.getIPlayer
+import net.savagelabs.skyblockx.persist.Config
+import net.savagelabs.skyblockx.persist.Message
 import me.rayzr522.jsonmessage.JSONMessage
 import org.bukkit.Bukkit
 import org.bukkit.block.Biome
@@ -18,17 +18,17 @@ import java.util.*
 abstract class SCommand {
 
     val aliases = LinkedList<String>()
-    val requiredArgs = LinkedList<_root_ide_package_.net.savagelabs.skyblockx.command.SCommand.Argument>()
-    val optionalArgs = LinkedList<_root_ide_package_.net.savagelabs.skyblockx.command.SCommand.Argument>()
-    lateinit var commandRequirements: _root_ide_package_.net.savagelabs.skyblockx.command.CommandRequirements
+    val requiredArgs = LinkedList<SCommand.Argument>()
+    val optionalArgs = LinkedList<SCommand.Argument>()
+    lateinit var commandRequirements: CommandRequirements
     var prefix = ""
 
-    val subCommands = LinkedList<_root_ide_package_.net.savagelabs.skyblockx.command.SCommand>()
+    val subCommands = LinkedList<SCommand>()
 
 
-    abstract fun perform(info: _root_ide_package_.net.savagelabs.skyblockx.command.CommandInfo)
+    abstract fun perform(info: CommandInfo)
 
-    fun execute(info: _root_ide_package_.net.savagelabs.skyblockx.command.CommandInfo) {
+    fun execute(info: CommandInfo) {
         if (info.args.size > 0) {
             for (command in subCommands) {
                 if (command.aliases.contains(info.args[0].toLowerCase())) {
@@ -44,7 +44,7 @@ abstract class SCommand {
             return
         }
 
-        if (this !is _root_ide_package_.net.savagelabs.skyblockx.command.skyblock.SkyblockBaseCommand && this !is _root_ide_package_.net.savagelabs.skyblockx.command.island.IslandBaseCommand) {
+        if (this !is SkyblockBaseCommand && this !is IslandBaseCommand) {
             if (!checkInput(info)) {
                 return
             }
@@ -59,11 +59,11 @@ abstract class SCommand {
     }
 
 
-    private fun checkRequirements(info: _root_ide_package_.net.savagelabs.skyblockx.command.CommandInfo): Boolean {
+    private fun checkRequirements(info: CommandInfo): Boolean {
         return commandRequirements.computeRequirements(info)
     }
 
-    private fun checkInput(info: _root_ide_package_.net.savagelabs.skyblockx.command.CommandInfo): Boolean {
+    private fun checkInput(info: CommandInfo): Boolean {
         if (info.args.size < requiredArgs.size) {
             info.message(Message.genericCommandsTooFewArgs)
             handleCommandFormat(info)
@@ -78,7 +78,7 @@ abstract class SCommand {
         return true
     }
 
-    private fun handleCommandFormat(info: _root_ide_package_.net.savagelabs.skyblockx.command.CommandInfo) {
+    private fun handleCommandFormat(info: CommandInfo) {
         if (info.isPlayer()) {
             sendCommandFormat(info)
         } else {
@@ -149,8 +149,8 @@ abstract class SCommand {
 
     }
 
-    private fun sendCommandFormat(info: _root_ide_package_.net.savagelabs.skyblockx.command.CommandInfo, useJSON: Boolean = true) {
-        val list = mutableListOf<_root_ide_package_.net.savagelabs.skyblockx.command.SCommand.Argument>()
+    private fun sendCommandFormat(info: CommandInfo, useJSON: Boolean = true) {
+        val list = mutableListOf<SCommand.Argument>()
         list.addAll(requiredArgs)
         list.addAll(optionalArgs)
         requiredArgs.sortBy { arg -> arg.argumentOrder }
@@ -188,7 +188,7 @@ abstract class SCommand {
     class Argument(
         val name: String,
         val argumentOrder: Int,
-        val argumentType: _root_ide_package_.net.savagelabs.skyblockx.command.SCommand.ArgumentType
+        val argumentType: SCommand.ArgumentType
     )
 
     abstract class ArgumentType {
@@ -196,49 +196,49 @@ abstract class SCommand {
     }
 
 
-    class BiomeArgument : _root_ide_package_.net.savagelabs.skyblockx.command.SCommand.ArgumentType() {
+    class BiomeArgument : SCommand.ArgumentType() {
         override fun getPossibleValues(iPlayer: IPlayer?): List<String> {
             return Biome.values().map { biome -> biome.name }.toList()
         }
     }
 
-    class HomeArgument : _root_ide_package_.net.savagelabs.skyblockx.command.SCommand.ArgumentType() {
+    class HomeArgument : SCommand.ArgumentType() {
         override fun getPossibleValues(iPlayer: IPlayer?): List<String> {
             return if (iPlayer != null && iPlayer.hasIsland()) iPlayer.getIsland()!!.getAllHomes().keys.toList() else emptyList()
         }
     }
 
-    class PlayerArgument : _root_ide_package_.net.savagelabs.skyblockx.command.SCommand.ArgumentType() {
+    class PlayerArgument : SCommand.ArgumentType() {
         override fun getPossibleValues(iPlayer: IPlayer?): List<String> {
             return Bukkit.getOnlinePlayers().map { player -> player.name }
         }
     }
 
-    class StringArgument : _root_ide_package_.net.savagelabs.skyblockx.command.SCommand.ArgumentType() {
+    class StringArgument : SCommand.ArgumentType() {
         override fun getPossibleValues(iPlayer: IPlayer?): List<String> {
             return emptyList()
         }
     }
 
-    class IntArgument : _root_ide_package_.net.savagelabs.skyblockx.command.SCommand.ArgumentType() {
+    class IntArgument : SCommand.ArgumentType() {
         override fun getPossibleValues(iPlayer: IPlayer?): List<String> {
             return listOf(1.toString())
         }
     }
 
-    class PosArgument : _root_ide_package_.net.savagelabs.skyblockx.command.SCommand.ArgumentType() {
+    class PosArgument : SCommand.ArgumentType() {
         override fun getPossibleValues(iPlayer: IPlayer?): List<String> {
             return if (iPlayer != null && iPlayer.pos1 == null) listOf(1.toString()) else listOf(2.toString())
         }
     }
 
-    class BooleanArgument : _root_ide_package_.net.savagelabs.skyblockx.command.SCommand.ArgumentType() {
+    class BooleanArgument : SCommand.ArgumentType() {
         override fun getPossibleValues(iPlayer: IPlayer?): List<String> {
             return listOf("true", "false")
         }
     }
 
-    class MemberArgument : _root_ide_package_.net.savagelabs.skyblockx.command.SCommand.ArgumentType() {
+    class MemberArgument : SCommand.ArgumentType() {
         override fun getPossibleValues(iPlayer: IPlayer?): List<String> {
             return if (iPlayer != null && iPlayer.hasIsland()) iPlayer.getIsland()!!.getIslandMembers().map { member -> member.name } else emptyList()
         }
@@ -275,12 +275,12 @@ abstract class SCommand {
             var subCommandIndex = 0
 
 
-            var commandToTab: _root_ide_package_.net.savagelabs.skyblockx.command.SCommand = this
+            var commandToTab: SCommand = this
 
             // Predicate for filtering our command.
             // If command is not found return empty list.
             while (commandToTab.subCommands.isNotEmpty()) {
-                var findCommand: _root_ide_package_.net.savagelabs.skyblockx.command.SCommand? = null
+                var findCommand: SCommand? = null
                 findCommand = commandToTab.subCommands.find { subCommand -> subCommand.aliases.contains(args[subCommandIndex].toLowerCase()) }
                 subCommandIndex++
                 if (findCommand != null) commandToTab = findCommand else break
@@ -292,7 +292,7 @@ abstract class SCommand {
             val argToComplete = args.size + 1 - relativeArgIndex
             if (commandToTab.requiredArgs.size >= argToComplete) {
                 // Quick add all so we can find from all args.
-                val list = mutableListOf<_root_ide_package_.net.savagelabs.skyblockx.command.SCommand.Argument>()
+                val list = mutableListOf<SCommand.Argument>()
                 list.addAll(commandToTab.requiredArgs)
                 list.addAll(commandToTab.optionalArgs)
                 val possibleValues = mutableListOf<String>()

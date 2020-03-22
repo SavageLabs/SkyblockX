@@ -1,10 +1,12 @@
 package net.savagelabs.skyblockx.command.island.cmd.home
 
 import net.savagelabs.skyblockx.command.SCommand
-import io.illyria.skyblockx.core.Permission
-import io.illyria.skyblockx.persist.Message
+import net.savagelabs.skyblockx.core.Permission
+import net.savagelabs.skyblockx.persist.Message
+import net.savagelabs.skyblockx.command.CommandInfo
+import net.savagelabs.skyblockx.command.CommandRequirementsBuilder
 
-class CmdHome : _root_ide_package_.net.savagelabs.skyblockx.command.SCommand() {
+class CmdHome : SCommand() {
 
     init {
         aliases.add("home")
@@ -12,17 +14,17 @@ class CmdHome : _root_ide_package_.net.savagelabs.skyblockx.command.SCommand() {
         optionalArgs.add(Argument("home-name", 0, HomeArgument()))
 
         commandRequirements =
-            _root_ide_package_.net.savagelabs.skyblockx.command.CommandRequirementsBuilder().withPermission(Permission.HOME).asPlayer(true)
+            CommandRequirementsBuilder().withPermission(Permission.HOME).asPlayer(true)
                 .asIslandMember(true).build()
 
-        subCommands.add(_root_ide_package_.net.savagelabs.skyblockx.command.island.cmd.home.CmdHomeList())
-        subCommands.add(_root_ide_package_.net.savagelabs.skyblockx.command.island.cmd.home.CmdHomeSet())
-        subCommands.add(_root_ide_package_.net.savagelabs.skyblockx.command.island.cmd.home.CmdHomeRemove())
-        subCommands.add(_root_ide_package_.net.savagelabs.skyblockx.command.island.cmd.home.CmdHomeGo())
+        subCommands.add(CmdHomeList())
+        subCommands.add(CmdHomeSet())
+        subCommands.add(CmdHomeRemove())
+        subCommands.add(CmdHomeGo())
     }
 
 
-    override fun perform(info: _root_ide_package_.net.savagelabs.skyblockx.command.CommandInfo) {
+    override fun perform(info: CommandInfo) {
         // No Args / Invalid args specified.
         if (info.args.size != 1) {
             generateHelp(1, info.player!!)
@@ -30,7 +32,7 @@ class CmdHome : _root_ide_package_.net.savagelabs.skyblockx.command.SCommand() {
         }
 
         // Execute command go just to make a shorthand version for /is home go <home>.
-        this.subCommands.find { command -> command is _root_ide_package_.net.savagelabs.skyblockx.command.island.cmd.home.CmdHomeGo }?.perform(info)
+        this.subCommands.find { command -> command is CmdHomeGo }?.perform(info)
 
 
     }

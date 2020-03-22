@@ -1,9 +1,9 @@
 package net.savagelabs.skyblockx.listener
 
-import io.illyria.skyblockx.core.color
-import io.illyria.skyblockx.core.getIPlayer
-import io.illyria.skyblockx.persist.Message
-import io.illyria.skyblockx.sedit.Position
+import net.savagelabs.skyblockx.core.color
+import net.savagelabs.skyblockx.core.getIPlayer
+import net.savagelabs.skyblockx.persist.Message
+import net.savagelabs.skyblockx.sedit.Position
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.block.Action

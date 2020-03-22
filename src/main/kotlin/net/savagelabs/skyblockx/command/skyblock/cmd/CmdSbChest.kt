@@ -3,11 +3,11 @@ package net.savagelabs.skyblockx.command.skyblock.cmd
 import net.savagelabs.skyblockx.command.CommandInfo
 import net.savagelabs.skyblockx.command.CommandRequirementsBuilder
 import net.savagelabs.skyblockx.command.SCommand
-import io.illyria.skyblockx.core.Permission
-import io.illyria.skyblockx.core.getIPlayerByName
-import io.illyria.skyblockx.persist.Message
+import net.savagelabs.skyblockx.core.Permission
+import net.savagelabs.skyblockx.core.getIPlayerByName
+import net.savagelabs.skyblockx.persist.Message
 
-class CmdSbChest : _root_ide_package_.net.savagelabs.skyblockx.command.SCommand() {
+class CmdSbChest : SCommand() {
 
 
     init {
@@ -16,10 +16,10 @@ class CmdSbChest : _root_ide_package_.net.savagelabs.skyblockx.command.SCommand(
 
         requiredArgs.add(Argument("owner-tag", 0, PlayerArgument()))
 
-        commandRequirements = _root_ide_package_.net.savagelabs.skyblockx.command.CommandRequirementsBuilder().withPermission(Permission.ADMIN_OPENCHEST).build()
+        commandRequirements = CommandRequirementsBuilder().withPermission(Permission.ADMIN_OPENCHEST).build()
     }
 
-    override fun perform(info: _root_ide_package_.net.savagelabs.skyblockx.command.CommandInfo) {
+    override fun perform(info: CommandInfo) {
         val iPlayerByName = getIPlayerByName(info.args[0])
         if (!iPlayerByName?.hasIsland()!!) {
             info.message(Message.commandSkyblockOpenChestNotAnIslandMember)

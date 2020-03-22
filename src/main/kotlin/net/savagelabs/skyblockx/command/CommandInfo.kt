@@ -1,10 +1,10 @@
 package net.savagelabs.skyblockx.command
 
-import io.illyria.skyblockx.core.IPlayer
-import io.illyria.skyblockx.core.Island
-import io.illyria.skyblockx.core.color
-import io.illyria.skyblockx.core.getIPlayer
-import io.illyria.skyblockx.persist.Message
+import net.savagelabs.skyblockx.core.IPlayer
+import net.savagelabs.skyblockx.core.Island
+import net.savagelabs.skyblockx.core.color
+import net.savagelabs.skyblockx.core.getIPlayer
+import net.savagelabs.skyblockx.persist.Message
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player

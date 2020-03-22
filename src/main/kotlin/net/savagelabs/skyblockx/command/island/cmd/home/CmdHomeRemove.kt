@@ -1,9 +1,12 @@
 package net.savagelabs.skyblockx.command.island.cmd.home
 
-import io.illyria.skyblockx.core.Permission
-import io.illyria.skyblockx.persist.Message
+import net.savagelabs.skyblockx.command.SCommand
+import net.savagelabs.skyblockx.core.Permission
+import net.savagelabs.skyblockx.persist.Message
+import net.savagelabs.skyblockx.command.CommandInfo
+import net.savagelabs.skyblockx.command.CommandRequirementsBuilder
 
-class CmdHomeRemove : _root_ide_package_.net.savagelabs.skyblockx.command.SCommand() {
+class CmdHomeRemove : SCommand() {
 
 
     init {
@@ -11,11 +14,11 @@ class CmdHomeRemove : _root_ide_package_.net.savagelabs.skyblockx.command.SComma
 
         requiredArgs.add(Argument("home-name", 0, HomeArgument()))
 
-        commandRequirements = _root_ide_package_.net.savagelabs.skyblockx.command.CommandRequirementsBuilder().withPermission(Permission.HOME)
+        commandRequirements = CommandRequirementsBuilder().withPermission(Permission.HOME)
             .asIslandMember(true).build()
     }
 
-    override fun perform(info: _root_ide_package_.net.savagelabs.skyblockx.command.CommandInfo) {
+    override fun perform(info: CommandInfo) {
         if (!info.island!!.hasHome(info.args[0])) {
             info.message(Message.commandHomeDoesNotExist)
             return

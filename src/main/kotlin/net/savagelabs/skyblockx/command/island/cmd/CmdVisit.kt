@@ -3,15 +3,15 @@ package net.savagelabs.skyblockx.command.island.cmd
 import net.savagelabs.skyblockx.command.CommandInfo
 import net.savagelabs.skyblockx.command.CommandRequirementsBuilder
 import net.savagelabs.skyblockx.command.SCommand
-import io.illyria.skyblockx.core.Permission
-import io.illyria.skyblockx.core.color
-import io.illyria.skyblockx.core.getIslandById
-import io.illyria.skyblockx.core.getIslandByOwnerTag
-import io.illyria.skyblockx.persist.Message
+import net.savagelabs.skyblockx.core.Permission
+import net.savagelabs.skyblockx.core.color
+import net.savagelabs.skyblockx.core.getIslandById
+import net.savagelabs.skyblockx.core.getIslandByOwnerTag
+import net.savagelabs.skyblockx.persist.Message
 import me.rayzr522.jsonmessage.JSONMessage
 import org.bukkit.event.player.PlayerTeleportEvent
 
-class CmdVisit : _root_ide_package_.net.savagelabs.skyblockx.command.SCommand() {
+class CmdVisit : SCommand() {
 
     init {
         aliases.add("visit")
@@ -22,12 +22,12 @@ class CmdVisit : _root_ide_package_.net.savagelabs.skyblockx.command.SCommand() 
         optionalArgs.add(Argument("island owner's name", 0, PlayerArgument()))
 
         commandRequirements =
-            _root_ide_package_.net.savagelabs.skyblockx.command.CommandRequirementsBuilder().asPlayer(true).withPermission(Permission.TELEPORT)
+            CommandRequirementsBuilder().asPlayer(true).withPermission(Permission.TELEPORT)
                 .build()
     }
 
 
-    override fun perform(info: _root_ide_package_.net.savagelabs.skyblockx.command.CommandInfo) {
+    override fun perform(info: CommandInfo) {
         // list possible locations if empty.
         if (info.args.isEmpty()) {
             val possibleLocations = ArrayList<String>()

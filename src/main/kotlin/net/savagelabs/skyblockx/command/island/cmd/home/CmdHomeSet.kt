@@ -1,10 +1,13 @@
 package net.savagelabs.skyblockx.command.island.cmd.home
 
-import io.illyria.skyblockx.core.Permission
-import io.illyria.skyblockx.persist.Message
-import io.illyria.skyblockx.persist.data.getSLocation
+import net.savagelabs.skyblockx.command.SCommand
+import net.savagelabs.skyblockx.core.Permission
+import net.savagelabs.skyblockx.persist.Message
+import net.savagelabs.skyblockx.persist.data.getSLocation
+import net.savagelabs.skyblockx.command.CommandInfo
+import net.savagelabs.skyblockx.command.CommandRequirementsBuilder
 
-class CmdHomeSet : _root_ide_package_.net.savagelabs.skyblockx.command.SCommand() {
+class CmdHomeSet : SCommand() {
 
 
     init {
@@ -14,11 +17,11 @@ class CmdHomeSet : _root_ide_package_.net.savagelabs.skyblockx.command.SCommand(
         this.requiredArgs.add(Argument("home-name", 0, StringArgument()))
 
         this.commandRequirements =
-            _root_ide_package_.net.savagelabs.skyblockx.command.CommandRequirementsBuilder().withPermission(Permission.HOME)
+            CommandRequirementsBuilder().withPermission(Permission.HOME)
                 .asIslandMember(true).build()
     }
 
-    override fun perform(info: _root_ide_package_.net.savagelabs.skyblockx.command.CommandInfo) {
+    override fun perform(info: CommandInfo) {
         if (!info.iPlayer!!.getIsland()!!.canHaveMoreHomes()) {
             info.message(Message.commandHomeCannotHaveMoreHomes)
             return

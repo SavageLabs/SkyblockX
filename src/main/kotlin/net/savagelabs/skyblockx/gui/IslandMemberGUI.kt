@@ -2,10 +2,10 @@ package net.savagelabs.skyblockx.gui
 
 import com.github.stefvanschie.inventoryframework.GuiItem
 import net.savagelabs.skyblockx.Globals
-import io.illyria.skyblockx.core.IPlayer
-import io.illyria.skyblockx.core.color
-import io.illyria.skyblockx.core.isPlaceholderAPIPresent
-import io.illyria.skyblockx.persist.Config
+import net.savagelabs.skyblockx.core.IPlayer
+import net.savagelabs.skyblockx.core.color
+import net.savagelabs.skyblockx.core.isPlaceholderAPIPresent
+import net.savagelabs.skyblockx.persist.Config
 import me.clip.placeholderapi.PlaceholderAPI
 import net.prosavage.baseplugin.ItemBuilder
 import net.prosavage.baseplugin.XMaterial
@@ -24,7 +24,7 @@ class IslandMemberGUI :
         var slotListIndexesUsed = 0
         for (memberName in context.getIsland()!!.getIslandMembers()) {
             if (slotListIndexesUsed >= Config.islandMemberGUIHeadSlots.size) {
-                _root_ide_package_.net.savagelabs.skyblockx.Globals.skyblockX.logger.info("Skipping for $memberName due to not having a configured slot for the ${slotListIndexesUsed + 1}th member.")
+                Globals.skyblockX.logger.info("Skipping for $memberName due to not having a configured slot for the ${slotListIndexesUsed + 1}th member.")
                 continue
             }
             guiItems[Config.islandMemberGUIHeadSlots[slotListIndexesUsed]] =

@@ -1,9 +1,9 @@
 package net.savagelabs.skyblockx.gui
 
 import com.github.stefvanschie.inventoryframework.GuiItem
-import io.illyria.skyblockx.core.IPlayer
-import io.illyria.skyblockx.core.isPlaceholderAPIPresent
-import io.illyria.skyblockx.persist.Config
+import net.savagelabs.skyblockx.core.IPlayer
+import net.savagelabs.skyblockx.core.isPlaceholderAPIPresent
+import net.savagelabs.skyblockx.persist.Config
 import me.clip.placeholderapi.PlaceholderAPI
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player

@@ -1,10 +1,10 @@
 package net.savagelabs.skyblockx.quest
 
-import io.illyria.skyblockx.core.IPlayer
-import io.illyria.skyblockx.core.Island
-import io.illyria.skyblockx.core.color
-import io.illyria.skyblockx.persist.Message
-import io.illyria.skyblockx.persist.Quests
+import net.savagelabs.skyblockx.core.IPlayer
+import net.savagelabs.skyblockx.core.Island
+import net.savagelabs.skyblockx.core.color
+import net.savagelabs.skyblockx.persist.Message
+import net.savagelabs.skyblockx.persist.Quests
 import me.rayzr522.jsonmessage.JSONMessage
 import net.prosavage.baseplugin.serializer.commonobjects.SerializableItem
 import org.bukkit.Bukkit

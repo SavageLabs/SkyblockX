@@ -1,6 +1,6 @@
 package net.savagelabs.skyblockx.core
 
-import io.illyria.skyblockx.persist.Config
+import net.savagelabs.skyblockx.persist.Config
 import org.bukkit.entity.HumanEntity
 import org.bukkit.permissions.Permissible
 import org.bukkit.permissions.PermissionAttachmentInfo

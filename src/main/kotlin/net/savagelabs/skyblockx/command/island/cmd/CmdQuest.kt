@@ -1,23 +1,24 @@
 package net.savagelabs.skyblockx.command.island.cmd
 
 
+import net.savagelabs.skyblockx.command.CommandInfo
 import net.savagelabs.skyblockx.command.CommandRequirementsBuilder
 import net.savagelabs.skyblockx.command.SCommand
-import io.illyria.skyblockx.core.Permission
-import io.illyria.skyblockx.gui.IslandQuestGUI
-import io.illyria.skyblockx.persist.Message
+import net.savagelabs.skyblockx.core.Permission
+import net.savagelabs.skyblockx.gui.IslandQuestGUI
+import net.savagelabs.skyblockx.persist.Message
 
-class CmdQuest : _root_ide_package_.net.savagelabs.skyblockx.command.SCommand() {
+class CmdQuest : SCommand() {
 
     init {
         aliases.add("quest")
         aliases.add("quests")
 
-        commandRequirements = _root_ide_package_.net.savagelabs.skyblockx.command.CommandRequirementsBuilder().withPermission(Permission.QUEST).asIslandMember(true).build()
+        commandRequirements = CommandRequirementsBuilder().withPermission(Permission.QUEST).asIslandMember(true).build()
     }
 
 
-    override fun perform(info: _root_ide_package_.net.savagelabs.skyblockx.command.CommandInfo) {
+    override fun perform(info: CommandInfo) {
         IslandQuestGUI().showGui(info.player!!)
     }
 

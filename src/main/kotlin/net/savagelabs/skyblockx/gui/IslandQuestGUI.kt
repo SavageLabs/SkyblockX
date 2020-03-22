@@ -1,12 +1,12 @@
 package net.savagelabs.skyblockx.gui
 
 import com.github.stefvanschie.inventoryframework.GuiItem
-import io.illyria.skyblockx.core.IPlayer
-import io.illyria.skyblockx.core.Island
-import io.illyria.skyblockx.core.color
-import io.illyria.skyblockx.persist.Message
-import io.illyria.skyblockx.persist.Quests
-import io.illyria.skyblockx.quest.Quest
+import net.savagelabs.skyblockx.core.IPlayer
+import net.savagelabs.skyblockx.core.Island
+import net.savagelabs.skyblockx.core.color
+import net.savagelabs.skyblockx.persist.Message
+import net.savagelabs.skyblockx.persist.Quests
+import net.savagelabs.skyblockx.quest.Quest
 import net.prosavage.baseplugin.ItemBuilder
 import net.prosavage.baseplugin.serializer.commonobjects.SerializableItem
 import org.bukkit.entity.Player

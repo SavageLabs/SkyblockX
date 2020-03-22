@@ -1,10 +1,12 @@
 package net.savagelabs.skyblockx.command.island.cmd
 
+import net.savagelabs.skyblockx.Globals
+import net.savagelabs.skyblockx.command.CommandInfo
 import net.savagelabs.skyblockx.command.CommandRequirementsBuilder
 import net.savagelabs.skyblockx.command.SCommand
-import io.illyria.skyblockx.persist.Message
+import net.savagelabs.skyblockx.persist.Message
 
-class CmdHelp : _root_ide_package_.net.savagelabs.skyblockx.command.SCommand() {
+class CmdHelp : SCommand() {
 
 
     init {
@@ -12,12 +14,12 @@ class CmdHelp : _root_ide_package_.net.savagelabs.skyblockx.command.SCommand() {
 
         requiredArgs.add(Argument("page-number", 0, IntArgument()))
 
-        commandRequirements = _root_ide_package_.net.savagelabs.skyblockx.command.CommandRequirementsBuilder().build()
+        commandRequirements = CommandRequirementsBuilder().build()
     }
 
-    override fun perform(info: _root_ide_package_.net.savagelabs.skyblockx.command.CommandInfo) {
+    override fun perform(info: CommandInfo) {
         val page = info.getArgAsInt(0) ?: return
-        _root_ide_package_.net.savagelabs.skyblockx.Globals.islandBaseCommand.generateHelp(page, info.player!!)
+        Globals.islandBaseCommand.generateHelp(page, info.player!!)
     }
 
     override fun getHelpInfo(): String {

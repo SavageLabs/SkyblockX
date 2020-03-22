@@ -3,11 +3,11 @@ package net.savagelabs.skyblockx.command.island.cmd
 import net.savagelabs.skyblockx.command.CommandInfo
 import net.savagelabs.skyblockx.command.CommandRequirementsBuilder
 import net.savagelabs.skyblockx.command.SCommand
-import io.illyria.skyblockx.core.Permission
-import io.illyria.skyblockx.persist.Message
-import io.illyria.skyblockx.sedit.SkyblockEdit
+import net.savagelabs.skyblockx.core.Permission
+import net.savagelabs.skyblockx.persist.Message
+import net.savagelabs.skyblockx.sedit.SkyblockEdit
 
-class CmdSESaveStructure : _root_ide_package_.net.savagelabs.skyblockx.command.SCommand() {
+class CmdSESaveStructure : SCommand() {
 
     init {
         aliases.add("save-struct")
@@ -16,12 +16,12 @@ class CmdSESaveStructure : _root_ide_package_.net.savagelabs.skyblockx.command.S
         requiredArgs.add(Argument("filename", 0, StringArgument()))
 
         commandRequirements =
-            _root_ide_package_.net.savagelabs.skyblockx.command.CommandRequirementsBuilder().asPlayer(true)
+            CommandRequirementsBuilder().asPlayer(true)
                 .withPermission(Permission.SE_SAVESTUCT).build()
     }
 
 
-    override fun perform(info: _root_ide_package_.net.savagelabs.skyblockx.command.CommandInfo) {
+    override fun perform(info: CommandInfo) {
         if (info.iPlayer!!.pos1 == null || info.iPlayer!!.pos2 == null) {
             info.message(Message.commandSESaveStructurePositionsNotSet)
             return

@@ -1,11 +1,11 @@
 package net.savagelabs.skyblockx.listener
 
 import net.savagelabs.skyblockx.Globals
-import io.illyria.skyblockx.core.IPlayer
-import io.illyria.skyblockx.core.getIPlayerByName
-import io.illyria.skyblockx.core.getIslandById
-import io.illyria.skyblockx.core.updateWorldBorder
-import io.illyria.skyblockx.persist.Data
+import net.savagelabs.skyblockx.core.IPlayer
+import net.savagelabs.skyblockx.core.getIPlayerByName
+import net.savagelabs.skyblockx.core.getIslandById
+import net.savagelabs.skyblockx.core.updateWorldBorder
+import net.savagelabs.skyblockx.persist.Data
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerJoinEvent
@@ -24,7 +24,7 @@ class DataListener : Listener {
                 // Update tag if not equal.
                 if (island.ownerTag != event.player.name) {
                     island.ownerTag = event.player.name
-                    _root_ide_package_.net.savagelabs.skyblockx.Globals.skyblockX.logger.info("Updated ${event.player.name}'s tag since they changed their name.")
+                    Globals.skyblockX.logger.info("Updated ${event.player.name}'s tag since they changed their name.")
                 }
             }
             // Delay to handle other plugins teleporting on login etc...
@@ -32,7 +32,7 @@ class DataListener : Listener {
             return
         }
         Data.IPlayers[event.player.uniqueId.toString()] = IPlayer(event.player.uniqueId.toString())
-        _root_ide_package_.net.savagelabs.skyblockx.Globals.skyblockX.logger.info("${event.player.name}'s IPlayer instance was created")
+        Globals.skyblockX.logger.info("${event.player.name}'s IPlayer instance was created")
     }
 
     @EventHandler

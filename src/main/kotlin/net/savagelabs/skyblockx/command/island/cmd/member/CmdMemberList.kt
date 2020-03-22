@@ -3,22 +3,22 @@ package net.savagelabs.skyblockx.command.island.cmd.member
 import net.savagelabs.skyblockx.command.CommandInfo
 import net.savagelabs.skyblockx.command.CommandRequirementsBuilder
 import net.savagelabs.skyblockx.command.SCommand
-import io.illyria.skyblockx.core.Permission
-import io.illyria.skyblockx.core.color
-import io.illyria.skyblockx.persist.Message
+import net.savagelabs.skyblockx.core.Permission
+import net.savagelabs.skyblockx.core.color
+import net.savagelabs.skyblockx.persist.Message
 import me.rayzr522.jsonmessage.JSONMessage
 
-class CmdMemberList : _root_ide_package_.net.savagelabs.skyblockx.command.SCommand() {
+class CmdMemberList : SCommand() {
 
     init {
         aliases.add("list")
 
         commandRequirements =
-            _root_ide_package_.net.savagelabs.skyblockx.command.CommandRequirementsBuilder().withPermission(Permission.MEMBER).asIslandMember(true).build()
+            CommandRequirementsBuilder().withPermission(Permission.MEMBER).asIslandMember(true).build()
     }
 
 
-    override fun perform(info: _root_ide_package_.net.savagelabs.skyblockx.command.CommandInfo) {
+    override fun perform(info: CommandInfo) {
         info.message(Message.commandMemberListHeader)
 
         JSONMessage.create(color(String.format(Message.commandMemberListFormat, 1, info.island!!.ownerTag)))

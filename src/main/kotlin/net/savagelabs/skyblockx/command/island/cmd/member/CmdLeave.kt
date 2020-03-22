@@ -3,20 +3,20 @@ package net.savagelabs.skyblockx.command.island.cmd.member
 import net.savagelabs.skyblockx.command.CommandInfo
 import net.savagelabs.skyblockx.command.CommandRequirementsBuilder
 import net.savagelabs.skyblockx.command.SCommand
-import io.illyria.skyblockx.core.Permission
-import io.illyria.skyblockx.persist.Message
+import net.savagelabs.skyblockx.core.Permission
+import net.savagelabs.skyblockx.persist.Message
 
-class CmdLeave : _root_ide_package_.net.savagelabs.skyblockx.command.SCommand() {
+class CmdLeave : SCommand() {
 
 
     init {
         aliases.add("leave")
 
-        commandRequirements = _root_ide_package_.net.savagelabs.skyblockx.command.CommandRequirementsBuilder().withPermission(Permission.LEAVE).asIslandMember(true).build()
+        commandRequirements = CommandRequirementsBuilder().withPermission(Permission.LEAVE).asIslandMember(true).build()
     }
 
 
-    override fun perform(info: _root_ide_package_.net.savagelabs.skyblockx.command.CommandInfo) {
+    override fun perform(info: CommandInfo) {
         if (info.iPlayer!!.isLeader()) {
             info.message(Message.commandLeaveDeniedLeader)
             return

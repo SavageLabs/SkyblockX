@@ -1,22 +1,24 @@
 package net.savagelabs.skyblockx.command.island.cmd
 
+import net.savagelabs.skyblockx.command.CommandInfo
 import net.savagelabs.skyblockx.command.CommandRequirementsBuilder
-import io.illyria.skyblockx.core.Permission
-import io.illyria.skyblockx.core.deleteIsland
-import io.illyria.skyblockx.persist.Message
+import net.savagelabs.skyblockx.command.SCommand
+import net.savagelabs.skyblockx.core.Permission
+import net.savagelabs.skyblockx.core.deleteIsland
+import net.savagelabs.skyblockx.persist.Message
 
-class CmdDelete : _root_ide_package_.net.savagelabs.skyblockx.command.SCommand() {
+class CmdDelete : SCommand() {
 
     init {
         aliases.add("delete")
 
         commandRequirements =
-           _root_ide_package_.net.savagelabs.skyblockx.command.CommandRequirementsBuilder().asIslandMember(true)
+           CommandRequirementsBuilder().asIslandMember(true)
                 .withPermission(Permission.DELETE).build()
     }
 
 
-    override fun perform(info: _root_ide_package_.net.savagelabs.skyblockx.command.CommandInfo) {
+    override fun perform(info: CommandInfo) {
         info.island!!.delete()
         info.message(Message.commandDeleteDeletedIsland)
 

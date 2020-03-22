@@ -2,14 +2,14 @@ package net.savagelabs.skyblockx
 
 import net.savagelabs.skyblockx.command.island.IslandBaseCommand
 import net.savagelabs.skyblockx.command.skyblock.SkyblockBaseCommand
-import io.illyria.skyblockx.core.color
-import io.illyria.skyblockx.core.registerAllPermissions
-import io.illyria.skyblockx.core.runIslandCalc
-import io.illyria.skyblockx.hooks.PlacholderAPIIntegration
-import io.illyria.skyblockx.listener.*
-import io.illyria.skyblockx.persist.*
-import io.illyria.skyblockx.persist.data.Items
-import io.illyria.skyblockx.world.VoidWorldGenerator
+import net.savagelabs.skyblockx.core.color
+import net.savagelabs.skyblockx.core.registerAllPermissions
+import net.savagelabs.skyblockx.core.runIslandCalc
+import net.savagelabs.skyblockx.hooks.PlacholderAPIIntegration
+import net.savagelabs.skyblockx.listener.*
+import net.savagelabs.skyblockx.persist.*
+import net.savagelabs.skyblockx.persist.data.Items
+import net.savagelabs.skyblockx.world.VoidWorldGenerator
 import net.prosavage.baseplugin.SavagePlugin
 import net.prosavage.baseplugin.WorldBorderUtil
 import net.prosavage.baseplugin.XMaterial
@@ -31,7 +31,7 @@ class SkyblockX : SavagePlugin() {
         val startupTime = measureTimeMillis {
             super.onEnable()
             printHeader()
-            _root_ide_package_.net.savagelabs.skyblockx.Globals.skyblockX = this
+            Globals.skyblockX = this
             registerAllPermissions(server.pluginManager)
             loadDataFiles()
             initWorldBorderUtility()
@@ -76,7 +76,7 @@ class SkyblockX : SavagePlugin() {
             val time = measureTimedValue {
                 Bukkit.getScheduler().runTask(this, Runnable { runIslandCalc() })
             }
-            if (Config.islandTopBroadcastMessage) Bukkit.broadcastMessage(color(String.format(Config.islandTopBroadcastMessageEnd, _root_ide_package_.net.savagelabs.skyblockx.Globals.islandValues?.map?.size, time.duration)))
+            if (Config.islandTopBroadcastMessage) Bukkit.broadcastMessage(color(String.format(Config.islandTopBroadcastMessageEnd, Globals.islandValues?.map?.size, time.duration)))
         }, 20L, Config.islandTopCalcPeriodTicks.toLong())
     }
 
@@ -120,12 +120,12 @@ class SkyblockX : SavagePlugin() {
 
     private fun initWorldBorderUtility() {
         logInfo("Starting WorldBorder Packet Util.")
-        _root_ide_package_.net.savagelabs.skyblockx.Globals.worldBorderUtil = WorldBorderUtil(this)
+        Globals.worldBorderUtil = WorldBorderUtil(this)
     }
 
     private fun setupCommands() {
         logInfo("Setting up Commands.")
-        val baseCommand = _root_ide_package_.net.savagelabs.skyblockx.command.island.IslandBaseCommand()
+        val baseCommand = IslandBaseCommand()
         baseCommand.prefix = "is"
         val command = this.getCommand("is")!!
         command.setExecutor(baseCommand)
@@ -135,7 +135,7 @@ class SkyblockX : SavagePlugin() {
 
     private fun setupAdminCommands() {
         logInfo("Setting up administrator Commands.")
-        val baseCommand = _root_ide_package_.net.savagelabs.skyblockx.command.skyblock.SkyblockBaseCommand()
+        val baseCommand = SkyblockBaseCommand()
         baseCommand.prefix = "sbx"
         val command = this.getCommand("skyblockx")!!
         command.setExecutor(baseCommand)
@@ -150,7 +150,7 @@ class SkyblockX : SavagePlugin() {
                 generatorStrategyMap[key] = Items(value)
             }
         }
-        _root_ide_package_.net.savagelabs.skyblockx.Globals.generatorAlgorithm = generatorStrategyMap
+        Globals.generatorAlgorithm = generatorStrategyMap
     }
 
     private fun saveDataFiles() {

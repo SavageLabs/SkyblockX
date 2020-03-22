@@ -3,12 +3,12 @@ package net.savagelabs.skyblockx.command.island.cmd
 import net.savagelabs.skyblockx.command.CommandInfo
 import net.savagelabs.skyblockx.command.CommandRequirementsBuilder
 import net.savagelabs.skyblockx.command.SCommand
-import io.illyria.skyblockx.core.Permission
-import io.illyria.skyblockx.core.enumValueOrNull
-import io.illyria.skyblockx.persist.Message
+import net.savagelabs.skyblockx.core.Permission
+import net.savagelabs.skyblockx.core.enumValueOrNull
+import net.savagelabs.skyblockx.persist.Message
 import org.bukkit.block.Biome
 
-class CmdBiome : _root_ide_package_.net.savagelabs.skyblockx.command.SCommand() {
+class CmdBiome : SCommand() {
 
     init {
         aliases.add("biome")
@@ -17,14 +17,14 @@ class CmdBiome : _root_ide_package_.net.savagelabs.skyblockx.command.SCommand() 
 
         requiredArgs.add(Argument("biome-type", 0, BiomeArgument()))
 
-        commandRequirements = _root_ide_package_.net.savagelabs.skyblockx.command.CommandRequirementsBuilder()
+        commandRequirements = CommandRequirementsBuilder()
             .asIslandMember(true)
             .withPermission(Permission.BIOME)
             .build()
     }
 
 
-    override fun perform(info: _root_ide_package_.net.savagelabs.skyblockx.command.CommandInfo) {
+    override fun perform(info: CommandInfo) {
         val biome = enumValueOrNull<Biome>(info.args[0]) ?: run {
             info.message(Message.commandBiomeInvalidBiome)
             return

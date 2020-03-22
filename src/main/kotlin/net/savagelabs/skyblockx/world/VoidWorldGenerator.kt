@@ -1,6 +1,6 @@
 package net.savagelabs.skyblockx.world
 
-import io.illyria.skyblockx.persist.Config
+import net.savagelabs.skyblockx.persist.Config
 import org.bukkit.Location
 import org.bukkit.World
 import org.bukkit.block.Biome

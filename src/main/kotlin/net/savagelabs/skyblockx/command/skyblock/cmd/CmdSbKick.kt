@@ -3,23 +3,23 @@ package net.savagelabs.skyblockx.command.skyblock.cmd
 import net.savagelabs.skyblockx.command.CommandInfo
 import net.savagelabs.skyblockx.command.CommandRequirementsBuilder
 import net.savagelabs.skyblockx.command.SCommand
-import io.illyria.skyblockx.core.Permission
-import io.illyria.skyblockx.core.getIPlayerByName
-import io.illyria.skyblockx.core.getIPlayerByUUID
-import io.illyria.skyblockx.persist.Message
+import net.savagelabs.skyblockx.core.Permission
+import net.savagelabs.skyblockx.core.getIPlayerByName
+import net.savagelabs.skyblockx.core.getIPlayerByUUID
+import net.savagelabs.skyblockx.persist.Message
 
-class CmdSbKick : _root_ide_package_.net.savagelabs.skyblockx.command.SCommand() {
+class CmdSbKick : SCommand() {
 
     init {
         aliases.add("kick")
 
         requiredArgs.add(Argument("player-to-kick", 0, PlayerArgument()))
 
-        commandRequirements = _root_ide_package_.net.savagelabs.skyblockx.command.CommandRequirementsBuilder().withPermission(Permission.ADMIN_KICKFROMISLAND).build()
+        commandRequirements = CommandRequirementsBuilder().withPermission(Permission.ADMIN_KICKFROMISLAND).build()
     }
 
 
-    override fun perform(info: _root_ide_package_.net.savagelabs.skyblockx.command.CommandInfo) {
+    override fun perform(info: CommandInfo) {
         val iPlayerByName = getIPlayerByName(info.args[0])
         if (iPlayerByName?.getIsland() == null) {
             info.message(Message.genericPlayerNotAnIslandMember)

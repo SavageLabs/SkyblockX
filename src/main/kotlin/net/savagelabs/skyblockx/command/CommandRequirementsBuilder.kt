@@ -1,6 +1,6 @@
 package net.savagelabs.skyblockx.command
 
-import io.illyria.skyblockx.core.Permission
+import net.savagelabs.skyblockx.core.Permission
 
 class CommandRequirementsBuilder {
 
@@ -10,30 +10,30 @@ class CommandRequirementsBuilder {
     var permission: Permission? = null
 
 
-    fun asPlayer(value: Boolean): _root_ide_package_.net.savagelabs.skyblockx.command.CommandRequirementsBuilder {
+    fun asPlayer(value: Boolean): CommandRequirementsBuilder {
         this.asPlayer = value
         return this
     }
 
-    fun asLeader(value: Boolean): _root_ide_package_.net.savagelabs.skyblockx.command.CommandRequirementsBuilder {
+    fun asLeader(value: Boolean): CommandRequirementsBuilder {
         this.asLeader = value
         return this
     }
 
-    fun withPermission(permission: Permission): _root_ide_package_.net.savagelabs.skyblockx.command.CommandRequirementsBuilder {
+    fun withPermission(permission: Permission): CommandRequirementsBuilder {
         this.permission = permission
         return this
     }
 
-    fun asIslandMember(value: Boolean): _root_ide_package_.net.savagelabs.skyblockx.command.CommandRequirementsBuilder {
+    fun asIslandMember(value: Boolean): CommandRequirementsBuilder {
         // Gotta be a player to be a island member
         this.asIslandMember = value
         this.asPlayer = true
         return this
     }
 
-    fun build(): _root_ide_package_.net.savagelabs.skyblockx.command.CommandRequirements {
-        return _root_ide_package_.net.savagelabs.skyblockx.command.CommandRequirements(
+    fun build(): CommandRequirements {
+        return CommandRequirements(
             permission,
             asPlayer,
             asIslandMember,

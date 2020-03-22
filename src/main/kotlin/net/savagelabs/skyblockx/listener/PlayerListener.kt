@@ -1,12 +1,12 @@
 package net.savagelabs.skyblockx.listener
 
-import io.illyria.skyblockx.core.*
-import io.illyria.skyblockx.persist.Config
-import io.illyria.skyblockx.persist.Message
-import io.illyria.skyblockx.persist.Quests
-import io.illyria.skyblockx.quest.QuestGoal
-import io.illyria.skyblockx.quest.failsQuestCheckingPreRequisites
-import io.illyria.skyblockx.sedit.SkyblockEdit
+import net.savagelabs.skyblockx.core.*
+import net.savagelabs.skyblockx.persist.Config
+import net.savagelabs.skyblockx.persist.Message
+import net.savagelabs.skyblockx.persist.Quests
+import net.savagelabs.skyblockx.quest.QuestGoal
+import net.savagelabs.skyblockx.quest.failsQuestCheckingPreRequisites
+import net.savagelabs.skyblockx.sedit.SkyblockEdit
 import net.prosavage.baseplugin.XMaterial
 import org.bukkit.Bukkit
 import org.bukkit.Material

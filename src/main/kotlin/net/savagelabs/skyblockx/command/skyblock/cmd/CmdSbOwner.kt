@@ -3,12 +3,12 @@ package net.savagelabs.skyblockx.command.skyblock.cmd
 import net.savagelabs.skyblockx.command.CommandInfo
 import net.savagelabs.skyblockx.command.CommandRequirementsBuilder
 import net.savagelabs.skyblockx.command.SCommand
-import io.illyria.skyblockx.core.Permission
-import io.illyria.skyblockx.core.getIPlayerByName
-import io.illyria.skyblockx.persist.Message
+import net.savagelabs.skyblockx.core.Permission
+import net.savagelabs.skyblockx.core.getIPlayerByName
+import net.savagelabs.skyblockx.persist.Message
 import org.bukkit.Bukkit
 
-class CmdSbOwner : _root_ide_package_.net.savagelabs.skyblockx.command.SCommand() {
+class CmdSbOwner : SCommand() {
 
 
     init {
@@ -19,10 +19,10 @@ class CmdSbOwner : _root_ide_package_.net.savagelabs.skyblockx.command.SCommand(
 
         requiredArgs.add(Argument("new-owner", 1, PlayerArgument()))
 
-        commandRequirements = _root_ide_package_.net.savagelabs.skyblockx.command.CommandRequirementsBuilder().withPermission(Permission.ADMIN_NEWOWNER).build()
+        commandRequirements = CommandRequirementsBuilder().withPermission(Permission.ADMIN_NEWOWNER).build()
     }
 
-    override fun perform(info: _root_ide_package_.net.savagelabs.skyblockx.command.CommandInfo) {
+    override fun perform(info: CommandInfo) {
         println(info)
         val newOwner = info.getArgAsIPlayer(1, cannotReferenceYourSelf = false) ?: return
         val iPlayerByName = getIPlayerByName(info.args[0])

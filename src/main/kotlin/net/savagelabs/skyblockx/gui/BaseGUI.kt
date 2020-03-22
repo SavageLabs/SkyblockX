@@ -4,9 +4,9 @@ import com.github.stefvanschie.inventoryframework.Gui
 import com.github.stefvanschie.inventoryframework.GuiItem
 import com.github.stefvanschie.inventoryframework.pane.PaginatedPane
 import net.savagelabs.skyblockx.Globals.skyblockX
-import io.illyria.skyblockx.core.IPlayer
-import io.illyria.skyblockx.core.color
-import io.illyria.skyblockx.core.getIPlayer
+import net.savagelabs.skyblockx.core.IPlayer
+import net.savagelabs.skyblockx.core.color
+import net.savagelabs.skyblockx.core.getIPlayer
 import net.prosavage.baseplugin.serializer.commonobjects.SerializableItem
 import org.bukkit.entity.HumanEntity
 import org.bukkit.entity.Player

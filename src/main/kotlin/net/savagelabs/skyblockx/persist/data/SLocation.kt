@@ -1,6 +1,6 @@
 package net.savagelabs.skyblockx.persist.data
 
-import io.illyria.skyblockx.persist.Config
+import net.savagelabs.skyblockx.persist.Config
 import org.bukkit.Bukkit
 import org.bukkit.Location
 

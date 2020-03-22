@@ -1,9 +1,9 @@
 package net.savagelabs.skyblockx.core
 
-import io.illyria.skyblockx.persist.Config
-import io.illyria.skyblockx.persist.Data
-import io.illyria.skyblockx.persist.Message
-import io.illyria.skyblockx.sedit.Position
+import net.savagelabs.skyblockx.persist.Config
+import net.savagelabs.skyblockx.persist.Data
+import net.savagelabs.skyblockx.persist.Message
+import net.savagelabs.skyblockx.sedit.Position
 import net.prosavage.baseplugin.WorldBorderUtil
 import org.bukkit.Bukkit
 import org.bukkit.Location

@@ -73,12 +73,12 @@ shadowJar {
     mergeServiceFiles()
     exclude 'META-INF/*.DSA'
     exclude 'META-INF/*.RSA'
-    relocate 'com.github.stefvanschie.inventoryframework', 'io.illyria.skyblockx.shade.stefvanschie.inventoryframework'
-    relocate 'com.google.gson', 'io.illyria.skyblockx.shade.com.google.gson'
-    relocate 'net.prosavage.baseplugin', 'io.illyria.skyblockx.shade.baseplugin'
-    relocate 'org.jetbrains.kotlin', 'io.illyria.skyblockx.shade.kotlin'
-    relocate 'me.rayzr522.jsonmessage', 'io.illyria.skyblockx.shade.jsonmessage'
-    relocate 'io.illyria.WorldBorder-API', 'io.illyria.skyblockx.shade.WorldBorder-API'
+    relocate 'com.github.stefvanschie.inventoryframework', 'net.savagelabs.skyblockx.shade.stefvanschie.inventoryframework'
+    relocate 'com.google.gson', 'net.savagelabs.skyblockx.shade.com.google.gson'
+    relocate 'net.prosavage.baseplugin', 'net.savagelabs.skyblockx.shade.baseplugin'
+    relocate 'org.jetbrains.kotlin', 'net.savagelabs.skyblockx.shade.kotlin'
+    relocate 'me.rayzr522.jsonmessage', 'net.savagelabs.skyblockx.shade.jsonmessage'
+    relocate 'io.illyria.WorldBorder-API', 'net.savagelabs.skyblockx.shade.WorldBorder-API'
     archiveName 'SkyblockX.jar'
 }
 

@@ -1,7 +1,7 @@
 package net.savagelabs.skyblockx.core
 
 import net.savagelabs.skyblockx.Globals
-import io.illyria.skyblockx.persist.Config
+import net.savagelabs.skyblockx.persist.Config
 import net.prosavage.baseplugin.WorldBorderUtil
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor
@@ -35,7 +35,7 @@ inline fun <reified T : Enum<*>> enumValueOrNull(name: String): T? = T::class.ja
 fun updateWorldBorder(player: Player, location: Location, delay: Long) {
     if (isNotInSkyblockWorld(location.world!!)) {
         val worldBorder = location.world?.worldBorder
-        _root_ide_package_.net.savagelabs.skyblockx.Globals.worldBorderUtil.sendWorldBorder(
+        Globals.worldBorderUtil.sendWorldBorder(
             player,
             WorldBorderUtil.Color.Off,
             worldBorder!!.size,
@@ -44,14 +44,14 @@ fun updateWorldBorder(player: Player, location: Location, delay: Long) {
     } else {
         Bukkit.getScheduler()
             .runTaskLater(
-                _root_ide_package_.net.savagelabs.skyblockx.Globals.skyblockX,
+                Globals.skyblockX,
                 Runnable {
                     val islandFromLocation = getIslandFromLocation(location)
                     val iPlayer = getIPlayer(player)
                     if (islandFromLocation != null) {
                         val wbCenter = islandFromLocation.getIslandCenter()
                         wbCenter.world = player.world
-                        WorldBorderUtil(_root_ide_package_.net.savagelabs.skyblockx.Globals.skyblockX).sendWorldBorder(
+                        WorldBorderUtil(Globals.skyblockX).sendWorldBorder(
                             player,
                             iPlayer.borderColor,
                             islandFromLocation.islandSize.toDouble(),

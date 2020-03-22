@@ -3,26 +3,26 @@ package net.savagelabs.skyblockx.command.island.cmd.member
 import net.savagelabs.skyblockx.command.CommandInfo
 import net.savagelabs.skyblockx.command.CommandRequirementsBuilder
 import net.savagelabs.skyblockx.command.SCommand
-import io.illyria.skyblockx.core.Permission
-import io.illyria.skyblockx.gui.IslandMemberGUI
-import io.illyria.skyblockx.persist.Message
+import net.savagelabs.skyblockx.core.Permission
+import net.savagelabs.skyblockx.gui.IslandMemberGUI
+import net.savagelabs.skyblockx.persist.Message
 
-class CmdMember : _root_ide_package_.net.savagelabs.skyblockx.command.SCommand() {
+class CmdMember : SCommand() {
 
     init {
         aliases.add("member")
         aliases.add("members")
 
         commandRequirements =
-            _root_ide_package_.net.savagelabs.skyblockx.command.CommandRequirementsBuilder().withPermission(Permission.MEMBER).asIslandMember(true).build()
+            CommandRequirementsBuilder().withPermission(Permission.MEMBER).asIslandMember(true).build()
 
-        subCommands.add(_root_ide_package_.net.savagelabs.skyblockx.command.island.cmd.member.CmdMemberInvite())
-        subCommands.add(_root_ide_package_.net.savagelabs.skyblockx.command.island.cmd.member.CmdMemberList())
-        subCommands.add(_root_ide_package_.net.savagelabs.skyblockx.command.island.cmd.member.CmdMemberKick())
-        subCommands.add(_root_ide_package_.net.savagelabs.skyblockx.command.island.cmd.member.CmdMemberPromote())
+        subCommands.add(CmdMemberInvite())
+        subCommands.add(CmdMemberList())
+        subCommands.add(CmdMemberKick())
+        subCommands.add(CmdMemberPromote())
     }
 
-    override fun perform(info: _root_ide_package_.net.savagelabs.skyblockx.command.CommandInfo) {
+    override fun perform(info: CommandInfo) {
         IslandMemberGUI().showGui(info.player!!)
         // No Args / Invalid args specified.
         if (info.args.size != 1) {

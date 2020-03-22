@@ -1,12 +1,12 @@
 package net.savagelabs.skyblockx.listener
 
-import io.illyria.skyblockx.core.color
-import io.illyria.skyblockx.core.getIPlayer
-import io.illyria.skyblockx.core.isNotInSkyblockWorld
-import io.illyria.skyblockx.persist.Config
-import io.illyria.skyblockx.persist.Message
-import io.illyria.skyblockx.persist.Quests
-import io.illyria.skyblockx.quest.QuestGoal
+import net.savagelabs.skyblockx.core.color
+import net.savagelabs.skyblockx.core.getIPlayer
+import net.savagelabs.skyblockx.core.isNotInSkyblockWorld
+import net.savagelabs.skyblockx.persist.Config
+import net.savagelabs.skyblockx.persist.Message
+import net.savagelabs.skyblockx.persist.Quests
+import net.savagelabs.skyblockx.quest.QuestGoal
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler

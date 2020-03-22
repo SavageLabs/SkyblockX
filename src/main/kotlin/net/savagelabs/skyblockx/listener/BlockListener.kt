@@ -1,13 +1,13 @@
 package net.savagelabs.skyblockx.listener
 
 import net.savagelabs.skyblockx.Globals
-import io.illyria.skyblockx.core.canUseBlockAtLocation
-import io.illyria.skyblockx.core.getIPlayer
-import io.illyria.skyblockx.core.isNotInSkyblockWorld
-import io.illyria.skyblockx.persist.Config
-import io.illyria.skyblockx.persist.Message
-import io.illyria.skyblockx.persist.Quests
-import io.illyria.skyblockx.quest.QuestGoal
+import net.savagelabs.skyblockx.core.canUseBlockAtLocation
+import net.savagelabs.skyblockx.core.getIPlayer
+import net.savagelabs.skyblockx.core.isNotInSkyblockWorld
+import net.savagelabs.skyblockx.persist.Config
+import net.savagelabs.skyblockx.persist.Message
+import net.savagelabs.skyblockx.persist.Quests
+import net.savagelabs.skyblockx.quest.QuestGoal
 import net.prosavage.baseplugin.XMaterial
 import org.bukkit.Bukkit
 import org.bukkit.Material
@@ -77,7 +77,7 @@ class BlockListener : Listener {
 
 
         // Anti-abuse for skyblock.
-        event.block.setMetadata("skyblock-placed-by-player", FixedMetadataValue(_root_ide_package_.net.savagelabs.skyblockx.Globals.skyblockX, true)
+        event.block.setMetadata("skyblock-placed-by-player", FixedMetadataValue(Globals.skyblockX, true)
         )
     }
 
@@ -144,10 +144,10 @@ class BlockListener : Listener {
         // No skyblock world or generating from down block face.
         if (!Config.islandOreGeneratorEnabled || event.face == BlockFace.DOWN || isNotInSkyblockWorld(event.block.world)) return
 
-        Bukkit.getScheduler().runTask(_root_ide_package_.net.savagelabs.skyblockx.Globals.skyblockX, Runnable {
+        Bukkit.getScheduler().runTask(Globals.skyblockX, Runnable {
             run {
                 if (event.toBlock.type == Material.COBBLESTONE) event.toBlock.location.block.type =
-                    _root_ide_package_.net.savagelabs.skyblockx.Globals.generatorAlgorithm[1]!!.choose().parseMaterial()!!
+                    Globals.generatorAlgorithm[1]!!.choose().parseMaterial()!!
             }
         })
 

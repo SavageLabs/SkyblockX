@@ -1,10 +1,10 @@
 package net.savagelabs.skyblockx.persist
 
-import io.illyria.skyblockx.gui.HeadFormat
-import io.illyria.skyblockx.gui.IslandBorderItem
-import io.illyria.skyblockx.gui.MenuItem
-import io.illyria.skyblockx.persist.data.IslandCreateInfo
-import io.illyria.skyblockx.persist.data.WeightedItem
+import net.savagelabs.skyblockx.gui.HeadFormat
+import net.savagelabs.skyblockx.gui.IslandBorderItem
+import net.savagelabs.skyblockx.gui.MenuItem
+import net.savagelabs.skyblockx.persist.data.IslandCreateInfo
+import net.savagelabs.skyblockx.persist.data.WeightedItem
 import net.prosavage.baseplugin.WorldBorderUtil
 import net.prosavage.baseplugin.XMaterial
 import net.prosavage.baseplugin.serializer.Serializer

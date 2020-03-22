@@ -4,38 +4,38 @@ import net.savagelabs.skyblockx.Globals
 import net.savagelabs.skyblockx.command.CommandInfo
 import net.savagelabs.skyblockx.command.CommandRequirementsBuilder
 import net.savagelabs.skyblockx.command.SCommand
-import io.illyria.skyblockx.core.Permission
-import io.illyria.skyblockx.core.buildBar
-import io.illyria.skyblockx.core.color
-import io.illyria.skyblockx.persist.Config
-import io.illyria.skyblockx.persist.Data
-import io.illyria.skyblockx.persist.Message
+import net.savagelabs.skyblockx.core.Permission
+import net.savagelabs.skyblockx.core.buildBar
+import net.savagelabs.skyblockx.core.color
+import net.savagelabs.skyblockx.persist.Config
+import net.savagelabs.skyblockx.persist.Data
+import net.savagelabs.skyblockx.persist.Message
 import me.rayzr522.jsonmessage.JSONMessage
 import net.prosavage.baseplugin.XMaterial
 import java.lang.StringBuilder
 import java.text.DecimalFormat
 import kotlin.time.ExperimentalTime
 
-class CmdTop : _root_ide_package_.net.savagelabs.skyblockx.command.SCommand() {
+class CmdTop : SCommand() {
 
     init {
         aliases.add("top")
         aliases.add("worth")
 
         commandRequirements =
-            _root_ide_package_.net.savagelabs.skyblockx.command.CommandRequirementsBuilder().withPermission(Permission.INFO)
+            CommandRequirementsBuilder().withPermission(Permission.INFO)
                 .build()
     }
 
 
     @ExperimentalTime
-    override fun perform(info: _root_ide_package_.net.savagelabs.skyblockx.command.CommandInfo) {
-        if (_root_ide_package_.net.savagelabs.skyblockx.Globals.islandValues == null || _root_ide_package_.net.savagelabs.skyblockx.Globals.islandValues!!.map.isEmpty()) {
+    override fun perform(info: CommandInfo) {
+        if (Globals.islandValues == null || Globals.islandValues!!.map.isEmpty()) {
             info.message(Message.commandTopNotCalculated)
             return
         }
         val decimalFormat = DecimalFormat()
-        val sortedBy = _root_ide_package_.net.savagelabs.skyblockx.Globals.islandValues!!.map.values.sortedByDescending { entry -> entry.worth }
+        val sortedBy = Globals.islandValues!!.map.values.sortedByDescending { entry -> entry.worth }
         var counter = 0
         if (Config.useIslandTopHeadMessage) info.message(Config.islandTopHeadMessage)
         if (Config.useIslandTopHeaderBar) {

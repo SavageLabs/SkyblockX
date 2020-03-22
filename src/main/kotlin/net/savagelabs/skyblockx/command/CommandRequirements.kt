@@ -1,8 +1,8 @@
 package net.savagelabs.skyblockx.command
 
-import io.illyria.skyblockx.core.Permission
-import io.illyria.skyblockx.core.hasPermission
-import io.illyria.skyblockx.persist.Message
+import net.savagelabs.skyblockx.core.Permission
+import net.savagelabs.skyblockx.core.hasPermission
+import net.savagelabs.skyblockx.persist.Message
 import org.bukkit.command.ConsoleCommandSender
 import org.bukkit.entity.Player
 
@@ -14,7 +14,7 @@ class CommandRequirements(
 ) {
 
 
-    fun computeRequirements(info: _root_ide_package_.net.savagelabs.skyblockx.command.CommandInfo, informIfNot: Boolean = true): Boolean {
+    fun computeRequirements(info: CommandInfo, informIfNot: Boolean = true): Boolean {
         // Check if the commandSender is a player
         if (asPlayer && !info.isPlayer()) {
             if (informIfNot) {

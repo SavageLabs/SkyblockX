@@ -4,13 +4,13 @@ import net.savagelabs.skyblockx.Globals
 import net.savagelabs.skyblockx.command.CommandInfo
 import net.savagelabs.skyblockx.command.CommandRequirementsBuilder
 import net.savagelabs.skyblockx.command.SCommand
-import io.illyria.skyblockx.core.Permission
-import io.illyria.skyblockx.core.color
-import io.illyria.skyblockx.core.getIPlayerByName
-import io.illyria.skyblockx.persist.Message
+import net.savagelabs.skyblockx.core.Permission
+import net.savagelabs.skyblockx.core.color
+import net.savagelabs.skyblockx.core.getIPlayerByName
+import net.savagelabs.skyblockx.persist.Message
 import org.bukkit.Bukkit
 
-class CmdMemberPromote : _root_ide_package_.net.savagelabs.skyblockx.command.SCommand() {
+class CmdMemberPromote : SCommand() {
 
     init {
         aliases.add("promote")
@@ -18,10 +18,10 @@ class CmdMemberPromote : _root_ide_package_.net.savagelabs.skyblockx.command.SCo
 
         requiredArgs.add(Argument("island-member", 0, MemberArgument()))
         commandRequirements =
-            _root_ide_package_.net.savagelabs.skyblockx.command.CommandRequirementsBuilder().withPermission(Permission.MEMBER).asIslandMember(true).asLeader(true).build()
+            CommandRequirementsBuilder().withPermission(Permission.MEMBER).asIslandMember(true).asLeader(true).build()
     }
 
-    override fun perform(info: _root_ide_package_.net.savagelabs.skyblockx.command.CommandInfo) {
+    override fun perform(info: CommandInfo) {
         val island = info.island!!
         if (island.getIslandMembers().isEmpty()) {
             info.message(Message.commandMemberNoMembers)
@@ -50,20 +50,20 @@ class CmdMemberPromote : _root_ide_package_.net.savagelabs.skyblockx.command.SCo
     }
 }
 
-class CmdPromote : _root_ide_package_.net.savagelabs.skyblockx.command.SCommand() {
+class CmdPromote : SCommand() {
     init {
         aliases.add("promote")
         aliases.add("leader")
 
         requiredArgs.add(Argument("island-member", 0, MemberArgument()))
         commandRequirements =
-            _root_ide_package_.net.savagelabs.skyblockx.command.CommandRequirementsBuilder().withPermission(Permission.MEMBER).asIslandMember(true).asLeader(true).build()
+            CommandRequirementsBuilder().withPermission(Permission.MEMBER).asIslandMember(true).asLeader(true).build()
     }
 
-    override fun perform(info: _root_ide_package_.net.savagelabs.skyblockx.command.CommandInfo) {
+    override fun perform(info: CommandInfo) {
         // Execute command go just to make a shorthand version for /is member kick <member>.
-        _root_ide_package_.net.savagelabs.skyblockx.Globals.islandBaseCommand.subCommands.find { command -> command is _root_ide_package_.net.savagelabs.skyblockx.command.island.cmd.member.CmdMember }
-            ?.subCommands?.find { command -> command is _root_ide_package_.net.savagelabs.skyblockx.command.island.cmd.member.CmdMemberPromote }?.perform(info)
+        Globals.islandBaseCommand.subCommands.find { command -> command is CmdMember }
+            ?.subCommands?.find { command -> command is CmdMemberPromote }?.perform(info)
     }
 
     override fun getHelpInfo(): String {

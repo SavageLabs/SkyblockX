@@ -1,12 +1,12 @@
 package net.savagelabs.skyblockx.gui
 
 import com.github.stefvanschie.inventoryframework.GuiItem
-import io.illyria.skyblockx.core.IPlayer
-import io.illyria.skyblockx.core.color
-import io.illyria.skyblockx.core.createIsland
-import io.illyria.skyblockx.core.hasPermission
-import io.illyria.skyblockx.persist.Config
-import io.illyria.skyblockx.persist.Message
+import net.savagelabs.skyblockx.core.IPlayer
+import net.savagelabs.skyblockx.core.color
+import net.savagelabs.skyblockx.core.createIsland
+import net.savagelabs.skyblockx.core.hasPermission
+import net.savagelabs.skyblockx.persist.Config
+import net.savagelabs.skyblockx.persist.Message
 import org.bukkit.entity.Player
 
 class IslandCreateGUI :

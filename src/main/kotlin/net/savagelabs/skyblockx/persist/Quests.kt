@@ -1,8 +1,8 @@
 package net.savagelabs.skyblockx.persist
 
-import io.illyria.skyblockx.quest.Quest
-import io.illyria.skyblockx.quest.QuestActions
-import io.illyria.skyblockx.quest.QuestGoal
+import net.savagelabs.skyblockx.quest.Quest
+import net.savagelabs.skyblockx.quest.QuestActions
+import net.savagelabs.skyblockx.quest.QuestGoal
 import net.prosavage.baseplugin.XMaterial
 import net.prosavage.baseplugin.serializer.Serializer
 import net.prosavage.baseplugin.serializer.commonobjects.SerializableItem

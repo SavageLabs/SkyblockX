@@ -2,11 +2,11 @@ package net.savagelabs.skyblockx.sedit
 
 
 import net.savagelabs.skyblockx.Globals
-import io.illyria.skyblockx.core.broadcastDebug
-import io.illyria.skyblockx.core.color
-import io.illyria.skyblockx.core.enumValueOrNull
-import io.illyria.skyblockx.persist.Message
-import io.illyria.skyblockx.sbf.*
+import net.savagelabs.skyblockx.core.broadcastDebug
+import net.savagelabs.skyblockx.core.color
+import net.savagelabs.skyblockx.core.enumValueOrNull
+import net.savagelabs.skyblockx.persist.Message
+import net.savagelabs.skyblockx.sbf.*
 import net.prosavage.baseplugin.ItemBuilder
 import net.prosavage.baseplugin.XMaterial
 import org.bukkit.Bukkit
@@ -99,7 +99,7 @@ class SkyblockEdit {
                 }
             }
         }
-        val structuresDir = File(_root_ide_package_.net.savagelabs.skyblockx.Globals.skyblockX.dataFolder, "structures")
+        val structuresDir = File(Globals.skyblockX.dataFolder, "structures")
         structuresDir.mkdirs()
         SbfWriter(container).write(File(structuresDir, "${name}.structure"))
         player.sendMessage(
@@ -113,16 +113,16 @@ class SkyblockEdit {
     }
 
     fun pasteIsland(name: String, location: Location, player: Player?) {
-        var file = File(File(_root_ide_package_.net.savagelabs.skyblockx.Globals.skyblockX.dataFolder, "structures"), "$name.structure")
+        var file = File(File(Globals.skyblockX.dataFolder, "structures"), "$name.structure")
 
         if (!file.exists()) {
             player?.sendMessage("$name does not exist, using default file: island.structure")
-            val fileIsland = File(_root_ide_package_.net.savagelabs.skyblockx.Globals.skyblockX.dataFolder, "island.structure")
-            val fileNether = File(_root_ide_package_.net.savagelabs.skyblockx.Globals.skyblockX.dataFolder, "nether-island.structure")
-            _root_ide_package_.net.savagelabs.skyblockx.Globals.skyblockX.saveResource("island.structure", false)
-            _root_ide_package_.net.savagelabs.skyblockx.Globals.skyblockX.saveResource("nether-island.structure", false)
-            fileIsland.copyTo(File(File(_root_ide_package_.net.savagelabs.skyblockx.Globals.skyblockX.dataFolder, "structures"), "island.structure"))
-            fileNether.copyTo(File(File(_root_ide_package_.net.savagelabs.skyblockx.Globals.skyblockX.dataFolder, "structures"), "nether-island.structure"))
+            val fileIsland = File(Globals.skyblockX.dataFolder, "island.structure")
+            val fileNether = File(Globals.skyblockX.dataFolder, "nether-island.structure")
+            Globals.skyblockX.saveResource("island.structure", false)
+            Globals.skyblockX.saveResource("nether-island.structure", false)
+            fileIsland.copyTo(File(File(Globals.skyblockX.dataFolder, "structures"), "island.structure"))
+            fileNether.copyTo(File(File(Globals.skyblockX.dataFolder, "structures"), "nether-island.structure"))
             fileNether.delete()
             fileIsland.delete()
         }

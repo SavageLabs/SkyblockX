@@ -1,13 +1,14 @@
 package net.savagelabs.skyblockx.command.island.cmd
 
+import net.savagelabs.skyblockx.command.CommandInfo
 import net.savagelabs.skyblockx.command.CommandRequirementsBuilder
 import net.savagelabs.skyblockx.command.SCommand
-import io.illyria.skyblockx.core.Permission
-import io.illyria.skyblockx.persist.Message
+import net.savagelabs.skyblockx.core.Permission
+import net.savagelabs.skyblockx.persist.Message
 import org.bukkit.Bukkit
 import org.bukkit.event.player.PlayerTeleportEvent
 
-class CmdRemove : _root_ide_package_.net.savagelabs.skyblockx.command.SCommand() {
+class CmdRemove : SCommand() {
 
     init {
         aliases.add("remove")
@@ -16,11 +17,11 @@ class CmdRemove : _root_ide_package_.net.savagelabs.skyblockx.command.SCommand()
         requiredArgs.add(Argument("player", 0, PlayerArgument()))
 
         commandRequirements =
-           _root_ide_package_.net.savagelabs.skyblockx.command.CommandRequirementsBuilder().asIslandMember(true).asPlayer(true)
+           CommandRequirementsBuilder().asIslandMember(true).asPlayer(true)
                 .withPermission(Permission.REMOVE).build()
     }
 
-    override fun perform(info: _root_ide_package_.net.savagelabs.skyblockx.command.CommandInfo) {
+    override fun perform(info: CommandInfo) {
         val target = info.getArgAsIPlayer(0) ?: return
         // Remove the target's co-op status if theyre co-op.
         if (target.hasCoopIsland() && target.coopedIslandIds.contains(info.iPlayer!!.islandID)) {

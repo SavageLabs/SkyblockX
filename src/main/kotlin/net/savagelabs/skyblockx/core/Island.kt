@@ -1,16 +1,16 @@
 package net.savagelabs.skyblockx.core
 
 import net.savagelabs.skyblockx.Globals
-import io.illyria.skyblockx.event.IslandPostLevelCalcEvent
-import io.illyria.skyblockx.event.IslandPreLevelCalcEvent
-import io.illyria.skyblockx.persist.*
-import io.illyria.skyblockx.persist.data.SLocation
-import io.illyria.skyblockx.persist.data.getSLocation
-import io.illyria.skyblockx.quest.Quest
-import io.illyria.skyblockx.quest.incrementQuestInOrder
-import io.illyria.skyblockx.sedit.SkyblockEdit
-import io.illyria.skyblockx.world.Point
-import io.illyria.skyblockx.world.spiral
+import net.savagelabs.skyblockx.event.IslandPostLevelCalcEvent
+import net.savagelabs.skyblockx.event.IslandPreLevelCalcEvent
+import net.savagelabs.skyblockx.persist.*
+import net.savagelabs.skyblockx.persist.data.SLocation
+import net.savagelabs.skyblockx.persist.data.getSLocation
+import net.savagelabs.skyblockx.quest.Quest
+import net.savagelabs.skyblockx.quest.incrementQuestInOrder
+import net.savagelabs.skyblockx.sedit.SkyblockEdit
+import net.savagelabs.skyblockx.world.Point
+import net.savagelabs.skyblockx.world.spiral
 import me.rayzr522.jsonmessage.JSONMessage
 import net.prosavage.baseplugin.XMaterial
 import org.bukkit.*
@@ -211,7 +211,7 @@ data class Island(
     }
 
     fun getLevel(): Double? {
-        return _root_ide_package_.net.savagelabs.skyblockx.Globals.islandValues?.map?.get(islandID)?.worth
+        return Globals.islandValues?.map?.get(islandID)?.worth
     }
 
     /**
@@ -525,14 +525,14 @@ fun runIslandCalc() {
     val pluginManager = Bukkit.getPluginManager()
     for ((key, island) in Data.islands) {
         val islandPreCalcEvent = IslandPreLevelCalcEvent(island, island.getLevel())
-        Bukkit.getScheduler().callSyncMethod(_root_ide_package_.net.savagelabs.skyblockx.Globals.skyblockX) { pluginManager.callEvent(islandPreCalcEvent) }
+        Bukkit.getScheduler().callSyncMethod(Globals.skyblockX) { pluginManager.callEvent(islandPreCalcEvent) }
         if (islandPreCalcEvent.isCancelled) continue
         val worth = island.calcIsland()
         val islandPostCalcEvent = IslandPostLevelCalcEvent(island, worth.worth)
-        Bukkit.getScheduler().callSyncMethod(_root_ide_package_.net.savagelabs.skyblockx.Globals.skyblockX) { pluginManager.callEvent(islandPostCalcEvent) }
+        Bukkit.getScheduler().callSyncMethod(Globals.skyblockX) { pluginManager.callEvent(islandPostCalcEvent) }
         worth.worth = islandPostCalcEvent.levelAfterCalc ?: worth.worth
         islandVals[key] = worth
 
     }
-    _root_ide_package_.net.savagelabs.skyblockx.Globals.islandValues = IslandTopInfo(islandVals, System.currentTimeMillis())
+    Globals.islandValues = IslandTopInfo(islandVals, System.currentTimeMillis())
 }

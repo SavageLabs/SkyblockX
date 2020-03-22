@@ -1,6 +1,6 @@
 package net.savagelabs.skyblockx.event
 
-import io.illyria.skyblockx.core.Island
+import net.savagelabs.skyblockx.core.Island
 import org.bukkit.event.Cancellable
 import org.bukkit.event.Event
 import org.bukkit.event.HandlerList

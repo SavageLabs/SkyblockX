@@ -1,6 +1,6 @@
 package net.savagelabs.skyblockx.persist
 
-import io.illyria.skyblockx.core.color
+import net.savagelabs.skyblockx.core.color
 import net.prosavage.baseplugin.serializer.Serializer
 import org.bukkit.ChatColor
 

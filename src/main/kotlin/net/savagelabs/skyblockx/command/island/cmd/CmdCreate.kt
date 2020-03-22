@@ -1,16 +1,18 @@
 package net.savagelabs.skyblockx.command.island.cmd
 
 import net.savagelabs.skyblockx.command.CommandRequirementsBuilder
-import io.illyria.skyblockx.core.Permission
-import io.illyria.skyblockx.core.color
-import io.illyria.skyblockx.core.createIsland
-import io.illyria.skyblockx.gui.IslandCreateGUI
-import io.illyria.skyblockx.persist.Config
-import io.illyria.skyblockx.persist.Message
+import net.savagelabs.skyblockx.core.Permission
+import net.savagelabs.skyblockx.core.color
+import net.savagelabs.skyblockx.core.createIsland
+import net.savagelabs.skyblockx.gui.IslandCreateGUI
+import net.savagelabs.skyblockx.persist.Config
+import net.savagelabs.skyblockx.persist.Message
 import me.rayzr522.jsonmessage.JSONMessage
+import net.savagelabs.skyblockx.command.CommandInfo
+import net.savagelabs.skyblockx.command.SCommand
 
 
-class CmdCreate : _root_ide_package_.net.savagelabs.skyblockx.command.SCommand() {
+class CmdCreate : SCommand() {
 
     init {
         aliases.add("create")
@@ -18,11 +20,11 @@ class CmdCreate : _root_ide_package_.net.savagelabs.skyblockx.command.SCommand()
         optionalArgs.add(Argument("island-type", 0, StringArgument()))
 
         commandRequirements =
-           _root_ide_package_.net.savagelabs.skyblockx.command.CommandRequirementsBuilder().asIslandMember(false).asPlayer(true)
+           CommandRequirementsBuilder().asIslandMember(false).asPlayer(true)
                 .withPermission(Permission.CREATE).build()
     }
 
-    override fun perform(info: _root_ide_package_.net.savagelabs.skyblockx.command.CommandInfo) {
+    override fun perform(info: CommandInfo) {
         if (info.iPlayer!!.hasIsland()) {
             info.message(Message.commandCreateAlreadyHaveAnIsland)
             return

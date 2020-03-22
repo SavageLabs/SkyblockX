@@ -1,10 +1,10 @@
 package net.savagelabs.skyblockx.gui
 
 import com.github.stefvanschie.inventoryframework.GuiItem
-import io.illyria.skyblockx.core.IPlayer
-import io.illyria.skyblockx.core.getIPlayer
-import io.illyria.skyblockx.core.updateWorldBorder
-import io.illyria.skyblockx.persist.Config
+import net.savagelabs.skyblockx.core.IPlayer
+import net.savagelabs.skyblockx.core.getIPlayer
+import net.savagelabs.skyblockx.core.updateWorldBorder
+import net.savagelabs.skyblockx.persist.Config
 import net.prosavage.baseplugin.WorldBorderUtil
 import net.prosavage.baseplugin.serializer.commonobjects.SerializableItem
 import org.bukkit.entity.Player

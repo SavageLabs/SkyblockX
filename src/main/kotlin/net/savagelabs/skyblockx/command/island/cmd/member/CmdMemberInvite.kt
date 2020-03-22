@@ -4,12 +4,12 @@ import net.savagelabs.skyblockx.Globals
 import net.savagelabs.skyblockx.command.CommandInfo
 import net.savagelabs.skyblockx.command.CommandRequirementsBuilder
 import net.savagelabs.skyblockx.command.SCommand
-import io.illyria.skyblockx.core.Permission
-import io.illyria.skyblockx.core.color
-import io.illyria.skyblockx.persist.Message
+import net.savagelabs.skyblockx.core.Permission
+import net.savagelabs.skyblockx.core.color
+import net.savagelabs.skyblockx.persist.Message
 import me.rayzr522.jsonmessage.JSONMessage
 
-class CmdMemberInvite : _root_ide_package_.net.savagelabs.skyblockx.command.SCommand() {
+class CmdMemberInvite : SCommand() {
 
 
     init {
@@ -18,11 +18,11 @@ class CmdMemberInvite : _root_ide_package_.net.savagelabs.skyblockx.command.SCom
         requiredArgs.add(Argument("player", 0, PlayerArgument()))
 
         commandRequirements =
-            _root_ide_package_.net.savagelabs.skyblockx.command.CommandRequirementsBuilder().withPermission(Permission.MEMBER).asIslandMember(true).build()
+            CommandRequirementsBuilder().withPermission(Permission.MEMBER).asIslandMember(true).build()
     }
 
 
-    override fun perform(info: _root_ide_package_.net.savagelabs.skyblockx.command.CommandInfo) {
+    override fun perform(info: CommandInfo) {
         val island = info.island!!
         if (island.memberLimit <= island.getIslandMembers().size) {
             info.message(String.format(Message.commandMemberInviteLimit, island.memberLimit))
@@ -51,17 +51,17 @@ class CmdMemberInvite : _root_ide_package_.net.savagelabs.skyblockx.command.SCom
 
 }
 
-class CmdInvite : _root_ide_package_.net.savagelabs.skyblockx.command.SCommand() {
+class CmdInvite : SCommand() {
     init {
         aliases.add("invite")
         requiredArgs.add(Argument("player", 0, PlayerArgument()))
         commandRequirements =
-            _root_ide_package_.net.savagelabs.skyblockx.command.CommandRequirementsBuilder().withPermission(Permission.MEMBER).asIslandMember(true).build()
+            CommandRequirementsBuilder().withPermission(Permission.MEMBER).asIslandMember(true).build()
     }
 
-    override fun perform(info: _root_ide_package_.net.savagelabs.skyblockx.command.CommandInfo) {
-        _root_ide_package_.net.savagelabs.skyblockx.Globals.islandBaseCommand.subCommands.find { command -> command is _root_ide_package_.net.savagelabs.skyblockx.command.island.cmd.member.CmdMember }
-            ?.subCommands?.find { subcommand -> subcommand is _root_ide_package_.net.savagelabs.skyblockx.command.island.cmd.member.CmdMemberInvite }?.perform(info)
+    override fun perform(info: CommandInfo) {
+        Globals.islandBaseCommand.subCommands.find { command -> command is CmdMember }
+            ?.subCommands?.find { subcommand -> subcommand is CmdMemberInvite }?.perform(info)
     }
 
     override fun getHelpInfo(): String {
