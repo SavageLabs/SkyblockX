@@ -428,6 +428,8 @@ data class Island(
             player!!.teleport(Bukkit.getWorld(Config.defaultWorld)!!.spawnLocation)
         }
         Data.islands.remove(islandID)
+        // Delete island from value map.
+        Globals.islandValues?.map?.remove(islandID)
         deleteIslandBlocks()
     }
 
