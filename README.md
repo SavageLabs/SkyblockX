@@ -1,4 +1,4 @@
-![Logo](./SkyblockHeader.png)
+![Logo](./skyblockx-github-banner-1.png)
 
 
 ## About
