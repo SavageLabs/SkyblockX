@@ -67,6 +67,9 @@ class PlayerListener : Listener {
     @EventHandler
     fun onPlayerTeleport(event: PlayerTeleportEvent) {
         updateWorldBorder(event.player, event.to!!, 10L)
+        if (event.cause == PlayerTeleportEvent.TeleportCause.ENDER_PEARL && event.to != null && getIslandFromLocation(event.from) != getIslandFromLocation(event.to!!)) {
+            event.isCancelled = true
+        }
     }
 
     @EventHandler
