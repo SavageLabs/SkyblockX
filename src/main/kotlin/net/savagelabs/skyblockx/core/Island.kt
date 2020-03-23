@@ -1,5 +1,7 @@
 package net.savagelabs.skyblockx.core
 
+import me.rayzr522.jsonmessage.JSONMessage
+import net.prosavage.baseplugin.XMaterial
 import net.savagelabs.skyblockx.Globals
 import net.savagelabs.skyblockx.event.IslandPostLevelCalcEvent
 import net.savagelabs.skyblockx.event.IslandPreLevelCalcEvent
@@ -11,8 +13,6 @@ import net.savagelabs.skyblockx.quest.incrementQuestInOrder
 import net.savagelabs.skyblockx.sedit.SkyblockEdit
 import net.savagelabs.skyblockx.world.Point
 import net.savagelabs.skyblockx.world.spiral
-import me.rayzr522.jsonmessage.JSONMessage
-import net.prosavage.baseplugin.XMaterial
 import org.bukkit.*
 import org.bukkit.block.Biome
 import org.bukkit.entity.Player
@@ -26,7 +26,6 @@ import kotlin.streams.toList
 import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTimedValue
-
 
 
 @Suppress("UNCHECKED_CAST")
@@ -419,13 +418,19 @@ data class Island(
      * Delete the players island by removing the whole team, Deleting the actual blocks is too intensive.
      */
     fun delete() {
-        val iPlayerByUUID = getIPlayerByUUID(ownerUUID)
-        iPlayerByUUID?.unassignIsland()
-        Bukkit.getPlayer(ownerUUID)?.teleport(Bukkit.getWorld(Config.defaultWorld)!!.spawnLocation)
+        val ownerIPlayer = getIPlayerByUUID(ownerUUID)
+        ownerIPlayer?.unassignIsland()
+        ownerIPlayer?.getPlayer()?.teleport(
+            Bukkit.getWorld(Config.defaultWorld)!!.spawnLocation.add(0.0, 1.0, 0.0),
+            PlayerTeleportEvent.TeleportCause.PLUGIN
+        )
         getAllMemberUUIDs().forEach { memberUUID ->
-            getIPlayerByUUID(memberUUID)?.unassignIsland()
-            val player = Bukkit.getPlayer(memberUUID)
-            player!!.teleport(Bukkit.getWorld(Config.defaultWorld)!!.spawnLocation)
+            val iplayer = getIPlayerByUUID(memberUUID)
+            iplayer?.unassignIsland()
+            iplayer?.getPlayer()?.teleport(
+                Bukkit.getWorld(Config.defaultWorld)!!.spawnLocation.add(0.0, 1.0, 0.0),
+                PlayerTeleportEvent.TeleportCause.PLUGIN
+            )
         }
         Data.islands.remove(islandID)
         // Delete island from value map.
