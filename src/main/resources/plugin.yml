@@ -12,5 +12,5 @@ commands:
     description: 'base skyblock command'
     aliases: [skyblock, sskyblock, sb, sbx, sblock]
   is:
-    description: 'base savageskyblock command'
+    description: 'base island command'
     aliases: [island]
