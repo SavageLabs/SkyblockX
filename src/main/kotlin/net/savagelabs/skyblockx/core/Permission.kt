@@ -49,13 +49,16 @@ enum class Permission(val node: String, val description: String, val permissionD
 
 fun registerAllPermissions(pluginManager: PluginManager) {
     Permission.values().forEach { permission ->
-        pluginManager.addPermission(
-            org.bukkit.permissions.Permission(
-                permission.getFullPermissionNode(),
-                permission.description,
-                permission.permissionDefault
+        // Check if existing for hot-reload :)
+        if (pluginManager.getPermission(permission.getFullPermissionNode()) == null) {
+            pluginManager.addPermission(
+                org.bukkit.permissions.Permission(
+                    permission.getFullPermissionNode(),
+                    permission.description,
+                    permission.permissionDefault
+                )
             )
-        )
+        }
     }
 }
 
