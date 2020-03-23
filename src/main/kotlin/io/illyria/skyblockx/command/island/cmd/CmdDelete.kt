@@ -1,5 +1,6 @@
 package io.illyria.skyblockx.command.island.cmd
 
+import io.illyria.skyblockx.command.CommandInfo
 import io.illyria.skyblockx.command.CommandRequirementsBuilder
 import io.illyria.skyblockx.core.Permission
 import io.illyria.skyblockx.core.deleteIsland
@@ -16,7 +17,7 @@ class CmdDelete : io.illyria.skyblockx.command.SCommand() {
     }
 
 
-    override fun perform(info: io.illyria.skyblockx.command.CommandInfo) {
+    override fun perform(info: CommandInfo) {
         info.island!!.delete()
         info.message(Message.commandDeleteDeletedIsland)
 
