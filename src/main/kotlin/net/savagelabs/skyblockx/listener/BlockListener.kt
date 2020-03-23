@@ -24,7 +24,7 @@ class BlockListener : Listener {
 
 
     @EventHandler
-    fun onBlockBreak(event: BlockPlaceEvent) {
+    fun onBlockPlace(event: BlockPlaceEvent) {
         // FUTURE CONTRIBUTIONS: Attempt to split checks into small blocks.
         if (isNotInSkyblockWorld(event.blockPlaced.world)) {
             return

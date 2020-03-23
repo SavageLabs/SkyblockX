@@ -243,16 +243,12 @@ class PlayerListener : Listener {
     @EventHandler
     fun onPlayerInteract(event: PlayerInteractEvent) {
         // FUTURE CONTRIBUTORS: TRY TO SPLIT CHECKS INTO SMALLER BLOCKS.
-
-        if (event.item == null
-            || event.clickedBlock == null
+        if (event.clickedBlock == null
             || isNotInSkyblockWorld(event.clickedBlock!!.world)
         ) {
             return
         }
-
         val iPlayer = getIPlayer(event.player)
-
 
         // Check if they have an island or co-op island, if not, deny.
         if (!iPlayer.hasCoopIsland() && !iPlayer.hasIsland() && !iPlayer.inBypass) {
