@@ -1,5 +1,6 @@
 package net.savagelabs.skyblockx.listener
 
+import net.prosavage.baseplugin.XMaterial
 import net.savagelabs.skyblockx.core.*
 import net.savagelabs.skyblockx.persist.Config
 import net.savagelabs.skyblockx.persist.Message
@@ -7,7 +8,6 @@ import net.savagelabs.skyblockx.persist.Quests
 import net.savagelabs.skyblockx.quest.QuestGoal
 import net.savagelabs.skyblockx.quest.failsQuestCheckingPreRequisites
 import net.savagelabs.skyblockx.sedit.SkyblockEdit
-import net.prosavage.baseplugin.XMaterial
 import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.World
@@ -21,7 +21,10 @@ import org.bukkit.event.inventory.CraftItemEvent
 import org.bukkit.event.inventory.InventoryAction
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.inventory.InventoryType
-import org.bukkit.event.player.*
+import org.bukkit.event.player.PlayerFishEvent
+import org.bukkit.event.player.PlayerInteractEvent
+import org.bukkit.event.player.PlayerPortalEvent
+import org.bukkit.event.player.PlayerTeleportEvent
 
 class PlayerListener : Listener {
 
@@ -248,6 +251,7 @@ class PlayerListener : Listener {
         ) {
             return
         }
+
         val iPlayer = getIPlayer(event.player)
 
         // Check if they have an island or co-op island, if not, deny.

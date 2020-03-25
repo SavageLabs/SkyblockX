@@ -26,6 +26,7 @@ class IslandCreateGUI :
                     val createdIsland = createIsland(player, island.structureFile.replace(".structure", ""))
                     createdIsland.netherFilePath = island.netherFile
                     player.sendMessage(color(Message.messagePrefix + Message.commandCreateSuccess))
+                    context.lastIslandResetTime = System.currentTimeMillis() / 1000
                 }
             })
         }

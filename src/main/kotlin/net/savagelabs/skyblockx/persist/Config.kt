@@ -1,19 +1,17 @@
 package net.savagelabs.skyblockx.persist
 
+import net.prosavage.baseplugin.WorldBorderUtil
+import net.prosavage.baseplugin.XMaterial
+import net.prosavage.baseplugin.serializer.Serializer
+import net.prosavage.baseplugin.serializer.commonobjects.SerializableItem
 import net.savagelabs.skyblockx.gui.HeadFormat
 import net.savagelabs.skyblockx.gui.IslandBorderItem
 import net.savagelabs.skyblockx.gui.MenuItem
 import net.savagelabs.skyblockx.persist.data.IslandCreateInfo
 import net.savagelabs.skyblockx.persist.data.WeightedItem
-import net.prosavage.baseplugin.WorldBorderUtil
-import net.prosavage.baseplugin.XMaterial
-import net.prosavage.baseplugin.serializer.Serializer
-import net.prosavage.baseplugin.serializer.commonobjects.SerializableItem
 import org.bukkit.Bukkit
-import org.bukkit.ChatColor
 import org.bukkit.block.Biome
 import java.util.*
-import kotlin.time.Duration
 
 object Config {
 
@@ -42,6 +40,9 @@ object Config {
     var fallingDeathPreventionCommands = listOf(
         "eco take {player} 100"
     )
+
+    // Equals to 6 hours, 60 sec in 1 min, and 60 min in an hour, times 6.
+    var islandResetCoolDownSeconds = 60L * 60L * 6L
 
     var chestRows = mapOf(1 to 3, 2 to 4, 3 to 5, 4 to 5, 5 to 6)
 

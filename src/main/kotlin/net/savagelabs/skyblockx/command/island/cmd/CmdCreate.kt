@@ -1,15 +1,15 @@
 package net.savagelabs.skyblockx.command.island.cmd
 
+import me.rayzr522.jsonmessage.JSONMessage
+import net.savagelabs.skyblockx.command.CommandInfo
 import net.savagelabs.skyblockx.command.CommandRequirementsBuilder
+import net.savagelabs.skyblockx.command.SCommand
 import net.savagelabs.skyblockx.core.Permission
 import net.savagelabs.skyblockx.core.color
 import net.savagelabs.skyblockx.core.createIsland
 import net.savagelabs.skyblockx.gui.IslandCreateGUI
 import net.savagelabs.skyblockx.persist.Config
 import net.savagelabs.skyblockx.persist.Message
-import me.rayzr522.jsonmessage.JSONMessage
-import net.savagelabs.skyblockx.command.CommandInfo
-import net.savagelabs.skyblockx.command.SCommand
 
 
 class CmdCreate : SCommand() {
@@ -30,6 +30,17 @@ class CmdCreate : SCommand() {
             return
         }
 
+        if (info.iPlayer!!.lastIslandResetTime != -1L) {
+            val timeNow = System.currentTimeMillis() / 1000
+            val resetTime = info.iPlayer!!.lastIslandResetTime
+            val difference = timeNow - resetTime
+            if (difference < Config.islandResetCoolDownSeconds) {
+                info.message(Message.commandCreateCooldown, (Config.islandResetCoolDownSeconds - difference).toString())
+                return
+            }
+        }
+
+
         if (info.args.size == 1) {
             val listOfNames = ArrayList<String>()
             for (islandCreationInfo in Config.islandCreateGUIIslandTypes) {
@@ -49,7 +60,6 @@ class CmdCreate : SCommand() {
                     .suggestCommand("/is create $islandName")
                     .send(info.player)
             }
-
             return
         }
         IslandCreateGUI().showGui(info.player!!)

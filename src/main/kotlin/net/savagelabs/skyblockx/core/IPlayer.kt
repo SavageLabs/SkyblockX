@@ -1,10 +1,10 @@
 package net.savagelabs.skyblockx.core
 
+import net.prosavage.baseplugin.WorldBorderUtil
 import net.savagelabs.skyblockx.persist.Config
 import net.savagelabs.skyblockx.persist.Data
 import net.savagelabs.skyblockx.persist.Message
 import net.savagelabs.skyblockx.sedit.Position
-import net.prosavage.baseplugin.WorldBorderUtil
 import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.entity.Player
@@ -13,6 +13,7 @@ import java.util.*
 data class IPlayer(val uuid: String) {
     var name: String = Bukkit.getPlayer(UUID.fromString(uuid))!!.player!!.name
 
+    var lastIslandResetTime = -1L
 
     var inBypass = false
 

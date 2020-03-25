@@ -1,7 +1,7 @@
 package net.savagelabs.skyblockx.persist
 
-import net.savagelabs.skyblockx.core.color
 import net.prosavage.baseplugin.serializer.Serializer
+import net.savagelabs.skyblockx.core.color
 import org.bukkit.ChatColor
 
 object Message {
@@ -55,6 +55,7 @@ object Message {
     var commandCreateHelp = "&7Creates a skyblock island."
     var commandCreateAlreadyHaveAnIsland = "&7You already have an island, use /is delete to delete your island."
     var commandCreateSuccess = "&7Your island was successfully created."
+    var commandCreateCooldown = "&7Island Creation is on cooldown: &b%1\$s &7seconds left."
 
     var commandChestOpening = "&7Opening the island chest."
     var commandChestHelp = "&7Open the island's virtual chest."
