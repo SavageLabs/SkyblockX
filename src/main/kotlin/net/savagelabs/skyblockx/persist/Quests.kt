@@ -1,12 +1,11 @@
 package net.savagelabs.skyblockx.persist
 
+import com.cryptomorin.xseries.XMaterial
+import net.prosavage.baseplugin.serializer.Serializer
+import net.prosavage.baseplugin.serializer.commonobjects.SerializableItem
 import net.savagelabs.skyblockx.quest.Quest
 import net.savagelabs.skyblockx.quest.QuestActions
 import net.savagelabs.skyblockx.quest.QuestGoal
-import net.prosavage.baseplugin.XMaterial
-import net.prosavage.baseplugin.serializer.Serializer
-import net.prosavage.baseplugin.serializer.commonobjects.SerializableItem
-import org.bukkit.entity.Entity
 import org.bukkit.entity.EntityType
 
 object Quests {

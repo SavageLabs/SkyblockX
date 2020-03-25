@@ -27,7 +27,7 @@ data class IPlayer(val uuid: String) {
 
     var coopedIslandIds = HashSet<Int>()
 
-    var borderColor = WorldBorderUtil.Color.Green
+    var borderColor = WorldBorderUtil.Color.GREEN
         get() = field
 
     var islandsInvitedTo = HashSet<Int>()

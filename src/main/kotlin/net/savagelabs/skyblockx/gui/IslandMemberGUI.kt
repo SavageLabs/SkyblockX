@@ -1,14 +1,14 @@
 package net.savagelabs.skyblockx.gui
 
+import com.cryptomorin.xseries.XMaterial
 import com.github.stefvanschie.inventoryframework.GuiItem
+import me.clip.placeholderapi.PlaceholderAPI
+import net.prosavage.baseplugin.ItemBuilder
 import net.savagelabs.skyblockx.Globals
 import net.savagelabs.skyblockx.core.IPlayer
 import net.savagelabs.skyblockx.core.color
 import net.savagelabs.skyblockx.core.isPlaceholderAPIPresent
 import net.savagelabs.skyblockx.persist.Config
-import me.clip.placeholderapi.PlaceholderAPI
-import net.prosavage.baseplugin.ItemBuilder
-import net.prosavage.baseplugin.XMaterial
 import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.inventory.ItemStack

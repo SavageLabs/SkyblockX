@@ -1,7 +1,7 @@
 package net.savagelabs.skyblockx.persist
 
+import com.cryptomorin.xseries.XMaterial
 import net.prosavage.baseplugin.WorldBorderUtil
-import net.prosavage.baseplugin.XMaterial
 import net.prosavage.baseplugin.serializer.Serializer
 import net.prosavage.baseplugin.serializer.commonobjects.SerializableItem
 import net.savagelabs.skyblockx.gui.HeadFormat
@@ -189,19 +189,22 @@ object Config {
     var islandBorderGUIRows = 3
     var islandBorderGUIBackgroundItem = SerializableItem(XMaterial.GRAY_STAINED_GLASS_PANE, "&7", listOf(""), 1)
     var islandBorderGUIItems = mapOf(
-        WorldBorderUtil.Color.Red to IslandBorderItem(
+        WorldBorderUtil.Color.RED to IslandBorderItem(
             10,
             SerializableItem(XMaterial.RED_STAINED_GLASS, "&cRed Border", listOf(), 1)
         ),
-        WorldBorderUtil.Color.Green to IslandBorderItem(
+        WorldBorderUtil.Color.GREEN to IslandBorderItem(
             12,
             SerializableItem(XMaterial.LIME_STAINED_GLASS, "&aGreen Border", listOf(), 1)
         ),
-        WorldBorderUtil.Color.Blue to IslandBorderItem(
+        WorldBorderUtil.Color.BLUE to IslandBorderItem(
             14,
             SerializableItem(XMaterial.LIGHT_BLUE_STAINED_GLASS, "&bBlue Border", listOf(), 1)
         ),
-        WorldBorderUtil.Color.Off to IslandBorderItem(16, SerializableItem(XMaterial.GLASS, "&fNo Border", listOf(), 1))
+        WorldBorderUtil.Color.NONE to IslandBorderItem(
+            16,
+            SerializableItem(XMaterial.GLASS, "&fNo Border", listOf(), 1)
+        )
     )
 
     var islandMenuGUITitle = "Island Menu"

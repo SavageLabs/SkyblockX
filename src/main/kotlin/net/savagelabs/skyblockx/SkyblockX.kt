@@ -1,5 +1,8 @@
 package net.savagelabs.skyblockx
 
+import com.cryptomorin.xseries.XMaterial
+import net.prosavage.baseplugin.SavagePlugin
+import net.prosavage.baseplugin.WorldBorderUtil
 import net.savagelabs.skyblockx.command.island.IslandBaseCommand
 import net.savagelabs.skyblockx.command.skyblock.SkyblockBaseCommand
 import net.savagelabs.skyblockx.core.color
@@ -10,15 +13,11 @@ import net.savagelabs.skyblockx.listener.*
 import net.savagelabs.skyblockx.persist.*
 import net.savagelabs.skyblockx.persist.data.Items
 import net.savagelabs.skyblockx.world.VoidWorldGenerator
-import net.prosavage.baseplugin.SavagePlugin
-import net.prosavage.baseplugin.WorldBorderUtil
-import net.prosavage.baseplugin.XMaterial
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor
 import org.bukkit.World
 import org.bukkit.WorldCreator
 import org.bukkit.generator.ChunkGenerator
-import kotlin.math.log
 import kotlin.system.measureTimeMillis
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTimedValue

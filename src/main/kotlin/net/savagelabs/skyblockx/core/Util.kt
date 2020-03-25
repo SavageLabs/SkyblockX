@@ -1,8 +1,8 @@
 package net.savagelabs.skyblockx.core
 
+import net.prosavage.baseplugin.WorldBorderUtil
 import net.savagelabs.skyblockx.Globals
 import net.savagelabs.skyblockx.persist.Config
-import net.prosavage.baseplugin.WorldBorderUtil
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor
 import org.bukkit.Location
@@ -37,7 +37,7 @@ fun updateWorldBorder(player: Player, location: Location, delay: Long) {
         val worldBorder = location.world?.worldBorder
         Globals.worldBorderUtil.sendWorldBorder(
             player,
-            WorldBorderUtil.Color.Off,
+            WorldBorderUtil.Color.NONE,
             worldBorder!!.size,
             worldBorder.center
         )

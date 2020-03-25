@@ -1,7 +1,7 @@
 package net.savagelabs.skyblockx.core
 
+import com.cryptomorin.xseries.XMaterial
 import me.rayzr522.jsonmessage.JSONMessage
-import net.prosavage.baseplugin.XMaterial
 import net.savagelabs.skyblockx.Globals
 import net.savagelabs.skyblockx.event.IslandPostLevelCalcEvent
 import net.savagelabs.skyblockx.event.IslandPreLevelCalcEvent

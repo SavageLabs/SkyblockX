@@ -1,16 +1,13 @@
 package net.savagelabs.skyblockx.command.island.cmd
 
+import com.cryptomorin.xseries.XMaterial
 import net.savagelabs.skyblockx.command.CommandInfo
-import net.savagelabs.skyblockx.command.CommandRequirements
 import net.savagelabs.skyblockx.command.CommandRequirementsBuilder
 import net.savagelabs.skyblockx.command.SCommand
 import net.savagelabs.skyblockx.persist.BlockValues
 import net.savagelabs.skyblockx.persist.Config
 import net.savagelabs.skyblockx.persist.Message
-import net.prosavage.baseplugin.XMaterial
-import java.text.DecimalFormat
 import java.text.NumberFormat
-import java.util.*
 
 class CmdValue : SCommand() {
 

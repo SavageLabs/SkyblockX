@@ -1,6 +1,6 @@
 package net.savagelabs.skyblockx.persist
 
-import net.prosavage.baseplugin.XMaterial
+import com.cryptomorin.xseries.XMaterial
 import net.prosavage.baseplugin.serializer.Serializer
 
 object BlockValues {

@@ -1,6 +1,6 @@
 package net.savagelabs.skyblockx.listener
 
-import net.prosavage.baseplugin.XMaterial
+import com.cryptomorin.xseries.XMaterial
 import net.savagelabs.skyblockx.core.*
 import net.savagelabs.skyblockx.persist.Config
 import net.savagelabs.skyblockx.persist.Message

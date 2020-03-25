@@ -1,5 +1,6 @@
 package net.savagelabs.skyblockx.listener
 
+import com.cryptomorin.xseries.XMaterial
 import net.savagelabs.skyblockx.Globals
 import net.savagelabs.skyblockx.core.canUseBlockAtLocation
 import net.savagelabs.skyblockx.core.getIPlayer
@@ -8,7 +9,6 @@ import net.savagelabs.skyblockx.persist.Config
 import net.savagelabs.skyblockx.persist.Message
 import net.savagelabs.skyblockx.persist.Quests
 import net.savagelabs.skyblockx.quest.QuestGoal
-import net.prosavage.baseplugin.XMaterial
 import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.block.BlockFace

@@ -1,15 +1,13 @@
 package net.savagelabs.skyblockx.sedit
 
 
+import com.cryptomorin.xseries.XMaterial
+import net.prosavage.baseplugin.ItemBuilder
 import net.savagelabs.skyblockx.Globals
-import net.savagelabs.skyblockx.core.broadcastDebug
 import net.savagelabs.skyblockx.core.color
 import net.savagelabs.skyblockx.core.enumValueOrNull
 import net.savagelabs.skyblockx.persist.Message
 import net.savagelabs.skyblockx.sbf.*
-import net.prosavage.baseplugin.ItemBuilder
-import net.prosavage.baseplugin.XMaterial
-import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.block.Chest
