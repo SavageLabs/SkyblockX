@@ -4,9 +4,7 @@ import net.savagelabs.skyblockx.command.CommandInfo
 import net.savagelabs.skyblockx.command.CommandRequirementsBuilder
 import net.savagelabs.skyblockx.command.SCommand
 import net.savagelabs.skyblockx.core.Permission
-import net.savagelabs.skyblockx.persist.Config
 import net.savagelabs.skyblockx.persist.Message
-import org.bukkit.Bukkit
 
 class CmdChest : SCommand() {
 
@@ -24,6 +22,7 @@ class CmdChest : SCommand() {
     override fun perform(info: CommandInfo) {
         var inventory = info.island?.inventory
         info.player?.openInventory(inventory!!)
+        info.message(Message.commandChestOpening)
     }
 
     override fun getHelpInfo(): String {
