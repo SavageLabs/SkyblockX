@@ -36,9 +36,10 @@ class CmdTop : SCommand() {
         val decimalFormat = DecimalFormat()
         val sortedBy = Globals.islandValues!!.map.values.sortedByDescending { entry -> entry.worth }
         var counter = 0
-        if (Config.useIslandTopHeadMessage) info.message(Config.islandTopHeadMessage)
+        // Should be able to add the prefix if they want in message.json, right now, it doesn't match because the top island entries part does not have the prefix.
+        if (Config.useIslandTopHeadMessage) info.message(Config.islandTopHeadMessage, false)
         if (Config.useIslandTopHeaderBar) {
-            info.message(buildBar(Config.islandTopbarElement))
+            info.message(buildBar(Config.islandTopbarElement), false)
         }
         sortedBy.forEach { entry ->
             counter++
@@ -60,7 +61,7 @@ class CmdTop : SCommand() {
             if (info.isPlayer()) {
                 JSONMessage.create(line).tooltip(tooltip).send(info.player)
             } else {
-                info.message(line)
+                info.message(line, false)
             }
 
         }

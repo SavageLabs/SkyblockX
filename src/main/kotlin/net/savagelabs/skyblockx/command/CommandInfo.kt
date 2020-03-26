@@ -74,12 +74,12 @@ class CommandInfo(val commandSender: CommandSender, val args: ArrayList<String>,
         return player != null
     }
 
-    fun message(message: String) {
-        commandSender.sendMessage(color(Message.messagePrefix + message))
+    fun message(message: String, withPrefix: Boolean = true) {
+        commandSender.sendMessage(color((if (withPrefix) Message.messagePrefix else "") + message))
     }
 
-    fun message(message: String, vararg args: String) {
-        message(String.format(message, *args))
+    fun message(message: String, vararg args: String, withPrefix: Boolean = true) {
+        message(String.format(message, *args), withPrefix)
     }
 
 
