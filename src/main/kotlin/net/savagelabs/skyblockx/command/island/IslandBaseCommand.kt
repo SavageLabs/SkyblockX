@@ -48,6 +48,7 @@ class IslandBaseCommand : SCommand(), CommandExecutor, TabCompleter {
         subCommands.add(CmdValue())
         subCommands.add(CmdChest())
         subCommands.add(CmdBiome())
+        subCommands.add(CmdSetGo())
         prefix = "/is"
 
         initializeSubCommandData()

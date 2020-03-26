@@ -13,6 +13,7 @@ enum class Permission(val node: String, val description: String, val permissionD
     CREATE("create", "create an island.", PermissionDefault.TRUE),
     RELOAD("reload", "reload the plugin", PermissionDefault.OP),
     GO("go", "go to your island.", PermissionDefault.TRUE),
+    GO_SET("go.set", "set the go point of the island", PermissionDefault.TRUE),
     DELETE("delete", "delete your island.", PermissionDefault.TRUE),
     BORDER("border", "update your island border.", PermissionDefault.TRUE),
     COOP("coop", "co-op a player.", PermissionDefault.TRUE),

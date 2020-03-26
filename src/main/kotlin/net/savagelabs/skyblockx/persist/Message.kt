@@ -63,6 +63,10 @@ object Message {
     var commandGoHelp = "&7Takes you to an island."
     var commandGoTeleporting = "&7Taking you to your island..."
 
+    var commandGoSetHelp = "&7set the go point for the island."
+    var commandGoSetYouMustBeOnYourIsland = "&7You must be on your island to execute this command."
+    var commandGoSetSuccess = "&7You have successfully updated your &b/is go&7 location."
+
     var commandDeleteHelp = "&7Deletes an island."
     var commandDeleteDeletedIsland = "&7Your island has been deleted."
 

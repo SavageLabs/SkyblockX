@@ -23,7 +23,7 @@ class CmdGo : SCommand() {
     override fun perform(info: CommandInfo) {
         val island = info.iPlayer!!.getIsland()!!
         info.message(Message.commandGoTeleporting)
-        info.player!!.teleport(island.getIslandCenter(), PlayerTeleportEvent.TeleportCause.PLUGIN)
+        info.player!!.teleport(island.islandGoPoint.getLocation(), PlayerTeleportEvent.TeleportCause.PLUGIN)
     }
 
 

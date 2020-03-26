@@ -37,14 +37,17 @@ data class Island(
     var islandSize: Int
 ) {
 
+
     var inventory = Bukkit.createInventory(null, (Config.chestRows[1] ?: 3) * 9)
-    get() {
-        if (field == null) field = Bukkit.createInventory(null, (Config.chestRows[1] ?: 3) * 9)
-        return field
-    }
+        get() {
+            if (field == null) field = Bukkit.createInventory(null, (Config.chestRows[1] ?: 3) * 9)
+            return field
+        }
 
     var beenToNether = false
     var netherFilePath = "nether-island.structure"
+
+    lateinit var islandGoPoint: SLocation
 
     val minLocation: SLocation = getSLocation(point.getLocation())
     val maxLocation: SLocation = getSLocation(
@@ -513,6 +516,7 @@ fun createIsland(player: Player?, schematic: String, teleport: Boolean = true): 
     player?.sendTitle(color(Message.islandCreatedTitle), color(Message.islandCreatedSubtitle))
     player?.sendMessage(color("${Message.messagePrefix}${String.format(Message.islandCreationMessage, size)}"))
     if (player != null) updateWorldBorder(player, player.location, 10L)
+    island.islandGoPoint = getSLocation(island.getIslandCenter())
     return island
 }
 
