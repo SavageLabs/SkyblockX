@@ -7,14 +7,18 @@ import net.savagelabs.skyblockx.Globals.skyblockX
 import net.savagelabs.skyblockx.core.IPlayer
 import net.savagelabs.skyblockx.core.color
 import net.savagelabs.skyblockx.core.getIPlayer
-import net.prosavage.baseplugin.serializer.commonobjects.SerializableItem
 import org.bukkit.entity.HumanEntity
 import org.bukkit.entity.Player
 
-abstract class BaseGUI(val title: String, val backgroundItem: SerializableItem, val guiRows: Int) {
+abstract class BaseGUI(
+    val title: String,
+    val backgroundItem: net.savagelabs.skyblockx.persist.data.SerializableItem,
+    val guiRows: Int
+) {
 
     @Transient
     val gui = Gui(skyblockX, guiRows, color(title))
+
     @Transient
     val pane = PaginatedPane(0, 0, 9, guiRows)
 

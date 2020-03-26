@@ -1,14 +1,13 @@
 package net.savagelabs.skyblockx.gui
 
 import com.github.stefvanschie.inventoryframework.GuiItem
+import net.prosavage.baseplugin.ItemBuilder
 import net.savagelabs.skyblockx.core.IPlayer
 import net.savagelabs.skyblockx.core.Island
 import net.savagelabs.skyblockx.core.color
 import net.savagelabs.skyblockx.persist.Message
 import net.savagelabs.skyblockx.persist.Quests
 import net.savagelabs.skyblockx.quest.Quest
-import net.prosavage.baseplugin.ItemBuilder
-import net.prosavage.baseplugin.serializer.commonobjects.SerializableItem
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import java.text.DecimalFormat
@@ -39,7 +38,11 @@ class IslandQuestGUI :
         pane.populateWithGuiItems(guiItems)
     }
 
-    private fun buildItem(island: Island, serializableItem: SerializableItem, quest: Quest): ItemStack {
+    private fun buildItem(
+        island: Island,
+        serializableItem: net.savagelabs.skyblockx.persist.data.SerializableItem,
+        quest: Quest
+    ): ItemStack {
         val lore = ArrayList<String>()
         for (line in serializableItem.lore) {
             lore.add(

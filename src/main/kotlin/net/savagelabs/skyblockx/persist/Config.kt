@@ -3,11 +3,11 @@ package net.savagelabs.skyblockx.persist
 import com.cryptomorin.xseries.XMaterial
 import net.prosavage.baseplugin.WorldBorderUtil
 import net.prosavage.baseplugin.serializer.Serializer
-import net.prosavage.baseplugin.serializer.commonobjects.SerializableItem
 import net.savagelabs.skyblockx.gui.HeadFormat
 import net.savagelabs.skyblockx.gui.IslandBorderItem
 import net.savagelabs.skyblockx.gui.MenuItem
 import net.savagelabs.skyblockx.persist.data.IslandCreateInfo
+import net.savagelabs.skyblockx.persist.data.SerializableItem
 import net.savagelabs.skyblockx.persist.data.WeightedItem
 import org.bukkit.Bukkit
 import org.bukkit.block.Biome

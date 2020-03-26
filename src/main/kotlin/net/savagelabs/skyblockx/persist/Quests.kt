@@ -2,7 +2,7 @@ package net.savagelabs.skyblockx.persist
 
 import com.cryptomorin.xseries.XMaterial
 import net.prosavage.baseplugin.serializer.Serializer
-import net.prosavage.baseplugin.serializer.commonobjects.SerializableItem
+import net.savagelabs.skyblockx.persist.data.SerializableItem
 import net.savagelabs.skyblockx.quest.Quest
 import net.savagelabs.skyblockx.quest.QuestActions
 import net.savagelabs.skyblockx.quest.QuestGoal

@@ -3,7 +3,6 @@ package net.savagelabs.skyblockx.gui
 import com.github.stefvanschie.inventoryframework.GuiItem
 import net.savagelabs.skyblockx.core.IPlayer
 import net.savagelabs.skyblockx.persist.Config
-import net.prosavage.baseplugin.serializer.commonobjects.SerializableItem
 import org.bukkit.entity.Player
 
 class IslandMenuGUI : BaseGUI(Config.islandMenuGUITitle, Config.islandMenuGUIBackgroundItem, Config.islandMenuGUIRows) {
@@ -30,4 +29,8 @@ class IslandMenuGUI : BaseGUI(Config.islandMenuGUITitle, Config.islandMenuGUIBac
 
 }
 
-class MenuItem(val guiItem: SerializableItem, val commandsToExecute: List<String>, val slot: Int)
+class MenuItem(
+    val guiItem: net.savagelabs.skyblockx.persist.data.SerializableItem,
+    val commandsToExecute: List<String>,
+    val slot: Int
+)

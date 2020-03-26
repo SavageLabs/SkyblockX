@@ -1,12 +1,11 @@
 package net.savagelabs.skyblockx.gui
 
 import com.github.stefvanschie.inventoryframework.GuiItem
+import net.prosavage.baseplugin.WorldBorderUtil
 import net.savagelabs.skyblockx.core.IPlayer
 import net.savagelabs.skyblockx.core.getIPlayer
 import net.savagelabs.skyblockx.core.updateWorldBorder
 import net.savagelabs.skyblockx.persist.Config
-import net.prosavage.baseplugin.WorldBorderUtil
-import net.prosavage.baseplugin.serializer.commonobjects.SerializableItem
 import org.bukkit.entity.Player
 
 class IslandBorderGUI :
@@ -30,4 +29,4 @@ class IslandBorderGUI :
 
 }
 
-class IslandBorderItem(val slot: Int, val displayItem: SerializableItem)
+class IslandBorderItem(val slot: Int, val displayItem: net.savagelabs.skyblockx.persist.data.SerializableItem)
