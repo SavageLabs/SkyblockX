@@ -48,8 +48,12 @@ dependencies {
     implementation 'me.clip:placeholderapi:2.0.6'
     implementation 'com.google.code.gson:gson:2.8.5'
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
-    compile 'net.prosavage:BasePlugin:1.7'
+    compileOnly('net.prosavage:BasePlugin:1.7.2') {
+        exclude group: 'com.cryptomorin', module: 'XSeries'
+    }
     compile 'me.rayzr522:jsonmessage:1.2.0'
+    compile 'com.cryptomorin:XSeries:5.3.2'
+
 }
 processResources {
     eachFile { details ->
