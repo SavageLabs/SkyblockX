@@ -46,7 +46,7 @@ dependencies {
         exclude group: 'com.google.code.gson', module: 'gson'
     }
     implementation 'me.clip:placeholderapi:2.0.6'
-    implementation 'com.google.code.gson:gson:2.8.5'
+    compile 'com.google.code.gson:gson:2.8.5'
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
     compile ('net.prosavage:BasePlugin:1.7.2')
     compile 'me.rayzr522:jsonmessage:1.2.0'
