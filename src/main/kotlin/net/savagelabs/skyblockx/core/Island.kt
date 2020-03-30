@@ -422,17 +422,23 @@ data class Island(
     fun delete() {
         val ownerIPlayer = getIPlayerByUUID(ownerUUID)
         ownerIPlayer?.unassignIsland()
-        ownerIPlayer?.getPlayer()?.teleport(
+        val player = ownerIPlayer?.getPlayer()
+        player?.teleport(
             Bukkit.getWorld(Config.defaultWorld)!!.spawnLocation.add(0.0, 1.0, 0.0),
             PlayerTeleportEvent.TeleportCause.PLUGIN
         )
+        if (Config.islandDeleteClearInventory) player?.inventory?.clear()
+        if (Config.islandDeleteClearEnderChest) player?.enderChest?.clear()
         getAllMemberUUIDs().forEach { memberUUID ->
             val iplayer = getIPlayerByUUID(memberUUID)
             iplayer?.unassignIsland()
-            iplayer?.getPlayer()?.teleport(
+            val player = iplayer?.getPlayer()
+            player?.teleport(
                 Bukkit.getWorld(Config.defaultWorld)!!.spawnLocation.add(0.0, 1.0, 0.0),
                 PlayerTeleportEvent.TeleportCause.PLUGIN
             )
+            if (Config.islandDeleteClearInventory) player?.inventory?.clear()
+            if (Config.islandDeleteClearEnderChest) player?.enderChest?.clear()
         }
         Data.islands.remove(islandID)
         // Delete island from value map.
