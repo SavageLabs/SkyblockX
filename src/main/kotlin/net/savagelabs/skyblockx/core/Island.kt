@@ -231,7 +231,7 @@ data class Island(
         // If the instance is null, the player is offline.
         val owner = Bukkit.getOfflinePlayer(UUID.fromString(ownerUUID)).player
         if (owner != null) {
-            maxCoopPlayers = getMaxPermission(owner, "savageskyblock.limits.coop-players")
+            maxCoopPlayers = getMaxPermission(owner, "skyblockx.limits.coop-players")
             if (maxCoopPlayers == 0) {
                 maxCoopPlayers = Config.defaultMaxCoopPlayers
             }
@@ -248,7 +248,7 @@ data class Island(
         // If the instance is null, the player is offline.
         val owner = Bukkit.getOfflinePlayer(UUID.fromString(ownerUUID)).player
         if (owner != null) {
-            maxIslandHomes = getMaxPermission(owner, "savageskyblock.limits.island-homes")
+            maxIslandHomes = getMaxPermission(owner, "skyblockx.limits.island-homes")
             if (maxIslandHomes == 0) {
                 maxIslandHomes = Config.defaultMaxIslandHomes
             }
