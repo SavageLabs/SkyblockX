@@ -10,7 +10,6 @@ import net.savagelabs.skyblockx.core.color
 import net.savagelabs.skyblockx.core.isPlaceholderAPIPresent
 import net.savagelabs.skyblockx.persist.Config
 import org.bukkit.Bukkit
-import org.bukkit.Material
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.meta.SkullMeta
 import java.util.*
@@ -40,7 +39,10 @@ class IslandMemberGUI :
         if (slotListIndexesUsed < Config.islandMemberGUIHeadSlots.size) {
             for (slot in slotListIndexesUsed until Config.islandMemberGUIHeadSlots.size) {
                 guiItems[Config.islandMemberGUIHeadSlots[slot]] =
-                    GuiItem(ItemBuilder(Material.PLAYER_HEAD).name(Config.islandMemberGUINoMemberName).lore(Config.islandMemberGUINoMemberLore).build()) { e ->
+                    GuiItem(
+                        ItemBuilder(XMaterial.PLAYER_HEAD.parseItem()).name(Config.islandMemberGUINoMemberName)
+                            .lore(Config.islandMemberGUINoMemberLore).build()
+                    ) { e ->
                         e.isCancelled = true
                     }
             }

@@ -330,7 +330,6 @@ data class Island(
     }
 
     fun addHome(name: String, sLocation: SLocation) {
-
         homes[name] = sLocation
     }
 
