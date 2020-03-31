@@ -86,13 +86,14 @@ object Config {
         )
 
 
-
     var disableMobDamageWhenIslandVisitor = true
 
     // amt x ticks/sec x sec/min: 15 min
     var islandTopCalcPeriodTicks = 15 * 20 * 60
 
     var islandTopManualCalcCooldownMiliseconds = 1 * 1000 * 60 * 5
+
+    var autoCalcIslands = true
 
     var islandTopBroadcastMessage = true
 
