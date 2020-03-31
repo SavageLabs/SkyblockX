@@ -60,6 +60,17 @@ fun registerAllPermissions(pluginManager: PluginManager) {
                 )
             )
         }
+        Config.islandCreateGUIIslandTypes.forEach { islandType ->
+            if (pluginManager.getPermission(islandType.requirementPermission) == null) {
+                pluginManager.addPermission(
+                    org.bukkit.permissions.Permission(
+                        islandType.requirementPermission,
+                        islandType.name,
+                        PermissionDefault.OP
+                    )
+                )
+            }
+        }
     }
 }
 
