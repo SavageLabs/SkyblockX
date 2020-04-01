@@ -231,7 +231,7 @@ data class Island(
         // If the instance is null, the player is offline.
         val owner = Bukkit.getOfflinePlayer(UUID.fromString(ownerUUID)).player
         if (owner != null) {
-            maxCoopPlayers = getMaxPermission(owner, "savageskyblock.limits.coop-players")
+            maxCoopPlayers = getMaxPermission(owner, "skyblockx.limits.coop-players")
             if (maxCoopPlayers == 0) {
                 maxCoopPlayers = Config.defaultMaxCoopPlayers
             }
@@ -248,7 +248,7 @@ data class Island(
         // If the instance is null, the player is offline.
         val owner = Bukkit.getOfflinePlayer(UUID.fromString(ownerUUID)).player
         if (owner != null) {
-            maxIslandHomes = getMaxPermission(owner, "savageskyblock.limits.island-homes")
+            maxIslandHomes = getMaxPermission(owner, "skyblockx.limits.island-homes")
             if (maxIslandHomes == 0) {
                 maxIslandHomes = Config.defaultMaxIslandHomes
             }
@@ -330,7 +330,6 @@ data class Island(
     }
 
     fun addHome(name: String, sLocation: SLocation) {
-
         homes[name] = sLocation
     }
 
@@ -423,17 +422,23 @@ data class Island(
     fun delete() {
         val ownerIPlayer = getIPlayerByUUID(ownerUUID)
         ownerIPlayer?.unassignIsland()
-        ownerIPlayer?.getPlayer()?.teleport(
+        val player = ownerIPlayer?.getPlayer()
+        player?.teleport(
             Bukkit.getWorld(Config.defaultWorld)!!.spawnLocation.add(0.0, 1.0, 0.0),
             PlayerTeleportEvent.TeleportCause.PLUGIN
         )
+        if (Config.islandDeleteClearInventory) player?.inventory?.clear()
+        if (Config.islandDeleteClearEnderChest) player?.enderChest?.clear()
         getAllMemberUUIDs().forEach { memberUUID ->
             val iplayer = getIPlayerByUUID(memberUUID)
             iplayer?.unassignIsland()
-            iplayer?.getPlayer()?.teleport(
+            val player = iplayer?.getPlayer()
+            player?.teleport(
                 Bukkit.getWorld(Config.defaultWorld)!!.spawnLocation.add(0.0, 1.0, 0.0),
                 PlayerTeleportEvent.TeleportCause.PLUGIN
             )
+            if (Config.islandDeleteClearInventory) player?.inventory?.clear()
+            if (Config.islandDeleteClearEnderChest) player?.enderChest?.clear()
         }
         Data.islands.remove(islandID)
         // Delete island from value map.

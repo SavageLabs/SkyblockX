@@ -70,6 +70,7 @@ class SkyblockX : SavagePlugin() {
 
     @ExperimentalTime
     private fun startIslandTopTask() {
+        if (!Config.autoCalcIslands) return
         Bukkit.getScheduler().runTaskTimer(this, Runnable {
             if (Config.islandTopBroadcastMessage) Bukkit.broadcastMessage(color(Config.islandTopBroadcastMessageStart))
             val time = measureTimedValue {

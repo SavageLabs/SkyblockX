@@ -44,6 +44,10 @@ object Config {
     // Equals to 6 hours, 60 sec in 1 min, and 60 min in an hour, times 6.
     var islandResetCoolDownSeconds = 60L * 60L * 6L
 
+    var islandDeleteClearInventory = true
+
+    var islandDeleteClearEnderChest = true
+
     var chestRows = mapOf(1 to 3, 2 to 4, 3 to 5, 4 to 5, 5 to 6)
 
     var defaultMaxCoopPlayers = 3
@@ -82,13 +86,14 @@ object Config {
         )
 
 
-
     var disableMobDamageWhenIslandVisitor = true
 
     // amt x ticks/sec x sec/min: 15 min
     var islandTopCalcPeriodTicks = 15 * 20 * 60
 
     var islandTopManualCalcCooldownMiliseconds = 1 * 1000 * 60 * 5
+
+    var autoCalcIslands = true
 
     var islandTopBroadcastMessage = true
 
