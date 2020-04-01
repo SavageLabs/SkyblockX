@@ -6,6 +6,7 @@ import me.clip.placeholderapi.expansion.PlaceholderExpansion
 import org.bukkit.entity.Player
 import java.text.DecimalFormat
 import java.util.stream.Collectors.joining
+import kotlin.math.floor
 
 
 class PlacholderAPIIntegration : PlaceholderExpansion() {
@@ -36,6 +37,7 @@ class PlacholderAPIIntegration : PlaceholderExpansion() {
             "island_member_list" -> iPlayer.getIsland()?.getIslandMembers()?.stream()!!.map { member -> member.name }.collect(joining(", ")) ?: "N/A"
             "island_worth" -> Globals.islandValues?.map?.get(iPlayer.getIsland()?.islandID)?.worth.toString() ?: "0"
             "island_worth_formatted" -> decimalFormat.format(Globals.islandValues?.map?.get(iPlayer.getIsland()?.islandID)?.worth ?: 0)
+            "island_worth_rounded" -> floor(Globals.islandValues?.map?.get(iPlayer.getIsland()?.islandID)?.worth ?: 0.0).toString()
             else -> null
         }
     }
