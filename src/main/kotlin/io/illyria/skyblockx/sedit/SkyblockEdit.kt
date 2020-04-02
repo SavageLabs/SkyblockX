@@ -2,7 +2,6 @@ package io.illyria.skyblockx.sedit
 
 
 import io.illyria.skyblockx.Globals
-import io.illyria.skyblockx.core.broadcastDebug
 import io.illyria.skyblockx.core.color
 import io.illyria.skyblockx.core.enumValueOrNull
 import io.illyria.skyblockx.persist.Message
@@ -29,7 +28,7 @@ class SkyblockEdit {
         *
         * @inputName string that need to be translated
         * */
-        val regex = """(Optional|optional)\[(\w+\s\w+|\w+)]""".toRegex()
+        val regex = """(Optional|optional)\[(\w+\s*)+]""".toRegex()
         if(regex.matches(xmaterialDefaultName)){
           return xmaterialDefaultName
               .toUpperCase()
@@ -94,6 +93,11 @@ class SkyblockEdit {
                         container.chests.addElement(SbfChest(xRel, yRel, zRel, 0, chest.blockInventory.size, items))
                         continue
                     }
+
+                    /*
+                    val console = Bukkit.getServer().consoleSender
+                    console.sendMessage(normalizeBlockName(XMaterial.matchXMaterial(block.type.name).toString()))
+                    */
 
                     container.blocks.add(SbfBlock(xRel, yRel, zRel, normalizeBlockName(XMaterial.matchXMaterial(block.type.name).toString()) ))
                 }
