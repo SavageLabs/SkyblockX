@@ -27,7 +27,7 @@ class SkyblockEdit {
         *
         * @inputName string that need to be translated
         * */
-        val regex = """(Optional|optional)\[(\w+\s\w+|\w+)]""".toRegex()
+        val regex = """(Optional|optional)\[(\w+\s*)+]""".toRegex()
         if(regex.matches(xmaterialDefaultName)){
           return xmaterialDefaultName
               .toUpperCase()
