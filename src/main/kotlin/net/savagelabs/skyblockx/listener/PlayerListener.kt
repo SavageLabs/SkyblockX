@@ -17,6 +17,7 @@ import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.enchantment.EnchantItemEvent
+import org.bukkit.event.entity.EntityToggleGlideEvent
 import org.bukkit.event.inventory.CraftItemEvent
 import org.bukkit.event.inventory.InventoryAction
 import org.bukkit.event.inventory.InventoryClickEvent
@@ -288,6 +289,27 @@ class PlayerListener : Listener {
             event.isCancelled = true
             return
         }
+    }
+
+
+    @EventHandler
+    fun onPlayerToggleGlide(event: EntityToggleGlideEvent) {
+        // We want them to be allowed to glide, but just check where they end up, so they need to be on the ground.
+        if (event.entity !is Player || event.isGliding || !event.entity.isOnGround) return
+
+        val island = getIslandFromLocation(event.entity.location) ?: return
+        val iPlayer = getIPlayer(event.entity as Player)
+        if (!island.allowVisitors && !island.hasCoopPlayer(iPlayer) && !island.getIslandMembers().contains(iPlayer)) {
+            if (iPlayer.hasIsland()) {
+                event.entity.teleport(island.islandGoPoint.getLocation())
+            } else {
+                event.entity.teleport(
+                    Bukkit.getWorld(Config.defaultWorld)!!.spawnLocation.add(0.0, 1.0, 0.0),
+                    PlayerTeleportEvent.TeleportCause.PLUGIN
+                )
+            }
+        }
+
     }
 
 

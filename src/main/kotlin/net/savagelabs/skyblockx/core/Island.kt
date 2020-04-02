@@ -375,6 +375,10 @@ data class Island(
         iPlayer.coopedIslandIds.add(islandID)
     }
 
+    fun hasCoopPlayer(iPlayer: IPlayer): Boolean {
+        return currentCoopPlayers != null && currentCoopPlayers.contains(UUID.fromString(iPlayer.uuid))
+    }
+
     fun removeCoopPlayer(iPlayer: IPlayer, notify: Boolean = true) {
         iPlayer.coopedIslandIds.remove(islandID)
         currentCoopPlayers.remove(UUID.fromString(iPlayer.uuid))
