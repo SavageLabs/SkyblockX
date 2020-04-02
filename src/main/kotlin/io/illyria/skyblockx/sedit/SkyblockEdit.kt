@@ -94,11 +94,6 @@ class SkyblockEdit {
                         continue
                     }
 
-                    /*
-                    val console = Bukkit.getServer().consoleSender
-                    console.sendMessage(normalizeBlockName(XMaterial.matchXMaterial(block.type.name).toString()))
-                    */
-
                     container.blocks.add(SbfBlock(xRel, yRel, zRel, normalizeBlockName(XMaterial.matchXMaterial(block.type.name).toString()) ))
                 }
             }
