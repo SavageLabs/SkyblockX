@@ -1,4 +1,4 @@
-package net.savagelabs.skyblockx.command.island.cmd
+package net.savagelabs.skyblockx.command.skyblock.cmd
 
 import net.savagelabs.skyblockx.command.CommandRequirementsBuilder
 import net.savagelabs.skyblockx.command.SCommand
