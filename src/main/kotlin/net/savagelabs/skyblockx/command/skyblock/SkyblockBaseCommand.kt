@@ -4,6 +4,9 @@ import net.savagelabs.skyblockx.Globals
 import net.savagelabs.skyblockx.command.CommandInfo
 import net.savagelabs.skyblockx.command.CommandRequirementsBuilder
 import net.savagelabs.skyblockx.command.SCommand
+import net.savagelabs.skyblockx.command.skyblock.cmd.CmdSEPasteStructure
+import net.savagelabs.skyblockx.command.skyblock.cmd.CmdSEPosition
+import net.savagelabs.skyblockx.command.skyblock.cmd.CmdSESaveStructure
 import net.savagelabs.skyblockx.command.skyblock.cmd.*
 import net.savagelabs.skyblockx.persist.Message
 import org.bukkit.command.Command
@@ -18,6 +21,9 @@ class SkyblockBaseCommand : SCommand(), CommandExecutor, TabCompleter {
     init {
         this.commandRequirements = CommandRequirementsBuilder().build()
 
+        subCommands.add(CmdSEPosition())
+        subCommands.add(CmdSESaveStructure())
+        subCommands.add(CmdSEPasteStructure())
         subCommands.add(CmdSbDelete())
         subCommands.add(CmdSbKick())
         subCommands.add(CmdSbOwner())
