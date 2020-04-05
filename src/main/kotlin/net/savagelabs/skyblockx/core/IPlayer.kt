@@ -56,6 +56,9 @@ data class IPlayer(val uuid: String) {
         return hasIsland() && getIsland()!!.ownerUUID == uuid
     }
 
+    fun isOnline(): Boolean {
+        return Bukkit.getPlayer(UUID.fromString(uuid)) != null
+    }
 
     fun isOnOwnIsland(): Boolean {
         return !(this.hasIsland() && this.getIsland()!!.containsBlock(getPlayer().location))
