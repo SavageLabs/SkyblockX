@@ -4,6 +4,7 @@ import net.savagelabs.skyblockx.command.CommandInfo
 import net.savagelabs.skyblockx.command.CommandRequirementsBuilder
 import net.savagelabs.skyblockx.command.SCommand
 import net.savagelabs.skyblockx.core.Permission
+import net.savagelabs.skyblockx.persist.Config
 import net.savagelabs.skyblockx.persist.Message
 import org.bukkit.Bukkit
 import org.bukkit.event.player.PlayerTeleportEvent
@@ -30,9 +31,9 @@ class CmdRemove : SCommand() {
             info.message(String.format(Message.commandRemoveInvokerCoopRemoved, target.getPlayer().name))
         }
 
-        // TODO: Implement a default spawn mechanic to set the default spawn location, so that it is more elegant.
 
-        val targetNewLocation = target.getIsland()?.getIslandCenter() ?: Bukkit.getWorld("world")!!.spawnLocation
+        val targetNewLocation =
+            target.getIsland()?.getIslandCenter() ?: Bukkit.getWorld(Config.defaultWorld)!!.spawnLocation
 
         // Check if they're even on the island, to prevent abuse.
         if (!info.iPlayer!!.getIsland()!!.containsBlock(target.getPlayer().location)) {
