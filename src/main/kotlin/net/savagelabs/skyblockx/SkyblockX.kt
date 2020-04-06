@@ -1,6 +1,7 @@
 package net.savagelabs.skyblockx
 
 import com.cryptomorin.xseries.XMaterial
+import io.papermc.lib.PaperLib
 import net.prosavage.baseplugin.SavagePlugin
 import net.prosavage.baseplugin.WorldBorderUtil
 import net.savagelabs.skyblockx.command.island.IslandBaseCommand
@@ -53,6 +54,7 @@ class SkyblockX : SavagePlugin() {
         logInfo("\t- Leave a Star on Github: https://github.com/SavageLabs/SkyblockX", ChatColor.GREEN)
         logInfo("\t- Review the plugin on Spigot: https://www.spigotmc.org/resources/73135/", ChatColor.GREEN)
         loadWorlds()
+        PaperLib.suggestPaper(this)
     }
 
     private fun logInfo(message: String, color: ChatColor = ChatColor.YELLOW) {
