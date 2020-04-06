@@ -3,6 +3,7 @@ package net.savagelabs.skyblockx.core
 import io.papermc.lib.PaperLib
 import net.prosavage.baseplugin.WorldBorderUtil
 import net.savagelabs.skyblockx.Globals
+import net.savagelabs.skyblockx.SkyblockX
 import net.savagelabs.skyblockx.persist.Config
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor
@@ -32,7 +33,9 @@ fun isNotInSkyblockWorld(world: World): Boolean {
 }
 
 fun teleportAsync(player: Player, location: Location, runnable: Runnable) {
-    PaperLib.teleportAsync(player, location.add(0.0, 1.0, 0.0), PlayerTeleportEvent.TeleportCause.PLUGIN).thenAccept { runnable.run() }
+    PaperLib.teleportAsync(player, location.add(0.0, 1.0, 0.0), PlayerTeleportEvent.TeleportCause.PLUGIN).thenAccept {
+        if (it) runnable.run() else Globals.skyblockX.logger.severe("Something went horribly wrong when trying to teleport ${player.name}.")
+    }
 }
 
 
