@@ -1,5 +1,6 @@
 package net.savagelabs.skyblockx.core
 
+import io.papermc.lib.PaperLib
 import net.prosavage.baseplugin.WorldBorderUtil
 import net.savagelabs.skyblockx.Globals
 import net.savagelabs.skyblockx.persist.Config
@@ -8,6 +9,7 @@ import org.bukkit.ChatColor
 import org.bukkit.Location
 import org.bukkit.World
 import org.bukkit.entity.Player
+import org.bukkit.event.player.PlayerTeleportEvent
 
 fun color(message: String): String {
     return ChatColor.translateAlternateColorCodes('&', message)
@@ -27,6 +29,10 @@ fun broadcastDebug(message: String) {
 
 fun isNotInSkyblockWorld(world: World): Boolean {
     return world.name != Config.skyblockWorldName && world.name != Config.skyblockWorldNameNether
+}
+
+fun teleportAsync(player: Player, location: Location, runnable: Runnable) {
+    PaperLib.teleportAsync(player, location.add(0.0, 1.0, 0.0), PlayerTeleportEvent.TeleportCause.PLUGIN).thenAccept { runnable.run() }
 }
 
 

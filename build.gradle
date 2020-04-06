@@ -30,6 +30,10 @@ repositories {
     maven {
         url "http://repo.extendedclip.com/content/repositories/placeholderapi/"
     }
+    maven {
+        name 'papermc'
+        url 'https://papermc.io/repo/repository/maven-public/'
+    }
 }
 
 
@@ -50,6 +54,7 @@ dependencies {
     compile ('net.prosavage:BasePlugin:1.7.2')
     compile 'me.rayzr522:jsonmessage:1.2.0'
     compile 'com.cryptomorin:XSeries:5.3.2'
+    compile "io.papermc:paperlib:1.0.2"
 
 }
 processResources {

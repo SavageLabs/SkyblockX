@@ -3,11 +3,13 @@ package net.savagelabs.skyblockx.listener
 import net.savagelabs.skyblockx.core.color
 import net.savagelabs.skyblockx.core.getIPlayer
 import net.savagelabs.skyblockx.core.isNotInSkyblockWorld
+import net.savagelabs.skyblockx.core.teleportAsync
 import net.savagelabs.skyblockx.persist.Config
 import net.savagelabs.skyblockx.persist.Message
 import net.savagelabs.skyblockx.persist.Quests
 import net.savagelabs.skyblockx.quest.QuestGoal
 import org.bukkit.Bukkit
+import org.bukkit.Location
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
@@ -83,12 +85,14 @@ class EntityListener : Listener {
         // Triggers when they fall into the void.
         if (event.cause == EntityDamageEvent.DamageCause.VOID && event.entity.location.y <= 0) {
             iPlayer.falling = true
-            player.sendMessage(color(Message.messagePrefix + Message.listenerVoidDeathPrevented))
-            if (iPlayer.hasIsland()) {
-                player.teleport(iPlayer.getIsland()!!.islandGoPoint.getLocation().add(0.0, 1.0, 0.0), PlayerTeleportEvent.TeleportCause.PLUGIN)
+            val location: Location = if (iPlayer.hasIsland()) {
+                iPlayer.getIsland()!!.islandGoPoint.getLocation()
             } else {
-                player.teleport(Bukkit.getWorld(Config.defaultWorld)!!.spawnLocation.add(0.0, 1.0, 0.0), PlayerTeleportEvent.TeleportCause.PLUGIN)
+                Bukkit.getWorld(Config.defaultWorld)!!.spawnLocation
             }
+            teleportAsync(player, location, Runnable {
+                player.sendMessage(color(Message.messagePrefix + Message.listenerVoidDeathPrevented))
+            })
             event.isCancelled = true
         }
 
