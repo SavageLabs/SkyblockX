@@ -1,7 +1,6 @@
 package net.savagelabs.skyblockx.core
 
 import com.cryptomorin.xseries.XMaterial
-import io.papermc.lib.PaperLib
 import me.rayzr522.jsonmessage.JSONMessage
 import net.savagelabs.skyblockx.Globals
 import net.savagelabs.skyblockx.event.IslandPostLevelCalcEvent
@@ -112,8 +111,7 @@ data class Island(
             val world = Bukkit.getWorld(Config.skyblockWorldName)!!
             for (x in minLocation.x.toInt()..maxLocation.x.toInt()) {
                 for (z in minLocation.z.toInt()..maxLocation.z.toInt()) {
-                    PaperLib.getChunkAtAsync(Location(world, x.toDouble(), 0.0, z.toDouble()))
-                        .thenAccept { chunk -> chunks.add(chunk) }
+                    chunks.add(world.getChunkAt(Location(world, x.toDouble(), 0.0, z.toDouble())))
                 }
             }
             lateinit var chunkList: List<ChunkSnapshot>
