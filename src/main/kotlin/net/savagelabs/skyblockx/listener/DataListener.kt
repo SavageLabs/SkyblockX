@@ -16,9 +16,11 @@ class DataListener : Listener {
 
     @EventHandler
     fun onPlayerConnect(event: PlayerJoinEvent) {
-        if (Data.IPlayers.containsKey(event.player.uniqueId.toString())) {
+        val iPlayer = Data.IPlayers[event.player.uniqueId.toString()]
+        if (iPlayer != null) {
+            iPlayer.falling = false
             // Update owner tag changes :)
-            val island = getIslandById(Data.IPlayers[event.player.uniqueId.toString()]!!.islandID) ?: return
+            val island = getIslandById(iPlayer.islandID) ?: return
             // Check if the player is an island owner.
             if (island.ownerUUID == event.player.uniqueId.toString()) {
                 // Update tag if not equal.
