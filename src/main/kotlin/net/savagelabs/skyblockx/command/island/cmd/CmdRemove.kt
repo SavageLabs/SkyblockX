@@ -4,10 +4,10 @@ import net.savagelabs.skyblockx.command.CommandInfo
 import net.savagelabs.skyblockx.command.CommandRequirementsBuilder
 import net.savagelabs.skyblockx.command.SCommand
 import net.savagelabs.skyblockx.core.Permission
+import net.savagelabs.skyblockx.core.teleportAsync
 import net.savagelabs.skyblockx.persist.Config
 import net.savagelabs.skyblockx.persist.Message
 import org.bukkit.Bukkit
-import org.bukkit.event.player.PlayerTeleportEvent
 
 class CmdRemove : SCommand() {
 
@@ -42,7 +42,7 @@ class CmdRemove : SCommand() {
         }
 
         // Teleport them cuz they're on the island.
-        target.getPlayer().teleport(targetNewLocation, PlayerTeleportEvent.TeleportCause.PLUGIN)
+        teleportAsync(target.getPlayer(), targetNewLocation, Runnable { })
         info.message(String.format(Message.commandRemoveInvokerSuccess, target.getPlayer().name))
 
 

@@ -1,6 +1,7 @@
 package net.savagelabs.skyblockx.core
 
 import com.cryptomorin.xseries.XMaterial
+import io.papermc.lib.PaperLib
 import me.rayzr522.jsonmessage.JSONMessage
 import net.savagelabs.skyblockx.Globals
 import net.savagelabs.skyblockx.event.IslandPostLevelCalcEvent
@@ -16,7 +17,6 @@ import net.savagelabs.skyblockx.world.spiral
 import org.bukkit.*
 import org.bukkit.block.Biome
 import org.bukkit.entity.Player
-import org.bukkit.event.player.PlayerTeleportEvent
 import java.lang.reflect.InvocationTargetException
 import java.text.DecimalFormat
 import java.util.*
@@ -112,9 +112,8 @@ data class Island(
             val world = Bukkit.getWorld(Config.skyblockWorldName)!!
             for (x in minLocation.x.toInt()..maxLocation.x.toInt()) {
                 for (z in minLocation.z.toInt()..maxLocation.z.toInt()) {
-                    val chunkAt = world.getChunkAt(Location(world, x.toDouble(), 0.0, z.toDouble()))
-                    if (!chunkAt.isLoaded) chunkAt.load()
-                    chunks.add(chunkAt)
+                    PaperLib.getChunkAtAsync(Location(world, x.toDouble(), 0.0, z.toDouble()))
+                        .thenAccept { chunk -> chunks.add(chunk) }
                 }
             }
             lateinit var chunkList: List<ChunkSnapshot>
@@ -427,20 +426,14 @@ data class Island(
         val ownerIPlayer = getIPlayerByUUID(ownerUUID)
         ownerIPlayer?.unassignIsland()
         val player = ownerIPlayer?.getPlayer()
-        player?.teleport(
-            Bukkit.getWorld(Config.defaultWorld)!!.spawnLocation.add(0.0, 1.0, 0.0),
-            PlayerTeleportEvent.TeleportCause.PLUGIN
-        )
+        teleportAsync(player, Bukkit.getWorld(Config.defaultWorld)!!.spawnLocation, Runnable { })
         if (Config.islandDeleteClearInventory) player?.inventory?.clear()
         if (Config.islandDeleteClearEnderChest) player?.enderChest?.clear()
         getAllMemberUUIDs().forEach { memberUUID ->
             val iplayer = getIPlayerByUUID(memberUUID)
             iplayer?.unassignIsland()
             val player = iplayer?.getPlayer()
-            player?.teleport(
-                Bukkit.getWorld(Config.defaultWorld)!!.spawnLocation.add(0.0, 1.0, 0.0),
-                PlayerTeleportEvent.TeleportCause.PLUGIN
-            )
+            teleportAsync(player, Bukkit.getWorld(Config.defaultWorld)!!.spawnLocation.add(0.0, 1.0, 0.0), Runnable { })
             if (Config.islandDeleteClearInventory) player?.inventory?.clear()
             if (Config.islandDeleteClearEnderChest) player?.enderChest?.clear()
         }
@@ -518,7 +511,7 @@ fun createIsland(player: Player?, schematic: String, teleport: Boolean = true): 
     if (player != null) {
         val iPlayer = getIPlayer(player)
         iPlayer.assignIsland(island)
-        if (teleport) player.teleport(island.getIslandCenter(), PlayerTeleportEvent.TeleportCause.PLUGIN)
+        if (teleport) teleportAsync(player, island.getIslandCenter(), Runnable { })
     }
     incrementQuestInOrder(island)
     // Use deprecated method for 1.8 support.

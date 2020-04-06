@@ -4,8 +4,8 @@ import net.savagelabs.skyblockx.command.CommandInfo
 import net.savagelabs.skyblockx.command.CommandRequirementsBuilder
 import net.savagelabs.skyblockx.command.SCommand
 import net.savagelabs.skyblockx.core.Permission
+import net.savagelabs.skyblockx.core.teleportAsync
 import net.savagelabs.skyblockx.persist.Message
-import org.bukkit.event.player.PlayerTeleportEvent
 
 class CmdGo : SCommand() {
 
@@ -22,8 +22,10 @@ class CmdGo : SCommand() {
 
     override fun perform(info: CommandInfo) {
         val island = info.iPlayer!!.getIsland()!!
-        info.message(Message.commandGoTeleporting)
-        info.player!!.teleport(island.islandGoPoint.getLocation(), PlayerTeleportEvent.TeleportCause.PLUGIN)
+        teleportAsync(
+            info.player!!,
+            island.islandGoPoint.getLocation(),
+            Runnable { info.message(Message.commandGoTeleporting) })
     }
 
 

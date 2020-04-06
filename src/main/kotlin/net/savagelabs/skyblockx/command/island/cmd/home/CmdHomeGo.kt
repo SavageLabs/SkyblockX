@@ -1,10 +1,10 @@
 package net.savagelabs.skyblockx.command.island.cmd.home
 
-import net.savagelabs.skyblockx.command.CommandRequirementsBuilder
-import net.savagelabs.skyblockx.persist.Message
-import org.bukkit.event.player.PlayerTeleportEvent
 import net.savagelabs.skyblockx.command.CommandInfo
+import net.savagelabs.skyblockx.command.CommandRequirementsBuilder
 import net.savagelabs.skyblockx.command.SCommand
+import net.savagelabs.skyblockx.core.teleportAsync
+import net.savagelabs.skyblockx.persist.Message
 
 class CmdHomeGo : SCommand() {
 
@@ -23,8 +23,10 @@ class CmdHomeGo : SCommand() {
             return
         }
 
-        info.player!!.teleport(info.island!!.getHome(home)!!.getLocation(), PlayerTeleportEvent.TeleportCause.PLUGIN)
-        info.message(String.format(Message.commandHomeGoSuccess, home))
+        teleportAsync(
+            info.player!!,
+            info.island!!.getHome(home)!!.getLocation(),
+            Runnable { info.message(String.format(Message.commandHomeGoSuccess, home)) })
     }
 
     override fun getHelpInfo(): String {

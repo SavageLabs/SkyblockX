@@ -1,15 +1,11 @@
 package net.savagelabs.skyblockx.command.island.cmd
 
+import me.rayzr522.jsonmessage.JSONMessage
 import net.savagelabs.skyblockx.command.CommandInfo
 import net.savagelabs.skyblockx.command.CommandRequirementsBuilder
 import net.savagelabs.skyblockx.command.SCommand
-import net.savagelabs.skyblockx.core.Permission
-import net.savagelabs.skyblockx.core.color
-import net.savagelabs.skyblockx.core.getIslandById
-import net.savagelabs.skyblockx.core.getIslandByOwnerTag
+import net.savagelabs.skyblockx.core.*
 import net.savagelabs.skyblockx.persist.Message
-import me.rayzr522.jsonmessage.JSONMessage
-import org.bukkit.event.player.PlayerTeleportEvent
 
 class CmdVisit : SCommand() {
 
@@ -68,10 +64,10 @@ class CmdVisit : SCommand() {
         }
 
         // TODO: Allow them to set island teleport location maybe? idk.
-        info.player!!.teleport(targetLocation.getIslandCenter(), PlayerTeleportEvent.TeleportCause.PLUGIN)
-        info.message(String.format(Message.commandVisitTeleporting, targetLocation.ownerTag))
-
-
+        teleportAsync(
+            info.player!!,
+            targetLocation.getIslandCenter(),
+            Runnable { info.message(String.format(Message.commandVisitTeleporting, targetLocation.ownerTag)) })
     }
 
     override fun getHelpInfo(): String {
