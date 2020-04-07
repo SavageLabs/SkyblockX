@@ -57,6 +57,10 @@ object Message {
     var commandCreateSuccess = "&7Your island was successfully created."
     var commandCreateCooldown = "&7Island Creation is on cooldown: &b%1\$s &7seconds left."
 
+    var commandWorthValue = "&7Your island value is &b$%1\$s&7."
+    var commandWorthLevel = "&7Your island level based off of your worth is Lv. &b%1\$s&7."
+    var commandWorthHelp = "view island worth and level."
+
     var commandChestOpening = "&7Opening the island chest."
     var commandChestHelp = "&7Open the island's virtual chest."
 

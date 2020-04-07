@@ -5,7 +5,7 @@ import org.bukkit.event.Cancellable
 import org.bukkit.event.Event
 import org.bukkit.event.HandlerList
 
-class IslandPreLevelCalcEvent(val island: Island, val levelBeforeCalc: Double?) : Event(false), Cancellable {
+class IslandPreLevelCalcEvent(val island: Island, val levelBeforeCalc: Double) : Event(false), Cancellable {
 
     private val HANDLERS = HandlerList()
     private var isCancelled = false

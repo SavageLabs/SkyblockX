@@ -25,6 +25,7 @@ enum class Permission(val node: String, val description: String, val permissionD
     MENU("menu", "open the island menu.", PermissionDefault.TRUE),
     RESET("reset", "reset your island.", PermissionDefault.TRUE),
     HOME("home", "manage island homes.", PermissionDefault.TRUE),
+    WORTH("worth", "view your island's value and level", PermissionDefault.TRUE),
     ALLOWVISITOR("allowvisitor", "allow visitors on your island.", PermissionDefault.TRUE),
     QUEST("quest", "opening the questing gui.", PermissionDefault.TRUE),
     OBSIDIANTOLAVA("obsidiantolava", "turn obsidian to lava with an empty bucket", PermissionDefault.FALSE),
