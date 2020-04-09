@@ -41,6 +41,8 @@ object Config {
         "eco take {player} 100"
     )
 
+    var levelIncrementFactor = 25
+
     // Equals to 6 hours, 60 sec in 1 min, and 60 min in an hour, times 6.
     var islandResetCoolDownSeconds = 60L * 60L * 6L
 

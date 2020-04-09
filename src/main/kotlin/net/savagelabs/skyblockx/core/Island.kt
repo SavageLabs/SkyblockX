@@ -21,6 +21,9 @@ import java.text.DecimalFormat
 import java.util.*
 import java.util.stream.Collectors
 import kotlin.collections.HashSet
+import kotlin.math.floor
+import kotlin.math.roundToInt
+import kotlin.math.sqrt
 import kotlin.streams.toList
 import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
@@ -209,8 +212,12 @@ data class Island(
         getIPlayerByName(name)?.assignIsland(-1)
     }
 
-    fun getLevel(): Double? {
-        return Globals.islandValues?.map?.get(islandID)?.worth
+    fun getValue(): Double {
+        return Globals.islandValues?.map?.get(islandID)?.worth ?: 0.0
+    }
+
+    fun getLevel(): Double {
+        return floor((25 + sqrt(Config.levelIncrementFactor * Config.levelIncrementFactor - 4 * Config.levelIncrementFactor * (-1 * this.getValue()))) / (2 * Config.levelIncrementFactor))
     }
 
     /**
@@ -417,6 +424,9 @@ data class Island(
         return x >= minLocation.x && x < maxLocation.x + 1 && z >= minLocation.z && z < maxLocation.z + 1
     }
 
+
+
+
     /**
      * Delete the players island by removing the whole team, Deleting the actual blocks is too intensive.
      */
@@ -535,7 +545,7 @@ fun runIslandCalc() {
     val islandVals = hashMapOf<Int, Island.CalcInfo>()
     val pluginManager = Bukkit.getPluginManager()
     for ((key, island) in Data.islands) {
-        val islandPreCalcEvent = IslandPreLevelCalcEvent(island, island.getLevel())
+        val islandPreCalcEvent = IslandPreLevelCalcEvent(island, island.getValue())
         Bukkit.getScheduler().callSyncMethod(Globals.skyblockX) { pluginManager.callEvent(islandPreCalcEvent) }
         if (islandPreCalcEvent.isCancelled) continue
         val worth = island.calcIsland()

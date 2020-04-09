@@ -24,7 +24,6 @@ class CmdValue : SCommand() {
         val xmat = XMaterial.matchXMaterial(blockMaterial)
         val value = BlockValues.blockValues[xmat] ?: 0.0
         info.message(String.format(Message.commandValueInfo, NumberFormat.getInstance(Config.numberFormatLocale).format(value)))
-
     }
 
     override fun getHelpInfo(): String {
