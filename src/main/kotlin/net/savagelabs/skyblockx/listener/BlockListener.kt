@@ -111,9 +111,9 @@ class BlockListener : Listener {
 
 
         // We're gonna need this more than once here, store to prevent lookups.
-        val island = iPlayer.getIsland()!!
+        val island = iPlayer.getIsland()
         // Quest checking block.
-        if (iPlayer.hasIsland() && island.currentQuest != null) {
+        if (iPlayer.hasIsland() && island!!.currentQuest != null) {
             // Assert non-null because the if check for this block will trigger.
             val currentQuest = island.currentQuest!!
             // Find the quest that the island has activated.
