@@ -85,7 +85,9 @@ object Config {
         "&7Iron Block: &b{IRON_BLOCK}",
         "&7Lapis Block: &b{LAPIS_BLOCK}",
         "&7Coal Block: &b{COAL_BLOCK}"
-        )
+    )
+
+    var commandTopPageSize = 5
 
 
     var disableMobDamageWhenIslandVisitor = true

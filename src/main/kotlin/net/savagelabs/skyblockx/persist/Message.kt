@@ -87,9 +87,11 @@ object Message {
     var commandBypassToggle = "&7You are now %1\$s bypass mode."
     var commandBypassHelp = "&7bypass island checks."
 
-    var commandTopNotCalculated = "&7Island values have not been calculated yet. Run &b/sbx calc&7 to force calculation."
+    var commandTopInvalidPage = "&7Invalid page"
+    var commandTopIndexTooHigh = "&7This page does not exist."
+    var commandTopNotCalculated =
+        "&7Island values have not been calculated yet. Run &b/sbx calc&7 to force calculation."
     var commandTopHelp = "&7gets island top info"
-
 
 
     var commandCoopInvokerSuccess = "&7You have added %1\$s to your island as co-op"
@@ -143,6 +145,7 @@ object Message {
 
     var commandJoinNotInvited = "&7You have not been invited to %1\$s's island."
     var commandJoinSuccess = "&7You have joined %1\$s's island."
+    var commandJoinHaveIsland = "&7You already have an island."
     var commandJoinHelp = "&7join an island."
 
     var commandQuestHelp = "&7view Quest GUI."

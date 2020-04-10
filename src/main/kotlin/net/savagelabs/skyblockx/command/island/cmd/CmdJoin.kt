@@ -18,6 +18,10 @@ class CmdJoin : SCommand() {
 
     override fun perform(info: CommandInfo) {
         val targetIPlayer = info.getArgAsIPlayer(0) ?: return
+        if (info.iPlayer!!.hasIsland()) {
+            info.message(Message.commandJoinHaveIsland)
+            return
+        }
 
         if (!info.iPlayer!!.isInvitedToIsland(targetIPlayer.getIsland()!!)) {
             info.message(String.format(Message.commandJoinNotInvited, targetIPlayer.getPlayer().name))
