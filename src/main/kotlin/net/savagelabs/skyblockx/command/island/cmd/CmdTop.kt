@@ -20,6 +20,8 @@ class CmdTop : SCommand() {
     init {
         aliases.add("top")
 
+        optionalArgs.add(Argument("page", 0, IntArgument()))
+
         commandRequirements =
             CommandRequirementsBuilder().withPermission(Permission.INFO)
                 .build()
@@ -34,14 +36,27 @@ class CmdTop : SCommand() {
         }
         val decimalFormat = DecimalFormat()
         val sortedBy = Globals.islandValues!!.map.values.sortedByDescending { entry -> entry.worth }
-        var counter = 0
+        var counter = 1
         // Should be able to add the prefix if they want in message.json, right now, it doesn't match because the top island entries part does not have the prefix.
         if (Config.useIslandTopHeadMessage) info.message(Config.islandTopHeadMessage, false)
         if (Config.useIslandTopHeaderBar) {
             info.message(buildBar(Config.islandTopbarElement), false)
         }
-        sortedBy.forEach { entry ->
-            counter++
+        if (info.args.isNotEmpty()) {
+            counter = info.getArgAsInt(0) ?: return
+            if (counter <= 0) {
+                info.message(Message.commandTopInvalidPage)
+                return
+            }
+        }
+        val startIndex = (counter - 1) * Config.commandTopPageSize
+        if (startIndex > sortedBy.size - 1) {
+            info.message(Message.commandTopIndexTooHigh)
+            return
+        }
+
+        for (islandindex in startIndex..startIndex + Config.commandTopPageSize) {
+            val entry = sortedBy.getOrNull(islandindex) ?: break
             val builder = StringBuilder()
             entry.matAmt.forEach { xmat -> builder.append("${xmat.key.name}: ${xmat.value}\n") }
             var tooltip = ""
@@ -50,8 +65,11 @@ class CmdTop : SCommand() {
                     .replace("{rank}", counter.toString())
                     .replace("{leader}", Data.islands[entry.islandID]!!.ownerTag)
                     .replace("{amount}", decimalFormat.format(entry.worth))
-                entry.matAmt.forEach{ xmat -> lineBasicParsed = lineBasicParsed.replace("{${xmat.key.name}}", decimalFormat.format(xmat.value)) }
-                XMaterial.values().toList().forEach{ xmat -> lineBasicParsed = lineBasicParsed.replace("{${xmat.name}}", 0.toString()) }
+                entry.matAmt.forEach { xmat ->
+                    lineBasicParsed = lineBasicParsed.replace("{${xmat.key.name}}", decimalFormat.format(xmat.value))
+                }
+                XMaterial.values().toList()
+                    .forEach { xmat -> lineBasicParsed = lineBasicParsed.replace("{${xmat.name}}", 0.toString()) }
                 tooltip += color("\n$lineBasicParsed")
             }
             val line = color(Config.islandTopLineFormat.replace("{rank}", counter.toString())
@@ -62,8 +80,8 @@ class CmdTop : SCommand() {
             } else {
                 info.message(line, false)
             }
-
         }
+
     }
 
     override fun getHelpInfo(): String {
