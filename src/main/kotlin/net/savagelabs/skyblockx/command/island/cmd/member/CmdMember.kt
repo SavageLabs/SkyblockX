@@ -5,6 +5,7 @@ import net.savagelabs.skyblockx.command.CommandRequirementsBuilder
 import net.savagelabs.skyblockx.command.SCommand
 import net.savagelabs.skyblockx.core.Permission
 import net.savagelabs.skyblockx.gui.IslandMemberGUI
+import net.savagelabs.skyblockx.persist.Config
 import net.savagelabs.skyblockx.persist.Message
 
 class CmdMember : SCommand() {
@@ -23,12 +24,13 @@ class CmdMember : SCommand() {
     }
 
     override fun perform(info: CommandInfo) {
-        IslandMemberGUI().showGui(info.player!!)
+        if (Config.islandMemberShowMenu) IslandMemberGUI().showGui(info.player!!)
+        else
         // No Args / Invalid args specified.
-        if (info.args.size != 1) {
-            generateHelp(1, info.player!!)
-            return
-        }
+            if (info.args.size != 1) {
+                generateHelp(1, info.player!!)
+                return
+            }
 
     }
 
