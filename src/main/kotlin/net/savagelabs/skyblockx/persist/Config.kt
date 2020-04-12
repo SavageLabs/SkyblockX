@@ -168,11 +168,11 @@ object Config {
         MenuItem(
             SerializableItem(
                 XMaterial.BARRIER,
-                "&7Ban &b&l{player}",
-                listOf("&7Click to ban"),
+                "&7Kick &b&l{player}",
+                listOf("&7Click to kick"),
                 1
             ),
-            listOf("is members ban {player}"),
+            listOf("is members kick {player}"),
             10
         ), MenuItem(
             SerializableItem(
