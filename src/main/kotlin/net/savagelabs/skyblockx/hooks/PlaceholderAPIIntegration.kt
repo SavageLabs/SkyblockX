@@ -48,7 +48,7 @@ class PlacholderAPIIntegration : PlaceholderExpansion() {
             "island_worth_rounded" -> floor(
                 Globals.islandValues?.map?.get(iPlayer.getIsland()?.islandID)?.worth ?: 0.0
             ).toString()
-            "island_level" -> (iPlayer.getIsland()?.getLevel() ?: 0).toString()
+            "island_level" -> (iPlayer.getIsland()?.getLevel()?.toInt() ?: 0).toString()
             else -> null
         }
     }
