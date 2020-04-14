@@ -63,10 +63,9 @@ class CmdVisit : SCommand() {
             return
         }
 
-        // TODO: Allow them to set island teleport location maybe? idk.
         teleportAsync(
             info.player!!,
-            targetLocation.getIslandCenter(),
+            targetLocation.islandGoPoint.getLocation(),
             Runnable { info.message(String.format(Message.commandVisitTeleporting, targetLocation.ownerTag)) })
     }
 
