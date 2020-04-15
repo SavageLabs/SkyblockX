@@ -26,7 +26,7 @@ class PlacholderAPIIntegration : PlaceholderExpansion() {
     }
 
     override fun getVersion(): String {
-        return Globals.skyblockX.server.version
+        return Globals.skyblockX.description.version
     }
 
     override fun onPlaceholderRequest(player: Player, s: String): String? {
