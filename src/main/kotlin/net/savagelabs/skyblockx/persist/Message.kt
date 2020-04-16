@@ -224,6 +224,7 @@ object Message {
 
 
     var listenerVoidDeathPrevented = "&7You fell into the void, teleporting you back."
+    var listenerDeathTeleport = "&7You've been teleported to your island."
     var listenerBlockPlacementDenied = "&7You can only place blocks inside of your island."
     var listenerActionDeniedCreateAnIslandFirst = "&7This action has been denied, please create an island first."
     var listenerObsidianBucketLava = "&7The obsidian has been turned back to lava, be careful!"

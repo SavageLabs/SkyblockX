@@ -18,6 +18,8 @@ import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.event.entity.EntityDeathEvent
+import org.bukkit.event.entity.PlayerDeathEvent
+import org.bukkit.event.player.PlayerRespawnEvent
 
 class EntityListener : Listener {
 
@@ -68,6 +70,33 @@ class EntityListener : Listener {
         if (Config.disableMobDamageWhenIslandVisitor && !iPlayer.isOnOwnIsland()) {
             event.isCancelled = true
         }
+    }
+
+    @EventHandler
+    fun onPlayerDeath(event: PlayerDeathEvent) {
+        if (Config.skyblockDeathTeleport && isNotInSkyblockWorld(event.entity.world))
+            return
+
+        val iPlayer = getIPlayer(event.entity)
+        iPlayer.teleportDeath = if (iPlayer.hasIsland()) {
+            iPlayer.getIsland()!!.islandGoPoint.getLocation()
+        } else {
+            Bukkit.getWorld(Config.defaultWorld)!!.spawnLocation
+        }
+    }
+
+    @EventHandler
+    fun onPlayerRespawn(event: PlayerRespawnEvent) {
+        val iPlayer = getIPlayer(event.player)
+        if (iPlayer.teleportDeath != null) {
+            Bukkit.getScheduler().runTask(Globals.skyblockX, Runnable {
+                teleportAsync(event.player, iPlayer.teleportDeath!!, Runnable {
+                    iPlayer.message(Message.listenerDeathTeleport)
+                })
+            })
+
+        }
+
     }
 
     @EventHandler

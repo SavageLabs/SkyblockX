@@ -41,6 +41,8 @@ object Config {
         "eco take {player} 100"
     )
 
+    var skyblockDeathTeleport = true
+
     var levelIncrementFactor = 25
 
     // Equals to 6 hours, 60 sec in 1 min, and 60 min in an hour, times 6.
@@ -63,6 +65,8 @@ object Config {
     var islandOreGeneratorEnabled = true
 
     var skyblockWorldBiome = Biome.PLAINS
+
+    var islandTopIslandCalculationSpeedIntervalMilis = 2000L
 
     var islandTopLineFormat = "&b{rank}&7. &7{leader}'s island &b(\${amount})&7."
 

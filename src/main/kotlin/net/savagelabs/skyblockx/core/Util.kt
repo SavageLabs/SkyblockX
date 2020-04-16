@@ -33,8 +33,12 @@ fun isNotInSkyblockWorld(world: World): Boolean {
 
 fun teleportAsync(player: Player?, location: Location, runnable: Runnable) {
     if (player == null) return
-    PaperLib.teleportAsync(player, location.add(0.0, 1.0, 0.0), PlayerTeleportEvent.TeleportCause.PLUGIN).thenAccept {
-        if (it) runnable.run() else Globals.skyblockX.logger.severe("Something went horribly wrong when trying to teleport ${player.name}.")
+    val locationtoTP = location.add(0.0, 1.0, 0.0)
+    PaperLib.teleportAsync(player, locationtoTP, PlayerTeleportEvent.TeleportCause.PLUGIN).thenAccept {
+        if (it) runnable.run() else {
+            Globals.skyblockX.logger.severe("Something went wrong when trying to teleport ${player.name} async - running sync.")
+            player.teleport(locationtoTP, PlayerTeleportEvent.TeleportCause.PLUGIN)
+        }
     }
 }
 

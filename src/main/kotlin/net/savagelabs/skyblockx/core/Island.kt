@@ -1,6 +1,7 @@
 package net.savagelabs.skyblockx.core
 
 import com.cryptomorin.xseries.XMaterial
+import io.papermc.lib.PaperLib
 import me.rayzr522.jsonmessage.JSONMessage
 import net.savagelabs.skyblockx.Globals
 import net.savagelabs.skyblockx.event.IslandPostLevelCalcEvent
@@ -22,7 +23,6 @@ import java.util.*
 import java.util.stream.Collectors
 import kotlin.collections.HashSet
 import kotlin.math.floor
-import kotlin.math.roundToInt
 import kotlin.math.sqrt
 import kotlin.streams.toList
 import kotlin.time.Duration
@@ -114,7 +114,8 @@ data class Island(
             val world = Bukkit.getWorld(Config.skyblockWorldName)!!
             for (x in minLocation.x.toInt()..maxLocation.x.toInt()) {
                 for (z in minLocation.z.toInt()..maxLocation.z.toInt()) {
-                    chunks.add(world.getChunkAt(Location(world, x.toDouble(), 0.0, z.toDouble())))
+                    PaperLib.getChunkAtAsync(Location(world, x.toDouble(), 0.0, z.toDouble()))
+                        .thenAccept { chunks.add(it) }
                 }
             }
             lateinit var chunkList: List<ChunkSnapshot>
@@ -520,8 +521,8 @@ fun createIsland(player: Player?, schematic: String, teleport: Boolean = true): 
         val iPlayer = getIPlayer(player)
         iPlayer.assignIsland(island)
         if (teleport) teleportAsync(player, island.getIslandCenter(), Runnable { })
+        incrementQuestInOrder(island)
     }
-    incrementQuestInOrder(island)
     // Use deprecated method for 1.8 support.
     player?.sendTitle(color(Message.islandCreatedTitle), color(Message.islandCreatedSubtitle))
     player?.sendMessage(color("${Message.messagePrefix}${String.format(Message.islandCreationMessage, size)}"))
@@ -541,6 +542,9 @@ fun deleteIsland(player: Player) {
 data class IslandTopInfo(val map: HashMap<Int, Island.CalcInfo>, val time: Long)
 
 @ExperimentalTime
+        /**
+         * CALL THIS ASYNC OR WHOLE SERVER WILL SLEEP :).
+         */
 fun runIslandCalc() {
     val islandVals = hashMapOf<Int, Island.CalcInfo>()
     val pluginManager = Bukkit.getPluginManager()
@@ -553,7 +557,8 @@ fun runIslandCalc() {
         Bukkit.getScheduler().callSyncMethod(Globals.skyblockX) { pluginManager.callEvent(islandPostCalcEvent) }
         worth.worth = islandPostCalcEvent.levelAfterCalc ?: worth.worth
         islandVals[key] = worth
-
+        Globals.skyblockX.logger.info("Finished Island ${island.ownerTag}")
+        Thread.sleep(Config.islandTopIslandCalculationSpeedIntervalMilis)
     }
     Globals.islandValues = IslandTopInfo(islandVals, System.currentTimeMillis())
 }

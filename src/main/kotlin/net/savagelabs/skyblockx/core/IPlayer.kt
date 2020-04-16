@@ -19,6 +19,9 @@ data class IPlayer(val uuid: String) {
 
     var falling = false
 
+    @Transient
+    var teleportDeath: Location? = null
+
     var islandID = -1
 
     var choosingPosition = false

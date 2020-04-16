@@ -119,8 +119,10 @@ class SkyblockEdit {
             val fileNether = File(Globals.skyblockX.dataFolder, "nether-island.structure")
             Globals.skyblockX.saveResource("island.structure", false)
             Globals.skyblockX.saveResource("nether-island.structure", false)
-            fileIsland.copyTo(File(File(Globals.skyblockX.dataFolder, "structures"), "island.structure"))
-            fileNether.copyTo(File(File(Globals.skyblockX.dataFolder, "structures"), "nether-island.structure"))
+            val copytoStruct = File(File(Globals.skyblockX.dataFolder, "structures"), "island.structure")
+            if (!copytoStruct.exists()) fileIsland.copyTo(copytoStruct, false)
+            val copyToNetherStruct = File(File(Globals.skyblockX.dataFolder, "structures"), "nether-island.structure")
+            if (!copyToNetherStruct.exists()) fileNether.copyTo(copyToNetherStruct, false)
             fileNether.delete()
             fileIsland.delete()
         }

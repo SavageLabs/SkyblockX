@@ -71,14 +71,24 @@ class SkyblockX : SavagePlugin() {
     }
 
     @ExperimentalTime
-    private fun startIslandTopTask() {
+    fun startIslandTopTask() {
         if (!Config.autoCalcIslands) return
         Bukkit.getScheduler().runTaskTimer(this, Runnable {
-            if (Config.islandTopBroadcastMessage) Bukkit.broadcastMessage(color(Config.islandTopBroadcastMessageStart))
-            val time = measureTimedValue {
-                Bukkit.getScheduler().runTask(this, Runnable { runIslandCalc() })
-            }
-            if (Config.islandTopBroadcastMessage) Bukkit.broadcastMessage(color(String.format(Config.islandTopBroadcastMessageEnd, Globals.islandValues?.map?.size, time.duration)))
+            Bukkit.getScheduler().runTaskAsynchronously(this, Runnable {
+                if (Config.islandTopBroadcastMessage) Bukkit.broadcastMessage(color(Config.islandTopBroadcastMessageStart))
+                val time = measureTimedValue {
+                    runIslandCalc()
+                }
+                if (Config.islandTopBroadcastMessage) Bukkit.broadcastMessage(
+                    color(
+                        String.format(
+                            Config.islandTopBroadcastMessageEnd,
+                            Globals.islandValues?.map?.size,
+                            time.duration
+                        )
+                    )
+                )
+            })
         }, 20L, Config.islandTopCalcPeriodTicks.toLong())
     }
 

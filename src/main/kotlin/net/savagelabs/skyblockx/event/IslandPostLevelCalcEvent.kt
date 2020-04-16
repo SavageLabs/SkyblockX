@@ -1,11 +1,10 @@
 package net.savagelabs.skyblockx.event
 
 import net.savagelabs.skyblockx.core.Island
-import org.bukkit.event.Cancellable
 import org.bukkit.event.Event
 import org.bukkit.event.HandlerList
 
-class IslandPostLevelCalcEvent(val island: Island, var levelAfterCalc: Double?) : Event(false) {
+class IslandPostLevelCalcEvent(val island: Island, var levelAfterCalc: Double?) : Event(true) {
 
     fun setLevelAfterCalc(levelAfterCalc: Double) {
         this.levelAfterCalc = levelAfterCalc
