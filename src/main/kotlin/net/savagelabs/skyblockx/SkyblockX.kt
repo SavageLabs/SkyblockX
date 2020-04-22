@@ -14,11 +14,13 @@ import net.savagelabs.skyblockx.listener.*
 import net.savagelabs.skyblockx.persist.*
 import net.savagelabs.skyblockx.persist.data.Items
 import net.savagelabs.skyblockx.world.VoidWorldGenerator
+import org.bstats.bukkit.Metrics
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor
 import org.bukkit.World
 import org.bukkit.WorldCreator
 import org.bukkit.generator.ChunkGenerator
+import java.util.concurrent.Callable
 import kotlin.system.measureTimeMillis
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTimedValue
@@ -41,6 +43,7 @@ class SkyblockX : SavagePlugin() {
             loadPlaceholderAPIHook()
             startIslandTopTask()
             startAutoSaveTask()
+            loadMetrics()
             registerListeners(DataListener(), SEditListener(), BlockListener(), PlayerListener(), EntityListener())
             logInfo("Loaded ${Data.IPlayers.size} players.")
             logInfo("Loaded ${Data.islands.size} islands.")
@@ -57,6 +60,13 @@ class SkyblockX : SavagePlugin() {
         PaperLib.suggestPaper(this)
     }
 
+    private fun loadMetrics() {
+        logInfo("Loading Metrics.")
+        val metrics = Metrics(this, 6970)
+        metrics.addCustomChart(Metrics.SingleLineChart("active_islands", Callable { Data.islands.size }))
+
+    }
+
     private fun logInfo(message: String, color: ChatColor = ChatColor.YELLOW) {
         logger.info("$color$message")
     }
@@ -65,7 +75,7 @@ class SkyblockX : SavagePlugin() {
     private fun startAutoSaveTask() {
         Bukkit.getScheduler().runTaskTimerAsynchronously(this, Runnable {
             if (Config.islandSaveBroadcastMessage) Bukkit.broadcastMessage(color(Config.islandSaveBroadcastMessageStart))
-            val time = measureTimedValue {  Data.save() }
+            val time = measureTimedValue { Data.save() }
             if (Config.islandSaveBroadcastMessage) Bukkit.broadcastMessage(color(String.format(Config.islandSaveBroadcastMessageEnd, time.duration)))
         }, 20L, Config.islandSaveTaskPeriodTicks.toLong())
     }

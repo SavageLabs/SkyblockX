@@ -34,6 +34,9 @@ repositories {
         name 'papermc'
         url 'https://papermc.io/repo/repository/maven-public/'
     }
+    maven {
+        url 'https://repo.codemc.org/repository/maven-public'
+    }
 }
 
 
@@ -49,6 +52,7 @@ dependencies {
         exclude group: 'com.google.guava', module: 'guava'
         exclude group: 'com.google.code.gson', module: 'gson'
     }
+    compile 'org.bstats:bstats-bukkit:1.7'
     compile 'com.google.code.gson:gson:2.8.5'
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
     compile ('net.prosavage:BasePlugin:1.7.2')
