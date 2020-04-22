@@ -90,6 +90,7 @@ shadowJar {
     relocate 'org.jetbrains.kotlin', 'net.savagelabs.skyblockx.shade.kotlin'
     relocate 'me.rayzr522.jsonmessage', 'net.savagelabs.skyblockx.shade.jsonmessage'
     relocate 'io.illyria.WorldBorder-API', 'net.savagelabs.skyblockx.shade.WorldBorder-API'
+    relocate 'org.bstats', 'net.savagelabs.skyblockx.shade.bstats'
     archiveName 'SkyblockX.jar'
     minimize()
 }
