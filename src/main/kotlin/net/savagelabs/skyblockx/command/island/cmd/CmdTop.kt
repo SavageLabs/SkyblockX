@@ -12,6 +12,7 @@ import net.savagelabs.skyblockx.core.color
 import net.savagelabs.skyblockx.persist.Config
 import net.savagelabs.skyblockx.persist.Data
 import net.savagelabs.skyblockx.persist.Message
+import org.bukkit.entity.EntityType
 import java.text.DecimalFormat
 import kotlin.time.ExperimentalTime
 
@@ -68,7 +69,14 @@ class CmdTop : SCommand() {
                 entry.matAmt.forEach { xmat ->
                     lineBasicParsed = lineBasicParsed.replace("{${xmat.key.name}}", decimalFormat.format(xmat.value))
                 }
-                XMaterial.values().toList()
+                entry.spawnerAmt.forEach { entity ->
+                    lineBasicParsed =
+                        lineBasicParsed.replace("{${entity.key.name}}", decimalFormat.format(entity.value))
+                }
+                EntityType.values().forEach { entityType ->
+                    lineBasicParsed = lineBasicParsed.replace("{${entityType.name}}", 0.toString())
+                }
+                XMaterial.values()
                     .forEach { xmat -> lineBasicParsed = lineBasicParsed.replace("{${xmat.name}}", 0.toString()) }
                 tooltip += color("\n$lineBasicParsed")
             }
