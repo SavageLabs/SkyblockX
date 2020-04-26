@@ -88,15 +88,16 @@ class SkyblockX : SavagePlugin() {
             val time = measureTimedValue {
                 runIslandCalc()
             }
-            if (Config.islandTopBroadcastMessage) Bukkit.broadcastMessage(
-                color(
-                    String.format(
-                        Config.islandTopBroadcastMessageEnd,
-                        Globals.islandValues?.map?.size,
-                        time.duration
+            if (Config.islandTopBroadcastMessage)
+                Bukkit.broadcastMessage(
+                    color(
+                        String.format(
+                            Config.islandTopBroadcastMessageEnd,
+                            Globals.islandValues?.map?.size,
+                            time.duration
+                        )
                     )
                 )
-            )
         }, 20L, Config.islandTopCalcPeriodTicks.toLong())
     }
 

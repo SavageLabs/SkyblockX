@@ -114,8 +114,10 @@ data class Island(
             val world = Bukkit.getWorld(Config.skyblockWorldName)!!
             for (x in minLocation.x.toInt()..maxLocation.x.toInt()) {
                 for (z in minLocation.z.toInt()..maxLocation.z.toInt()) {
-                    PaperLib.getChunkAtAsync(Location(world, x.toDouble(), 0.0, z.toDouble()))
-                        .thenAccept { chunks.add(it) }
+                    Bukkit.getScheduler().runTask(Globals.skyblockX, Runnable {
+                        PaperLib.getChunkAtAsync(Location(world, x.toDouble(), 0.0, z.toDouble()))
+                            .thenAccept { chunks.add(it) }
+                    })
                 }
             }
             lateinit var chunkList: List<ChunkSnapshot>
@@ -125,7 +127,8 @@ data class Island(
                 for (x in 0 until 16) {
                     for (y in 0 until 256) {
                         for (z in 0 until 16) {
-                            val blockType = getChunkSnapshotBlockType(useNewGetBlockTypeSnapshotMethod, chunkSnapshot, x, y, z)!!
+                            val blockType =
+                                getChunkSnapshotBlockType(useNewGetBlockTypeSnapshotMethod, chunkSnapshot, x, y, z)!!
                             if (blockType == Material.AIR) continue
                             val xmat = XMaterial.matchXMaterial(blockType) ?: continue
                             price += BlockValues.blockValues[xmat] ?: 0.0
@@ -138,7 +141,12 @@ data class Island(
         return CalcInfo(time.duration, price, mapAmt, islandID)
     }
 
-    data class CalcInfo @ExperimentalTime constructor(val timeDuration: Duration, var worth: Double, val matAmt: Map<XMaterial, Int>, val islandID: Int)
+    data class CalcInfo @ExperimentalTime constructor(
+        val timeDuration: Duration,
+        var worth: Double,
+        val matAmt: Map<XMaterial, Int>,
+        val islandID: Int
+    )
 
     /**
      * Gets the chunksnapshot's block type.
@@ -156,9 +164,17 @@ data class Island(
         return if (useNew) chunkSnapshot.getBlockType(x, y, z)
         // TODO: Optimize this by caching the methods as this is reflection being called for EVERY block.
         else {
-            val id = chunkSnapshot.javaClass.getMethod("getBlockTypeId", Int::class.javaPrimitiveType, Int::class.javaPrimitiveType, Int::class.javaPrimitiveType)
+            val id = chunkSnapshot.javaClass.getMethod(
+                "getBlockTypeId",
+                Int::class.javaPrimitiveType,
+                Int::class.javaPrimitiveType,
+                Int::class.javaPrimitiveType
+            )
                 .invoke(chunkSnapshot, x, y, z) as Int
-            return  Class.forName("org.bukkit.Material").getMethod("getMaterial", Int::class.javaPrimitiveType).invoke(null, id) as Material
+            return Class.forName("org.bukkit.Material").getMethod("getMaterial", Int::class.javaPrimitiveType).invoke(
+                null,
+                id
+            ) as Material
         }
     }
 
@@ -426,8 +442,6 @@ data class Island(
     }
 
 
-
-
     /**
      * Delete the players island by removing the whole team, Deleting the actual blocks is too intensive.
      */
@@ -512,7 +526,13 @@ fun createIsland(player: Player?, schematic: String, teleport: Boolean = true): 
     var size = if (player == null) Config.islandMaxSizeInBlocks else getMaxPermission(player, "skyblockx.size")
     size = if (size <= 0 || size > Config.islandMaxSizeInBlocks) Config.islandMaxSizeInBlocks else size
     val island =
-        Island(Data.nextIslandID, spiral(Data.nextIslandID), player?.uniqueId.toString(), player?.name ?: "SYSTEM_OWNED", size)
+        Island(
+            Data.nextIslandID,
+            spiral(Data.nextIslandID),
+            player?.uniqueId.toString(),
+            player?.name ?: "SYSTEM_OWNED",
+            size
+        )
     Data.islands[Data.nextIslandID] = island
     Data.nextIslandID++
     // Make player null because we dont want to send them the SkyblockEdit Engine's success upon pasting the island.
