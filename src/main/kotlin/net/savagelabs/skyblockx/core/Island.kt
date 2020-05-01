@@ -461,6 +461,9 @@ data class Island(
      * This is built for checking bounds without checking the Y axis as it is not needed.
      */
     fun locationInIsland(v: Location): Boolean {
+        if (v.world!!.name != Config.skyblockWorldName && v.world!!.name != Config.skyblockWorldNameNether)
+            return false
+
         val x = v.x
         val z = v.z
         return x >= minLocation.x && x < maxLocation.x + 1 && z >= minLocation.z && z < maxLocation.z + 1
