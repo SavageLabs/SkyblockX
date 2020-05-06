@@ -20,7 +20,14 @@ class IslandCreateGUI :
                     e.isCancelled = true
                     val player = e.whoClicked as Player
                     if (!hasPermission(player, island.requirementPermission)) {
-                        player.sendMessage(color(Message.messagePrefix + Message.islandCreateGUIYouDontHavePermission))
+                        player.sendMessage(
+                            color(
+                                String.format(
+                                    Message.messagePrefix + Message.islandCreateGUIYouDontHavePermissionToUseIsland,
+                                    island.requirementPermission
+                                )
+                            )
+                        )
                         return@run
                     }
                     val createdIsland = createIsland(player, island.structureFile.replace(".structure", ""))

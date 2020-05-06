@@ -158,7 +158,8 @@ object Message {
 
     var commandMenuHelp = "&7Opens the Island Menu GUI."
 
-    var islandCreateGUIYouDontHavePermission = "You do not have permission to use this island."
+    var islandCreateGUIYouDontHavePermissionToUseIsland =
+        "You do not have the permission &b%1\$s&7 required to use this island."
 
     var commandMemberInviteHelp = "invite a member to your island"
     var commandMemberInviteSuccess = "&7You have invited %1\$s to your island."
