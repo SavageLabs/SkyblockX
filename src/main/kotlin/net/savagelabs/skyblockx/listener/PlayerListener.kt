@@ -88,6 +88,7 @@ class PlayerListener : Listener {
         newLoc.world = Bukkit.getWorld(Config.skyblockWorldNameNether)
         if (!islandFromLocation.beenToNether) {
             SkyblockEdit().pasteIsland(islandFromLocation.netherFilePath.replace(".structure", ""), newLoc, null)
+            islandFromLocation.beenToNether = true
         }
         event.player.teleport(newLoc, PlayerTeleportEvent.TeleportCause.PLUGIN)
         iPlayer.message(Message.islandNetherTeleported)
