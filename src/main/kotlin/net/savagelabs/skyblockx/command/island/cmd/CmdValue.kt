@@ -20,7 +20,7 @@ class CmdValue : SCommand() {
 
 
     override fun perform(info: CommandInfo) {
-        val blockMaterial = info.player!!.inventory.itemInMainHand.type
+        val blockMaterial = info.player!!.itemInHand.type
         val xmat = XMaterial.matchXMaterial(blockMaterial)
         val value = BlockValues.blockValues[xmat] ?: 0.0
         info.message(String.format(Message.commandValueInfo, NumberFormat.getInstance(Config.numberFormatLocale).format(value)))
