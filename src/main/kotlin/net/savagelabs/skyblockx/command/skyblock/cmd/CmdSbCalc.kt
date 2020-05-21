@@ -20,7 +20,7 @@ class CmdSbCalc : SCommand() {
     @ExperimentalTime
     override fun perform(info: CommandInfo) {
         info.message(Message.commandSkyblockCalcStart)
-        Globals.skyblockX.startIslandTopTask()
+        Globals.skyblockX.runIslandCalc()
 
     }
 

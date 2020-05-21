@@ -103,6 +103,9 @@ object Config {
     // amt x ticks/sec x sec/min: 15 min
     var islandTopCalcPeriodTicks = 15 * 20 * 60
 
+    var _islandTopChunkLoadDelayComment = "50 miliseconds is equal to ONE tick. Make this higher if you are lagging, and lower if you want speed."
+    var islandTopChunkLoadDelayInMiliseconds = 50L
+
     var islandTopManualCalcCooldownMiliseconds = 1 * 1000 * 60 * 5
 
     var autoCalcIslands = true
