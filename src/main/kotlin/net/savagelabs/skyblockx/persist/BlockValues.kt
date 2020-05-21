@@ -2,6 +2,7 @@ package net.savagelabs.skyblockx.persist
 
 import com.cryptomorin.xseries.XMaterial
 import net.prosavage.baseplugin.serializer.Serializer
+import org.bukkit.entity.EntityType
 
 object BlockValues {
 
@@ -20,6 +21,16 @@ object BlockValues {
     )
 
 
+    var spawnerValues = mutableMapOf(
+        EntityType.PIG to 10000.0,
+        EntityType.ZOMBIE to 15000.0,
+        EntityType.CREEPER to 20000.0,
+        EntityType.IRON_GOLEM to 100000.0,
+        EntityType.PIG_ZOMBIE to 50000.0,
+        EntityType.SPIDER to 15000.0
+    )
+
+
 
 
 
@@ -30,6 +41,10 @@ object BlockValues {
 
     fun load() {
         XMaterial.values().toList().forEach{ xmat -> blockValues.putIfAbsent(xmat, 0.0) }
+        EntityType.values().forEach {
+            spawnerValues.putIfAbsent(it, 1000.0)
+        }
         Serializer().load(instance, BlockValues::class.java, "blockvalues")
+
     }
 }
