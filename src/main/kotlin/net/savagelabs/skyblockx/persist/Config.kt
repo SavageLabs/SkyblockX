@@ -66,7 +66,7 @@ object Config {
 
     var skyblockWorldBiome = Biome.PLAINS
 
-    var islandTopIslandCalculationSpeedIntervalMilis = 10000L
+    var islandTopIslandCalculationSpeedIntervalMilis = 2000L
 
     var islandTopLineFormat = "&b{rank}&7. &7{leader}'s island &b(\${amount})&7."
 
@@ -84,9 +84,6 @@ object Config {
     var islandTopTooltip = listOf(
         "&7Leader: &b{leader}",
         "&7Dirt: &b{DIRT}",
-        "&7Creeper Spawner: &b{CREEPER}",
-        "&7Zombie Spawner: &b{ZOMBIE}",
-        "&7Skeleton Spawner: &b{SKELETON}",
         "&7Diamond Block: &b{DIAMOND_BLOCK}",
         "&7Grass Block: &b{GRASS_BLOCK}",
         "&7Gold Block: &b{GOLD_BLOCK}",
