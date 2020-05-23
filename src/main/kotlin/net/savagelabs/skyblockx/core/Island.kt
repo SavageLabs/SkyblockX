@@ -44,6 +44,8 @@ data class Island(
 ) {
 
 
+    var islandName = ownerTag
+
     var inventory = Bukkit.createInventory(null, (Config.chestRows[1] ?: 3) * 9)
         get() {
             if (field == null) field = Bukkit.createInventory(null, (Config.chestRows[1] ?: 3) * 9)
@@ -617,3 +619,9 @@ fun calculateAllIslands() {
     Globals.islandValues = IslandTopInfo(islandVals, System.nanoTime())
 }
 
+fun isIslandNameTaken(tag: String): Boolean {
+    for ((id, island) in Data.islands) {
+        if (tag == island.islandName) return true
+    }
+    return false
+}

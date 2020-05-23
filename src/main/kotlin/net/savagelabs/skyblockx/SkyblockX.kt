@@ -50,6 +50,7 @@ class SkyblockX : SavagePlugin() {
             registerListeners(DataListener(), SEditListener(), BlockListener(), PlayerListener(), EntityListener())
             logInfo("Loaded ${Data.IPlayers.size} players.")
             logInfo("Loaded ${Data.islands.size} islands.")
+            migrateData()
         }
         logInfo("Startup Finished (${startupTime}ms)")
         logInfo("If you need help with the plugin check out our wiki: https://github.com/SavageLabs/SkyblockX/wiki")
@@ -61,6 +62,15 @@ class SkyblockX : SavagePlugin() {
         logInfo("\t- Review the plugin on Spigot: https://www.spigotmc.org/resources/73135/", ChatColor.GREEN)
         loadWorlds()
         PaperLib.suggestPaper(this)
+    }
+
+    private fun migrateData() {
+        Data.islands.forEach { id, island ->
+            if (island.islandName == null) {
+                logInfo("Island Names Update: Migrated ${island.ownerTag}'s Island Data.")
+                island.islandName = island.ownerTag
+            }
+        }
     }
 
     private fun loadMetrics() {

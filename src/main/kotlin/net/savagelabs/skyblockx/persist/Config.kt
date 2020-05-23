@@ -68,7 +68,7 @@ object Config {
 
     var islandTopIslandCalculationSpeedIntervalMilis = 2000L
 
-    var islandTopLineFormat = "&b{rank}&7. &7{leader}'s island &b(\${amount})&7."
+    var islandTopLineFormat = "&b{rank}&7. &7{name} &b(\${amount})&7."
 
     var useIslandTopHeadMessage = true
 
@@ -93,6 +93,11 @@ object Config {
     )
 
     var commandTopPageSize = 5
+
+    var islandNameEnforceLength = true
+    var islandNameMinLength = 4
+    var islandNameMaxLength = 12
+    var islandNameEnforceAlphaNumeric = true
 
 
     var disableMobDamageWhenIslandVisitor = true
