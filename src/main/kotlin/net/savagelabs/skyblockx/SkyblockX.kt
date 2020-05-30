@@ -47,7 +47,7 @@ class SkyblockX : SavagePlugin() {
             startIslandTopTask()
             startAutoSaveTask()
             loadMetrics()
-            registerListeners(DataListener(), SEditListener(), BlockListener(), PlayerListener(), EntityListener())
+            registerListeners(DataListener(), SEditListener(), BlockListener(), PlayerListener(), EntityListener(), GlideListener())
             logInfo("Loaded ${Data.IPlayers.size} players.")
             logInfo("Loaded ${Data.islands.size} islands.")
             migrateData()
