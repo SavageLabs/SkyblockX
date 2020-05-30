@@ -30,7 +30,7 @@ class CmdCreate : SCommand() {
             return
         }
 
-        if (info.iPlayer!!.lastIslandResetTime != -1L) {
+        if (info.isBypassing().not() && info.iPlayer!!.lastIslandResetTime != -1L) {
             val timeNow = System.currentTimeMillis() / 1000
             val resetTime = info.iPlayer!!.lastIslandResetTime
             val difference = timeNow - resetTime
