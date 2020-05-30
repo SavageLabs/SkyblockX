@@ -68,7 +68,7 @@ object Config {
 
     var islandTopIslandCalculationSpeedIntervalMilis = 2000L
 
-    var islandTopLineFormat = "&b{rank}&7. &7{leader}'s island &b(\${amount})&7."
+    var islandTopLineFormat = "&b{rank}&7. &7{name} &b(\${amount})&7."
 
     var useIslandTopHeadMessage = true
 
@@ -94,11 +94,19 @@ object Config {
 
     var commandTopPageSize = 5
 
+    var islandNameEnforceLength = true
+    var islandNameMinLength = 4
+    var islandNameMaxLength = 12
+    var islandNameEnforceAlphaNumeric = true
+
 
     var disableMobDamageWhenIslandVisitor = true
 
     // amt x ticks/sec x sec/min: 15 min
     var islandTopCalcPeriodTicks = 15 * 20 * 60
+
+    var _islandTopChunkLoadDelayComment = "50 miliseconds is equal to ONE tick. Make this higher if you are lagging, and lower if you want speed."
+    var islandTopChunkLoadDelayInMiliseconds = 50L
 
     var islandTopManualCalcCooldownMiliseconds = 1 * 1000 * 60 * 5
 

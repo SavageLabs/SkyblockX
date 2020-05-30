@@ -60,10 +60,12 @@ class CmdTop : SCommand() {
             val builder = StringBuilder()
             entry.matAmt.forEach { xmat -> builder.append("${xmat.key.name}: ${xmat.value}\n") }
             var tooltip = ""
+            val island = Data.islands[entry.islandID]!!
             for (line in Config.islandTopTooltip) {
                 var lineBasicParsed = line
+                    .replace("{name}", island.islandName)
                     .replace("{rank}", counter.toString())
-                    .replace("{leader}", Data.islands[entry.islandID]!!.ownerTag)
+                    .replace("{leader}", island.ownerTag)
                     .replace("{amount}", decimalFormat.format(entry.worth))
                 entry.matAmt.forEach { xmat ->
                     lineBasicParsed = lineBasicParsed.replace("{${xmat.key.name}}", decimalFormat.format(xmat.value))
@@ -72,8 +74,10 @@ class CmdTop : SCommand() {
                     .forEach { xmat -> lineBasicParsed = lineBasicParsed.replace("{${xmat.name}}", 0.toString()) }
                 tooltip += color("\n$lineBasicParsed")
             }
-            val line = color(Config.islandTopLineFormat.replace("{rank}", counter.toString())
-                .replace("{leader}", Data.islands[entry.islandID]!!.ownerTag)
+            val line = color(Config.islandTopLineFormat
+                .replace("{name}", island.islandName)
+                .replace("{rank}", counter.toString())
+                .replace("{leader}", island.ownerTag)
                 .replace("{amount}", decimalFormat.format(entry.worth)))
             if (info.isPlayer()) {
                 JSONMessage.create(line).tooltip(tooltip).send(info.player)

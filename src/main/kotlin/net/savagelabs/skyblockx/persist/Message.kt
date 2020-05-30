@@ -151,6 +151,10 @@ object Message {
     var commandJoinSuccess = "&7You have joined %1\$s's island."
     var commandJoinHaveIsland = "&7You already have an island."
 
+    var commandRenameIslandNameIsTaken = "&7This island name is already in use."
+    var commandRenameSuccess = "&7You have renamed your island to &6%1\$s."
+    var commandRenameHelp = "rename your island."
+
     var commandQuestHelp = "&7View Quest GUI."
 
     var commandReloadHelp = "&7Reloads the skyblock config files."
@@ -245,7 +249,8 @@ object Message {
 
     var islandNetherTeleported = "&7You have been teleported to your nether island."
 
-
+    var commandCreateNonAlphaNumeric = "&7This island tag is not &balphanumeric&7."
+    var commandCreateLength = "&7island tag must be between &b%1\$s&7 and &b%2\$s&7 characters long."
 
     var islandCreatedTitle = "&9SkyblockX"
     var islandCreatedSubtitle = "&7By: ProSavage"

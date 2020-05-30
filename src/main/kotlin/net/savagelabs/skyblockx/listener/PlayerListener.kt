@@ -78,7 +78,7 @@ class PlayerListener : Listener {
 
     @EventHandler
     fun onPlayerChangeWorldEvent(event: PlayerPortalEvent) {
-        if (event.from.world?.name != Config.skyblockWorldName || event.to?.world?.environment != World.Environment.NETHER) {
+        if (event.from.world?.name != Config.skyblockWorldName || event.cause != PlayerTeleportEvent.TeleportCause.NETHER_PORTAL) {
             return
         }
         val iPlayer = getIPlayer(event.player)

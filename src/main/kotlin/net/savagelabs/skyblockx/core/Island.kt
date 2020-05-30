@@ -2,6 +2,8 @@ package net.savagelabs.skyblockx.core
 
 import com.cryptomorin.xseries.XMaterial
 import io.papermc.lib.PaperLib
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 import me.rayzr522.jsonmessage.JSONMessage
 import net.savagelabs.skyblockx.Globals
 import net.savagelabs.skyblockx.event.IslandPostLevelCalcEvent
@@ -16,17 +18,19 @@ import net.savagelabs.skyblockx.world.Point
 import net.savagelabs.skyblockx.world.spiral
 import org.bukkit.*
 import org.bukkit.block.Biome
+import org.bukkit.block.CreatureSpawner
+import org.bukkit.entity.EntityType
 import org.bukkit.entity.Player
 import java.lang.reflect.InvocationTargetException
 import java.text.DecimalFormat
 import java.util.*
-import java.util.stream.Collectors
 import kotlin.collections.HashSet
 import kotlin.math.floor
 import kotlin.math.sqrt
 import kotlin.streams.toList
 import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
+import kotlin.time.TimedValue
 import kotlin.time.measureTimedValue
 
 
@@ -39,6 +43,8 @@ data class Island(
     var islandSize: Int
 ) {
 
+
+    var islandName = ownerTag
 
     var inventory = Bukkit.createInventory(null, (Config.chestRows[1] ?: 3) * 9)
         get() {
@@ -108,43 +114,71 @@ data class Island(
     @ExperimentalTime
     fun calcIsland(): CalcInfo {
         var price = 0.0
+        val spawnerMap = hashMapOf<EntityType, Int>()
         val mapAmt = hashMapOf<XMaterial, Int>()
-        val time = measureTimedValue {
-            val chunks = mutableSetOf<Chunk>()
-            val world = Bukkit.getWorld(Config.skyblockWorldName)!!
-            for (x in minLocation.x.toInt()..maxLocation.x.toInt()) {
-                for (z in minLocation.z.toInt()..maxLocation.z.toInt()) {
-                    Bukkit.getScheduler().runTask(Globals.skyblockX, Runnable {
-                        PaperLib.getChunkAtAsync(Location(world, x.toDouble(), 0.0, z.toDouble()))
-                            .thenAccept { chunks.add(it) }
-                    })
+        var time: TimedValue<Unit>? = null
+        runBlocking {
+            time = measureTimedValue {
+                val chunkList = mutableSetOf<Chunk>()
+                var chunks = mutableSetOf<ChunkSnapshot>()
+                val world = Bukkit.getWorld(Config.skyblockWorldName)!!
+                for (x in minLocation.x.toInt()..maxLocation.x.toInt()) {
+                    for (z in minLocation.z.toInt()..maxLocation.z.toInt()) {
+                        Bukkit.getScheduler().runTask(Globals.skyblockX, Runnable {
+                            PaperLib.getChunkAtAsync(Location(world, x.toDouble(), 0.0, z.toDouble()))
+                                .thenAccept { chunkList.add(it) }
+                        })
+
+                    }
+                    delay(Config.islandTopChunkLoadDelayInMiliseconds)
                 }
-            }
-            lateinit var chunkList: List<ChunkSnapshot>
-            chunkList = chunks.parallelStream().map { chunk -> chunk.chunkSnapshot }.collect(Collectors.toList())
-            val useNewGetBlockTypeSnapshotMethod = XMaterial.getVersion() >= 12.0
-            chunkList.parallelStream().forEach { chunkSnapshot ->
-                for (x in 0 until 16) {
-                    for (y in 0 until 256) {
-                        for (z in 0 until 16) {
-                            val blockType =
-                                getChunkSnapshotBlockType(useNewGetBlockTypeSnapshotMethod, chunkSnapshot, x, y, z)!!
-                            if (blockType == Material.AIR) continue
-                            val xmat = XMaterial.matchXMaterial(blockType) ?: continue
-                            price += BlockValues.blockValues[xmat] ?: 0.0
-                            mapAmt[xmat] = mapAmt.getOrDefault(xmat, 0) + 1
+                chunks = chunkList.map { it.chunkSnapshot }.toMutableSet()
+                val useNewGetBlockTypeSnapshotMethod = XMaterial.getVersion() >= 12.0
+                for (chunkSnapshot in chunks) {
+                    for (x in 0 until 16) {
+                        for (y in 0 until 256) {
+                            for (z in 0 until 16) {
+                                val blockType =
+                                    getChunkSnapshotBlockType(
+                                        useNewGetBlockTypeSnapshotMethod,
+                                        chunkSnapshot,
+                                        x,
+                                        y,
+                                        z
+                                    )!!
+                                if (blockType == Material.AIR) continue
+                                val xmat = XMaterial.matchXMaterial(blockType) ?: continue
+                                if (xmat == XMaterial.SPAWNER) {
+                                    PaperLib.getChunkAtAsync(
+                                        Bukkit.getWorld(chunkSnapshot.worldName)!!,
+                                        chunkSnapshot.x,
+                                        chunkSnapshot.z
+                                    ).thenAccept {
+                                        val state = it.getBlock(x, y, z).state
+                                        state as CreatureSpawner
+                                        val spawnedType = state.spawnedType
+                                        price += (BlockValues.spawnerValues[spawnedType] ?: 0.0)
+                                        val spawnerAmount = spawnerMap.getOrDefault(spawnedType, 0)
+                                        spawnerMap[spawnedType] = spawnerAmount + 1
+                                    }
+                                    continue
+                                }
+                                price += BlockValues.blockValues[xmat] ?: 0.0
+                                mapAmt[xmat] = mapAmt.getOrDefault(xmat, 0) + 1
+                            }
                         }
                     }
                 }
             }
         }
-        return CalcInfo(time.duration, price, mapAmt, islandID)
+        return CalcInfo(time?.duration ?: Duration.ZERO, price, mapAmt, spawnerMap, islandID)
     }
 
     data class CalcInfo @ExperimentalTime constructor(
         val timeDuration: Duration,
         var worth: Double,
         val matAmt: Map<XMaterial, Int>,
+        val spawnerAmt: Map<EntityType, Int>,
         val islandID: Int
     )
 
@@ -568,7 +602,7 @@ data class IslandTopInfo(val map: HashMap<Int, Island.CalcInfo>, val time: Long)
         /**
          * CALL THIS ASYNC OR WHOLE SERVER WILL SLEEP :).
          */
-fun runIslandCalc() {
+fun calculateAllIslands() {
     val islandVals = hashMapOf<Int, Island.CalcInfo>()
     val pluginManager = Bukkit.getPluginManager()
     for ((key, island) in Data.islands) {
@@ -581,7 +615,13 @@ fun runIslandCalc() {
         worth.worth = islandPostCalcEvent.levelAfterCalc ?: worth.worth
         islandVals[key] = worth
         Globals.skyblockX.logger.info("Finished Island ${island.ownerTag}")
-        Thread.sleep(Config.islandTopIslandCalculationSpeedIntervalMilis)
     }
-    Globals.islandValues = IslandTopInfo(islandVals, System.currentTimeMillis())
+    Globals.islandValues = IslandTopInfo(islandVals, System.nanoTime())
+}
+
+fun isIslandNameTaken(tag: String): Boolean {
+    for ((id, island) in Data.islands) {
+        if (tag == island.islandName) return true
+    }
+    return false
 }

@@ -2,13 +2,14 @@ package net.savagelabs.skyblockx
 
 import com.cryptomorin.xseries.XMaterial
 import io.papermc.lib.PaperLib
+import kotlinx.coroutines.runBlocking
 import net.prosavage.baseplugin.SavagePlugin
 import net.prosavage.baseplugin.WorldBorderUtil
 import net.savagelabs.skyblockx.command.island.IslandBaseCommand
 import net.savagelabs.skyblockx.command.skyblock.SkyblockBaseCommand
+import net.savagelabs.skyblockx.core.calculateAllIslands
 import net.savagelabs.skyblockx.core.color
 import net.savagelabs.skyblockx.core.registerAllPermissions
-import net.savagelabs.skyblockx.core.runIslandCalc
 import net.savagelabs.skyblockx.hooks.PlacholderAPIIntegration
 import net.savagelabs.skyblockx.listener.*
 import net.savagelabs.skyblockx.persist.*
@@ -22,7 +23,9 @@ import org.bukkit.WorldCreator
 import org.bukkit.generator.ChunkGenerator
 import java.util.concurrent.Callable
 import kotlin.system.measureTimeMillis
+import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
+import kotlin.time.TimedValue
 import kotlin.time.measureTimedValue
 
 
@@ -47,6 +50,7 @@ class SkyblockX : SavagePlugin() {
             registerListeners(DataListener(), SEditListener(), BlockListener(), PlayerListener(), EntityListener())
             logInfo("Loaded ${Data.IPlayers.size} players.")
             logInfo("Loaded ${Data.islands.size} islands.")
+            migrateData()
         }
         logInfo("Startup Finished (${startupTime}ms)")
         logInfo("If you need help with the plugin check out our wiki: https://github.com/SavageLabs/SkyblockX/wiki")
@@ -60,11 +64,19 @@ class SkyblockX : SavagePlugin() {
         PaperLib.suggestPaper(this)
     }
 
+    private fun migrateData() {
+        Data.islands.forEach { id, island ->
+            if (island.islandName == null) {
+                logInfo("Island Names Update: Migrated ${island.ownerTag}'s Island Data.")
+                island.islandName = island.ownerTag
+            }
+        }
+    }
+
     private fun loadMetrics() {
         logInfo("Loading Metrics.")
         val metrics = Metrics(this, 6970)
         metrics.addCustomChart(Metrics.SingleLineChart("active_islands", Callable { Data.islands.size }))
-
     }
 
     private fun logInfo(message: String, color: ChatColor = ChatColor.YELLOW) {
@@ -76,17 +88,34 @@ class SkyblockX : SavagePlugin() {
         Bukkit.getScheduler().runTaskTimerAsynchronously(this, Runnable {
             if (Config.islandSaveBroadcastMessage) Bukkit.broadcastMessage(color(Config.islandSaveBroadcastMessageStart))
             val time = measureTimedValue { Data.save() }
-            if (Config.islandSaveBroadcastMessage) Bukkit.broadcastMessage(color(String.format(Config.islandSaveBroadcastMessageEnd, time.duration)))
+            if (Config.islandSaveBroadcastMessage) Bukkit.broadcastMessage(
+                color(
+                    String.format(
+                        Config.islandSaveBroadcastMessageEnd,
+                        time.duration
+                    )
+                )
+            )
         }, 20L, Config.islandSaveTaskPeriodTicks.toLong())
     }
 
     @ExperimentalTime
     fun startIslandTopTask() {
         if (!Config.autoCalcIslands) return
-        Bukkit.getScheduler().runTaskTimerAsynchronously(this, Runnable {
+        Bukkit.getScheduler().runTaskTimer(this, Runnable {
+            runIslandCalc()
+        }, 20L, Config.islandTopCalcPeriodTicks.toLong())
+    }
+
+    @ExperimentalTime
+    fun runIslandCalc() {
+        Bukkit.getScheduler().runTaskAsynchronously(this, Runnable {
             if (Config.islandTopBroadcastMessage) Bukkit.broadcastMessage(color(Config.islandTopBroadcastMessageStart))
-            val time = measureTimedValue {
-                runIslandCalc()
+            var time: TimedValue<Unit>? = null
+            runBlocking {
+                time = measureTimedValue {
+                    calculateAllIslands()
+                }
             }
             if (Config.islandTopBroadcastMessage)
                 Bukkit.broadcastMessage(
@@ -94,11 +123,11 @@ class SkyblockX : SavagePlugin() {
                         String.format(
                             Config.islandTopBroadcastMessageEnd,
                             Globals.islandValues?.map?.size,
-                            time.duration
+                            time?.duration ?: Duration.ZERO
                         )
                     )
                 )
-        }, 20L, Config.islandTopCalcPeriodTicks.toLong())
+        })
     }
 
     private fun loadPlaceholderAPIHook() {
@@ -207,7 +236,8 @@ class SkyblockX : SavagePlugin() {
                     " ▄████████▀    ███   ▀█▀  ▀█████▀  ▄█████████▀  █████▄▄██  ▀██████▀  ████████▀    ███   ▀█▀ ████       ███▄ \n" +
                     "               ▀                                ▀                                 ▀                         \n" +
                     "By: ProSavage - https://github.com/ProSavage - https://savagelabs.net"
-        , ChatColor.AQUA)
+            , ChatColor.AQUA
+        )
     }
 
 

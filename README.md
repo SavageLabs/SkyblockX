@@ -17,7 +17,7 @@ The plugin's primary deployment and testing version is the latest version of spi
 4. Agree to the EULA & restart.
 5. Move the Skyblock binary from step 1 into `/plugins`.
 6. Restart the server.
-
+  
 ### Tech Stack
 * This plugin is built using [Kotlin](https://kotlinlang.org/) which can compile to jvm bytecode.
 * [SavageFramework](https://github.com/illyria-io/SavageFramework) for storage management & a collection of tools for cross version support.
