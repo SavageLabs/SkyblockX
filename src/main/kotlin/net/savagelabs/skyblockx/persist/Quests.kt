@@ -58,7 +58,7 @@ object Quests {
             ),
             0,
             QuestGoal.BREAK_BLOCKS,
-            XMaterial.OAK_LOG.name,
+            XMaterial.OAK_LOG.parseMaterial().toString(),
             1,
             true,
             QuestActions(
@@ -86,7 +86,7 @@ object Quests {
             ),
             1,
             QuestGoal.CRAFT,
-            XMaterial.WOODEN_PICKAXE.name,
+            XMaterial.WOODEN_PICKAXE.parseMaterial().toString(),
             1,
             true,
             QuestActions(
@@ -113,8 +113,8 @@ object Quests {
             ),
             2,
             QuestGoal.BREAK_BLOCKS,
-            XMaterial.COBBLESTONE.name,
-            2,
+            XMaterial.COBBLESTONE.parseMaterial().toString(),
+            3,
             true,
             QuestActions(
                 listOf(
@@ -140,7 +140,7 @@ object Quests {
             ),
             3,
             QuestGoal.CRAFT,
-            XMaterial.STONE_PICKAXE.name,
+            XMaterial.STONE_PICKAXE.parseMaterial().toString(),
             1,
             true,
             QuestActions(
@@ -167,7 +167,7 @@ object Quests {
             ),
             4,
             QuestGoal.BREAK_BLOCKS,
-            XMaterial.IRON_ORE.name,
+            XMaterial.IRON_ORE.parseMaterial().toString(),
             3,
             true,
             QuestActions(
@@ -194,8 +194,8 @@ object Quests {
             ),
             5,
             QuestGoal.CRAFT,
-            XMaterial.FURNACE.name,
-            8,
+            XMaterial.FURNACE.parseMaterial().toString(),
+            1,
             true,
             QuestActions(
                 listOf(
@@ -222,7 +222,7 @@ object Quests {
             ),
             6,
             QuestGoal.SMELT,
-            XMaterial.IRON_INGOT.name,
+            XMaterial.IRON_INGOT.parseMaterial().toString(),
             3,
             true,
             QuestActions(
@@ -249,7 +249,7 @@ object Quests {
             ),
             7,
             QuestGoal.CRAFT,
-            XMaterial.IRON_PICKAXE.name,
+            XMaterial.IRON_PICKAXE.parseMaterial().toString(),
             1,
             true,
             QuestActions(
@@ -276,7 +276,7 @@ object Quests {
             ),
             8,
             QuestGoal.PLACE_BLOCKS,
-            XMaterial.OAK_SAPLING.name,
+            XMaterial.OAK_SAPLING.parseMaterial().toString(),
             1,
             true,
             QuestActions(
@@ -294,7 +294,7 @@ object Quests {
         ),
         Quest(
             "Quest-10",
-            "&8Get some sand.",
+            "Get some sand.",
             SerializableItem(
                 XMaterial.SAND,
                 "&8Get some sand.",
@@ -303,7 +303,7 @@ object Quests {
             ),
             9,
             QuestGoal.BREAK_BLOCKS,
-            XMaterial.SAND.name,
+            XMaterial.SAND.parseMaterial().toString(),
             3,
             true,
             QuestActions(
@@ -321,7 +321,7 @@ object Quests {
         ),
         Quest(
             "Quest-11",
-            "&8Plant some Cactus.",
+            "Plant some Cactus.",
             SerializableItem(
                 XMaterial.CACTUS,
                 "&8Plant some cactus.",
@@ -330,7 +330,7 @@ object Quests {
             ),
             10,
             QuestGoal.PLACE_BLOCKS,
-            XMaterial.CACTUS.name,
+            XMaterial.CACTUS.parseMaterial().toString(),
             1,
             true,
             QuestActions(
@@ -348,7 +348,7 @@ object Quests {
         ),
         Quest(
             "Quest-12",
-            "&8Plant some sugarcane.",
+            "Plant some sugarcane.",
             SerializableItem(
                 XMaterial.SUGAR_CANE,
                 "&8Plant some sugarcane.",
@@ -357,8 +357,8 @@ object Quests {
             ),
             11,
             QuestGoal.PLACE_BLOCKS,
-            XMaterial.CACTUS.name,
-            10,
+            if (XMaterial.isNewVersion()) XMaterial.SUGAR_CANE.parseMaterial().toString() else "SUGAR_CANE_BLOCK",
+            1,
             true,
             QuestActions(
                 listOf(
@@ -375,16 +375,16 @@ object Quests {
         ),
         Quest(
             "Quest-13",
-            "&8Plant some melons.",
+            "Harvest some melons.",
             SerializableItem(
                 XMaterial.MELON_SLICE,
-                "&8Plant some melons.",
-                listOf("&7Plant some melons on tilled dirt.", "&7You can find some melon seeds in the island chest.", "&7Completion: &b{currentAmount}&7/&b{finalAmount}"),
+                "&8Harvest some melons.",
+                listOf("&7Harvest some melons.", "&7You can find some melon seeds in the island chest.", "&7Completion: &b{currentAmount}&7/&b{finalAmount}"),
                 1
             ),
             12,
-            QuestGoal.PLACE_BLOCKS,
-            XMaterial.MELON_SEEDS.name,
+            QuestGoal.BREAK_BLOCKS,
+            XMaterial.MELON.parseMaterial().toString(),
             1,
             true,
             QuestActions(
@@ -402,7 +402,7 @@ object Quests {
         ),
         Quest(
             "Quest-14",
-            "&8Plant 20 Cacti.",
+            "Plant 20 Cacti.",
             SerializableItem(
                 XMaterial.CACTUS,
                 "&8Make a cactus farm.",
@@ -411,7 +411,7 @@ object Quests {
             ),
             13,
             QuestGoal.PLACE_BLOCKS,
-            XMaterial.CACTUS.name,
+            XMaterial.CACTUS.parseMaterial().toString(),
             20,
             true,
             QuestActions(
@@ -429,16 +429,16 @@ object Quests {
         ),
         Quest(
             "Quest-15",
-            "&8Plant 30 wheat seeds.",
+            "Harvest 30 wheat.",
             SerializableItem(
                 XMaterial.WHEAT_SEEDS,
                 "&8Make a wheat farm.",
-                listOf("&7Plant some wheat on dirt.", "&7You can buy more dirt from /is shop.", "&7Completion: &b{currentAmount}&7/&b{finalAmount}"),
+                listOf("&7Harvest some wheat.", "&7You can buy more dirt from /is shop.", "&7Completion: &b{currentAmount}&7/&b{finalAmount}"),
                 1
             ),
             14,
-            QuestGoal.PLACE_BLOCKS,
-            XMaterial.WHEAT_SEEDS.name,
+            QuestGoal.BREAK_BLOCKS,
+            if (XMaterial.isNewVersion()) XMaterial.WHEAT.parseMaterial().toString() else "CROPS",
             30,
             true,
             QuestActions(
@@ -456,16 +456,16 @@ object Quests {
         ),
         Quest(
             "Quest-16",
-            "&8Harvest some wheat.",
+            "Harvest some pumpkins.",
             SerializableItem(
                 XMaterial.WHEAT,
-                "&8Harvest some wheat.",
-                listOf("&7Harvest some fully grown wheat.", "&7You can find some pumpkin in the island chest.", "&7Completion: &b{currentAmount}&7/&b{finalAmount}"),
+                "&8Harvest some pumpkins.",
+                listOf("&7Harvest some fully grown pumpkins.", "&7You can find some pumpkin seeds in the island chest.", "&7Completion: &b{currentAmount}&7/&b{finalAmount}"),
                 1
             ),
             15,
             QuestGoal.BREAK_BLOCKS,
-            XMaterial.WHEAT.name,
+            XMaterial.PUMPKIN.parseMaterial().toString(),
             1,
             true,
             QuestActions(
@@ -483,7 +483,7 @@ object Quests {
         ),
         Quest(
             "Quest-17",
-            "&8Kill 100 Zombies.",
+            "Kill 100 Zombies.",
             SerializableItem(
                 XMaterial.ZOMBIE_HEAD,
                 "&8Kill Zombies.",
@@ -492,7 +492,7 @@ object Quests {
             ),
             16,
             QuestGoal.KILL_MOBS,
-            EntityType.ZOMBIE.name,
+            EntityType.ZOMBIE.toString(),
             100,
             true,
             QuestActions(
@@ -510,7 +510,7 @@ object Quests {
         ),
         Quest(
             "Quest-18",
-            "&8Kill 100 Skeleton.",
+            "Kill 100 Skeleton.",
             SerializableItem(
                 XMaterial.SKELETON_SKULL,
                 "&8Kill Skeletons.",
@@ -519,7 +519,7 @@ object Quests {
             ),
             17,
             QuestGoal.KILL_MOBS,
-            EntityType.SKELETON.name,
+            EntityType.SKELETON.toString(),
             100,
             true,
             QuestActions(
@@ -537,7 +537,7 @@ object Quests {
         ),
         Quest(
             "Quest-19",
-            "&8Kill 100 Creepers.",
+            "Kill 100 Creepers.",
             SerializableItem(
                 XMaterial.CREEPER_HEAD,
                 "&8Kill Creepers.",
@@ -546,7 +546,7 @@ object Quests {
             ),
             16,
             QuestGoal.KILL_MOBS,
-            EntityType.CREEPER.name,
+            EntityType.CREEPER.toString(),
             100,
             true,
             QuestActions(

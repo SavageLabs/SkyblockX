@@ -3,7 +3,7 @@ package net.savagelabs.skyblockx.sedit
 
 import com.cryptomorin.xseries.XMaterial
 import net.prosavage.baseplugin.ItemBuilder
-import net.savagelabs.skyblockx.Globals
+import net.savagelabs.skyblockx.SkyblockX
 import net.savagelabs.skyblockx.core.color
 import net.savagelabs.skyblockx.core.enumValueOrNull
 import net.savagelabs.skyblockx.persist.Message
@@ -97,7 +97,7 @@ class SkyblockEdit {
                 }
             }
         }
-        val structuresDir = File(Globals.skyblockX.dataFolder, "structures")
+        val structuresDir = File(SkyblockX.skyblockX.dataFolder, "structures")
         structuresDir.mkdirs()
         SbfWriter(container).write(File(structuresDir, "${name}.structure"))
         player.sendMessage(
@@ -111,17 +111,17 @@ class SkyblockEdit {
     }
 
     fun pasteIsland(name: String, location: Location, player: Player?) {
-        var file = File(File(Globals.skyblockX.dataFolder, "structures"), "$name.structure")
+        var file = File(File(SkyblockX.skyblockX.dataFolder, "structures"), "$name.structure")
 
         if (!file.exists()) {
             player?.sendMessage("$name does not exist, using default file: island.structure")
-            val fileIsland = File(Globals.skyblockX.dataFolder, "island.structure")
-            val fileNether = File(Globals.skyblockX.dataFolder, "nether-island.structure")
-            Globals.skyblockX.saveResource("island.structure", false)
-            Globals.skyblockX.saveResource("nether-island.structure", false)
-            val copytoStruct = File(File(Globals.skyblockX.dataFolder, "structures"), "island.structure")
+            val fileIsland = File(SkyblockX.skyblockX.dataFolder, "island.structure")
+            val fileNether = File(SkyblockX.skyblockX.dataFolder, "nether-island.structure")
+            SkyblockX.skyblockX.saveResource("island.structure", false)
+            SkyblockX.skyblockX.saveResource("nether-island.structure", false)
+            val copytoStruct = File(File(SkyblockX.skyblockX.dataFolder, "structures"), "island.structure")
             if (!copytoStruct.exists()) fileIsland.copyTo(copytoStruct, false)
-            val copyToNetherStruct = File(File(Globals.skyblockX.dataFolder, "structures"), "nether-island.structure")
+            val copyToNetherStruct = File(File(SkyblockX.skyblockX.dataFolder, "structures"), "nether-island.structure")
             if (!copyToNetherStruct.exists()) fileNether.copyTo(copyToNetherStruct, false)
             fileNether.delete()
             fileIsland.delete()

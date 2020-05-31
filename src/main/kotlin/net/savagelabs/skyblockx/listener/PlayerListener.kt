@@ -33,13 +33,13 @@ class PlayerListener : Listener {
     @EventHandler
     fun onPlayerCraft(event: CraftItemEvent) {
         // Exit if we aren't in skyblock world - since they cannot be on an island that way.
-        if (event.whoClicked.location.world?.name != Config.skyblockWorldName) {
+        if (isNotInSkyblockWorld(event.whoClicked.world)) {
             return
         }
-
         val iplayer = getIPlayer(event.whoClicked as Player)
         // Fail the checks if we dont have an island, or dont have a active quest, or if we arent on our own island.
         val island = iplayer.getIsland()
+
 
         if (failsQuestCheckingPreRequisites(iplayer, island, event.whoClicked.location)) {
             return
@@ -51,8 +51,7 @@ class PlayerListener : Listener {
             Quests.islandQuests.find { quest -> quest.type == QuestGoal.CRAFT && quest.id == currentQuest }
                 ?: return
         // Use XMaterial to parse the material, if null, try to use native material just in case.
-        val materialCrafted = XMaterial.matchXMaterial(event.recipe.result)?.name ?: event.recipe.result.type
-
+        val materialCrafted = event.recipe.result.type
         // We had a quest active and it was a crafting quest, however, we didnt craft the goal item.
         if (materialCrafted.toString().toLowerCase() != targetQuest.goalParameter.toLowerCase()) {
             return
@@ -140,7 +139,7 @@ class PlayerListener : Listener {
         }
 
         // Smelting Quests POG.
-        if (event.inventory.type == InventoryType.FURNACE && event.slot == 2 && event.action == InventoryAction.MOVE_TO_OTHER_INVENTORY && event.view.bottomInventory != event.clickedInventory) {
+        if (event.inventory.type == InventoryType.FURNACE && event.slot == 2 && (event.action == InventoryAction.MOVE_TO_OTHER_INVENTORY || event.action == InventoryAction.PICKUP_ALL || event.action == InventoryAction.PICKUP_ALL) && event.view.bottomInventory != event.clickedInventory) {
             val iPlayer = getIPlayer(event.whoClicked as Player)
 
             val island = iPlayer.getIsland()
@@ -154,14 +153,13 @@ class PlayerListener : Listener {
                 Quests.islandQuests.find { quest -> quest.type == QuestGoal.SMELT && quest.id == currentQuest }
                     ?: return
 
-            val materialSmelted =
-                XMaterial.matchXMaterial(targetQuest.goalParameter) ?: Material.valueOf(targetQuest.goalParameter)
+            val materialSmelted = XMaterial.matchXMaterial(event.currentItem!!.type).name ?: event.currentItem?.type.toString()
 
-            if (materialSmelted.toString() != targetQuest.goalParameter) {
+
+            if (materialSmelted != targetQuest.goalParameter) {
                 return
             }
-
-            island.addQuestData(targetQuest.id)
+            island.addQuestData(targetQuest.id, event.currentItem!!.amount)
             island.sendTeamQuestProgress(targetQuest, event.whoClicked as Player)
 
             if (targetQuest.isComplete(island.getQuestCompletedAmount(targetQuest.id))) {
@@ -185,8 +183,7 @@ class PlayerListener : Listener {
                 Quests.islandQuests.find { quest -> quest.type == QuestGoal.REPAIR && quest.id == currentQuest }
                     ?: return
 
-            val materialToRepair =
-                XMaterial.matchXMaterial(targetQuest.goalParameter) ?: Material.valueOf(targetQuest.goalParameter)
+            val materialToRepair = event.currentItem?.type
 
             if (materialToRepair.toString() != targetQuest.goalParameter) {
                 return

@@ -1,6 +1,5 @@
 package net.savagelabs.skyblockx.command.island
 
-import net.savagelabs.skyblockx.Globals
 import net.savagelabs.skyblockx.command.CommandInfo
 import net.savagelabs.skyblockx.command.CommandRequirementsBuilder
 import net.savagelabs.skyblockx.command.SCommand
@@ -18,6 +17,12 @@ import java.util.*
 
 
 class IslandBaseCommand : SCommand(), CommandExecutor, TabCompleter {
+
+
+    companion object {
+        lateinit var instance: IslandBaseCommand
+    }
+
 
     init {
         this.commandRequirements = CommandRequirementsBuilder().build()
@@ -51,7 +56,7 @@ class IslandBaseCommand : SCommand(), CommandExecutor, TabCompleter {
         prefix = "/is"
 
         initializeSubCommandData()
-        Globals.islandBaseCommand = this
+        instance = this
     }
 
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {

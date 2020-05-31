@@ -3,7 +3,7 @@ package net.savagelabs.skyblockx.gui
 import com.github.stefvanschie.inventoryframework.Gui
 import com.github.stefvanschie.inventoryframework.GuiItem
 import com.github.stefvanschie.inventoryframework.pane.PaginatedPane
-import net.savagelabs.skyblockx.Globals.skyblockX
+import net.savagelabs.skyblockx.SkyblockX
 import net.savagelabs.skyblockx.core.IPlayer
 import net.savagelabs.skyblockx.core.color
 import net.savagelabs.skyblockx.core.getIPlayer
@@ -17,7 +17,7 @@ abstract class BaseGUI(
 ) {
 
     @Transient
-    val gui = Gui(skyblockX, guiRows, color(title))
+    val gui = Gui(SkyblockX.skyblockX, guiRows, color(title))
 
     @Transient
     val pane = PaginatedPane(0, 0, 9, guiRows)
