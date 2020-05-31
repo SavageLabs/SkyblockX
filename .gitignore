@@ -1,4 +1,5 @@
 .idea/
 .gradle/
 Wiki/
-build/
+
+copy-to-server.sh

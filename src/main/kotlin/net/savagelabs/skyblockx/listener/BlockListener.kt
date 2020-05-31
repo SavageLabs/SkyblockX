@@ -60,12 +60,12 @@ class BlockListener : Listener {
                 Quests.islandQuests.find { quest -> quest.type == QuestGoal.PLACE_BLOCKS && quest.id == currentQuest }
                     ?: return
             // Use XMaterial to parse the material, if null, try to use native material just in case.
-            val material = XMaterial.matchXMaterial(event.block.type)?.name ?: event.block.type.name
+            val material = event.block.type.toString()
 
             // Check if the material we just processed is the targetQuest's material instead of just checking if the quest is equal.
             if (material == targetQuest.goalParameter) {
                 // Increment that quest data by 1 :)
-                island.addQuestData(targetQuest.id, 1)
+                island.addQuestData(targetQuest.id)
                 island.sendTeamQuestProgress(targetQuest, event.player)
                 // Check if quest is complete :D
                 if (targetQuest.isComplete(island.getQuestCompletedAmount(targetQuest.id))) {
@@ -92,7 +92,6 @@ class BlockListener : Listener {
         // Need this a lot.
         val iPlayer = getIPlayer(event.player)
 
-        if (iPlayer.inBypass) return
 
 
         // Check if they have an island or co-op island, if not, deny.
@@ -112,17 +111,19 @@ class BlockListener : Listener {
 
         // We're gonna need this more than once here, store to prevent lookups.
         val island = iPlayer.getIsland()
+
         // Quest checking block.
         if (iPlayer.hasIsland() && island!!.currentQuest != null) {
             // Assert non-null because the if check for this block will trigger.
             val currentQuest = island.currentQuest!!
+
             // Find the quest that the island has activated.
             val targetQuest =
                 Quests.islandQuests.find { quest -> quest.type == QuestGoal.BREAK_BLOCKS && quest.id == currentQuest }
                     ?: return
-            // Use XMaterial to parse the material, if null, try to use native material just in case.
-            val material = XMaterial.matchXMaterial(event.block.type)?.name ?: event.block.type.name
 
+            // Use XMaterial to parse the material, if null, try to use native material just in case.
+            val material = event.block.type.toString()
             // Check if the material we just processed is the targetQuest's material instead of just checking if the quest is equal.
             if (material == targetQuest.goalParameter && !event.block.hasMetadata("skyblock-placed-by-player")) {
                 // Increment that quest data by 1 :)
