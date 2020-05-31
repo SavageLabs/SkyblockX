@@ -2,7 +2,6 @@ package net.savagelabs.skyblockx.core
 
 import io.papermc.lib.PaperLib
 import net.prosavage.baseplugin.WorldBorderUtil
-import net.savagelabs.skyblockx.Globals
 import net.savagelabs.skyblockx.SkyblockX
 import net.savagelabs.skyblockx.persist.Config
 import org.bukkit.Bukkit

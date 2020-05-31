@@ -1,6 +1,5 @@
 package net.savagelabs.skyblockx.command.skyblock.cmd
 
-import net.savagelabs.skyblockx.Globals
 import net.savagelabs.skyblockx.SkyblockX
 import net.savagelabs.skyblockx.command.CommandInfo
 import net.savagelabs.skyblockx.command.CommandRequirementsBuilder

@@ -34,8 +34,6 @@ class SkyblockX : SavagePlugin() {
 
     companion object {
         lateinit var skyblockX: SkyblockX
-        lateinit var islandBaseCommand: IslandBaseCommand
-        lateinit var skyblockBaseCommand: SkyblockBaseCommand
         lateinit var worldBorderUtil: WorldBorderUtil
         lateinit var generatorAlgorithm: Map<Int, Items<XMaterial>>
         var islandValues: IslandTopInfo? = null

@@ -5,7 +5,6 @@ import io.papermc.lib.PaperLib
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import me.rayzr522.jsonmessage.JSONMessage
-import net.savagelabs.skyblockx.Globals
 import net.savagelabs.skyblockx.SkyblockX
 import net.savagelabs.skyblockx.event.IslandPostLevelCalcEvent
 import net.savagelabs.skyblockx.event.IslandPreLevelCalcEvent

@@ -1,10 +1,9 @@
 package net.savagelabs.skyblockx.command.island.cmd.member
 
-import net.savagelabs.skyblockx.Globals
-import net.savagelabs.skyblockx.SkyblockX
 import net.savagelabs.skyblockx.command.CommandInfo
 import net.savagelabs.skyblockx.command.CommandRequirementsBuilder
 import net.savagelabs.skyblockx.command.SCommand
+import net.savagelabs.skyblockx.command.island.IslandBaseCommand
 import net.savagelabs.skyblockx.core.Permission
 import net.savagelabs.skyblockx.core.color
 import net.savagelabs.skyblockx.core.getIPlayerByName
@@ -63,7 +62,7 @@ class CmdPromote : SCommand() {
 
     override fun perform(info: CommandInfo) {
         // Execute command go just to make a shorthand version for /is member kick <member>.
-        SkyblockX.islandBaseCommand.subCommands.find { command -> command is CmdMember }
+        IslandBaseCommand.instance.subCommands.find { command -> command is CmdMember }
             ?.subCommands?.find { command -> command is CmdMemberPromote }?.perform(info)
     }
 

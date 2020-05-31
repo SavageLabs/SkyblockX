@@ -4,7 +4,6 @@ import com.cryptomorin.xseries.XMaterial
 import com.github.stefvanschie.inventoryframework.GuiItem
 import me.clip.placeholderapi.PlaceholderAPI
 import net.prosavage.baseplugin.ItemBuilder
-import net.savagelabs.skyblockx.Globals
 import net.savagelabs.skyblockx.SkyblockX
 import net.savagelabs.skyblockx.core.IPlayer
 import net.savagelabs.skyblockx.core.color

@@ -1,6 +1,5 @@
 package net.savagelabs.skyblockx.listener
 
-import net.savagelabs.skyblockx.Globals
 import net.savagelabs.skyblockx.SkyblockX
 import net.savagelabs.skyblockx.core.IPlayer
 import net.savagelabs.skyblockx.core.getIPlayerByName

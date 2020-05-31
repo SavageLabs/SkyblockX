@@ -3,7 +3,6 @@ package net.savagelabs.skyblockx.sedit
 
 import com.cryptomorin.xseries.XMaterial
 import net.prosavage.baseplugin.ItemBuilder
-import net.savagelabs.skyblockx.Globals
 import net.savagelabs.skyblockx.SkyblockX
 import net.savagelabs.skyblockx.core.color
 import net.savagelabs.skyblockx.core.enumValueOrNull

@@ -2,7 +2,6 @@ package net.savagelabs.skyblockx.command.island.cmd
 
 import com.cryptomorin.xseries.XMaterial
 import me.rayzr522.jsonmessage.JSONMessage
-import net.savagelabs.skyblockx.Globals
 import net.savagelabs.skyblockx.SkyblockX
 import net.savagelabs.skyblockx.command.CommandInfo
 import net.savagelabs.skyblockx.command.CommandRequirementsBuilder

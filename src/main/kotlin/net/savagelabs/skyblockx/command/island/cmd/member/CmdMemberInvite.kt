@@ -1,6 +1,5 @@
 package net.savagelabs.skyblockx.command.island.cmd.member
 
-import net.savagelabs.skyblockx.Globals
 import net.savagelabs.skyblockx.command.CommandInfo
 import net.savagelabs.skyblockx.command.CommandRequirementsBuilder
 import net.savagelabs.skyblockx.command.SCommand
@@ -8,7 +7,7 @@ import net.savagelabs.skyblockx.core.Permission
 import net.savagelabs.skyblockx.core.color
 import net.savagelabs.skyblockx.persist.Message
 import me.rayzr522.jsonmessage.JSONMessage
-import net.savagelabs.skyblockx.SkyblockX
+import net.savagelabs.skyblockx.command.island.IslandBaseCommand
 
 class CmdMemberInvite : SCommand() {
 
@@ -61,7 +60,7 @@ class CmdInvite : SCommand() {
     }
 
     override fun perform(info: CommandInfo) {
-        SkyblockX.islandBaseCommand.subCommands.find { command -> command is CmdMember }
+        IslandBaseCommand.instance.subCommands.find { command -> command is CmdMember }
             ?.subCommands?.find { subcommand -> subcommand is CmdMemberInvite }?.perform(info)
     }
 

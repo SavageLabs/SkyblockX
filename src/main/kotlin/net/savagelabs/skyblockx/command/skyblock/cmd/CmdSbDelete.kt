@@ -1,11 +1,9 @@
 package net.savagelabs.skyblockx.command.skyblock.cmd
 
-import net.savagelabs.skyblockx.Globals
 import net.savagelabs.skyblockx.command.CommandInfo
 import net.savagelabs.skyblockx.command.CommandRequirementsBuilder
 import net.savagelabs.skyblockx.command.SCommand
 import net.savagelabs.skyblockx.core.Permission
-import net.savagelabs.skyblockx.core.getIPlayer
 import net.savagelabs.skyblockx.core.getIPlayerByName
 import net.savagelabs.skyblockx.persist.Message
 

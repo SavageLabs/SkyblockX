@@ -1,7 +1,5 @@
 package net.savagelabs.skyblockx.listener
 
-import com.cryptomorin.xseries.XMaterial
-import net.savagelabs.skyblockx.Globals
 import net.savagelabs.skyblockx.SkyblockX
 import net.savagelabs.skyblockx.core.canUseBlockAtLocation
 import net.savagelabs.skyblockx.core.getIPlayer

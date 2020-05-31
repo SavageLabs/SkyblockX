@@ -1,10 +1,9 @@
 package net.savagelabs.skyblockx.command.island.cmd
 
-import net.savagelabs.skyblockx.Globals
-import net.savagelabs.skyblockx.SkyblockX
 import net.savagelabs.skyblockx.command.CommandInfo
 import net.savagelabs.skyblockx.command.CommandRequirementsBuilder
 import net.savagelabs.skyblockx.command.SCommand
+import net.savagelabs.skyblockx.command.island.IslandBaseCommand
 import net.savagelabs.skyblockx.core.Permission
 import net.savagelabs.skyblockx.persist.Message
 
@@ -17,8 +16,8 @@ class CmdReset : SCommand() {
     }
 
     override fun perform(info: CommandInfo) {
-        SkyblockX.islandBaseCommand.subCommands.find { command -> command is CmdDelete }?.perform(info)
-        SkyblockX.islandBaseCommand.subCommands.find { command -> command is CmdCreate }?.perform(info)
+        IslandBaseCommand.instance.subCommands.find { command -> command is CmdDelete }?.perform(info)
+        IslandBaseCommand.instance.subCommands.find { command -> command is CmdCreate }?.perform(info)
     }
 
     override fun getHelpInfo(): String {

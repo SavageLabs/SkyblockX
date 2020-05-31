@@ -1,7 +1,6 @@
 package net.savagelabs.skyblockx.hooks
 
 import me.clip.placeholderapi.expansion.PlaceholderExpansion
-import net.savagelabs.skyblockx.Globals
 import net.savagelabs.skyblockx.SkyblockX
 import net.savagelabs.skyblockx.core.getIPlayer
 import org.bukkit.entity.Player

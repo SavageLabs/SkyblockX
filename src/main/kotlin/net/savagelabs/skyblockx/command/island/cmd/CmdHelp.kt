@@ -1,10 +1,9 @@
 package net.savagelabs.skyblockx.command.island.cmd
 
-import net.savagelabs.skyblockx.Globals
-import net.savagelabs.skyblockx.SkyblockX
 import net.savagelabs.skyblockx.command.CommandInfo
 import net.savagelabs.skyblockx.command.CommandRequirementsBuilder
 import net.savagelabs.skyblockx.command.SCommand
+import net.savagelabs.skyblockx.command.island.IslandBaseCommand
 import net.savagelabs.skyblockx.persist.Message
 
 class CmdHelp : SCommand() {
@@ -20,7 +19,7 @@ class CmdHelp : SCommand() {
 
     override fun perform(info: CommandInfo) {
         val page = info.getArgAsInt(0) ?: return
-        SkyblockX.islandBaseCommand.generateHelp(page, info.player!!)
+        IslandBaseCommand.instance.generateHelp(page, info.player!!)
     }
 
     override fun getHelpInfo(): String {
