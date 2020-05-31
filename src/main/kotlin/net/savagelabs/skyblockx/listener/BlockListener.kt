@@ -2,6 +2,7 @@ package net.savagelabs.skyblockx.listener
 
 import com.cryptomorin.xseries.XMaterial
 import net.savagelabs.skyblockx.Globals
+import net.savagelabs.skyblockx.SkyblockX
 import net.savagelabs.skyblockx.core.canUseBlockAtLocation
 import net.savagelabs.skyblockx.core.getIPlayer
 import net.savagelabs.skyblockx.core.isNotInSkyblockWorld
@@ -77,7 +78,7 @@ class BlockListener : Listener {
 
 
         // Anti-abuse for skyblock.
-        event.block.setMetadata("skyblock-placed-by-player", FixedMetadataValue(Globals.skyblockX, true)
+        event.block.setMetadata("skyblock-placed-by-player", FixedMetadataValue(SkyblockX.skyblockX, true)
         )
     }
 
@@ -145,10 +146,10 @@ class BlockListener : Listener {
         // No skyblock world or generating from down block face.
         if (!Config.islandOreGeneratorEnabled || event.face == BlockFace.DOWN || isNotInSkyblockWorld(event.block.world)) return
 
-        Bukkit.getScheduler().runTask(Globals.skyblockX, Runnable {
+        Bukkit.getScheduler().runTask(SkyblockX.skyblockX, Runnable {
             run {
                 if (event.toBlock.type == Material.COBBLESTONE) event.toBlock.location.block.type =
-                    Globals.generatorAlgorithm[1]!!.choose().parseMaterial()!!
+                    SkyblockX.generatorAlgorithm[1]!!.choose().parseMaterial()!!
             }
         })
 

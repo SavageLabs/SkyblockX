@@ -3,6 +3,7 @@ package net.savagelabs.skyblockx.command.island.cmd
 import com.cryptomorin.xseries.XMaterial
 import me.rayzr522.jsonmessage.JSONMessage
 import net.savagelabs.skyblockx.Globals
+import net.savagelabs.skyblockx.SkyblockX
 import net.savagelabs.skyblockx.command.CommandInfo
 import net.savagelabs.skyblockx.command.CommandRequirementsBuilder
 import net.savagelabs.skyblockx.command.SCommand
@@ -30,12 +31,12 @@ class CmdTop : SCommand() {
 
     @ExperimentalTime
     override fun perform(info: CommandInfo) {
-        if (Globals.islandValues == null || Globals.islandValues!!.map.isEmpty()) {
+        if (SkyblockX.islandValues == null || SkyblockX.islandValues!!.map.isEmpty()) {
             info.message(Message.commandTopNotCalculated)
             return
         }
         val decimalFormat = DecimalFormat()
-        val sortedBy = Globals.islandValues!!.map.values.sortedByDescending { entry -> entry.worth }
+        val sortedBy = SkyblockX.islandValues!!.map.values.sortedByDescending { entry -> entry.worth }
         var counter = 1
         // Should be able to add the prefix if they want in message.json, right now, it doesn't match because the top island entries part does not have the prefix.
         if (Config.useIslandTopHeadMessage) info.message(Config.islandTopHeadMessage, false)

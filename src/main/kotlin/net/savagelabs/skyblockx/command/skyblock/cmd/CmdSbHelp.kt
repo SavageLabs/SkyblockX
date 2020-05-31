@@ -1,6 +1,7 @@
 package net.savagelabs.skyblockx.command.skyblock.cmd
 
 import net.savagelabs.skyblockx.Globals
+import net.savagelabs.skyblockx.SkyblockX
 import net.savagelabs.skyblockx.command.CommandInfo
 import net.savagelabs.skyblockx.command.CommandRequirementsBuilder
 import net.savagelabs.skyblockx.command.SCommand
@@ -19,7 +20,7 @@ class CmdSbHelp: SCommand() {
 
     override fun perform(info: CommandInfo) {
         val page = info.getArgAsInt(0) ?: return
-        Globals.skyblockBaseCommand.generateHelp(page, info.player!!)
+        SkyblockX.skyblockBaseCommand.generateHelp(page, info.player!!)
     }
 
     override fun getHelpInfo(): String {

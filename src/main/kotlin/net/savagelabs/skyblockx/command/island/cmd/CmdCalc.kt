@@ -1,6 +1,7 @@
 package net.savagelabs.skyblockx.command.island.cmd
 
 import net.savagelabs.skyblockx.Globals
+import net.savagelabs.skyblockx.SkyblockX
 import net.savagelabs.skyblockx.command.CommandInfo
 import net.savagelabs.skyblockx.command.CommandRequirementsBuilder
 import net.savagelabs.skyblockx.command.SCommand
@@ -30,7 +31,7 @@ class CmdCalc : SCommand() {
         }
         info.island!!.lastManualCalc = System.currentTimeMillis()
         val calcInfo = info.island!!.calcIsland()
-        Globals.islandValues?.map?.put(info.island!!.islandID, calcInfo)
+        SkyblockX.islandValues?.map?.put(info.island!!.islandID, calcInfo)
         info.message(Message.commandCalcMessage)
     }
 

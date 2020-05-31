@@ -2,6 +2,7 @@ package net.savagelabs.skyblockx.hooks
 
 import me.clip.placeholderapi.expansion.PlaceholderExpansion
 import net.savagelabs.skyblockx.Globals
+import net.savagelabs.skyblockx.SkyblockX
 import net.savagelabs.skyblockx.core.getIPlayer
 import org.bukkit.entity.Player
 import java.text.DecimalFormat
@@ -26,7 +27,7 @@ class PlacholderAPIIntegration : PlaceholderExpansion() {
     }
 
     override fun getVersion(): String {
-        return Globals.skyblockX.description.version
+        return SkyblockX.skyblockX.description.version
     }
 
     override fun onPlaceholderRequest(player: Player, s: String): String? {
@@ -41,12 +42,12 @@ class PlacholderAPIIntegration : PlaceholderExpansion() {
             ) ?: 0).toString()
             "island_member_list" -> iPlayer.getIsland()?.getIslandMembers()?.stream()!!.map { member -> member.name }
                 .collect(joining(", ")) ?: "N/A"
-            "island_worth" -> Globals.islandValues?.map?.get(iPlayer.getIsland()?.islandID)?.worth?.toString() ?: "0"
+            "island_worth" -> SkyblockX.islandValues?.map?.get(iPlayer.getIsland()?.islandID)?.worth?.toString() ?: "0"
             "island_worth_formatted" -> decimalFormat.format(
-                Globals.islandValues?.map?.get(iPlayer.getIsland()?.islandID)?.worth ?: 0
+                SkyblockX.islandValues?.map?.get(iPlayer.getIsland()?.islandID)?.worth ?: 0
             )
             "island_worth_rounded" -> floor(
-                Globals.islandValues?.map?.get(iPlayer.getIsland()?.islandID)?.worth ?: 0.0
+                SkyblockX.islandValues?.map?.get(iPlayer.getIsland()?.islandID)?.worth ?: 0.0
             ).toString()
             "island_level" -> (iPlayer.getIsland()?.getLevel()?.toInt() ?: 0).toString()
             else -> null

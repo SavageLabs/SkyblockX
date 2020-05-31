@@ -1,6 +1,7 @@
 package net.savagelabs.skyblockx.listener
 
 import net.savagelabs.skyblockx.Globals
+import net.savagelabs.skyblockx.SkyblockX
 import net.savagelabs.skyblockx.core.color
 import net.savagelabs.skyblockx.core.getIPlayer
 import net.savagelabs.skyblockx.core.isNotInSkyblockWorld
@@ -89,7 +90,7 @@ class EntityListener : Listener {
     fun onPlayerRespawn(event: PlayerRespawnEvent) {
         val iPlayer = getIPlayer(event.player)
         if (iPlayer.teleportDeath != null) {
-            Bukkit.getScheduler().runTask(Globals.skyblockX, Runnable {
+            Bukkit.getScheduler().runTask(SkyblockX.skyblockX, Runnable {
                 teleportAsync(event.player, iPlayer.teleportDeath!!, Runnable {
                     iPlayer.message(Message.listenerDeathTeleport)
                 })
@@ -114,7 +115,7 @@ class EntityListener : Listener {
         // Triggers when they fall into the void.
         if (event.cause == EntityDamageEvent.DamageCause.VOID && !iPlayer.falling && event.entity.location.y <= 0) {
             iPlayer.falling = true
-            Bukkit.getScheduler().runTaskLater(Globals.skyblockX, Runnable { iPlayer.falling = false }, 20L)
+            Bukkit.getScheduler().runTaskLater(SkyblockX.skyblockX, Runnable { iPlayer.falling = false }, 20L)
             val location: Location = if (iPlayer.hasIsland()) {
                 iPlayer.getIsland()!!.islandGoPoint.getLocation()
             } else {

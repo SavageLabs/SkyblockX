@@ -1,6 +1,7 @@
 package net.savagelabs.skyblockx.command.skyblock
 
 import net.savagelabs.skyblockx.Globals
+import net.savagelabs.skyblockx.SkyblockX
 import net.savagelabs.skyblockx.command.CommandInfo
 import net.savagelabs.skyblockx.command.CommandRequirementsBuilder
 import net.savagelabs.skyblockx.command.SCommand
@@ -35,7 +36,7 @@ class SkyblockBaseCommand : SCommand(), CommandExecutor, TabCompleter {
         prefix = "/sbx"
 
         initializeSubCommandData()
-        Globals.skyblockBaseCommand = this
+        SkyblockX.skyblockBaseCommand = this
     }
 
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {

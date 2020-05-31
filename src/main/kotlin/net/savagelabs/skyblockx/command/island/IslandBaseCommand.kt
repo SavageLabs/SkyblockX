@@ -1,6 +1,7 @@
 package net.savagelabs.skyblockx.command.island
 
 import net.savagelabs.skyblockx.Globals
+import net.savagelabs.skyblockx.SkyblockX
 import net.savagelabs.skyblockx.command.CommandInfo
 import net.savagelabs.skyblockx.command.CommandRequirementsBuilder
 import net.savagelabs.skyblockx.command.SCommand
@@ -51,7 +52,7 @@ class IslandBaseCommand : SCommand(), CommandExecutor, TabCompleter {
         prefix = "/is"
 
         initializeSubCommandData()
-        Globals.islandBaseCommand = this
+        SkyblockX.islandBaseCommand = this
     }
 
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {

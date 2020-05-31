@@ -5,6 +5,7 @@ import com.github.stefvanschie.inventoryframework.GuiItem
 import me.clip.placeholderapi.PlaceholderAPI
 import net.prosavage.baseplugin.ItemBuilder
 import net.savagelabs.skyblockx.Globals
+import net.savagelabs.skyblockx.SkyblockX
 import net.savagelabs.skyblockx.core.IPlayer
 import net.savagelabs.skyblockx.core.color
 import net.savagelabs.skyblockx.core.isPlaceholderAPIPresent
@@ -23,7 +24,7 @@ class IslandMemberGUI :
         var slotListIndexesUsed = 0
         for (memberName in context.getIsland()!!.getIslandMembers()) {
             if (slotListIndexesUsed >= Config.islandMemberGUIHeadSlots.size) {
-                Globals.skyblockX.logger.info("Skipping for $memberName due to not having a configured slot for the ${slotListIndexesUsed + 1}th member.")
+                SkyblockX.skyblockX.logger.info("Skipping for $memberName due to not having a configured slot for the ${slotListIndexesUsed + 1}th member.")
                 continue
             }
             guiItems[Config.islandMemberGUIHeadSlots[slotListIndexesUsed]] =
