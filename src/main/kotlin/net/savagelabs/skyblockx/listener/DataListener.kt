@@ -1,6 +1,6 @@
 package net.savagelabs.skyblockx.listener
 
-import net.savagelabs.skyblockx.Globals
+import net.savagelabs.skyblockx.SkyblockX
 import net.savagelabs.skyblockx.core.IPlayer
 import net.savagelabs.skyblockx.core.getIPlayerByName
 import net.savagelabs.skyblockx.core.getIslandById
@@ -26,7 +26,7 @@ class DataListener : Listener {
                 // Update tag if not equal.
                 if (island.ownerTag != event.player.name) {
                     island.ownerTag = event.player.name
-                    Globals.skyblockX.logger.info("Updated ${event.player.name}'s tag since they changed their name.")
+                    SkyblockX.skyblockX.logger.info("Updated ${event.player.name}'s tag since they changed their name.")
                 }
             }
             // Delay to handle other plugins teleporting on login etc...
@@ -34,7 +34,7 @@ class DataListener : Listener {
             return
         }
         Data.IPlayers[event.player.uniqueId.toString()] = IPlayer(event.player.uniqueId.toString())
-        Globals.skyblockX.logger.info("${event.player.name}'s IPlayer instance was created")
+        SkyblockX.skyblockX.logger.info("${event.player.name}'s IPlayer instance was created")
     }
 
     @EventHandler

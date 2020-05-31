@@ -1,6 +1,6 @@
 package net.savagelabs.skyblockx.command.skyblock.cmd
 
-import net.savagelabs.skyblockx.Globals
+import net.savagelabs.skyblockx.SkyblockX
 import net.savagelabs.skyblockx.command.CommandInfo
 import net.savagelabs.skyblockx.command.CommandRequirementsBuilder
 import net.savagelabs.skyblockx.command.SCommand
@@ -20,7 +20,7 @@ class CmdSbCalc : SCommand() {
     @ExperimentalTime
     override fun perform(info: CommandInfo) {
         info.message(Message.commandSkyblockCalcStart)
-        Globals.skyblockX.runIslandCalc()
+        SkyblockX.skyblockX.runIslandCalc()
 
     }
 

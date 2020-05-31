@@ -7,6 +7,7 @@ import net.prosavage.baseplugin.SavagePlugin
 import net.prosavage.baseplugin.WorldBorderUtil
 import net.savagelabs.skyblockx.command.island.IslandBaseCommand
 import net.savagelabs.skyblockx.command.skyblock.SkyblockBaseCommand
+import net.savagelabs.skyblockx.core.IslandTopInfo
 import net.savagelabs.skyblockx.core.calculateAllIslands
 import net.savagelabs.skyblockx.core.color
 import net.savagelabs.skyblockx.core.registerAllPermissions
@@ -31,12 +32,19 @@ import kotlin.time.measureTimedValue
 
 class SkyblockX : SavagePlugin() {
 
+    companion object {
+        lateinit var skyblockX: SkyblockX
+        lateinit var worldBorderUtil: WorldBorderUtil
+        lateinit var generatorAlgorithm: Map<Int, Items<XMaterial>>
+        var islandValues: IslandTopInfo? = null
+    }
+
     @ExperimentalTime
     override fun onEnable() {
         val startupTime = measureTimeMillis {
             super.onEnable()
             printHeader()
-            Globals.skyblockX = this
+            skyblockX = this
             registerAllPermissions(server.pluginManager)
             loadDataFiles()
             initWorldBorderUtility()
@@ -122,7 +130,7 @@ class SkyblockX : SavagePlugin() {
                     color(
                         String.format(
                             Config.islandTopBroadcastMessageEnd,
-                            Globals.islandValues?.map?.size,
+                            islandValues?.map?.size,
                             time?.duration ?: Duration.ZERO
                         )
                     )
@@ -170,7 +178,7 @@ class SkyblockX : SavagePlugin() {
 
     private fun initWorldBorderUtility() {
         logInfo("Starting WorldBorder Packet Util.")
-        Globals.worldBorderUtil = WorldBorderUtil(this)
+        worldBorderUtil = WorldBorderUtil(this)
     }
 
     private fun setupCommands() {
@@ -200,7 +208,7 @@ class SkyblockX : SavagePlugin() {
                 generatorStrategyMap[key] = Items(value)
             }
         }
-        Globals.generatorAlgorithm = generatorStrategyMap
+        generatorAlgorithm = generatorStrategyMap
     }
 
     private fun saveDataFiles() {

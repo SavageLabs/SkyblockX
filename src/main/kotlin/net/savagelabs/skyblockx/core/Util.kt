@@ -2,7 +2,7 @@ package net.savagelabs.skyblockx.core
 
 import io.papermc.lib.PaperLib
 import net.prosavage.baseplugin.WorldBorderUtil
-import net.savagelabs.skyblockx.Globals
+import net.savagelabs.skyblockx.SkyblockX
 import net.savagelabs.skyblockx.persist.Config
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor
@@ -36,7 +36,7 @@ fun teleportAsync(player: Player?, location: Location, runnable: Runnable) {
     val locationtoTP = location.add(0.0, 1.0, 0.0)
     PaperLib.teleportAsync(player, locationtoTP, PlayerTeleportEvent.TeleportCause.PLUGIN).thenAccept {
         if (it) runnable.run() else {
-            Globals.skyblockX.logger.severe("Something went wrong when trying to teleport ${player.name} async - running sync.")
+            SkyblockX.skyblockX.logger.severe("Something went wrong when trying to teleport ${player.name} async - running sync.")
             player.teleport(locationtoTP, PlayerTeleportEvent.TeleportCause.PLUGIN)
         }
     }
@@ -48,7 +48,7 @@ inline fun <reified T : Enum<*>> enumValueOrNull(name: String): T? = T::class.ja
 fun updateWorldBorder(player: Player, location: Location, delay: Long) {
     if (isNotInSkyblockWorld(location.world!!)) {
         val worldBorder = location.world?.worldBorder
-        Globals.worldBorderUtil.sendWorldBorder(
+        SkyblockX.worldBorderUtil.sendWorldBorder(
             player,
             WorldBorderUtil.Color.NONE,
             worldBorder!!.size,
@@ -57,14 +57,14 @@ fun updateWorldBorder(player: Player, location: Location, delay: Long) {
     } else {
         Bukkit.getScheduler()
             .runTaskLater(
-                Globals.skyblockX,
+                SkyblockX.skyblockX,
                 Runnable {
                     val islandFromLocation = getIslandFromLocation(location)
                     val iPlayer = getIPlayer(player)
                     if (islandFromLocation != null) {
                         val wbCenter = islandFromLocation.getIslandCenter()
                         wbCenter.world = player.world
-                        WorldBorderUtil(Globals.skyblockX).sendWorldBorder(
+                        WorldBorderUtil(SkyblockX.skyblockX).sendWorldBorder(
                             player,
                             iPlayer.borderColor,
                             islandFromLocation.islandSize.toDouble(),

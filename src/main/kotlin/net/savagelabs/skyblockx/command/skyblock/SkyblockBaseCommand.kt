@@ -1,6 +1,5 @@
 package net.savagelabs.skyblockx.command.skyblock
 
-import net.savagelabs.skyblockx.Globals
 import net.savagelabs.skyblockx.command.CommandInfo
 import net.savagelabs.skyblockx.command.CommandRequirementsBuilder
 import net.savagelabs.skyblockx.command.SCommand
@@ -17,6 +16,11 @@ import java.util.*
 
 
 class SkyblockBaseCommand : SCommand(), CommandExecutor, TabCompleter {
+
+
+    companion object {
+        lateinit var instance: SkyblockBaseCommand
+    }
 
     init {
         this.commandRequirements = CommandRequirementsBuilder().build()
@@ -35,7 +39,7 @@ class SkyblockBaseCommand : SCommand(), CommandExecutor, TabCompleter {
         prefix = "/sbx"
 
         initializeSubCommandData()
-        Globals.skyblockBaseCommand = this
+        instance = this
     }
 
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {

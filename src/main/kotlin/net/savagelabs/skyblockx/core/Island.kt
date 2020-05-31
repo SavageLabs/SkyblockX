@@ -5,7 +5,7 @@ import io.papermc.lib.PaperLib
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import me.rayzr522.jsonmessage.JSONMessage
-import net.savagelabs.skyblockx.Globals
+import net.savagelabs.skyblockx.SkyblockX
 import net.savagelabs.skyblockx.event.IslandPostLevelCalcEvent
 import net.savagelabs.skyblockx.event.IslandPreLevelCalcEvent
 import net.savagelabs.skyblockx.persist.*
@@ -124,7 +124,7 @@ data class Island(
                 val world = Bukkit.getWorld(Config.skyblockWorldName)!!
                 for (x in minLocation.x.toInt()..maxLocation.x.toInt()) {
                     for (z in minLocation.z.toInt()..maxLocation.z.toInt()) {
-                        Bukkit.getScheduler().runTask(Globals.skyblockX, Runnable {
+                        Bukkit.getScheduler().runTask(SkyblockX.skyblockX, Runnable {
                             PaperLib.getChunkAtAsync(Location(world, x.toDouble(), 0.0, z.toDouble()))
                                 .thenAccept { chunkList.add(it) }
                         })
@@ -264,7 +264,7 @@ data class Island(
     }
 
     fun getValue(): Double {
-        return Globals.islandValues?.map?.get(islandID)?.worth ?: 0.0
+        return SkyblockX.islandValues?.map?.get(islandID)?.worth ?: 0.0
     }
 
     fun getLevel(): Double {
@@ -499,7 +499,7 @@ data class Island(
         }
         Data.islands.remove(islandID)
         // Delete island from value map.
-        Globals.islandValues?.map?.remove(islandID)
+        SkyblockX.islandValues?.map?.remove(islandID)
         deleteIslandBlocks()
     }
 
@@ -607,16 +607,16 @@ fun calculateAllIslands() {
     val pluginManager = Bukkit.getPluginManager()
     for ((key, island) in Data.islands) {
         val islandPreCalcEvent = IslandPreLevelCalcEvent(island, island.getValue())
-        Bukkit.getScheduler().callSyncMethod(Globals.skyblockX) { pluginManager.callEvent(islandPreCalcEvent) }
+        Bukkit.getScheduler().callSyncMethod(SkyblockX.skyblockX) { pluginManager.callEvent(islandPreCalcEvent) }
         if (islandPreCalcEvent.isCancelled) continue
         val worth = island.calcIsland()
         val islandPostCalcEvent = IslandPostLevelCalcEvent(island, worth.worth)
-        Bukkit.getScheduler().callSyncMethod(Globals.skyblockX) { pluginManager.callEvent(islandPostCalcEvent) }
+        Bukkit.getScheduler().callSyncMethod(SkyblockX.skyblockX) { pluginManager.callEvent(islandPostCalcEvent) }
         worth.worth = islandPostCalcEvent.levelAfterCalc ?: worth.worth
         islandVals[key] = worth
-        Globals.skyblockX.logger.info("Finished Island ${island.ownerTag}")
+        SkyblockX.skyblockX.logger.info("Finished Island ${island.ownerTag}")
     }
-    Globals.islandValues = IslandTopInfo(islandVals, System.nanoTime())
+    SkyblockX.islandValues = IslandTopInfo(islandVals, System.nanoTime())
 }
 
 fun isIslandNameTaken(tag: String): Boolean {
