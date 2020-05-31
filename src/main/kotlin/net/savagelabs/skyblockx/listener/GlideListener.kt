@@ -10,6 +10,9 @@ import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityToggleGlideEvent
 import org.bukkit.event.player.PlayerTeleportEvent
 
+/**
+ * This class will fail to register on 1.8 servers.
+ */
 class GlideListener : Listener {
 
 
