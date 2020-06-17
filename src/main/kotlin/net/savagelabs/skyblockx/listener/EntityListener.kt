@@ -74,7 +74,7 @@ class EntityListener : Listener {
 
     @EventHandler
     fun onPlayerDeath(event: PlayerDeathEvent) {
-        if (Config.skyblockDeathTeleport && isNotInSkyblockWorld(event.entity.world))
+        if (Config.skyblockDeathTeleport || isNotInSkyblockWorld(event.entity.world))
             return
 
         val iPlayer = getIPlayer(event.entity)
