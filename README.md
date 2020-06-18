@@ -38,7 +38,7 @@ The plugin is available on our Nexus Repository.
 <dependency>
   <groupId>io.illyria</groupId>
   <artifactId>SkyblockX</artifactId>
-  <version>v1.3.6-alpha</version>
+  <version>VERSION</version>
 </dependency>
 ```
 **Gradle**
@@ -50,7 +50,7 @@ repositories {
 }
 
 dependencies {
-  implementation 'io.illyria:SkyblockX:v1.3.6-alpha'
+  implementation 'io.illyria:SkyblockX:VERSION'
 }
 ```
 
