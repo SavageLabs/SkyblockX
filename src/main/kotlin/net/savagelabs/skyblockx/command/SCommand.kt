@@ -1,5 +1,6 @@
 package net.savagelabs.skyblockx.command
 
+import net.prosavage.baseplugin.JSONMessage
 import net.savagelabs.skyblockx.command.island.IslandBaseCommand
 import net.savagelabs.skyblockx.command.skyblock.SkyblockBaseCommand
 import net.savagelabs.skyblockx.core.IPlayer
@@ -7,7 +8,6 @@ import net.savagelabs.skyblockx.core.color
 import net.savagelabs.skyblockx.core.getIPlayer
 import net.savagelabs.skyblockx.persist.Config
 import net.savagelabs.skyblockx.persist.Message
-import me.rayzr522.jsonmessage.JSONMessage
 import org.bukkit.Bukkit
 import org.bukkit.block.Biome
 import org.bukkit.command.Command

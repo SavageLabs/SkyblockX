@@ -17,7 +17,11 @@ class CmdRename : SCommand() {
 
         requiredArgs.add(Argument("new-name", 0, StringArgument()))
 
-        commandRequirements = CommandRequirementsBuilder().withPermission(Permission.RENAME).asLeader(true).asIslandMember(true).build()
+        commandRequirements = CommandRequirementsBuilder()
+            .withPermission(Permission.RENAME)
+            .asLeader(true)
+            .asIslandMember(true)
+            .build()
     }
 
 
@@ -38,6 +42,7 @@ class CmdRename : SCommand() {
             return
         }
 
+        info.island?.islandName = newName
         info.message(Message.commandRenameSuccess, newName)
     }
 
