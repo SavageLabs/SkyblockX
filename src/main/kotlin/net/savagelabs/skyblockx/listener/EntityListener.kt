@@ -87,6 +87,7 @@ class EntityListener : Listener {
 
     @EventHandler
     fun onPlayerRespawn(event: PlayerRespawnEvent) {
+        if (isNotInSkyblockWorld(event.player.world)) return
         val iPlayer = getIPlayer(event.player)
         if (iPlayer.teleportDeath != null) {
             Bukkit.getScheduler().runTask(SkyblockX.skyblockX, Runnable {
