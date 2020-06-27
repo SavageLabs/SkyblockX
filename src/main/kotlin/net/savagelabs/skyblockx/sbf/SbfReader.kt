@@ -1,18 +1,16 @@
 package net.savagelabs.skyblockx.sbf
 
-import net.savagelabs.skyblockx.core.broadcastDebug
-import java.io.DataInputStream
-import java.io.File
-import java.io.FileInputStream
+import java.io.*
 import java.util.*
 import java.util.zip.GZIPInputStream
 
 class SbfReader {
     fun read(f: File, withoutGZIP: Boolean = false): SbfContainer {
-        var stream = DataInputStream(GZIPInputStream(FileInputStream(f)))
-        if (withoutGZIP) {
-            stream = DataInputStream(FileInputStream(f))
-        }
+        val stream = if (withoutGZIP)
+            DataInputStream(FileInputStream(f))
+        else
+            DataInputStream(GZIPInputStream(FileInputStream(f)))
+
         val version = stream.readUTF()
         val offsetX = stream.readInt()
         val offsetY = stream.readInt()

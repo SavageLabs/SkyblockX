@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "net.savagelabs"
-version = "v1.0-SNAPSHOT"
+version = "v1.5"
 
 repositories {
     mavenCentral()
@@ -30,10 +30,10 @@ dependencies {
     compile("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     compile("net.prosavage:BasePlugin:1.7.4")
     compile("me.rayzr522:jsonmessage:1.2.0")
-    compile("com.cryptomorin:XSeries:5.3.3")
+    compile("com.cryptomorin:XSeries:6.0.0")
     compile("io.papermc:paperlib:1.0.2")
 
-    compileOnly("org.spigotmc:spigot-api:1.15.1-R0.1-SNAPSHOT")
+    compileOnly("org.spigotmc:spigot-api:1.16.1-R0.1-SNAPSHOT")
     compileOnly("me.clip:placeholderapi:2.9.2")
 }
 
@@ -42,14 +42,22 @@ tasks {
         kotlinOptions.jvmTarget = "1.8"
     }
 
-
     processResources {
+        println("Task ***** processResources*****")
         filter<ReplaceTokens>("tokens" to mapOf(
             "project.version" to project.version
         ))
     }
 
+    val copyResources by registering(Copy::class) {
+        from("src/main/resources")
+        into(buildDir.resolve("resources/main"))
+        dependsOn(processResources)
+    }
+
+
     val shadowJar = named<ShadowJar>("shadowJar") {
+        dependsOn(copyResources)
         mergeServiceFiles()
         exclude("META-INF/*.DSA")
         exclude("META-INF/*.RSA")
@@ -67,15 +75,14 @@ tasks {
         relocate("org.jetbrains.annotations", "net.savagelabs.skyblockx.shade.jetbrains-annotations")
         relocate("com.cryptomorin.xseries", "net.savagelabs.skyblockx.shade.xseries")
         relocate("fonts", "net.savagelabs.skyblockx.shade.fonts")
-        archiveBaseName.set("SkyblockX.jar")
+        archiveBaseName.set("SkyblockX")
         minimize()
     }
 
-    task("ci") {
+
+
+    val ci = task("ci") {
         dependsOn(clean)
         dependsOn(shadowJar)
     }
-
-
-
 }
