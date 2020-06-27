@@ -71,6 +71,11 @@ tasks {
         minimize()
     }
 
+    task("ci") {
+        dependsOn(clean)
+        dependsOn(shadowJar)
+    }
+
 
 
 }
