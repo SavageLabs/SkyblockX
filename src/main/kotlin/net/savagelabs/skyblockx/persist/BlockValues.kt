@@ -26,7 +26,6 @@ object BlockValues {
         EntityType.ZOMBIE to 15000.0,
         EntityType.CREEPER to 20000.0,
         EntityType.IRON_GOLEM to 100000.0,
-        EntityType.PIG_ZOMBIE to 50000.0,
         EntityType.SPIDER to 15000.0
     )
 
