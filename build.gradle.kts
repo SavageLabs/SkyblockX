@@ -22,16 +22,17 @@ repositories {
 }
 
 dependencies {
-    compile("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.2")
-    compile("org.ocpsoft.prettytime:prettytime:4.0.1.Final")
-    compile("com.github.stefvanschie.inventoryframework:IF:0.5.18")
-    compile("org.bstats:bstats-bukkit:1.7")
-    compile("com.google.code.gson:gson:2.8.5")
-    compile("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    compile("net.prosavage:BasePlugin:1.7.4")
-    compile("me.rayzr522:jsonmessage:1.2.0")
-    compile("com.cryptomorin:XSeries:6.0.0")
-    compile("io.papermc:paperlib:1.0.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.2")
+    implementation("org.ocpsoft.prettytime:prettytime:4.0.1.Final")
+    implementation("com.github.stefvanschie.inventoryframework:IF:0.5.18")
+    implementation("org.bstats:bstats-bukkit:1.7")
+    implementation("com.google.code.gson:gson:2.8.5")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    implementation("net.prosavage:BasePlugin:1.7.4")
+    implementation("me.rayzr522:jsonmessage:1.2.0")
+    implementation("com.cryptomorin:XSeries:6.0.0")
+    implementation("io.papermc:paperlib:1.0.2")
+    implementation(project(":SavagePluginX"))
 
     compileOnly("org.spigotmc:spigot-api:1.16.1-R0.1-SNAPSHOT")
     compileOnly("me.clip:placeholderapi:2.9.2")
@@ -47,6 +48,10 @@ tasks {
         filter<ReplaceTokens>("tokens" to mapOf(
             "project.version" to project.version
         ))
+    }
+
+    val build by existing {
+        dependsOn(shadowJar)
     }
 
     val copyResources by registering(Copy::class) {

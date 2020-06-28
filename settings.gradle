@@ -1,3 +1,3 @@
 rootProject.name = 'SkyblockX'
-include 'JavaPluginX'
+include 'SavagePluginX'
 
