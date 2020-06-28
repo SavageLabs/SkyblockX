@@ -14,9 +14,10 @@ object YAMLJacksonParser : JacksonParser {
         mapper
     }
 
-    override fun <T : Any> deserialize(content: String, dataClass: KClass<T>) {
-        mapper.readValue(content, dataClass.java)
+    override fun <T : Any> deserialize(content: String, dataClass: KClass<T>): T {
+        return mapper.readValue(content, dataClass.java)
     }
+
 
     override fun <T : Any> serialize(instance: T): String {
         return mapper.writeValueAsString(instance)

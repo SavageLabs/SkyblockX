@@ -1,5 +1,7 @@
 package net.savagelabs.savagepluginx
 
+import net.savagelabs.savagepluginx.persist.PersistEngine
+import net.savagelabs.savagepluginx.persist.StorageConfig
 import org.bukkit.plugin.java.JavaPlugin
 
 class SavagePluginX : JavaPlugin() {
@@ -12,6 +14,8 @@ class SavagePluginX : JavaPlugin() {
     override fun onEnable() {
         logger.info("Running Framework Enable.")
         INSTANCE = this
+
+        val readConfig = PersistEngine.readConfig(StorageConfig())
     }
 
     override fun onDisable() {

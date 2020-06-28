@@ -1,8 +1,6 @@
 package net.savagelabs.savagepluginx.persist
 
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-
-class StorageConfig : ConfigFile {
+class StorageConfig : ConfigContainer {
 
 
     override val name = "storage-config"
