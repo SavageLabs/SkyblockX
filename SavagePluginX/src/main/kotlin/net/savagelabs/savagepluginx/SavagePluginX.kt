@@ -1,25 +1,31 @@
 package net.savagelabs.savagepluginx
 
-import net.savagelabs.savagepluginx.persist.PersistEngine
-import net.savagelabs.savagepluginx.persist.StorageConfig
+import org.bukkit.event.Listener
 import org.bukkit.plugin.java.JavaPlugin
 
-class SavagePluginX : JavaPlugin() {
+abstract class SavagePluginX : JavaPlugin() {
 
     companion object {
         lateinit var INSTANCE: SavagePluginX
     }
 
+    abstract fun enable()
+    abstract fun disable()
 
     override fun onEnable() {
         logger.info("Running Framework Enable.")
         INSTANCE = this
-
-        val readConfig = PersistEngine.readConfig(StorageConfig())
+        enable()
     }
 
     override fun onDisable() {
+        disable()
+    }
 
+    fun registerListeners(vararg listeners: Listener) {
+        for (listener in listeners) {
+            server.pluginManager.registerEvents(listener, INSTANCE)
+        }
     }
 
 

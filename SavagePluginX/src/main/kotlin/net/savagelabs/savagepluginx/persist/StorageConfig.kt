@@ -1,13 +1,5 @@
 package net.savagelabs.savagepluginx.persist
 
-class StorageConfig : ConfigContainer {
-
-
-    override val name = "storage-config"
-
-    val useMongoDB = false
-    val mongoDBConnectionString = "mongodb://localhost:27017"
-
-
-
-}
+data class StorageConfig(val useMongoDB: Boolean = false, val mongoDBConnectionString: String = "mongodb://localhost:27017",
+                    override val name: String = "storage-config"
+) : ConfigContainer

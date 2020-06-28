@@ -1,8 +1,5 @@
 .idea/
 .gradle/
 Wiki/
-
 copy-to-server.sh
-
-JavaPluginX/
 build/

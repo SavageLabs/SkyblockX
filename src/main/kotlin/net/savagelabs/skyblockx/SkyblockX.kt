@@ -3,8 +3,10 @@ package net.savagelabs.skyblockx
 import com.cryptomorin.xseries.XMaterial
 import io.papermc.lib.PaperLib
 import kotlinx.coroutines.runBlocking
-import net.prosavage.baseplugin.SavagePlugin
 import net.prosavage.baseplugin.WorldBorderUtil
+import net.savagelabs.savagepluginx.SavagePluginX
+import net.savagelabs.savagepluginx.persist.PersistEngine
+import net.savagelabs.savagepluginx.persist.StorageConfig
 import net.savagelabs.skyblockx.command.island.IslandBaseCommand
 import net.savagelabs.skyblockx.command.skyblock.SkyblockBaseCommand
 import net.savagelabs.skyblockx.core.IslandTopInfo
@@ -30,7 +32,7 @@ import kotlin.time.TimedValue
 import kotlin.time.measureTimedValue
 
 
-class SkyblockX : SavagePlugin() {
+class SkyblockX : SavagePluginX() {
 
     companion object {
         lateinit var skyblockX: SkyblockX
@@ -39,14 +41,16 @@ class SkyblockX : SavagePlugin() {
         var islandValues: IslandTopInfo? = null
     }
 
+
     @ExperimentalTime
-    override fun onEnable() {
+    override fun enable() {
         val startupTime = measureTimeMillis {
-            super.onEnable()
             printHeader()
             skyblockX = this
             registerAllPermissions(server.pluginManager)
-            loadDataFiles()
+            PersistEngine.saveConfig(StorageConfig())
+
+//            loadDataFiles()
             initWorldBorderUtility()
             setupCommands()
             setupAdminCommands()
@@ -162,8 +166,7 @@ class SkyblockX : SavagePlugin() {
         return VoidWorldGenerator()
     }
 
-    override fun onDisable() {
-        super.onDisable()
+    override fun disable() {
         saveDataFiles()
     }
 

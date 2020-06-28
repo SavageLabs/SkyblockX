@@ -17,8 +17,9 @@ repositories {
 
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.2")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.50")
+    implementation("org.jetbrains.kotlin:kotlin-reflect:1.3.50")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.7")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.11.0")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.11.0")
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.11.1")
@@ -38,7 +39,7 @@ tasks {
         exclude("META-INF/*.DSA")
         exclude("META-INF/*.RSA")
 
-        relocate("kotlin", "net.savagelabs.savagepluginx.shade.kotlin")
+//        relocate("kxotlin", "net.savagelabs.savagepluginx.shade.kotlin")
 
 
         archiveBaseName.set("SavagePluginX")
