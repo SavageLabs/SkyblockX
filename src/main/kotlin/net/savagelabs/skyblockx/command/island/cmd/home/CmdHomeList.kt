@@ -20,16 +20,16 @@ class CmdHomeList : SCommand() {
     }
 
     override fun perform(info: CommandInfo) {
-        info.message(Message.commandHomeListHeader)
+        info.message(Message.instance.commandHomeListHeader)
         for ((index, home) in info.iPlayer!!.getIsland()!!.getAllHomes().keys.withIndex()) {
-            JSONMessage.create(color(String.format(Message.commandHomeListFormat, index + 1, home)))
-                .tooltip(color(Message.commandHomeListRemoveTooltip)).runCommand("/is home go $home")
+            JSONMessage.create(color(String.format(Message.instance.commandHomeListFormat, index + 1, home)))
+                .tooltip(color(Message.instance.commandHomeListRemoveTooltip)).runCommand("/is home go $home")
                 .send(info.player!!)
         }
     }
 
     override fun getHelpInfo(): String {
-        return Message.commandHomeList
+        return Message.instance.commandHomeList
     }
 
 }

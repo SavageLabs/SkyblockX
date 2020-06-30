@@ -21,27 +21,27 @@ class CmdMemberKick : SCommand() {
     override fun perform(info: CommandInfo) {
         val island = info.island!!
         if (island.getIslandMembers().isEmpty()) {
-            info.message(Message.commandMemberKickLimit)
+            info.message(Message.instance.commandMemberKickLimit)
             return
         }
         val playerNameToRemove = info.args[0]
         if (playerNameToRemove == info.player!!.name) {
-            info.message(Message.genericCannotReferenceYourSelf)
+            info.message(Message.instance.genericCannotReferenceYourSelf)
             return
         }
 
         if (!info.island!!.getIslandMembers().map { member -> member.name }.contains(playerNameToRemove)) {
-            info.message(Message.commandMemberKickNotFound)
+            info.message(Message.instance.commandMemberKickNotFound)
             return
         }
 
 
         info.island!!.kickMember(playerNameToRemove)
-        info.message(String.format(Message.commandMemberKicked, playerNameToRemove))
+        info.message(String.format(Message.instance.commandMemberKicked, playerNameToRemove))
     }
 
     override fun getHelpInfo(): String {
-        return Message.commandMemberKickHelp
+        return Message.instance.commandMemberKickHelp
     }
 }
 
@@ -61,7 +61,7 @@ class CmdKick : SCommand() {
     }
 
     override fun getHelpInfo(): String {
-        return Message.commandMemberKickHelp
+        return Message.instance.commandMemberKickHelp
     }
 
 }

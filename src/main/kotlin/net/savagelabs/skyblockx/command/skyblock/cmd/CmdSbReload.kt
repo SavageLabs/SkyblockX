@@ -1,5 +1,6 @@
 package net.savagelabs.skyblockx.command.skyblock.cmd
 
+import net.savagelabs.savagepluginx.persist.engine.FlatDataManager
 import net.savagelabs.skyblockx.SkyblockX
 import net.savagelabs.skyblockx.command.CommandInfo
 import net.savagelabs.skyblockx.command.CommandRequirementsBuilder
@@ -18,16 +19,16 @@ class CmdSbReload : SCommand() {
 
 
     override fun perform(info: CommandInfo) {
-        Data.save()
+        FlatDataManager.save(Data.instance)
         SkyblockX.skyblockX.loadDataFiles()
         SkyblockX.skyblockX.setupOreGeneratorAlgorithm()
-        info.message(Message.commandReloadSuccess)
+        info.message(Message.instance.commandReloadSuccess)
 
 
     }
 
 
     override fun getHelpInfo(): String {
-        return Message.commandReloadHelp
+        return Message.instance.commandReloadHelp
     }
 }

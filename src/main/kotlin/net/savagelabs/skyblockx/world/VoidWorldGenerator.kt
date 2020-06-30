@@ -26,7 +26,7 @@ class VoidWorldGenerator : ChunkGenerator() {
         val createChunkData = createChunkData(world)
         for (cx in 0..15) {
             for (cz in 0..15) {
-                biome.setBiome(cx, cz, Config.skyblockWorldBiome)
+                biome.setBiome(cx, cz, Config.instance.skyblockWorldBiome)
             }
         }
         return createChunkData

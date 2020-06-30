@@ -1,9 +1,9 @@
 package net.savagelabs.skyblockx.core
 
 import io.papermc.lib.PaperLib
-import net.prosavage.baseplugin.WorldBorderUtil
 import net.savagelabs.skyblockx.SkyblockX
 import net.savagelabs.skyblockx.persist.Config
+import net.savagelabs.worldborder.WorldBorderUtil
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor
 import org.bukkit.Location
@@ -15,7 +15,7 @@ fun color(message: String): String {
     return ChatColor.translateAlternateColorCodes('&', message)
 }
 
-fun buildBar(element: String, barLength: Int = Config.barLength): String {
+fun buildBar(element: String, barLength: Int = Config.instance.barLength): String {
     val bar = StringBuilder()
     repeat(barLength) {
         bar.append(element)
@@ -28,7 +28,7 @@ fun broadcastDebug(message: String) {
 }
 
 fun isNotInSkyblockWorld(world: World): Boolean {
-    return world.name != Config.skyblockWorldName && world.name != Config.skyblockWorldNameNether
+    return world.name != Config.instance.skyblockWorldName && world.name != Config.instance.skyblockWorldNameNether
 }
 
 fun teleportAsync(player: Player?, location: Location, runnable: Runnable) {

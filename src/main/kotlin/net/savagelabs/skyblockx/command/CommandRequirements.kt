@@ -18,7 +18,7 @@ class CommandRequirements(
         // Check if the commandSender is a player
         if (asPlayer && !info.isPlayer()) {
             if (informIfNot) {
-                info.message(Message.commandRequirementsNotAPlayer)
+                info.message(Message.instance.commandRequirementsNotAPlayer)
             }
             return false
         }
@@ -35,7 +35,7 @@ class CommandRequirements(
             if (informIfNot) {
                 info.message(
                     String.format(
-                        Message.commandRequirementsPlayerDoesNotHavePermission,
+                        Message.instance.commandRequirementsPlayerDoesNotHavePermission,
                         permission.getFullPermissionNode()
                     )
                 )
@@ -48,7 +48,7 @@ class CommandRequirements(
         if (asIslandMember) {
             if (info.iPlayer == null || !info.iPlayer!!.hasIsland()) {
                 if (informIfNot) {
-                    info.message(Message.commandRequirementsNotAnIslandMember)
+                    info.message(Message.instance.commandRequirementsNotAnIslandMember)
                 }
 
                 return false
@@ -57,7 +57,7 @@ class CommandRequirements(
 
         if (asLeader && info.iPlayer!!.getIsland()!!.getOwnerIPlayer() != info.iPlayer) {
             if (informIfNot) {
-                info.message(Message.commandRequirementsNotAnIslandLeader)
+                info.message(Message.instance.commandRequirementsNotAnIslandLeader)
             }
             return false
         }

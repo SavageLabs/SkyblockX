@@ -23,7 +23,7 @@ class CmdSESaveStructure : SCommand() {
 
     override fun perform(info: CommandInfo) {
         if (info.iPlayer!!.pos1 == null || info.iPlayer!!.pos2 == null) {
-            info.message(Message.commandSESaveStructurePositionsNotSet)
+            info.message(Message.instance.commandSESaveStructurePositionsNotSet)
             return
         }
         SkyblockEdit().saveStructure(info.iPlayer!!.pos1!!, info.iPlayer!!.pos2!!, info.player!!, info.args[0])
@@ -31,7 +31,7 @@ class CmdSESaveStructure : SCommand() {
 
 
     override fun getHelpInfo(): String {
-        return Message.commandSESaveStructureHelp
+        return Message.instance.commandSESaveStructureHelp
     }
 
 }

@@ -23,7 +23,7 @@ class CmdHelp : SCommand() {
     }
 
     override fun getHelpInfo(): String {
-        return Message.commandHelpHelp
+        return Message.instance.commandHelpHelp
     }
 
 }

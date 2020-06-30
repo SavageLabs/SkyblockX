@@ -1,6 +1,6 @@
 package net.savagelabs.skyblockx.command
 
-import net.prosavage.baseplugin.JSONMessage
+import me.rayzr522.jsonmessage.JSONMessage
 import net.savagelabs.skyblockx.command.island.IslandBaseCommand
 import net.savagelabs.skyblockx.command.skyblock.SkyblockBaseCommand
 import net.savagelabs.skyblockx.core.IPlayer
@@ -65,13 +65,13 @@ abstract class SCommand {
 
     private fun checkInput(info: CommandInfo): Boolean {
         if (info.args.size < requiredArgs.size) {
-            info.message(Message.genericCommandsTooFewArgs)
+            info.message(Message.instance.genericCommandsTooFewArgs)
             handleCommandFormat(info)
             return false
         }
 
         if (info.args.size > requiredArgs.size + optionalArgs.size) {
-            info.message(Message.genericCommandsTooManyArgs)
+            info.message(Message.instance.genericCommandsTooManyArgs)
             handleCommandFormat(info)
             return false
         }
@@ -87,12 +87,12 @@ abstract class SCommand {
     }
 
     fun generateHelp(page: Int, commandSender: CommandSender) {
-        val pageStartEntry = Config.helpGeneratorPageEntries * (page - 1)
+        val pageStartEntry = Config.instance.helpGeneratorPageEntries * (page - 1)
         if (page <= 0 || pageStartEntry >= subCommands.size) {
             commandSender.sendMessage(
                 color(
-                    Message.messagePrefix + String.format(
-                        Message.commandHelpGeneratorPageInvalid,
+                    Message.instance.messagePrefix + String.format(
+                        Message.instance.commandHelpGeneratorPageInvalid,
                         page
                     )
                 )
@@ -100,33 +100,33 @@ abstract class SCommand {
             return
         }
 
-        for (i in pageStartEntry until (pageStartEntry + Config.helpGeneratorPageEntries)) {
+        for (i in pageStartEntry until (pageStartEntry + Config.instance.helpGeneratorPageEntries)) {
             if (subCommands.size - 1 < i) {
                 continue
             }
             val command = subCommands[i]
             val base = (if (aliases.size > 0) aliases[0] + " " else "") + command.aliases[0]
             val tooltip = String.format(
-                Message.commandHelpGeneratorIslandRequired,
-                (if (command.commandRequirements.asIslandMember) Message.commandHelpGeneratorRequires else Message.commandHelpGeneratorNotRequired)
-            ) + "\n" + Message.commandHelpGeneratorClickMeToPaste
+                Message.instance.commandHelpGeneratorIslandRequired,
+                (if (command.commandRequirements.asIslandMember) Message.instance.commandHelpGeneratorRequires else Message.instance.commandHelpGeneratorNotRequired)
+            ) + "\n" + Message.instance.commandHelpGeneratorClickMeToPaste
             if (commandSender is Player) {
                 JSONMessage.create(
                     color(
                         String.format(
-                            Message.commandHelpGeneratorFormat,
+                            Message.instance.commandHelpGeneratorFormat,
                             prefix,
                             base,
                             command.getHelpInfo()
                         )
                     )
                 )
-                    .color(Message.commandHelpGeneratorBackgroundColor)
+                    .color(Message.instance.commandHelpGeneratorBackgroundColor)
                     .tooltip(color(tooltip)).suggestCommand("/$prefix $base").send(commandSender)
             } else commandSender.sendMessage(
                 color(
                     String.format(
-                        Message.commandHelpGeneratorFormat,
+                        Message.instance.commandHelpGeneratorFormat,
                         prefix,
                         base,
                         command.getHelpInfo()
@@ -138,10 +138,10 @@ abstract class SCommand {
         }
         if (commandSender is Player) {
             val pageNav = JSONMessage.create("       ")
-            if (page > 1) pageNav.then(color(Message.commandHelpGeneratorPageNavBack)).tooltip("Go to Page ${page - 1}").runCommand(
+            if (page > 1) pageNav.then(color(Message.instance.commandHelpGeneratorPageNavBack)).tooltip("Go to Page ${page - 1}").runCommand(
                 "/$prefix help ${page - 1}"
             ).then("       ")
-            if (page < subCommands.size) pageNav.then(color(Message.commandHelpGeneratorPageNavNext)).tooltip("Go to Page ${page + 1}").runCommand(
+            if (page < subCommands.size) pageNav.then(color(Message.instance.commandHelpGeneratorPageNavNext)).tooltip("Go to Page ${page + 1}").runCommand(
                 "/$prefix help ${page + 1}"
             )
             pageNav.send(commandSender)

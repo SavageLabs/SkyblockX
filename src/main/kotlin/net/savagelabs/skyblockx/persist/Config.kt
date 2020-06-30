@@ -1,26 +1,32 @@
 package net.savagelabs.skyblockx.persist
 
 import com.cryptomorin.xseries.XMaterial
-import net.prosavage.baseplugin.WorldBorderUtil
-import net.prosavage.baseplugin.serializer.Serializer
+import com.fasterxml.jackson.annotation.JsonIgnore
+import net.savagelabs.savagepluginx.persist.container.ConfigContainer
 import net.savagelabs.skyblockx.gui.HeadFormat
 import net.savagelabs.skyblockx.gui.IslandBorderItem
 import net.savagelabs.skyblockx.gui.MenuItem
 import net.savagelabs.skyblockx.persist.data.IslandCreateInfo
 import net.savagelabs.skyblockx.persist.data.SerializableItem
 import net.savagelabs.skyblockx.persist.data.WeightedItem
+import net.savagelabs.worldborder.WorldBorderUtil
 import org.bukkit.Bukkit
 import org.bukkit.block.Biome
 import java.util.*
 
-object Config {
 
-    @Transient
-    private val instance = this
+
+class Config(@JsonIgnore override val name: String = "config") :
+    ConfigContainer {
+
+    companion object {
+        lateinit var instance: Config
+    }
+
 
     var defaultWorld = Bukkit.getWorlds().first().name
 
-    @Transient
+    @JsonIgnore
     val skyblockPermissionPrefix = "skyblockx"
 
     var islandMaxSizeInBlocks = 100
@@ -123,7 +129,7 @@ object Config {
 
     var islandSaveBroadcastMessage = true
 
-    var islandSaveBroadcastMessageStart = "&7Saving Data..."
+    var islandSaveBroadcastMessageStart = "&7Saving Data.instance..."
 
     var islandSaveBroadcastMessageEnd = "&7Finished Saving data ( %1\$s )."
 
@@ -297,11 +303,5 @@ object Config {
 
     var removeBlocksOnIslandDelete = false
 
-    fun save() {
-        Serializer().save(instance)
-    }
 
-    fun load() {
-        Serializer().load(instance, Config::class.java, "config")
-    }
 }

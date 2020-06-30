@@ -26,7 +26,7 @@ class CommandInfo(val commandSender: CommandSender, val args: ArrayList<String>,
         val player = Bukkit.getPlayer(args[index])
         if (player == null) {
             if (informIfNot) {
-                message(Message.commandParsingPlayerDoesNotExist)
+                message(Message.instance.commandParsingPlayerDoesNotExist)
             }
             return null
         }
@@ -37,13 +37,13 @@ class CommandInfo(val commandSender: CommandSender, val args: ArrayList<String>,
         val player = Bukkit.getPlayer(args[index])
         if (player == null) {
             if (informIfNot) {
-                message(Message.commandParsingPlayerDoesNotExist)
+                message(Message.instance.commandParsingPlayerDoesNotExist)
             }
             return null
         }
         if (cannotReferenceYourSelf && player == this.player) {
             if (informIfNot) {
-                message(Message.commandParsingPlayerIsYou)
+                message(Message.instance.commandParsingPlayerIsYou)
             }
             return null
         }
@@ -56,7 +56,7 @@ class CommandInfo(val commandSender: CommandSender, val args: ArrayList<String>,
             return args[index].toInt()
         } catch (exception: NumberFormatException) {
             if (informIfNot) {
-                message(Message.commandParsingArgIsNotInt)
+                message(Message.instance.commandParsingArgIsNotInt)
             }
         }
         return null
@@ -66,7 +66,7 @@ class CommandInfo(val commandSender: CommandSender, val args: ArrayList<String>,
         val arg = args[index].toLowerCase()
         if (arg.equals("true") || arg.equals("1")) return true
         if (arg.equals("false") || arg.equals("0")) return false
-        if (informIfNot) message(Message.commandParsingArgIsNotBoolean)
+        if (informIfNot) message(Message.instance.commandParsingArgIsNotBoolean)
         return null
     }
 
@@ -75,7 +75,7 @@ class CommandInfo(val commandSender: CommandSender, val args: ArrayList<String>,
     }
 
     fun message(message: String, withPrefix: Boolean = true) {
-        commandSender.sendMessage(color((if (withPrefix) Message.messagePrefix else "") + message))
+        commandSender.sendMessage(color((if (withPrefix) Message.instance.messagePrefix else "") + message))
     }
 
     fun message(message: String, vararg args: String, withPrefix: Boolean = true) {

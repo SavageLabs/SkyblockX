@@ -26,7 +26,7 @@ class CmdSEPasteStructure : SCommand() {
 
 
     override fun getHelpInfo(): String {
-        return Message.commandSESaveStructureHelp
+        return Message.instance.commandSESaveStructureHelp
     }
 
 }

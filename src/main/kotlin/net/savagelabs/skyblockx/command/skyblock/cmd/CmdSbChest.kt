@@ -22,17 +22,17 @@ class CmdSbChest : SCommand() {
     override fun perform(info: CommandInfo) {
         val iPlayerByName = getIPlayerByName(info.args[0])
         if (!iPlayerByName?.hasIsland()!!) {
-            info.message(Message.commandSkyblockOpenChestNotAnIslandMember)
+            info.message(Message.instance.commandSkyblockOpenChestNotAnIslandMember)
             return
         }
         val inventory = iPlayerByName.getIsland()!!.inventory
-        iPlayerByName.getPlayer().openInventory(inventory)
-        info.message(Message.commandSkyblockOpenChestOpening)
+        iPlayerByName.getPlayer().openInventory(inventory!!)
+        info.message(Message.instance.commandSkyblockOpenChestOpening)
 
     }
 
     override fun getHelpInfo(): String {
-        return Message.commandSkyblockOpenChestNotAnIslandMember
+        return Message.instance.commandSkyblockOpenChestNotAnIslandMember
     }
 
 }

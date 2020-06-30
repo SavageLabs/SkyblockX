@@ -94,21 +94,21 @@ fun failsQuestCheckingPreRequisites(iPlayer: IPlayer, island: Island?, location:
 }
 
 fun incrementQuestInOrder(island: Island) {
-    if (Quests.sendNextQuestInOrderMessages) sendQuestOrderMessage(island)
+    if (Quests.instance.sendNextQuestInOrderMessages) sendQuestOrderMessage(island)
     if (island.currentQuestOrderIndex == null) return
-    val quest = Quests.islandQuests.find { quest -> quest.id == Quests.questOrder[island.currentQuestOrderIndex!!] }
+    val quest = Quests.instance.islandQuests.find { quest -> quest.id == Quests.instance.questOrder[island.currentQuestOrderIndex!!] }
     island.changeCurrentQuest(quest?.id)
 
 }
 
 fun sendQuestOrderMessage(island: Island) {
     if (island.currentQuestOrderIndex == null) return
-    val quest = Quests.islandQuests.find { quest -> quest.id == Quests.questOrder[island.currentQuestOrderIndex!!] }
+    val quest = Quests.instance.islandQuests.find { quest -> quest.id == Quests.instance.questOrder[island.currentQuestOrderIndex!!] }
 
     if (quest == null) {
-        island.messageAllOnlineIslandMembers(Message.messagePrefix + Message.questOrderNoNextQuestWasFound)
+        island.messageAllOnlineIslandMembers(Message.instance.messagePrefix + Message.instance.questOrderNoNextQuestWasFound)
         return
     }
 
-    island.messageAllOnlineIslandMembers(Message.messagePrefix + String.format(Message.nextQuestMessage, quest.name))
+    island.messageAllOnlineIslandMembers(Message.instance.messagePrefix + String.format(Message.instance.nextQuestMessage, quest.name))
 }

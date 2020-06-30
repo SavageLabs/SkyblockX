@@ -22,16 +22,16 @@ class CmdCalc : SCommand() {
     override fun perform(info: CommandInfo) {
         if (!info.island!!.canManualCalc()) {
             val cooldown = (System.currentTimeMillis() - info.island!!.lastManualCalc ) / 1000
-            info.message(String.format(Message.commandCalcCooldown, (Config.islandTopManualCalcCooldownMiliseconds / 1000) - cooldown))
+            info.message(String.format(Message.instance.commandCalcCooldown, (Config.instance.islandTopManualCalcCooldownMiliseconds / 1000) - cooldown))
             return
         }
         info.island!!.lastManualCalc = System.currentTimeMillis()
         val calcInfo = info.island!!.calcIsland()
         SkyblockX.islandValues?.map?.put(info.island!!.islandID, calcInfo)
-        info.message(Message.commandCalcMessage)
+        info.message(Message.instance.commandCalcMessage)
     }
 
     override fun getHelpInfo(): String {
-        return Message.commandCalcHelp
+        return Message.instance.commandCalcHelp
     }
 }

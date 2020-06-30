@@ -25,18 +25,18 @@ class CmdSEPosition : SCommand() {
     override fun perform(info: CommandInfo) {
         val index = info.getArgAsInt(0) ?: return
         if (index < 0 || index > 2) {
-            info.message(Message.commandSEPositionInvalidIndex)
+            info.message(Message.instance.commandSEPositionInvalidIndex)
             return
         }
         val positionChosen = if (index == 1) Position.POSITION1 else Position.POSITION2
         info.iPlayer!!.chosenPosition = positionChosen
         info.iPlayer!!.choosingPosition = true
-        info.message(String.format(Message.commandSEPosition, if (positionChosen == Position.POSITION1) "1" else "2"))
+        info.message(String.format(Message.instance.commandSEPosition, if (positionChosen == Position.POSITION1) "1" else "2"))
     }
 
 
     override fun getHelpInfo(): String {
-        return Message.commandSEPostionHelp
+        return Message.instance.commandSEPostionHelp
     }
 
 

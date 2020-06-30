@@ -23,16 +23,16 @@ class CmdSbDelete : SCommand() {
     override fun perform(info: CommandInfo) {
         val iPlayerByName = getIPlayerByName(info.args[0])
         if (iPlayerByName?.getIsland() == null) {
-            info.message(Message.commandSkyblockRemoveNotAnIslandOwner)
+            info.message(Message.instance.commandSkyblockRemoveNotAnIslandOwner)
             return
         }
         iPlayerByName.getIsland()?.delete()
-        info.message(Message.commandSkyblockRemoveSuccess)
+        info.message(Message.instance.commandSkyblockRemoveSuccess)
 
     }
 
     override fun getHelpInfo(): String {
-        return Message.commandSkyblockRemoveHelp
+        return Message.instance.commandSkyblockRemoveHelp
     }
 
 }

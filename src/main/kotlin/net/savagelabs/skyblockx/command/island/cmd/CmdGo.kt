@@ -24,13 +24,13 @@ class CmdGo : SCommand() {
         val island = info.iPlayer!!.getIsland()!!
         teleportAsync(
             info.player!!,
-            island.islandGoPoint.getLocation(),
-            Runnable { info.message(Message.commandGoTeleporting) })
+            island.islandGoPoint!!.getLocation(),
+            Runnable { info.message(Message.instance.commandGoTeleporting) })
     }
 
 
     override fun getHelpInfo(): String {
-        return Message.commandGoHelp
+        return Message.instance.commandGoHelp
     }
 
 }

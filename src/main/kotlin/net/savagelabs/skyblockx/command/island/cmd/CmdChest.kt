@@ -22,10 +22,10 @@ class CmdChest : SCommand() {
     override fun perform(info: CommandInfo) {
         var inventory = info.island?.inventory
         info.player?.openInventory(inventory!!)
-        info.message(Message.commandChestOpening)
+        info.message(Message.instance.commandChestOpening)
     }
 
     override fun getHelpInfo(): String {
-        return Message.commandChestHelp
+        return Message.instance.commandChestHelp
     }
 }

@@ -14,6 +14,7 @@ abstract class SavagePluginX : JavaPlugin() {
 
     override fun onEnable() {
         logger.info("Running Framework Enable.")
+        printPluginInformation()
         INSTANCE = this
         enable()
     }
@@ -37,6 +38,7 @@ abstract class SavagePluginX : JavaPlugin() {
         logger.info("Author(s): " + description.authors)
         logger.info("Description: " + description.description)
         logger.info("-- Powered By SavagePluginX")
+        logger.info("-- Written by ProSavage")
         logger.info("================================================")
     }
 

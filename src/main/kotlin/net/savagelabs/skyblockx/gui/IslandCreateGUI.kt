@@ -10,11 +10,11 @@ import net.savagelabs.skyblockx.persist.Message
 import org.bukkit.entity.Player
 
 class IslandCreateGUI :
-    BaseGUI(Config.islandCreateGUITitle, Config.islandCreateGUIBackgroundItem, Config.islandCreateGUIRows) {
+    BaseGUI(Config.instance.islandCreateGUITitle, Config.instance.islandCreateGUIBackgroundItem, Config.instance.islandCreateGUIRows) {
 
     override fun populatePane(context: IPlayer) {
         val guiItems = buildFullBackgroundItemlist()
-        for (island in Config.islandCreateGUIIslandTypes) {
+        for (island in Config.instance.islandCreateGUIIslandTypes) {
             guiItems[island.guiIndex] = (GuiItem(island.item.buildItem()) { e ->
                 run {
                     e.isCancelled = true
@@ -23,7 +23,7 @@ class IslandCreateGUI :
                         player.sendMessage(
                             color(
                                 String.format(
-                                    Message.messagePrefix + Message.islandCreateGUIYouDontHavePermissionToUseIsland,
+                                    Message.instance.messagePrefix + Message.instance.islandCreateGUIYouDontHavePermissionToUseIsland,
                                     island.requirementPermission
                                 )
                             )
@@ -32,7 +32,7 @@ class IslandCreateGUI :
                     }
                     val createdIsland = createIsland(player, island.structureFile.replace(".structure", ""))
                     createdIsland.netherFilePath = island.netherFile
-                    player.sendMessage(color(Message.messagePrefix + Message.commandCreateSuccess))
+                    player.sendMessage(color(Message.instance.messagePrefix + Message.instance.commandCreateSuccess))
                     context.lastIslandResetTime = System.currentTimeMillis() / 1000
                 }
             })

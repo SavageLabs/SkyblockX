@@ -18,11 +18,11 @@ class CmdMenu : SCommand() {
     }
 
     override fun perform(info: CommandInfo) {
-        if (Config.openIslandMenuOnBaseCommand) IslandMenuGUI().showGui(info.player!!)
+        if (Config.instance.openIslandMenuOnBaseCommand) IslandMenuGUI().showGui(info.player!!)
     }
 
     override fun getHelpInfo(): String {
-        return Message.commandMenuHelp
+        return Message.instance.commandMenuHelp
     }
 
 

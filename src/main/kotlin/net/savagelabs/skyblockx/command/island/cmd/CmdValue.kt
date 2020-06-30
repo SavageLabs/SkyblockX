@@ -22,11 +22,11 @@ class CmdValue : SCommand() {
     override fun perform(info: CommandInfo) {
         val blockMaterial = info.player!!.itemInHand.type
         val xmat = XMaterial.matchXMaterial(blockMaterial)
-        val value = BlockValues.blockValues[xmat] ?: 0.0
-        info.message(String.format(Message.commandValueInfo, NumberFormat.getInstance(Config.numberFormatLocale).format(value)))
+        val value = BlockValues.instance.blockValues[xmat] ?: 0.0
+        info.message(String.format(Message.instance.commandValueInfo, NumberFormat.getInstance(Config.instance.numberFormatLocale).format(value)))
     }
 
     override fun getHelpInfo(): String {
-        return Message.commandValueHelp
+        return Message.instance.commandValueHelp
     }
 }

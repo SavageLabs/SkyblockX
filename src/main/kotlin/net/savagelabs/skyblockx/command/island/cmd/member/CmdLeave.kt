@@ -18,14 +18,14 @@ class CmdLeave : SCommand() {
 
     override fun perform(info: CommandInfo) {
         if (info.iPlayer!!.isLeader()) {
-            info.message(Message.commandLeaveDeniedLeader)
+            info.message(Message.instance.commandLeaveDeniedLeader)
             return
         }
 
-        info.message(Message.commandLeaveSuccess)
+        info.message(Message.instance.commandLeaveSuccess)
         info.island!!.messageAllOnlineIslandMembers(
             String.format(
-                Message.commandLeaveMemberLeftIsland,
+                Message.instance.commandLeaveMemberLeftIsland,
                 info.player!!.name
             )
         )
@@ -35,6 +35,6 @@ class CmdLeave : SCommand() {
     }
 
     override fun getHelpInfo(): String {
-        return Message.commandLeaveHelp
+        return Message.instance.commandLeaveHelp
     }
 }

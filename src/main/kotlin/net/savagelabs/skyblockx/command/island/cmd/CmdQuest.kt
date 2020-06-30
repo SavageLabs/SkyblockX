@@ -24,6 +24,6 @@ class CmdQuest : SCommand() {
 
 
     override fun getHelpInfo(): String {
-        return Message.commandQuestHelp
+        return Message.instance.commandQuestHelp
     }
 }

@@ -41,7 +41,7 @@ class EntityListener : Listener {
             val currentQuest = island.currentQuest!!
             // Find the quest that the island has activated.
             val targetQuest =
-                Quests.islandQuests.find { quest -> quest.type == QuestGoal.KILL_MOBS && quest.id == currentQuest }
+                Quests.instance.islandQuests.find { quest -> quest.type == QuestGoal.KILL_MOBS && quest.id == currentQuest }
             if (targetQuest != null) {
                 val isCorrectType = targetQuest.goalParameter.equals(event.entity.type.name, true)
 
@@ -67,21 +67,21 @@ class EntityListener : Listener {
             return
         }
         val iPlayer = getIPlayer(event.entity as Player)
-        if (Config.disableMobDamageWhenIslandVisitor && !iPlayer.isOnOwnIsland()) {
+        if (Config.instance.disableMobDamageWhenIslandVisitor && !iPlayer.isOnOwnIsland()) {
             event.isCancelled = true
         }
     }
 
     @EventHandler
     fun onPlayerDeath(event: PlayerDeathEvent) {
-        if (Config.skyblockDeathTeleport || isNotInSkyblockWorld(event.entity.world))
+        if (Config.instance.skyblockDeathTeleport || isNotInSkyblockWorld(event.entity.world))
             return
 
         val iPlayer = getIPlayer(event.entity)
         iPlayer.teleportDeath = if (iPlayer.hasIsland()) {
-            iPlayer.getIsland()!!.islandGoPoint.getLocation()
+            iPlayer.getIsland()!!.islandGoPoint!!.getLocation()
         } else {
-            Bukkit.getWorld(Config.defaultWorld)!!.spawnLocation
+            Bukkit.getWorld(Config.instance.defaultWorld)!!.spawnLocation
         }
     }
 
@@ -92,7 +92,7 @@ class EntityListener : Listener {
         if (iPlayer.teleportDeath != null) {
             Bukkit.getScheduler().runTask(SkyblockX.skyblockX, Runnable {
                 teleportAsync(event.player, iPlayer.teleportDeath!!, Runnable {
-                    iPlayer.message(Message.listenerDeathTeleport)
+                    iPlayer.message(Message.instance.listenerDeathTeleport)
                 })
             })
 
@@ -102,7 +102,7 @@ class EntityListener : Listener {
 
     @EventHandler
     fun onPlayerDamage(event: EntityDamageEvent) {
-        if (!Config.preventFallingDeaths
+        if (!Config.instance.preventFallingDeaths
             || event.entity !is Player
             || isNotInSkyblockWorld(event.entity.world)
         ) {
@@ -117,12 +117,12 @@ class EntityListener : Listener {
             iPlayer.falling = true
             Bukkit.getScheduler().runTaskLater(SkyblockX.skyblockX, Runnable { iPlayer.falling = false }, 20L)
             val location: Location = if (iPlayer.hasIsland()) {
-                iPlayer.getIsland()!!.islandGoPoint.getLocation()
+                iPlayer.getIsland()!!.islandGoPoint!!.getLocation()
             } else {
-                Bukkit.getWorld(Config.defaultWorld)!!.spawnLocation
+                Bukkit.getWorld(Config.instance.defaultWorld)!!.spawnLocation
             }
             teleportAsync(player, location, Runnable {
-                player.sendMessage(color(Message.messagePrefix + Message.listenerVoidDeathPrevented))
+                player.sendMessage(color(Message.instance.messagePrefix + Message.instance.listenerVoidDeathPrevented))
             })
             event.isCancelled = true
         }
@@ -130,8 +130,8 @@ class EntityListener : Listener {
         // Triggers when they fall and the VOID damage registers falling to cancel.
         if (event.cause == EntityDamageEvent.DamageCause.FALL && iPlayer.falling) {
             iPlayer.falling = false
-            if (Config.useFallingDeathCommands && Config.fallingDeathPreventionCommands.isNotEmpty()) {
-                for (command in Config.fallingDeathPreventionCommands) {
+            if (Config.instance.useFallingDeathCommands && Config.instance.fallingDeathPreventionCommands.isNotEmpty()) {
+                for (command in Config.instance.fallingDeathPreventionCommands) {
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), color(command.replace("{player}", player.name)))
                 }
             }

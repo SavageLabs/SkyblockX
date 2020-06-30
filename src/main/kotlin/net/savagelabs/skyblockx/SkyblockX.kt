@@ -1,18 +1,15 @@
 package net.savagelabs.skyblockx
 
+import net.savagelabs.worldborder.WorldBorderUtil
 import com.cryptomorin.xseries.XMaterial
 import io.papermc.lib.PaperLib
 import kotlinx.coroutines.runBlocking
-import net.prosavage.baseplugin.WorldBorderUtil
 import net.savagelabs.savagepluginx.SavagePluginX
-import net.savagelabs.savagepluginx.persist.PersistEngine
-import net.savagelabs.savagepluginx.persist.StorageConfig
+import net.savagelabs.savagepluginx.persist.engine.ConfigManager
+import net.savagelabs.savagepluginx.persist.engine.FlatDataManager
 import net.savagelabs.skyblockx.command.island.IslandBaseCommand
 import net.savagelabs.skyblockx.command.skyblock.SkyblockBaseCommand
-import net.savagelabs.skyblockx.core.IslandTopInfo
-import net.savagelabs.skyblockx.core.calculateAllIslands
-import net.savagelabs.skyblockx.core.color
-import net.savagelabs.skyblockx.core.registerAllPermissions
+import net.savagelabs.skyblockx.core.*
 import net.savagelabs.skyblockx.hooks.PlacholderAPIIntegration
 import net.savagelabs.skyblockx.listener.*
 import net.savagelabs.skyblockx.persist.*
@@ -25,6 +22,7 @@ import org.bukkit.World
 import org.bukkit.WorldCreator
 import org.bukkit.generator.ChunkGenerator
 import java.util.concurrent.Callable
+import kotlin.collections.HashMap
 import kotlin.system.measureTimeMillis
 import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
@@ -47,10 +45,8 @@ class SkyblockX : SavagePluginX() {
         val startupTime = measureTimeMillis {
             printHeader()
             skyblockX = this
+            loadDataFiles()
             registerAllPermissions(server.pluginManager)
-            PersistEngine.saveConfig(StorageConfig())
-
-//            loadDataFiles()
             initWorldBorderUtility()
             setupCommands()
             setupAdminCommands()
@@ -58,10 +54,10 @@ class SkyblockX : SavagePluginX() {
             loadPlaceholderAPIHook()
             startIslandTopTask()
             startAutoSaveTask()
-            loadMetrics()
+//            loadMetrics()
             registerListeners(DataListener(), SEditListener(), BlockListener(), PlayerListener(), EntityListener(), GlideListener())
-            logInfo("Loaded ${Data.IPlayers.size} players.")
-            logInfo("Loaded ${Data.islands.size} islands.")
+            logInfo("Loaded ${Data.instance.IPlayers.size} players.")
+            logInfo("Loaded ${Data.instance.islands.size} islands.")
             migrateData()
         }
         logInfo("Startup Finished (${startupTime}ms)")
@@ -77,9 +73,9 @@ class SkyblockX : SavagePluginX() {
     }
 
     private fun migrateData() {
-        Data.islands.forEach { id, island ->
+        Data.instance.islands.forEach { id, island ->
             if (island.islandName == null) {
-                logInfo("Island Names Update: Migrated ${island.ownerTag}'s Island Data.")
+                logInfo("Island Names Update: Migrated ${island.ownerTag}'s Island Data.instance.")
                 island.islandName = island.ownerTag
             }
         }
@@ -88,7 +84,7 @@ class SkyblockX : SavagePluginX() {
     private fun loadMetrics() {
         logInfo("Loading Metrics.")
         val metrics = Metrics(this, 6970)
-        metrics.addCustomChart(Metrics.SingleLineChart("active_islands", Callable { Data.islands.size }))
+        metrics.addCustomChart(Metrics.SingleLineChart("active_islands", Callable { Data.instance.islands.size }))
     }
 
     private fun logInfo(message: String, color: ChatColor = ChatColor.YELLOW) {
@@ -98,42 +94,42 @@ class SkyblockX : SavagePluginX() {
     @ExperimentalTime
     private fun startAutoSaveTask() {
         Bukkit.getScheduler().runTaskTimerAsynchronously(this, Runnable {
-            if (Config.islandSaveBroadcastMessage) Bukkit.broadcastMessage(color(Config.islandSaveBroadcastMessageStart))
-            val time = measureTimedValue { Data.save() }
-            if (Config.islandSaveBroadcastMessage) Bukkit.broadcastMessage(
+            if (Config.instance.islandSaveBroadcastMessage) Bukkit.broadcastMessage(color(Config.instance.islandSaveBroadcastMessageStart))
+            val time = measureTimedValue { FlatDataManager.save(Data.instance) }
+            if (Config.instance.islandSaveBroadcastMessage) Bukkit.broadcastMessage(
                 color(
                     String.format(
-                        Config.islandSaveBroadcastMessageEnd,
+                        Config.instance.islandSaveBroadcastMessageEnd,
                         time.duration
                     )
                 )
             )
-        }, 20L, Config.islandSaveTaskPeriodTicks.toLong())
+        }, 20L, Config.instance.islandSaveTaskPeriodTicks.toLong())
     }
 
     @ExperimentalTime
     fun startIslandTopTask() {
-        if (!Config.autoCalcIslands) return
+        if (!Config.instance.autoCalcIslands) return
         Bukkit.getScheduler().runTaskTimer(this, Runnable {
             runIslandCalc()
-        }, 20L, Config.islandTopCalcPeriodTicks.toLong())
+        }, 20L, Config.instance.islandTopCalcPeriodTicks.toLong())
     }
 
     @ExperimentalTime
     fun runIslandCalc() {
         Bukkit.getScheduler().runTaskAsynchronously(this, Runnable {
-            if (Config.islandTopBroadcastMessage) Bukkit.broadcastMessage(color(Config.islandTopBroadcastMessageStart))
+            if (Config.instance.islandTopBroadcastMessage) Bukkit.broadcastMessage(color(Config.instance.islandTopBroadcastMessageStart))
             var time: TimedValue<Unit>? = null
             runBlocking {
                 time = measureTimedValue {
                     calculateAllIslands()
                 }
             }
-            if (Config.islandTopBroadcastMessage)
+            if (Config.instance.islandTopBroadcastMessage)
                 Bukkit.broadcastMessage(
                     color(
                         String.format(
-                            Config.islandTopBroadcastMessageEnd,
+                            Config.instance.islandTopBroadcastMessageEnd,
                             islandValues?.map?.size,
                             time?.duration ?: Duration.ZERO
                         )
@@ -150,12 +146,12 @@ class SkyblockX : SavagePluginX() {
     }
 
     private fun loadWorlds() {
-        logInfo("Loading World: ${Config.skyblockWorldName}")
-        WorldCreator(Config.skyblockWorldName)
+        logInfo("Loading World: ${Config.instance.skyblockWorldName}")
+        WorldCreator(Config.instance.skyblockWorldName)
             .generator(VoidWorldGenerator())
             .createWorld()
-        logInfo("Loading World: ${Config.skyblockWorldNameNether}")
-        WorldCreator(Config.skyblockWorldNameNether)
+        logInfo("Loading World: ${Config.instance.skyblockWorldNameNether}")
+        WorldCreator(Config.instance.skyblockWorldNameNether)
             .generator(VoidWorldGenerator())
             .environment(World.Environment.NETHER)
             .generateStructures(false)
@@ -172,11 +168,11 @@ class SkyblockX : SavagePluginX() {
 
     fun loadDataFiles() {
         logInfo("Loading data files.")
-        Config.load()
-        Data.load()
-        BlockValues.load()
-        Quests.load()
-        Message.load()
+        Config.instance = ConfigManager.readOrSave(Config())
+        Data.instance = FlatDataManager.readOrSave(Data())
+        BlockValues.instance = ConfigManager.readOrSave(BlockValues())
+        Quests.instance = ConfigManager.readOrSave(Quests())
+        Message.instance = ConfigManager.readOrSave(Message())
     }
 
     private fun initWorldBorderUtility() {
@@ -206,7 +202,7 @@ class SkyblockX : SavagePluginX() {
 
     fun setupOreGeneratorAlgorithm() {
         val generatorStrategyMap = HashMap<Int, Items<XMaterial>>()
-        Config.generatorProbability.forEach { (key, value) ->
+        Config.instance.generatorProbability.forEach { (key, value) ->
             run {
                 generatorStrategyMap[key] = Items(value)
             }
@@ -216,22 +212,14 @@ class SkyblockX : SavagePluginX() {
 
     private fun saveDataFiles() {
         // Load and save to take in account changes :P
-        Config.load()
-        Config.save()
+//        Config.instance.load()
+//        Config.instance.save()
 
-        // Load and save to take in account changes :P
-        Quests.load()
-        Quests.save()
+
 
         // Don't load this as people shouldn't be touching this file anyways.
-        Data.save()
+        FlatDataManager.save(Data.instance)
 
-        BlockValues.load()
-        BlockValues.save()
-
-        // Load and save to take in account changes :P
-        Message.load()
-        Message.save()
     }
 
     private fun printHeader() {

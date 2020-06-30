@@ -22,6 +22,6 @@ class CmdBorder : SCommand() {
     }
 
     override fun getHelpInfo(): String {
-        return Message.commandBorderHelp
+        return Message.instance.commandBorderHelp
     }
 }

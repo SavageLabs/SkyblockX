@@ -22,12 +22,12 @@ class CmdDelete : SCommand() {
 
     override fun perform(info: CommandInfo) {
         info.island!!.delete()
-        info.message(Message.commandDeleteDeletedIsland)
+        info.message(Message.instance.commandDeleteDeletedIsland)
     }
 
 
     override fun getHelpInfo(): String {
-        return Message.commandDeleteHelp
+        return Message.instance.commandDeleteHelp
     }
 
 }

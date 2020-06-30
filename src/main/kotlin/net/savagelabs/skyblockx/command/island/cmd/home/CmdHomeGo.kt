@@ -19,18 +19,18 @@ class CmdHomeGo : SCommand() {
     override fun perform(info: CommandInfo) {
         val home = info.args[0]
         if (!info.island!!.hasHome(home)) {
-            info.message(Message.commandHomeDoesNotExist)
+            info.message(Message.instance.commandHomeDoesNotExist)
             return
         }
 
         teleportAsync(
             info.player!!,
             info.island!!.getHome(home)!!.getLocation(),
-            Runnable { info.message(String.format(Message.commandHomeGoSuccess, home)) })
+            Runnable { info.message(String.format(Message.instance.commandHomeGoSuccess, home)) })
     }
 
     override fun getHelpInfo(): String {
-        return Message.commandHomeGoHelp
+        return Message.instance.commandHomeGoHelp
     }
 
 

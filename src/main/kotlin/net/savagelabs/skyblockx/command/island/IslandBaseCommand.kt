@@ -71,19 +71,19 @@ class IslandBaseCommand : SCommand(), CommandExecutor, TabCompleter {
     }
 
     override fun getHelpInfo(): String {
-        return Message.commandBaseHelp
+        return Message.instance.commandBaseHelp
     }
 
     override fun perform(info: CommandInfo) {
         // If console
         if (info.player == null) {
-            info.message(Message.commandBaseHelpMessage)
+            info.message(Message.instance.commandBaseHelpMessage)
             generateHelp(1, info.commandSender)
             return
         }
 
         if (info.args.isEmpty()) {
-            if (Config.openIslandMenuOnBaseCommand && info.iPlayer!!.hasIsland()) {
+            if (Config.instance.openIslandMenuOnBaseCommand && info.iPlayer!!.hasIsland()) {
                 // Execute command just to make a shorthand version for /is menu.
                 this.subCommands.find { command -> command is CmdMenu }?.perform(info)
             } else {
@@ -91,7 +91,7 @@ class IslandBaseCommand : SCommand(), CommandExecutor, TabCompleter {
                 this.subCommands.find { command -> command is CmdCreate }?.perform(info)
             }
         } else {
-            info.message(Message.commandBaseHelpMessage)
+            info.message(Message.instance.commandBaseHelpMessage)
             generateHelp(1, info.player!!)
         }
     }

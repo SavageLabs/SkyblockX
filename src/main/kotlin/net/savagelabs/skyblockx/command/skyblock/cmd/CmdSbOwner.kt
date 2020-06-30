@@ -28,7 +28,7 @@ class CmdSbOwner : SCommand() {
         val iPlayerByName = getIPlayerByName(info.args[0])
         val island = iPlayerByName?.getIsland()
         if (island == null || island.getOwnerIPlayer() != iPlayerByName) {
-            info.message(Message.commandSkyblockRemoveNotAnIslandOwner)
+            info.message(Message.instance.commandSkyblockRemoveNotAnIslandOwner)
             return
         }
 
@@ -36,12 +36,12 @@ class CmdSbOwner : SCommand() {
         island.getOwnerIPlayer()?.unassignIsland()
 
 
-        info.message(Message.commandSkyblockNewOwnerSuccess)
+        info.message(Message.instance.commandSkyblockNewOwnerSuccess)
 
     }
 
     override fun getHelpInfo(): String {
-        return Message.commandSkyblockNewOwnerHelp
+        return Message.instance.commandSkyblockNewOwnerHelp
     }
 
 }

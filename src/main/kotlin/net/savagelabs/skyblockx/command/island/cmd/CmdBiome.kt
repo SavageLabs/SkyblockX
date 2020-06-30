@@ -26,14 +26,14 @@ class CmdBiome : SCommand() {
 
     override fun perform(info: CommandInfo) {
         val biome = enumValueOrNull<Biome>(info.args[0]) ?: run {
-            info.message(Message.commandBiomeInvalidBiome)
+            info.message(Message.instance.commandBiomeInvalidBiome)
             return
         }
         info.island?.setBiome(biome)
-        info.message(Message.commandBiomeSuccess, biome.name)
+        info.message(Message.instance.commandBiomeSuccess, biome.name)
     }
 
     override fun getHelpInfo(): String {
-        return Message.commandBiomeHelp
+        return Message.instance.commandBiomeHelp
     }
 }

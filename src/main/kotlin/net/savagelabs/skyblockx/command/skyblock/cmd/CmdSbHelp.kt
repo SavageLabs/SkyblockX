@@ -23,7 +23,7 @@ class CmdSbHelp: SCommand() {
     }
 
     override fun getHelpInfo(): String {
-        return Message.commandSkyblockHelpHelp
+        return Message.instance.commandSkyblockHelpHelp
     }
 
 }

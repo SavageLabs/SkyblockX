@@ -30,10 +30,10 @@ class CmdAllowVisitors : SCommand() {
             info.island!!.allowVisitors = !info.island!!.allowVisitors
         }
 
-        info.message(String.format(Message.commandAllowVisitorsStatus, info.island!!.allowVisitors))
+        info.message(String.format(Message.instance.commandAllowVisitorsStatus, info.island!!.allowVisitors))
     }
 
     override fun getHelpInfo(): String {
-        return Message.commandAllowVisitorsHelp
+        return Message.instance.commandAllowVisitorsHelp
     }
 }

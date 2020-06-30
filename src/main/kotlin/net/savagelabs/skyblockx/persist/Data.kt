@@ -1,28 +1,27 @@
 package net.savagelabs.skyblockx.persist
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import net.savagelabs.skyblockx.core.IPlayer
 import net.savagelabs.skyblockx.core.Island
-import net.prosavage.baseplugin.serializer.Serializer
+import net.savagelabs.savagepluginx.persist.container.FlatDataContainer
 
-object Data {
+class Data : FlatDataContainer {
 
-    @Transient
-    private val instance = this
+    @JsonIgnore
+    override val name = "data"
+
+
+    companion object {
+        lateinit var instance: Data
+    }
 
     var nextIslandID = 0
 
     var IPlayers = HashMap<String, IPlayer>()
-
     var islands = HashMap<Int, Island>()
 
 
-    fun save() {
-        Serializer().save(instance)
-    }
 
-    fun load() {
-        Serializer().load(instance, Data::class.java, "data")
-    }
 
 
 }

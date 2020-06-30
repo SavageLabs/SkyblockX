@@ -20,15 +20,15 @@ class CmdHomeRemove : SCommand() {
 
     override fun perform(info: CommandInfo) {
         if (!info.island!!.hasHome(info.args[0])) {
-            info.message(Message.commandHomeDoesNotExist)
+            info.message(Message.instance.commandHomeDoesNotExist)
             return
         }
 
         info.island!!.removeHome(info.args[0])
-        info.message(String.format(Message.commandHomeRemoveSuccess, info.args[0]))
+        info.message(String.format(Message.instance.commandHomeRemoveSuccess, info.args[0]))
     }
 
     override fun getHelpInfo(): String {
-        return Message.commandHomeRemoveHelp
+        return Message.instance.commandHomeRemoveHelp
     }
 }

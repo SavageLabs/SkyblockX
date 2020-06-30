@@ -22,12 +22,12 @@ class CmdWorth : SCommand() {
 
 
     override fun perform(info: CommandInfo) {
-        val numberFormat = NumberFormat.getInstance(Config.numberFormatLocale)
-        info.message(Message.commandWorthValue, numberFormat.format(info.island!!.getValue()))
-        info.message(Message.commandWorthLevel, numberFormat.format(info.island!!.getLevel()))
+        val numberFormat = NumberFormat.getInstance(Config.instance.numberFormatLocale)
+        info.message(Message.instance.commandWorthValue, numberFormat.format(info.island!!.getValue()))
+        info.message(Message.instance.commandWorthLevel, numberFormat.format(info.island!!.getLevel()))
     }
 
     override fun getHelpInfo(): String {
-        return Message.commandWorthHelp
+        return Message.instance.commandWorthHelp
     }
 }

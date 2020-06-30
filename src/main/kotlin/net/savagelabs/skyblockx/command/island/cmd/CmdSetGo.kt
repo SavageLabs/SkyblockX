@@ -25,15 +25,15 @@ class CmdSetGo : SCommand() {
 
     override fun perform(info: CommandInfo) {
         if (getIslandFromLocation(info.player!!.location) != info.island) {
-            info.message(Message.commandGoSetYouMustBeOnYourIsland)
+            info.message(Message.instance.commandGoSetYouMustBeOnYourIsland)
             return
         }
 
         info.island!!.islandGoPoint = getSLocation(info.player!!.location)
-        info.message(Message.commandGoSetSuccess)
+        info.message(Message.instance.commandGoSetSuccess)
     }
 
     override fun getHelpInfo(): String {
-        return Message.commandGoSetHelp
+        return Message.instance.commandGoSetHelp
     }
 }

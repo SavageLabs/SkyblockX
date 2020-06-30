@@ -25,28 +25,28 @@ class CmdMemberInvite : SCommand() {
     override fun perform(info: CommandInfo) {
         val island = info.island!!
         if (island.memberLimit <= island.getIslandMembers().size) {
-            info.message(String.format(Message.commandMemberInviteLimit, island.memberLimit))
+            info.message(String.format(Message.instance.commandMemberInviteLimit, island.memberLimit))
             return
         }
         val playerToInvite = info.getArgAsPlayer(0) ?: return
         if (playerToInvite == info.player) {
-            info.message(Message.genericCannotReferenceYourSelf)
+            info.message(Message.instance.genericCannotReferenceYourSelf)
             return
         }
         if (island.members.contains(playerToInvite.name)) {
-            info.message(Message.commandMemberAlreadyPartOfIsland)
+            info.message(Message.instance.commandMemberAlreadyPartOfIsland)
             return
         }
         island.inviteMember(info.getArgAsIPlayer(0)!!)
-        info.message(String.format(Message.commandMemberInviteSuccess, playerToInvite.name))
-        JSONMessage.create(color(String.format(Message.commandMemberInviteMessage, info.player?.name)))
+        info.message(String.format(Message.instance.commandMemberInviteSuccess, playerToInvite.name))
+        JSONMessage.create(color(String.format(Message.instance.commandMemberInviteMessage, info.player?.name)))
             .tooltip(color("&7Click to paste &f\"/is join ${info.player!!.name}\""))
             .runCommand("/is join ${info.player!!.name}")
             .send(info.getArgAsPlayer(0)!!)
     }
 
     override fun getHelpInfo(): String {
-        return Message.commandMemberInviteHelp
+        return Message.instance.commandMemberInviteHelp
     }
 
 }
@@ -65,7 +65,7 @@ class CmdInvite : SCommand() {
     }
 
     override fun getHelpInfo(): String {
-        return Message.commandMemberInviteHelp
+        return Message.instance.commandMemberInviteHelp
     }
 }
 

@@ -22,7 +22,7 @@ class CmdSbKick : SCommand() {
     override fun perform(info: CommandInfo) {
         val iPlayerByName = getIPlayerByName(info.args[0])
         if (iPlayerByName?.getIsland() == null) {
-            info.message(Message.genericPlayerNotAnIslandMember)
+            info.message(Message.instance.genericPlayerNotAnIslandMember)
             return
         }
 
@@ -30,7 +30,7 @@ class CmdSbKick : SCommand() {
         val island = iPlayerByName.getIsland()!!
         if (island.getOwnerIPlayer() != iPlayerByName) {
             if (!island.getIslandMembers().contains(iPlayerByName)) {
-                info.message(Message.commandMemberKickNotFound)
+                info.message(Message.instance.commandMemberKickNotFound)
                 return
             }
 
@@ -40,7 +40,7 @@ class CmdSbKick : SCommand() {
             iPlayerByName.unassignIsland()
             if (island.getAllMemberUUIDs().isEmpty()) {
                 island.delete()
-                info.message(Message.commandSkyblockKickIslandDeleted)
+                info.message(Message.instance.commandSkyblockKickIslandDeleted)
                 return
             }
             val firstMember = island.getAllMemberUUIDs().toList()[0]
@@ -51,9 +51,9 @@ class CmdSbKick : SCommand() {
             iPlayerByUUID!!.assignIsland(island)
             island.ownerTag = iPlayerByUUID.name
             island.ownerUUID = iPlayerByUUID.uuid
-            info.message(String.format(Message.commandSkyblockKickMemberKickedOwner, iPlayerByUUID.name))
+            info.message(String.format(Message.instance.commandSkyblockKickMemberKickedOwner, iPlayerByUUID.name))
         }
-        info.message(String.format(Message.commandSkyblockKickMemberKicked, iPlayerByName.name))
+        info.message(String.format(Message.instance.commandSkyblockKickMemberKicked, iPlayerByName.name))
 
 
 
@@ -61,6 +61,6 @@ class CmdSbKick : SCommand() {
     }
 
     override fun getHelpInfo(): String {
-        return Message.commandSkyblockKickHelp
+        return Message.instance.commandSkyblockKickHelp
     }
 }

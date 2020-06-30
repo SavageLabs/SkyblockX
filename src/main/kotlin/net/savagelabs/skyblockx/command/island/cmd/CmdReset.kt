@@ -21,7 +21,7 @@ class CmdReset : SCommand() {
     }
 
     override fun getHelpInfo(): String {
-        return Message.commandResetHelp
+        return Message.instance.commandResetHelp
     }
 
 }

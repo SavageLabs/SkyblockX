@@ -1,16 +1,20 @@
 package net.savagelabs.skyblockx.persist
 
 import com.cryptomorin.xseries.XMaterial
-import net.prosavage.baseplugin.serializer.Serializer
+import net.savagelabs.savagepluginx.persist.container.ConfigContainer
 import net.savagelabs.skyblockx.persist.data.SerializableItem
 import net.savagelabs.skyblockx.quest.Quest
 import net.savagelabs.skyblockx.quest.QuestActions
 import net.savagelabs.skyblockx.quest.QuestGoal
 import org.bukkit.entity.EntityType
 
-object Quests {
-    @Transient
-    private val instance = this
+class Quests : ConfigContainer {
+
+    override val name = "quests"
+
+    companion object {
+        lateinit var instance: Quests
+    }
 
     var islandQuestGUITitle = "&bIsland Quests"
 
@@ -564,11 +568,5 @@ object Quests {
         )
     )
 
-    fun save() {
-        Serializer().save(instance)
-    }
 
-    fun load() {
-        Serializer().load(instance, Quests::class.java, "quests")
-    }
 }

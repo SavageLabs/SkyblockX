@@ -27,27 +27,27 @@ class CmdRename : SCommand() {
 
     override fun perform(info: CommandInfo) {
         val newName = info.args[0]
-        if (Config.islandNameEnforceLength && (newName.length < Config.islandNameMinLength || newName.length > Config.islandNameMaxLength)) {
-            info.message(Message.commandCreateLength, Config.islandNameMinLength.toString(), Config.islandNameMaxLength.toString())
+        if (Config.instance.islandNameEnforceLength && (newName.length < Config.instance.islandNameMinLength || newName.length > Config.instance.islandNameMaxLength)) {
+            info.message(Message.instance.commandCreateLength, Config.instance.islandNameMinLength.toString(), Config.instance.islandNameMaxLength.toString())
             return
         }
 
-        if (Config.islandNameEnforceAlphaNumeric && !newName.chars().allMatch(Character::isLetterOrDigit)) {
-            info.message(Message.commandCreateNonAlphaNumeric)
+        if (Config.instance.islandNameEnforceAlphaNumeric && !newName.chars().allMatch(Character::isLetterOrDigit)) {
+            info.message(Message.instance.commandCreateNonAlphaNumeric)
             return
         }
 
         if (isIslandNameTaken(newName)) {
-            info.message(Message.commandRenameIslandNameIsTaken)
+            info.message(Message.instance.commandRenameIslandNameIsTaken)
             return
         }
 
         info.island?.islandName = newName
-        info.message(Message.commandRenameSuccess, newName)
+        info.message(Message.instance.commandRenameSuccess, newName)
     }
 
 
     override fun getHelpInfo(): String {
-        return Message.commandRenameHelp
+        return Message.instance.commandRenameHelp
     }
 }

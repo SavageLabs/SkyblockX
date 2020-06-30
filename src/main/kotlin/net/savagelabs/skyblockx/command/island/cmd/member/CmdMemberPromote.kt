@@ -24,29 +24,29 @@ class CmdMemberPromote : SCommand() {
     override fun perform(info: CommandInfo) {
         val island = info.island!!
         if (island.getIslandMembers().isEmpty()) {
-            info.message(Message.commandMemberNoMembers)
+            info.message(Message.instance.commandMemberNoMembers)
             return
         }
 
 
         val playerNameToPromote = info.args[0]
         if (playerNameToPromote == info.player!!.name) {
-            info.message(Message.genericCannotReferenceYourSelf)
+            info.message(Message.instance.genericCannotReferenceYourSelf)
             return
         }
 
         if (!info.island!!.getIslandMembers().contains(getIPlayerByName(playerNameToPromote))) {
-            info.message(Message.commandMemberPromoteNotFound)
+            info.message(Message.instance.commandMemberPromoteNotFound)
             return
         }
 
         island.promoteNewLeader(playerNameToPromote)
-        island.messageAllOnlineIslandMembers(String.format(Message.commandMemberPromotedSuccess, playerNameToPromote))
-        Bukkit.getPlayer(playerNameToPromote)?.sendMessage(color(Message.commandMemberPromoteYouHaveBeenPromoted))
+        island.messageAllOnlineIslandMembers(String.format(Message.instance.commandMemberPromotedSuccess, playerNameToPromote))
+        Bukkit.getPlayer(playerNameToPromote)?.sendMessage(color(Message.instance.commandMemberPromoteYouHaveBeenPromoted))
     }
 
     override fun getHelpInfo(): String {
-        return Message.commandMemberPromoteHelp
+        return Message.instance.commandMemberPromoteHelp
     }
 }
 
@@ -67,7 +67,7 @@ class CmdPromote : SCommand() {
     }
 
     override fun getHelpInfo(): String {
-        return Message.commandMemberKickHelp
+        return Message.instance.commandMemberKickHelp
     }
 
 }

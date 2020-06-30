@@ -54,11 +54,11 @@ class SkyblockBaseCommand : SCommand(), CommandExecutor, TabCompleter {
     }
 
     override fun getHelpInfo(): String {
-        return Message.commandSkyblockBaseHelp
+        return Message.instance.commandSkyblockBaseHelp
     }
 
     override fun perform(info: CommandInfo) {
-        info.message(Message.commandSkyblockBaseHelpMessage)
+        info.message(Message.instance.commandSkyblockBaseHelpMessage)
         generateHelp(1, info.commandSender)
     }
 

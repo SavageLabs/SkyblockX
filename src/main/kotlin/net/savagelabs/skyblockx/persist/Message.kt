@@ -1,14 +1,16 @@
 package net.savagelabs.skyblockx.persist
 
-import net.prosavage.baseplugin.serializer.Serializer
+import net.savagelabs.savagepluginx.persist.container.ConfigContainer
 import net.savagelabs.skyblockx.core.color
 import org.bukkit.ChatColor
 
-object Message {
+class Message : ConfigContainer {
 
-    @Transient
-    private val instance = this
+    override val name = "message"
 
+    companion object {
+        lateinit var instance: Message
+    }
 
     var messagePrefix = "&7[&b!&7] "
 
@@ -158,7 +160,7 @@ object Message {
     var commandQuestHelp = "&7View Quest GUI."
 
     var commandReloadHelp = "&7Reloads the skyblock config files."
-    var commandReloadSuccess = "&7Reloaded configs and saved data."
+    var commandReloadSuccess = "&7Reloaded configs and saved Data.instance."
 
     var commandMenuHelp = "&7Opens the Island Menu GUI."
 
@@ -258,14 +260,6 @@ object Message {
 
     override fun toString(): String {
         return color(super.toString())
-    }
-
-    fun save() {
-        Serializer().save(instance)
-    }
-
-    fun load() {
-        Serializer().load(instance, Message::class.java, "message")
     }
 
 

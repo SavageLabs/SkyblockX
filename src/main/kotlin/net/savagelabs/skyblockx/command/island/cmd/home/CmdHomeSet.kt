@@ -3,9 +3,9 @@ package net.savagelabs.skyblockx.command.island.cmd.home
 import net.savagelabs.skyblockx.command.SCommand
 import net.savagelabs.skyblockx.core.Permission
 import net.savagelabs.skyblockx.persist.Message
-import net.savagelabs.skyblockx.persist.data.getSLocation
 import net.savagelabs.skyblockx.command.CommandInfo
 import net.savagelabs.skyblockx.command.CommandRequirementsBuilder
+import net.savagelabs.skyblockx.persist.data.getSLocation
 
 class CmdHomeSet : SCommand() {
 
@@ -23,7 +23,7 @@ class CmdHomeSet : SCommand() {
 
     override fun perform(info: CommandInfo) {
         if (!info.iPlayer!!.getIsland()!!.canHaveMoreHomes()) {
-            info.message(Message.commandHomeCannotHaveMoreHomes)
+            info.message(Message.instance.commandHomeCannotHaveMoreHomes)
             return
         }
 
@@ -33,15 +33,15 @@ class CmdHomeSet : SCommand() {
 
         // Check if the island even contains the location for the new home.
         if (!info.island!!.containsBlock(playerLocation)) {
-            info.message(Message.commandHomeSetNotInIsland)
+            info.message(Message.instance.commandHomeSetNotInIsland)
             return
         }
         info.iPlayer!!.getIsland()!!.addHome(homeName, getSLocation(playerLocation))
-        info.message(String.format(Message.commandHomeHomeSet, homeName))
+        info.message(String.format(Message.instance.commandHomeHomeSet, homeName))
     }
 
     override fun getHelpInfo(): String {
-        return Message.commandHomeSetHelp
+        return Message.instance.commandHomeSetHelp
     }
 
 }

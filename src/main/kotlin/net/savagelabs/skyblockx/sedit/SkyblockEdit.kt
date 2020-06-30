@@ -2,7 +2,7 @@ package net.savagelabs.skyblockx.sedit
 
 
 import com.cryptomorin.xseries.XMaterial
-import net.prosavage.baseplugin.ItemBuilder
+import net.savagelabs.savagepluginx.item.ItemBuilder
 import net.savagelabs.skyblockx.SkyblockX
 import net.savagelabs.skyblockx.core.color
 import net.savagelabs.skyblockx.core.enumValueOrNull
@@ -42,7 +42,7 @@ class SkyblockEdit {
 
     fun saveStructure(pos1: Location, pos2: Location, player: Player, name: String, skipAir: Boolean = false) {
         if (pos1.world != pos2.world) {
-            player.sendMessage(Message.messagePrefix + Message.skyblockEditErrorPositionsNotInSameWorld)
+            player.sendMessage(Message.instance.messagePrefix + Message.instance.skyblockEditErrorPositionsNotInSameWorld)
             return
         }
         val playerLoc = player.location
@@ -102,8 +102,8 @@ class SkyblockEdit {
         SbfWriter(container).write(File(structuresDir, "${name}.structure"))
         player.sendMessage(
             color(
-                Message.messagePrefix + String.format(
-                    Message.skyblockEditStructureSaved,
+                Message.instance.messagePrefix + String.format(
+                    Message.instance.skyblockEditStructureSaved,
                     "${name}.structure"
                 )
             )
@@ -164,7 +164,7 @@ class SkyblockEdit {
                 chestState.blockInventory.setItem(item.slot, ItemBuilder(valueOf).amount(item.amount).build())
             }
         }
-        player?.sendMessage(Message.commandSEPasteStructurePasted)
+        player?.sendMessage(Message.instance.commandSEPasteStructurePasted)
     }
 
 }

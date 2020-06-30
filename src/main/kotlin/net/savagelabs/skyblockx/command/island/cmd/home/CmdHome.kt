@@ -38,7 +38,7 @@ class CmdHome : SCommand() {
     }
 
     override fun getHelpInfo(): String {
-        return Message.commandHomeHelp
+        return Message.instance.commandHomeHelp
     }
 }
 

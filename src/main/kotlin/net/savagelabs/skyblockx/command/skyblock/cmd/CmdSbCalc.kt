@@ -19,12 +19,12 @@ class CmdSbCalc : SCommand() {
 
     @ExperimentalTime
     override fun perform(info: CommandInfo) {
-        info.message(Message.commandSkyblockCalcStart)
+        info.message(Message.instance.commandSkyblockCalcStart)
         SkyblockX.skyblockX.runIslandCalc()
 
     }
 
     override fun getHelpInfo(): String {
-        return Message.commandSkyblockCalcHelp
+        return Message.instance.commandSkyblockCalcHelp
     }
 }

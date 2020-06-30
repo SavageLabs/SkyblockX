@@ -1,19 +1,19 @@
 package net.savagelabs.skyblockx.gui
 
 import com.github.stefvanschie.inventoryframework.GuiItem
-import net.prosavage.baseplugin.WorldBorderUtil
 import net.savagelabs.skyblockx.core.IPlayer
 import net.savagelabs.skyblockx.core.getIPlayer
 import net.savagelabs.skyblockx.core.updateWorldBorder
 import net.savagelabs.skyblockx.persist.Config
+import net.savagelabs.worldborder.WorldBorderUtil
 import org.bukkit.entity.Player
 
 class IslandBorderGUI :
-    BaseGUI(Config.islandBorderGUITitle, Config.islandBorderGUIBackgroundItem, Config.islandBorderGUIRows) {
+    BaseGUI(Config.instance.islandBorderGUITitle, Config.instance.islandBorderGUIBackgroundItem, Config.instance.islandBorderGUIRows) {
 
     override fun populatePane(context: IPlayer) {
         val guiItems = buildFullBackgroundItemlist()
-        Config.islandBorderGUIItems.forEach { color: WorldBorderUtil.Color, item: IslandBorderItem ->
+        Config.instance.islandBorderGUIItems.forEach { color: WorldBorderUtil.Color, item: IslandBorderItem ->
             guiItems[item.slot] = GuiItem(item.displayItem.buildItem()) { e ->
                 run {
                     e.isCancelled = true

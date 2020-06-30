@@ -23,19 +23,19 @@ class CmdCoop : SCommand() {
     override fun perform(info: CommandInfo) {
         val target = info.getArgAsIPlayer(0) ?: return
         if (!info.iPlayer!!.getIsland()!!.canHaveMoreCoopPlayers()) {
-            info.message(Message.commandCoopCannotHaveMoreCoopPlayers)
+            info.message(Message.instance.commandCoopCannotHaveMoreCoopPlayers)
             return
         }
 
         info.iPlayer!!.getIsland()!!.coopPlayer(info.iPlayer, target)
 
-        target.message(String.format(Message.commandCoopMessageRecipient, info.player!!.name))
-        info.iPlayer!!.message(String.format(Message.commandCoopInvokerSuccess, target.getPlayer().name))
+        target.message(String.format(Message.instance.commandCoopMessageRecipient, info.player!!.name))
+        info.iPlayer!!.message(String.format(Message.instance.commandCoopInvokerSuccess, target.getPlayer().name))
     }
 
 
     override fun getHelpInfo(): String {
-        return Message.commandCoopHelp
+        return Message.instance.commandCoopHelp
     }
 
 

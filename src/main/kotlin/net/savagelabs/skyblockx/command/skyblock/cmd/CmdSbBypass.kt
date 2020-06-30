@@ -19,11 +19,11 @@ class CmdSbBypass : SCommand() {
 
     override fun perform(info: CommandInfo) {
         info.iPlayer!!.inBypass = !info.isBypassing()
-        info.message(String.format(Message.commandBypassToggle, if (info.iPlayer!!.inBypass) "in" else "out of"))
+        info.message(String.format(Message.instance.commandBypassToggle, if (info.iPlayer!!.inBypass) "in" else "out of"))
     }
 
     override fun getHelpInfo(): String {
-        return Message.commandBypassHelp
+        return Message.instance.commandBypassHelp
 
     }
 

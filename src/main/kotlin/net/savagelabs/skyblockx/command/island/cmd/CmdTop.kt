@@ -31,37 +31,37 @@ class CmdTop : SCommand() {
     @ExperimentalTime
     override fun perform(info: CommandInfo) {
         if (SkyblockX.islandValues == null || SkyblockX.islandValues!!.map.isEmpty()) {
-            info.message(Message.commandTopNotCalculated)
+            info.message(Message.instance.commandTopNotCalculated)
             return
         }
         val decimalFormat = DecimalFormat()
         val sortedBy = SkyblockX.islandValues!!.map.values.sortedByDescending { entry -> entry.worth }
         var counter = 1
-        // Should be able to add the prefix if they want in message.json, right now, it doesn't match because the top island entries part does not have the prefix.
-        if (Config.useIslandTopHeadMessage) info.message(Config.islandTopHeadMessage, false)
-        if (Config.useIslandTopHeaderBar) {
-            info.message(buildBar(Config.islandTopbarElement), false)
+        // Should be able to add the prefix if they want in Message.instance.json, right now, it doesn't match because the top island entries part does not have the prefix.
+        if (Config.instance.useIslandTopHeadMessage) info.message(Config.instance.islandTopHeadMessage, false)
+        if (Config.instance.useIslandTopHeaderBar) {
+            info.message(buildBar(Config.instance.islandTopbarElement), false)
         }
         if (info.args.isNotEmpty()) {
             counter = info.getArgAsInt(0) ?: return
             if (counter <= 0) {
-                info.message(Message.commandTopInvalidPage)
+                info.message(Message.instance.commandTopInvalidPage)
                 return
             }
         }
-        val startIndex = (counter - 1) * Config.commandTopPageSize
+        val startIndex = (counter - 1) * Config.instance.commandTopPageSize
         if (startIndex > sortedBy.size - 1) {
-            info.message(Message.commandTopIndexTooHigh)
+            info.message(Message.instance.commandTopIndexTooHigh)
             return
         }
 
-        for (islandindex in startIndex..startIndex + Config.commandTopPageSize) {
+        for (islandindex in startIndex..startIndex + Config.instance.commandTopPageSize) {
             val entry = sortedBy.getOrNull(islandindex) ?: break
             val builder = StringBuilder()
             entry.matAmt.forEach { xmat -> builder.append("${xmat.key.name}: ${xmat.value}\n") }
             var tooltip = ""
-            val island = Data.islands[entry.islandID]!!
-            for (line in Config.islandTopTooltip) {
+            val island = Data.instance.islands[entry.islandID]!!
+            for (line in Config.instance.islandTopTooltip) {
                 var lineBasicParsed = line
                     .replace("{name}", island.islandName)
                     .replace("{rank}", counter.toString())
@@ -74,7 +74,7 @@ class CmdTop : SCommand() {
                     .forEach { xmat -> lineBasicParsed = lineBasicParsed.replace("{${xmat.name}}", 0.toString()) }
                 tooltip += color("\n$lineBasicParsed")
             }
-            val line = color(Config.islandTopLineFormat
+            val line = color(Config.instance.islandTopLineFormat
                 .replace("{name}", island.islandName)
                 .replace("{rank}", counter.toString())
                 .replace("{leader}", island.ownerTag)
@@ -89,7 +89,7 @@ class CmdTop : SCommand() {
     }
 
     override fun getHelpInfo(): String {
-        return Message.commandTopHelp
+        return Message.instance.commandTopHelp
     }
 
 }

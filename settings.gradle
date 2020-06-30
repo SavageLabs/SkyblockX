@@ -1,3 +1,5 @@
 rootProject.name = 'SkyblockX'
+include 'WorldBorderUtil'
 include 'SavagePluginX'
+
 

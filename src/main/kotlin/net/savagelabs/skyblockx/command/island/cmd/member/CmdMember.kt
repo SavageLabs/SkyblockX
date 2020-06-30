@@ -24,7 +24,7 @@ class CmdMember : SCommand() {
     }
 
     override fun perform(info: CommandInfo) {
-        if (Config.islandMemberShowMenu) IslandMemberGUI().showGui(info.player!!)
+        if (Config.instance.islandMemberShowMenu) IslandMemberGUI().showGui(info.player!!)
         else
         // No Args / Invalid args specified.
             if (info.args.size != 1) {
@@ -35,7 +35,7 @@ class CmdMember : SCommand() {
     }
 
     override fun getHelpInfo(): String {
-        return Message.commandMemberHelp
+        return Message.instance.commandMemberHelp
     }
 
 }
