@@ -11,7 +11,11 @@ class CmdReset : Command<SCommandInfo, SCommandRequirements>() {
     init {
         aliases.add("reset")
 
-        commandRequirements = SCommandRequirementsBuilder().withPermission(Permission.RESET).asIslandMember(true).asLeader(true).build()
+        commandRequirements = SCommandRequirementsBuilder()
+            .withPermission(Permission.RESET)
+            .asIslandMember(true)
+            .asLeader(true)
+            .build()
     }
 
     override fun perform(info: SCommandInfo) {

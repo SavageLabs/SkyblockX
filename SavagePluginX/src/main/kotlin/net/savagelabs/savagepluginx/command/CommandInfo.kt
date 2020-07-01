@@ -68,10 +68,12 @@ open class CommandInfo(val commandSender: CommandSender, val args: ArrayList<Str
         return player != null
     }
 
-    fun message(message: String) {
+    fun message(message: String, prefix: Boolean) {
         if (message.isEmpty()) return
-        commandSender.sendMessage(color(BaseConfig.instance.commandEnginePrefix + message))
+        commandSender.sendMessage(color(
+            if (prefix) BaseConfig.instance.commandEnginePrefix else "" + message))
     }
+
 
     fun message(message: String, vararg args: String) {
         if (message.isEmpty()) return

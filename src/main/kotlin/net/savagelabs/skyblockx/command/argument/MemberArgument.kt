@@ -1,4 +1,4 @@
-package net.savagelabs.skyblockx.command.island.cmd.argument
+package net.savagelabs.skyblockx.command.argument
 
 import net.savagelabs.savagepluginx.command.ArgumentType
 import net.savagelabs.skyblockx.core.getIPlayer

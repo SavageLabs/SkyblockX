@@ -1,14 +1,16 @@
 package net.savagelabs.skyblockx.command.skyblock.cmd
 
-import net.savagelabs.skyblockx.command.CommandRequirementsBuilder
-import net.savagelabs.skyblockx.command.SCommand
+import net.savagelabs.savagepluginx.command.Argument
+import net.savagelabs.savagepluginx.command.Command
+import net.savagelabs.savagepluginx.command.CommandRequirementsBuilder
+import net.savagelabs.skyblockx.command.*
+import net.savagelabs.skyblockx.command.argument.PosArgument
 import net.savagelabs.skyblockx.core.Permission
 import net.savagelabs.skyblockx.persist.Message
 import net.savagelabs.skyblockx.sedit.Position
-import net.savagelabs.skyblockx.command.CommandInfo
 
 
-class CmdSEPosition : SCommand() {
+class CmdSEPosition : Command<SCommandInfo, SCommandRequirements>() {
 
     init {
         aliases.add("pos")
@@ -17,12 +19,14 @@ class CmdSEPosition : SCommand() {
         requiredArgs.add(Argument("positionIndex", 0, PosArgument()))
 
         commandRequirements =
-            CommandRequirementsBuilder().asPlayer(true)
-                .withPermission(Permission.SE_REGIONS).build()
+            SCommandRequirementsBuilder()
+                .asPlayer(true)
+                .withPermission(Permission.SE_REGIONS)
+                .build()
     }
 
 
-    override fun perform(info: CommandInfo) {
+    override fun perform(info: SCommandInfo) {
         val index = info.getArgAsInt(0) ?: return
         if (index < 0 || index > 2) {
             info.message(Message.instance.commandSEPositionInvalidIndex)

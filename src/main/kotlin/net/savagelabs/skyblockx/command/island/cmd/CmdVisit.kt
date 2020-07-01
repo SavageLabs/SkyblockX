@@ -1,13 +1,14 @@
 package net.savagelabs.skyblockx.command.island.cmd
 
 import me.rayzr522.jsonmessage.JSONMessage
-import net.savagelabs.skyblockx.command.CommandInfo
-import net.savagelabs.skyblockx.command.CommandRequirementsBuilder
-import net.savagelabs.skyblockx.command.SCommand
+import net.savagelabs.savagepluginx.command.Argument
+import net.savagelabs.savagepluginx.command.Command
+import net.savagelabs.savagepluginx.command.argument.PlayerArgument
+import net.savagelabs.skyblockx.command.*
 import net.savagelabs.skyblockx.core.*
 import net.savagelabs.skyblockx.persist.Message
 
-class CmdVisit : SCommand() {
+class CmdVisit : Command<SCommandInfo, SCommandRequirements>() {
 
     init {
         aliases.add("visit")
@@ -18,12 +19,12 @@ class CmdVisit : SCommand() {
         optionalArgs.add(Argument("island owner's name", 0, PlayerArgument()))
 
         commandRequirements =
-            CommandRequirementsBuilder().asPlayer(true).withPermission(Permission.TELEPORT)
+            SCommandRequirementsBuilder().asPlayer(true).withPermission(Permission.TELEPORT)
                 .build()
     }
 
 
-    override fun perform(info: CommandInfo) {
+    override fun perform(info: SCommandInfo) {
         // list possible locations if empty.
         if (info.args.isEmpty()) {
             val possibleLocations = ArrayList<String>()

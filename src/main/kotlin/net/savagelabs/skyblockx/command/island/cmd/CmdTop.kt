@@ -2,10 +2,11 @@ package net.savagelabs.skyblockx.command.island.cmd
 
 import com.cryptomorin.xseries.XMaterial
 import me.rayzr522.jsonmessage.JSONMessage
+import net.savagelabs.savagepluginx.command.Argument
+import net.savagelabs.savagepluginx.command.Command
+import net.savagelabs.savagepluginx.command.argument.IntArgument
 import net.savagelabs.skyblockx.SkyblockX
-import net.savagelabs.skyblockx.command.CommandInfo
-import net.savagelabs.skyblockx.command.CommandRequirementsBuilder
-import net.savagelabs.skyblockx.command.SCommand
+import net.savagelabs.skyblockx.command.*
 import net.savagelabs.skyblockx.core.Permission
 import net.savagelabs.skyblockx.core.buildBar
 import net.savagelabs.skyblockx.core.color
@@ -15,7 +16,7 @@ import net.savagelabs.skyblockx.persist.Message
 import java.text.DecimalFormat
 import kotlin.time.ExperimentalTime
 
-class CmdTop : SCommand() {
+class CmdTop : Command<SCommandInfo, SCommandRequirements>() {
 
     init {
         aliases.add("top")
@@ -23,13 +24,13 @@ class CmdTop : SCommand() {
         optionalArgs.add(Argument("page", 0, IntArgument()))
 
         commandRequirements =
-            CommandRequirementsBuilder().withPermission(Permission.INFO)
+            SCommandRequirementsBuilder().withPermission(Permission.INFO)
                 .build()
     }
 
 
     @ExperimentalTime
-    override fun perform(info: CommandInfo) {
+    override fun perform(info: SCommandInfo) {
         if (SkyblockX.islandValues == null || SkyblockX.islandValues!!.map.isEmpty()) {
             info.message(Message.instance.commandTopNotCalculated)
             return
@@ -82,7 +83,7 @@ class CmdTop : SCommand() {
             if (info.isPlayer()) {
                 JSONMessage.create(line).tooltip(tooltip).send(info.player)
             } else {
-                info.message(line, false)
+                info.message(line, false.toString())
             }
         }
 

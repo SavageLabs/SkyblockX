@@ -1,24 +1,23 @@
 package net.savagelabs.skyblockx.command.skyblock.cmd
 
+import net.savagelabs.savagepluginx.command.Command
 import net.savagelabs.skyblockx.SkyblockX
-import net.savagelabs.skyblockx.command.CommandInfo
-import net.savagelabs.skyblockx.command.CommandRequirementsBuilder
-import net.savagelabs.skyblockx.command.SCommand
+import net.savagelabs.skyblockx.command.*
 import net.savagelabs.skyblockx.core.Permission
 import net.savagelabs.skyblockx.persist.Message
 import kotlin.time.ExperimentalTime
 
-class CmdSbCalc : SCommand() {
+class CmdSbCalc : Command<SCommandInfo, SCommandRequirements>() {
 
     init {
         aliases.add("calc")
 
 
-        commandRequirements = CommandRequirementsBuilder().withPermission(Permission.ADMIN_CALC).build()
+        commandRequirements = SCommandRequirementsBuilder().withPermission(Permission.ADMIN_CALC).build()
     }
 
     @ExperimentalTime
-    override fun perform(info: CommandInfo) {
+    override fun perform(info: SCommandInfo) {
         info.message(Message.instance.commandSkyblockCalcStart)
         SkyblockX.skyblockX.runIslandCalc()
 

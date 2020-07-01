@@ -3,7 +3,7 @@ package net.savagelabs.skyblockx.command.island.cmd
 import net.savagelabs.savagepluginx.command.Argument
 import net.savagelabs.savagepluginx.command.Command
 import net.savagelabs.skyblockx.command.*
-import net.savagelabs.skyblockx.command.island.cmd.argument.BiomeArgument
+import net.savagelabs.skyblockx.command.argument.BiomeArgument
 import net.savagelabs.skyblockx.core.Permission
 import net.savagelabs.skyblockx.core.enumValueOrNull
 import net.savagelabs.skyblockx.persist.Message
