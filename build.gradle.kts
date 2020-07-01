@@ -65,13 +65,12 @@ tasks {
         dependsOn(processResources)
     }
 
-
     val shadowJar = named<ShadowJar>("shadowJar") {
         dependsOn(copyResources)
         mergeServiceFiles()
         exclude("META-INF/*.DSA")
         exclude("META-INF/*.RSA")
-        archiveBaseName.set("SkyblockX")
+        archiveFileName.set("SkyblockX-${version}.jar")
     }
 
 
