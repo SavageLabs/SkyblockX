@@ -1,6 +1,0 @@
-[submodule "SavagePluginX"]
-	path = SavagePluginX
-	url = https://github.com/SavageLabs/SavagePluginX.git
-[submodule "WorldBorderUtil"]
-	path = WorldBorderUtil
-	url = https://github.com/SavageLabs/WorldBorderUtil.git
