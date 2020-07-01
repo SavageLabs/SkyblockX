@@ -1,0 +1,3 @@
+[submodule "SavagePluginX-Framework"]
+	path = SavagePluginX
+	url = https://github.com/SavageLabs/SavagePluginX.git
