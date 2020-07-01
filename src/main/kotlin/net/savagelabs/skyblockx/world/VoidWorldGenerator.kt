@@ -3,7 +3,6 @@ package net.savagelabs.skyblockx.world
 import net.savagelabs.skyblockx.persist.Config
 import org.bukkit.Location
 import org.bukkit.World
-import org.bukkit.block.Biome
 import org.bukkit.generator.BlockPopulator
 import org.bukkit.generator.ChunkGenerator
 import java.util.*
@@ -31,7 +30,6 @@ class VoidWorldGenerator : ChunkGenerator() {
         }
         return createChunkData
     }
-
 
 
     override fun getFixedSpawnLocation(world: World, random: Random): Location {

@@ -16,7 +16,11 @@ import java.util.*
 
 
 class IslandMemberGUI :
-    BaseGUI(Config.instance.islandMemberGUITitle, Config.instance.islandMemberGUIBackgroundItem, Config.instance.islandMemberGUIRows) {
+    BaseGUI(
+        Config.instance.islandMemberGUITitle,
+        Config.instance.islandMemberGUIBackgroundItem,
+        Config.instance.islandMemberGUIRows
+    ) {
 
     override fun populatePane(context: IPlayer) {
         val guiItems = buildFullBackgroundItemlist()

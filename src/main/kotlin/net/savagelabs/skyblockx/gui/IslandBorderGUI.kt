@@ -9,7 +9,11 @@ import net.savagelabs.worldborder.WorldBorderUtil
 import org.bukkit.entity.Player
 
 class IslandBorderGUI :
-    BaseGUI(Config.instance.islandBorderGUITitle, Config.instance.islandBorderGUIBackgroundItem, Config.instance.islandBorderGUIRows) {
+    BaseGUI(
+        Config.instance.islandBorderGUITitle,
+        Config.instance.islandBorderGUIBackgroundItem,
+        Config.instance.islandBorderGUIRows
+    ) {
 
     override fun populatePane(context: IPlayer) {
         val guiItems = buildFullBackgroundItemlist()

@@ -5,7 +5,11 @@ import net.savagelabs.skyblockx.core.IPlayer
 import net.savagelabs.skyblockx.persist.Config
 import org.bukkit.entity.Player
 
-class IslandMenuGUI : BaseGUI(Config.instance.islandMenuGUITitle, Config.instance.islandMenuGUIBackgroundItem, Config.instance.islandMenuGUIRows) {
+class IslandMenuGUI : BaseGUI(
+    Config.instance.islandMenuGUITitle,
+    Config.instance.islandMenuGUIBackgroundItem,
+    Config.instance.islandMenuGUIRows
+) {
 
     override fun populatePane(context: IPlayer) {
         val guiItems = buildFullBackgroundItemlist()

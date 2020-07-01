@@ -10,14 +10,12 @@ import net.savagelabs.skyblockx.quest.failsQuestCheckingPreRequisites
 import net.savagelabs.skyblockx.sedit.SkyblockEdit
 import org.bukkit.Bukkit
 import org.bukkit.Material
-import org.bukkit.World
 import org.bukkit.enchantments.Enchantment
 import org.bukkit.entity.Item
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.enchantment.EnchantItemEvent
-import org.bukkit.event.entity.EntityToggleGlideEvent
 import org.bukkit.event.inventory.CraftItemEvent
 import org.bukkit.event.inventory.InventoryAction
 import org.bukkit.event.inventory.InventoryClickEvent
@@ -70,7 +68,10 @@ class PlayerListener : Listener {
     @EventHandler
     fun onPlayerTeleport(event: PlayerTeleportEvent) {
         updateWorldBorder(event.player, event.to!!, 10L)
-        if (event.cause == PlayerTeleportEvent.TeleportCause.ENDER_PEARL && event.to != null && !isNotInSkyblockWorld(event.from.world!!) && getIslandFromLocation(event.from) != getIslandFromLocation(event.to!!)) {
+        if (event.cause == PlayerTeleportEvent.TeleportCause.ENDER_PEARL && event.to != null && !isNotInSkyblockWorld(
+                event.from.world!!
+            ) && getIslandFromLocation(event.from) != getIslandFromLocation(event.to!!)
+        ) {
             event.isCancelled = true
         }
     }
@@ -153,7 +154,8 @@ class PlayerListener : Listener {
                 Quests.instance.islandQuests.find { quest -> quest.type == QuestGoal.SMELT && quest.id == currentQuest }
                     ?: return
 
-            val materialSmelted = XMaterial.matchXMaterial(event.currentItem!!.type).name ?: event.currentItem?.type.toString()
+            val materialSmelted =
+                XMaterial.matchXMaterial(event.currentItem!!.type).name ?: event.currentItem?.type.toString()
 
 
             if (materialSmelted != targetQuest.goalParameter) {
@@ -240,8 +242,6 @@ class PlayerListener : Listener {
     }
 
 
-
-
     @EventHandler
     fun onPlayerInteract(event: PlayerInteractEvent) {
         // FUTURE CONTRIBUTORS: TRY TO SPLIT CHECKS INTO SMALLER BLOCKS.
@@ -269,8 +269,8 @@ class PlayerListener : Listener {
 
         // Obsidian to Lava Bucket Check
         if (event.clickedBlock?.type == XMaterial.OBSIDIAN.parseMaterial()
-            && event.item?.type == XMaterial.BUCKET.parseMaterial())
-        {
+            && event.item?.type == XMaterial.BUCKET.parseMaterial()
+        ) {
             if (!hasPermission(event.player, Permission.OBSIDIANTOLAVA)) {
                 iPlayer.message(
                     String.format(
@@ -288,9 +288,6 @@ class PlayerListener : Listener {
             return
         }
     }
-
-
-
 
 
 }

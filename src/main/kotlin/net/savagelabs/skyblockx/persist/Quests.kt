@@ -85,7 +85,10 @@ class Quests : ConfigContainer {
             SerializableItem(
                 XMaterial.WOODEN_PICKAXE,
                 "&bCraft a Wooden Pickaxe",
-                listOf("&7Put three planks and 2 sticks in a crafting table.", "&7Completion: &b{currentAmount}&7/&b{finalAmount}"),
+                listOf(
+                    "&7Put three planks and 2 sticks in a crafting table.",
+                    "&7Completion: &b{currentAmount}&7/&b{finalAmount}"
+                ),
                 1
             ),
             1,
@@ -112,7 +115,10 @@ class Quests : ConfigContainer {
             SerializableItem(
                 XMaterial.LAVA_BUCKET,
                 "&8Create an Ore Generator",
-                listOf("&7Mine &b3 &7cobblestone from Ore Generator", "&7Completion: &b{currentAmount}&7/&b{finalAmount}"),
+                listOf(
+                    "&7Mine &b3 &7cobblestone from Ore Generator",
+                    "&7Completion: &b{currentAmount}&7/&b{finalAmount}"
+                ),
                 1
             ),
             2,
@@ -193,7 +199,10 @@ class Quests : ConfigContainer {
             SerializableItem(
                 XMaterial.FURNACE,
                 "&8Craft a Furnace",
-                listOf("&7Place 8 cobblestone blocks in the crafting table.", "&7Completion: &b{currentAmount}&7/&b{finalAmount}"),
+                listOf(
+                    "&7Place 8 cobblestone blocks in the crafting table.",
+                    "&7Completion: &b{currentAmount}&7/&b{finalAmount}"
+                ),
                 1
             ),
             5,
@@ -248,7 +257,10 @@ class Quests : ConfigContainer {
             SerializableItem(
                 XMaterial.IRON_PICKAXE,
                 "&8Craft an Iron Pickaxe",
-                listOf("&7Place three Iron Ingots and 2 Sticks into a crafting table.", "&7Completion: &b{currentAmount}&7/&b{finalAmount}"),
+                listOf(
+                    "&7Place three Iron Ingots and 2 Sticks into a crafting table.",
+                    "&7Completion: &b{currentAmount}&7/&b{finalAmount}"
+                ),
                 1
             ),
             7,
@@ -275,7 +287,10 @@ class Quests : ConfigContainer {
             SerializableItem(
                 XMaterial.OAK_SAPLING,
                 "&8Plant a sapling.",
-                listOf("&7Plant the Oak Sapling in your Inventory.", "&7Completion: &b{currentAmount}&7/&b{finalAmount}"),
+                listOf(
+                    "&7Plant the Oak Sapling in your Inventory.",
+                    "&7Completion: &b{currentAmount}&7/&b{finalAmount}"
+                ),
                 1
             ),
             8,
@@ -302,7 +317,10 @@ class Quests : ConfigContainer {
             SerializableItem(
                 XMaterial.SAND,
                 "&8Get some sand.",
-                listOf("&7Dig into your island and find the sand.", "&7Completion: &b{currentAmount}&7/&b{finalAmount}"),
+                listOf(
+                    "&7Dig into your island and find the sand.",
+                    "&7Completion: &b{currentAmount}&7/&b{finalAmount}"
+                ),
                 1
             ),
             9,
@@ -329,7 +347,11 @@ class Quests : ConfigContainer {
             SerializableItem(
                 XMaterial.CACTUS,
                 "&8Plant some cactus.",
-                listOf("&7Plant some cactus on sand.", "&7You can find cactus in the island chest", "&7Completion: &b{currentAmount}&7/&b{finalAmount}"),
+                listOf(
+                    "&7Plant some cactus on sand.",
+                    "&7You can find cactus in the island chest",
+                    "&7Completion: &b{currentAmount}&7/&b{finalAmount}"
+                ),
                 1
             ),
             10,
@@ -356,7 +378,11 @@ class Quests : ConfigContainer {
             SerializableItem(
                 XMaterial.SUGAR_CANE,
                 "&8Plant some sugarcane.",
-                listOf("&7Plant some sugarcane on sand.", "&7You can find some sugarcane in the island chest.", "&7Completion: &b{currentAmount}&7/&b{finalAmount}"),
+                listOf(
+                    "&7Plant some sugarcane on sand.",
+                    "&7You can find some sugarcane in the island chest.",
+                    "&7Completion: &b{currentAmount}&7/&b{finalAmount}"
+                ),
                 1
             ),
             11,
@@ -383,7 +409,11 @@ class Quests : ConfigContainer {
             SerializableItem(
                 XMaterial.MELON_SLICE,
                 "&8Harvest some melons.",
-                listOf("&7Harvest some melons.", "&7You can find some melon seeds in the island chest.", "&7Completion: &b{currentAmount}&7/&b{finalAmount}"),
+                listOf(
+                    "&7Harvest some melons.",
+                    "&7You can find some melon seeds in the island chest.",
+                    "&7Completion: &b{currentAmount}&7/&b{finalAmount}"
+                ),
                 1
             ),
             12,
@@ -410,7 +440,11 @@ class Quests : ConfigContainer {
             SerializableItem(
                 XMaterial.CACTUS,
                 "&8Make a cactus farm.",
-                listOf("&7Plant 20 cacti.", "&7You can buy more sand from /is shop.", "&7Completion: &b{currentAmount}&7/&b{finalAmount}"),
+                listOf(
+                    "&7Plant 20 cacti.",
+                    "&7You can buy more sand from /is shop.",
+                    "&7Completion: &b{currentAmount}&7/&b{finalAmount}"
+                ),
                 1
             ),
             13,
@@ -437,7 +471,11 @@ class Quests : ConfigContainer {
             SerializableItem(
                 XMaterial.WHEAT_SEEDS,
                 "&8Make a wheat farm.",
-                listOf("&7Harvest some wheat.", "&7You can buy more dirt from /is shop.", "&7Completion: &b{currentAmount}&7/&b{finalAmount}"),
+                listOf(
+                    "&7Harvest some wheat.",
+                    "&7You can buy more dirt from /is shop.",
+                    "&7Completion: &b{currentAmount}&7/&b{finalAmount}"
+                ),
                 1
             ),
             14,
@@ -464,7 +502,11 @@ class Quests : ConfigContainer {
             SerializableItem(
                 XMaterial.WHEAT,
                 "&8Harvest some pumpkins.",
-                listOf("&7Harvest some fully grown pumpkins.", "&7You can find some pumpkin seeds in the island chest.", "&7Completion: &b{currentAmount}&7/&b{finalAmount}"),
+                listOf(
+                    "&7Harvest some fully grown pumpkins.",
+                    "&7You can find some pumpkin seeds in the island chest.",
+                    "&7Completion: &b{currentAmount}&7/&b{finalAmount}"
+                ),
                 1
             ),
             15,
@@ -491,7 +533,11 @@ class Quests : ConfigContainer {
             SerializableItem(
                 XMaterial.ZOMBIE_HEAD,
                 "&8Kill Zombies.",
-                listOf("&7Kill 100 Zombies.", "&7They will spawn in the dark.", "&7Completion: &b{currentAmount}&7/&b{finalAmount}"),
+                listOf(
+                    "&7Kill 100 Zombies.",
+                    "&7They will spawn in the dark.",
+                    "&7Completion: &b{currentAmount}&7/&b{finalAmount}"
+                ),
                 1
             ),
             16,
@@ -518,7 +564,11 @@ class Quests : ConfigContainer {
             SerializableItem(
                 XMaterial.SKELETON_SKULL,
                 "&8Kill Skeletons.",
-                listOf("&7Kill 100 Skeletons.", "&7They will spawn in the dark.", "&7Completion: &b{currentAmount}&7/&b{finalAmount}"),
+                listOf(
+                    "&7Kill 100 Skeletons.",
+                    "&7They will spawn in the dark.",
+                    "&7Completion: &b{currentAmount}&7/&b{finalAmount}"
+                ),
                 1
             ),
             17,
@@ -545,7 +595,11 @@ class Quests : ConfigContainer {
             SerializableItem(
                 XMaterial.CREEPER_HEAD,
                 "&8Kill Creepers.",
-                listOf("&7Kill 100 Creepers.", "&7They will spawn in the dark.", "&7Completion: &b{currentAmount}&7/&b{finalAmount}"),
+                listOf(
+                    "&7Kill 100 Creepers.",
+                    "&7They will spawn in the dark.",
+                    "&7Completion: &b{currentAmount}&7/&b{finalAmount}"
+                ),
                 1
             ),
             16,

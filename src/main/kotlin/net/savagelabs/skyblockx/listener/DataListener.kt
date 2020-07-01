@@ -33,7 +33,8 @@ class DataListener : Listener {
             updateWorldBorder(event.player, event.player.location, 10L)
             return
         }
-        Data.instance.IPlayers[event.player.uniqueId.toString()] = IPlayer(event.player.uniqueId.toString(),  event.player.name)
+        Data.instance.IPlayers[event.player.uniqueId.toString()] =
+            IPlayer(event.player.uniqueId.toString(), event.player.name)
         SkyblockX.skyblockX.logger.info("${event.player.name}'s IPlayer instance was created")
     }
 

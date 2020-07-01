@@ -3,7 +3,6 @@ package net.savagelabs.skyblockx.command
 import net.savagelabs.savagepluginx.command.CommandInfo
 import net.savagelabs.skyblockx.core.IPlayer
 import net.savagelabs.skyblockx.core.Island
-import net.savagelabs.skyblockx.core.color
 import net.savagelabs.skyblockx.core.getIPlayer
 import net.savagelabs.skyblockx.persist.Message
 import org.bukkit.Bukkit
@@ -12,7 +11,8 @@ import org.bukkit.entity.Player
 import java.util.*
 
 
-class SCommandInfo(commandSender: CommandSender, args: ArrayList<String>, aliasUsed: String) : CommandInfo(commandSender, args,
+class SCommandInfo(commandSender: CommandSender, args: ArrayList<String>, aliasUsed: String) : CommandInfo(
+    commandSender, args,
     aliasUsed
 ) {
     var iPlayer: IPlayer? = if (commandSender is Player) getIPlayer(commandSender) else null

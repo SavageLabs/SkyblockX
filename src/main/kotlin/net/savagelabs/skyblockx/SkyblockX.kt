@@ -1,6 +1,5 @@
 package net.savagelabs.skyblockx
 
-import net.savagelabs.worldborder.WorldBorderUtil
 import com.cryptomorin.xseries.XMaterial
 import io.papermc.lib.PaperLib
 import kotlinx.coroutines.runBlocking
@@ -9,12 +8,16 @@ import net.savagelabs.savagepluginx.persist.engine.ConfigManager
 import net.savagelabs.savagepluginx.persist.engine.FlatDataManager
 import net.savagelabs.skyblockx.command.island.IslandBaseCommand
 import net.savagelabs.skyblockx.command.skyblock.SkyblockBaseCommand
-import net.savagelabs.skyblockx.core.*
+import net.savagelabs.skyblockx.core.IslandTopInfo
+import net.savagelabs.skyblockx.core.calculateAllIslands
+import net.savagelabs.skyblockx.core.color
+import net.savagelabs.skyblockx.core.registerAllPermissions
 import net.savagelabs.skyblockx.hooks.PlacholderAPIIntegration
 import net.savagelabs.skyblockx.listener.*
 import net.savagelabs.skyblockx.persist.*
 import net.savagelabs.skyblockx.persist.data.Items
 import net.savagelabs.skyblockx.world.VoidWorldGenerator
+import net.savagelabs.worldborder.WorldBorderUtil
 import org.bstats.bukkit.Metrics
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor
@@ -22,7 +25,6 @@ import org.bukkit.World
 import org.bukkit.WorldCreator
 import org.bukkit.generator.ChunkGenerator
 import java.util.concurrent.Callable
-import kotlin.collections.HashMap
 import kotlin.system.measureTimeMillis
 import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
@@ -55,7 +57,14 @@ class SkyblockX : SavagePluginX() {
             startIslandTopTask()
             startAutoSaveTask()
 //            loadMetrics()
-            registerListeners(DataListener(), SEditListener(), BlockListener(), PlayerListener(), EntityListener(), GlideListener())
+            registerListeners(
+                DataListener(),
+                SEditListener(),
+                BlockListener(),
+                PlayerListener(),
+                EntityListener(),
+                GlideListener()
+            )
             logInfo("Loaded ${Data.instance.IPlayers.size} players.")
             logInfo("Loaded ${Data.instance.islands.size} islands.")
             migrateData()
@@ -214,7 +223,6 @@ class SkyblockX : SavagePluginX() {
         // Load and save to take in account changes :P
 //        Config.instance.load()
 //        Config.instance.save()
-
 
 
         // Don't load this as people shouldn't be touching this file anyways.

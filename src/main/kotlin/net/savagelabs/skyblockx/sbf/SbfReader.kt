@@ -1,6 +1,8 @@
 package net.savagelabs.skyblockx.sbf
 
-import java.io.*
+import java.io.DataInputStream
+import java.io.File
+import java.io.FileInputStream
 import java.util.*
 import java.util.zip.GZIPInputStream
 

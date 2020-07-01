@@ -3,11 +3,13 @@ package net.savagelabs.skyblockx.command.skyblock.cmd
 import net.savagelabs.savagepluginx.command.Argument
 import net.savagelabs.savagepluginx.command.Command
 import net.savagelabs.savagepluginx.command.argument.IntArgument
-import net.savagelabs.skyblockx.command.*
+import net.savagelabs.skyblockx.command.SCommandInfo
+import net.savagelabs.skyblockx.command.SCommandRequirements
+import net.savagelabs.skyblockx.command.SCommandRequirementsBuilder
 import net.savagelabs.skyblockx.command.skyblock.SkyblockBaseCommand
 import net.savagelabs.skyblockx.persist.Message
 
-class CmdSbHelp: Command<SCommandInfo, SCommandRequirements>() {
+class CmdSbHelp : Command<SCommandInfo, SCommandRequirements>() {
 
 
     init {

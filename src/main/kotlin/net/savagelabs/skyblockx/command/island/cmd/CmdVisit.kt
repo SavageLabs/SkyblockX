@@ -4,7 +4,9 @@ import me.rayzr522.jsonmessage.JSONMessage
 import net.savagelabs.savagepluginx.command.Argument
 import net.savagelabs.savagepluginx.command.Command
 import net.savagelabs.savagepluginx.command.argument.PlayerArgument
-import net.savagelabs.skyblockx.command.*
+import net.savagelabs.skyblockx.command.SCommandInfo
+import net.savagelabs.skyblockx.command.SCommandRequirements
+import net.savagelabs.skyblockx.command.SCommandRequirementsBuilder
 import net.savagelabs.skyblockx.core.*
 import net.savagelabs.skyblockx.persist.Message
 
@@ -43,7 +45,15 @@ class CmdVisit : Command<SCommandInfo, SCommandRequirements>() {
             // Message them.
             info.message(Message.instance.commandVisitPossibleLocationsHeader)
             for ((index, location) in possibleLocations.withIndex()) {
-                JSONMessage.create(color(String.format(Message.instance.commandVisitPossibleLocationsFormat, index + 1, location)))
+                JSONMessage.create(
+                    color(
+                        String.format(
+                            Message.instance.commandVisitPossibleLocationsFormat,
+                            index + 1,
+                            location
+                        )
+                    )
+                )
                     .suggestCommand("/is tp $location")
                     .tooltip("Click to run /is tp $location")
                     .send(info.player)
@@ -59,7 +69,8 @@ class CmdVisit : Command<SCommandInfo, SCommandRequirements>() {
 
         // Check if they can actually go to the location
         if (!targetLocation.allowVisitors && info.iPlayer!!.islandID != targetLocation.islandID
-            && !info.iPlayer!!.isCoopedIsland(targetLocation.islandID)) {
+            && !info.iPlayer!!.isCoopedIsland(targetLocation.islandID)
+        ) {
             info.message(Message.instance.commandVisitNoPermission)
             return
         }

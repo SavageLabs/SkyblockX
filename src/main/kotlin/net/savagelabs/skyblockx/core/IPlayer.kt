@@ -48,6 +48,7 @@ data class IPlayer(val uuid: String, val name: String) {
 
     @JsonIgnore
     var pos1: Location? = null
+
     @JsonIgnore
     var pos2: Location? = null
 
@@ -125,7 +126,6 @@ data class IPlayer(val uuid: String, val name: String) {
     fun message(message: String, vararg args: String) {
         message(String.format(message, *args))
     }
-
 
 
     fun coopIslandsContainBlock(location: Location): Boolean {

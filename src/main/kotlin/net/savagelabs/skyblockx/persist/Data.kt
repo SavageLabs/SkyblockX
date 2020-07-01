@@ -1,9 +1,9 @@
 package net.savagelabs.skyblockx.persist
 
 import com.fasterxml.jackson.annotation.JsonIgnore
+import net.savagelabs.savagepluginx.persist.container.FlatDataContainer
 import net.savagelabs.skyblockx.core.IPlayer
 import net.savagelabs.skyblockx.core.Island
-import net.savagelabs.savagepluginx.persist.container.FlatDataContainer
 
 class Data : FlatDataContainer {
 
@@ -19,9 +19,6 @@ class Data : FlatDataContainer {
 
     var IPlayers = HashMap<String, IPlayer>()
     var islands = HashMap<Int, Island>()
-
-
-
 
 
 }

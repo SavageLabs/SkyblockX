@@ -12,7 +12,8 @@ data class Point(val x: Int, val z: Int) {
     fun getLocation(): Location {
         return Location(
             Bukkit.getWorld(Config.instance.skyblockWorldName),
-            (Config.instance.islandMaxSizeInBlocks + Config.instance.islandPaddingSizeInBlocks + 1) * x.toDouble(), 0.toDouble(),
+            (Config.instance.islandMaxSizeInBlocks + Config.instance.islandPaddingSizeInBlocks + 1) * x.toDouble(),
+            0.toDouble(),
             (Config.instance.islandMaxSizeInBlocks + Config.instance.islandPaddingSizeInBlocks + 1) * z.toDouble()
         )
     }

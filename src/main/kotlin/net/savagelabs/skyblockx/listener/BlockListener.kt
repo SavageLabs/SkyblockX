@@ -76,7 +76,8 @@ class BlockListener : Listener {
 
 
         // Anti-abuse for skyblock.
-        event.block.setMetadata("skyblock-placed-by-player", FixedMetadataValue(SkyblockX.skyblockX, true)
+        event.block.setMetadata(
+            "skyblock-placed-by-player", FixedMetadataValue(SkyblockX.skyblockX, true)
         )
     }
 
@@ -90,7 +91,6 @@ class BlockListener : Listener {
 
         // Need this a lot.
         val iPlayer = getIPlayer(event.player)
-
 
 
         // Check if they have an island or co-op island, if not, deny.

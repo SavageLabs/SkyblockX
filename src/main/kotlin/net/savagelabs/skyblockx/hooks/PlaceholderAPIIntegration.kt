@@ -37,8 +37,8 @@ class PlacholderAPIIntegration : PlaceholderExpansion() {
                 ?: 0).toString()
             "island_member_online_amount", "island_member_online_count" -> (iPlayer.getIsland()?.getIslandMembers()
                 ?.filter { member -> member.isOnline() }?.size?.plus(
-                if (iPlayer.getIsland()?.getOwnerIPlayer()?.isOnline() == true) 1 else 0
-            ) ?: 0).toString()
+                    if (iPlayer.getIsland()?.getOwnerIPlayer()?.isOnline() == true) 1 else 0
+                ) ?: 0).toString()
             "island_member_list" -> iPlayer.getIsland()?.getIslandMembers()?.stream()!!.map { member -> member.name }
                 .collect(joining(", ")) ?: "N/A"
             "island_worth" -> SkyblockX.islandValues?.map?.get(iPlayer.getIsland()?.islandID)?.worth?.toString() ?: "0"

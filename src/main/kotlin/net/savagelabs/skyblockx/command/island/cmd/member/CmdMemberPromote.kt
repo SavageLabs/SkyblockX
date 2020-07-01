@@ -2,9 +2,11 @@ package net.savagelabs.skyblockx.command.island.cmd.member
 
 import net.savagelabs.savagepluginx.command.Argument
 import net.savagelabs.savagepluginx.command.Command
-import net.savagelabs.skyblockx.command.*
-import net.savagelabs.skyblockx.command.island.IslandBaseCommand
+import net.savagelabs.skyblockx.command.SCommandInfo
+import net.savagelabs.skyblockx.command.SCommandRequirements
+import net.savagelabs.skyblockx.command.SCommandRequirementsBuilder
 import net.savagelabs.skyblockx.command.argument.MemberArgument
+import net.savagelabs.skyblockx.command.island.IslandBaseCommand
 import net.savagelabs.skyblockx.core.Permission
 import net.savagelabs.skyblockx.core.color
 import net.savagelabs.skyblockx.core.getIPlayerByName
@@ -42,8 +44,14 @@ class CmdMemberPromote : Command<SCommandInfo, SCommandRequirements>() {
         }
 
         island.promoteNewLeader(playerNameToPromote)
-        island.messageAllOnlineIslandMembers(String.format(Message.instance.commandMemberPromotedSuccess, playerNameToPromote))
-        Bukkit.getPlayer(playerNameToPromote)?.sendMessage(color(Message.instance.commandMemberPromoteYouHaveBeenPromoted))
+        island.messageAllOnlineIslandMembers(
+            String.format(
+                Message.instance.commandMemberPromotedSuccess,
+                playerNameToPromote
+            )
+        )
+        Bukkit.getPlayer(playerNameToPromote)
+            ?.sendMessage(color(Message.instance.commandMemberPromoteYouHaveBeenPromoted))
     }
 
     override fun getHelpInfo(): String {

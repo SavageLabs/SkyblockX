@@ -4,7 +4,9 @@ import me.rayzr522.jsonmessage.JSONMessage
 import net.savagelabs.savagepluginx.command.Argument
 import net.savagelabs.savagepluginx.command.Command
 import net.savagelabs.savagepluginx.command.argument.StringArgument
-import net.savagelabs.skyblockx.command.*
+import net.savagelabs.skyblockx.command.SCommandInfo
+import net.savagelabs.skyblockx.command.SCommandRequirements
+import net.savagelabs.skyblockx.command.SCommandRequirementsBuilder
 import net.savagelabs.skyblockx.core.Permission
 import net.savagelabs.skyblockx.core.color
 import net.savagelabs.skyblockx.core.createIsland
@@ -19,10 +21,11 @@ class CmdCreate : Command<SCommandInfo, SCommandRequirements>() {
         aliases.add("create")
 
         optionalArgs.add(
-            Argument("island-type", 0, StringArgument()))
+            Argument("island-type", 0, StringArgument())
+        )
 
         commandRequirements =
-           SCommandRequirementsBuilder().asIslandMember(false).asPlayer(true)
+            SCommandRequirementsBuilder().asIslandMember(false).asPlayer(true)
                 .withPermission(Permission.CREATE).build()
     }
 
@@ -37,7 +40,10 @@ class CmdCreate : Command<SCommandInfo, SCommandRequirements>() {
             val resetTime = info.iPlayer!!.lastIslandResetTime
             val difference = timeNow - resetTime
             if (difference < Config.instance.islandResetCoolDownSeconds) {
-                info.message(Message.instance.commandCreateCooldown, (Config.instance.islandResetCoolDownSeconds - difference).toString())
+                info.message(
+                    Message.instance.commandCreateCooldown,
+                    (Config.instance.islandResetCoolDownSeconds - difference).toString()
+                )
                 return
             }
         }

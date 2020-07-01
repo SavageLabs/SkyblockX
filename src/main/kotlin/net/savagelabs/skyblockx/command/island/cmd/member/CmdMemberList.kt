@@ -1,11 +1,13 @@
 package net.savagelabs.skyblockx.command.island.cmd.member
 
+import me.rayzr522.jsonmessage.JSONMessage
+import net.savagelabs.savagepluginx.command.Command
+import net.savagelabs.skyblockx.command.SCommandInfo
+import net.savagelabs.skyblockx.command.SCommandRequirements
+import net.savagelabs.skyblockx.command.SCommandRequirementsBuilder
 import net.savagelabs.skyblockx.core.Permission
 import net.savagelabs.skyblockx.core.color
 import net.savagelabs.skyblockx.persist.Message
-import me.rayzr522.jsonmessage.JSONMessage
-import net.savagelabs.savagepluginx.command.Command
-import net.savagelabs.skyblockx.command.*
 
 class CmdMemberList : Command<SCommandInfo, SCommandRequirements>() {
 
@@ -30,7 +32,8 @@ class CmdMemberList : Command<SCommandInfo, SCommandRequirements>() {
 
         for ((index, member) in info.iPlayer!!.getIsland()!!.getIslandMembers().withIndex()) {
             JSONMessage.create(color(String.format(Message.instance.commandMemberListFormat, index + 2, member.name)))
-                .tooltip(color(Message.instance.commandMemberListRemoveTooltip)).runCommand("/is member kick ${member.name}")
+                .tooltip(color(Message.instance.commandMemberListRemoveTooltip))
+                .runCommand("/is member kick ${member.name}")
                 .send(info.player!!)
         }
 

@@ -1,10 +1,9 @@
 package net.savagelabs.skyblockx.command.skyblock
 
 import net.savagelabs.savagepluginx.command.Command
-import net.savagelabs.skyblockx.command.*
-import net.savagelabs.skyblockx.command.skyblock.cmd.CmdSEPasteStructure
-import net.savagelabs.skyblockx.command.skyblock.cmd.CmdSEPosition
-import net.savagelabs.skyblockx.command.skyblock.cmd.CmdSESaveStructure
+import net.savagelabs.skyblockx.command.SCommandInfo
+import net.savagelabs.skyblockx.command.SCommandRequirements
+import net.savagelabs.skyblockx.command.SCommandRequirementsBuilder
 import net.savagelabs.skyblockx.command.skyblock.cmd.*
 import net.savagelabs.skyblockx.persist.Message
 import org.bukkit.command.CommandExecutor
@@ -40,7 +39,12 @@ class SkyblockBaseCommand : Command<SCommandInfo, SCommandRequirements>(), Comma
         instance = this
     }
 
-    override fun onCommand(sender: CommandSender, command: org.bukkit.command.Command, label: String, args: Array<out String>): Boolean {
+    override fun onCommand(
+        sender: CommandSender,
+        command: org.bukkit.command.Command,
+        label: String,
+        args: Array<out String>
+    ): Boolean {
         execute(
             SCommandInfo(
                 sender,

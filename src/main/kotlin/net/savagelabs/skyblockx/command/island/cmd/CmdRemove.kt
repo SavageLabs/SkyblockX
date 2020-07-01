@@ -3,7 +3,9 @@ package net.savagelabs.skyblockx.command.island.cmd
 import net.savagelabs.savagepluginx.command.Argument
 import net.savagelabs.savagepluginx.command.Command
 import net.savagelabs.savagepluginx.command.argument.PlayerArgument
-import net.savagelabs.skyblockx.command.*
+import net.savagelabs.skyblockx.command.SCommandInfo
+import net.savagelabs.skyblockx.command.SCommandRequirements
+import net.savagelabs.skyblockx.command.SCommandRequirementsBuilder
 import net.savagelabs.skyblockx.core.Permission
 import net.savagelabs.skyblockx.core.teleportAsync
 import net.savagelabs.skyblockx.persist.Config
@@ -19,7 +21,7 @@ class CmdRemove : Command<SCommandInfo, SCommandRequirements>() {
         requiredArgs.add(Argument("player", 0, PlayerArgument()))
 
         commandRequirements =
-           SCommandRequirementsBuilder().asIslandMember(true).asPlayer(true)
+            SCommandRequirementsBuilder().asIslandMember(true).asPlayer(true)
                 .withPermission(Permission.REMOVE).build()
     }
 

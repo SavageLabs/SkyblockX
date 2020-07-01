@@ -28,15 +28,15 @@ class SkyblockEdit {
         * @inputName string that need to be translated
         * */
         val regex = """(Optional|optional)\[(\w+\s*)+]""".toRegex()
-        if(regex.matches(xmaterialDefaultName)){
-          return xmaterialDefaultName
-              .toUpperCase()
-              .replace("OPTIONAL", "")
-              .replace(" ", "_")
-              .replace("[", "")
-              .replace("]", "")
-        }else{
-          return xmaterialDefaultName
+        if (regex.matches(xmaterialDefaultName)) {
+            return xmaterialDefaultName
+                .toUpperCase()
+                .replace("OPTIONAL", "")
+                .replace(" ", "_")
+                .replace("[", "")
+                .replace("]", "")
+        } else {
+            return xmaterialDefaultName
         }
     }
 
@@ -62,7 +62,7 @@ class SkyblockEdit {
         val yEnd = if (pos1.y < pos2.y) pos2.y else pos1.y
         val zEnd = if (pos1.z < pos2.z) pos2.z else pos1.z
 
-        for (x in xStart.toInt() - 1  until xEnd.toInt() + 1) {
+        for (x in xStart.toInt() - 1 until xEnd.toInt() + 1) {
             for (y in yStart.toInt() - 1 until yEnd.toInt() + 1) {
                 for (z in zStart.toInt() - 1 until zEnd.toInt() + 1) {
                     val block = world!!.getBlockAt(x, y, z)
@@ -79,7 +79,13 @@ class SkyblockEdit {
                         for (slot in 0 until chest.blockInventory.size) {
                             val item = chest.blockInventory.getItem(slot) ?: continue
 
-                            items.add(SbfChestItem(slot, item.amount, normalizeBlockName(XMaterial.matchXMaterial(item.type.name).toString()) ))
+                            items.add(
+                                SbfChestItem(
+                                    slot,
+                                    item.amount,
+                                    normalizeBlockName(XMaterial.matchXMaterial(item.type.name).toString())
+                                )
+                            )
                         }
 //                        val directionalState = chest.blockData as Directional
 //                        val direction = when (directionalState.facing) {
@@ -93,7 +99,14 @@ class SkyblockEdit {
                         continue
                     }
 
-                    container.blocks.add(SbfBlock(xRel, yRel, zRel, normalizeBlockName(XMaterial.matchXMaterial(block.type.name).toString()) ))
+                    container.blocks.add(
+                        SbfBlock(
+                            xRel,
+                            yRel,
+                            zRel,
+                            normalizeBlockName(XMaterial.matchXMaterial(block.type.name).toString())
+                        )
+                    )
                 }
             }
         }

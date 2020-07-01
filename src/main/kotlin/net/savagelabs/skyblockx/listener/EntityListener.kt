@@ -28,7 +28,10 @@ class EntityListener : Listener {
     @EventHandler(priority = EventPriority.HIGH)
     fun onEntityDamage(event: EntityDeathEvent) {
         // Return if the entity taking the damage is player, or if the damager is NOT a player.
-        if (event.entity is Player || event.entity.killer == null || event.entity.killer !is Player || isNotInSkyblockWorld(event.entity.world)) {
+        if (event.entity is Player || event.entity.killer == null || event.entity.killer !is Player || isNotInSkyblockWorld(
+                event.entity.world
+            )
+        ) {
             return
         }
 

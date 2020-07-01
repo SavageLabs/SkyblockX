@@ -27,5 +27,4 @@ class IslandPreLevelCalcEvent(val island: Island, val levelBeforeCalc: Double) :
     }
 
 
-
 }

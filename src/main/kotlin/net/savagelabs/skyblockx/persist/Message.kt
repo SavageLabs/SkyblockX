@@ -54,7 +54,7 @@ class Message : ConfigContainer {
     var commandCreateCLIHeader = "&7&m-------&r &bIsland Types &7&m-------"
     var commandCreateCLIFormat = "&7%1\$s. &b%2\$s"
     var commandCreateCLIFormatTooltip = "&7Click to paste &b/is create %1\$s&7 into your chatbar."
-    
+
     var commandCreateHelp = "&7Creates a skyblock island."
     var commandCreateAlreadyHaveAnIsland = "&7You already have an island, use /is delete to delete your island."
     var commandCreateSuccess = "&7Your island was successfully created."
@@ -126,7 +126,8 @@ class Message : ConfigContainer {
     var commandHomeRemoveSuccess = "&7The home &b%1\$s&7 has been removed."
 
     var commandCalcMessage = "&7Calculated Island."
-    var commandCalcCooldown = "&7You are trying to calculate the island value too often, Cooldown: &b%1\$s seconds left."
+    var commandCalcCooldown =
+        "&7You are trying to calculate the island value too often, Cooldown: &b%1\$s seconds left."
     var commandCalcHelp = "&7Calculate your own island's value."
 
     var commandBorderHelp = "&7Change your border color."
@@ -146,7 +147,8 @@ class Message : ConfigContainer {
     var commandVisitThisIslandIsNotValid =
         "&7The player %1\$s does not own an island. Type &b/is tp &r&7to list possible locations."
     var commandVisitTeleporting = "&7Teleporting you to %1\$s's island."
-    var commandVisitNoPermission = "&7The specified island does not have you as co-op, an island member, or allow visitors."
+    var commandVisitNoPermission =
+        "&7The specified island does not have you as co-op, an island member, or allow visitors."
 
     var commandJoinHelp = "&7Join an island."
     var commandJoinNotInvited = "&7You have not been invited to %1\$s's island."
@@ -213,7 +215,8 @@ class Message : ConfigContainer {
     var commandSkyblockKickHelp = "&7Kick a player from their island."
     var commandSkyblockKickMemberKicked = "&b%1\$s was kicked from their island."
     var commandSkyblockKickMemberKickedOwner = "&b%1\$s is now the owner of the island."
-    var commandSkyblockKickIslandDeleted = "&7The island has been deleted since the island has no members left to inherit the island."
+    var commandSkyblockKickIslandDeleted =
+        "&7The island has been deleted since the island has no members left to inherit the island."
 
     var commandSkyblockNewOwnerHelp = "&7Set a new owner for an island."
     var commandSkyblockNewOwnerSuccess = "&7New owner successfully set."

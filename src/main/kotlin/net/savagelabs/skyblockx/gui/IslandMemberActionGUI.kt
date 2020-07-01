@@ -1,10 +1,10 @@
 package net.savagelabs.skyblockx.gui
 
 import com.github.stefvanschie.inventoryframework.GuiItem
+import me.clip.placeholderapi.PlaceholderAPI
 import net.savagelabs.skyblockx.core.IPlayer
 import net.savagelabs.skyblockx.core.isPlaceholderAPIPresent
 import net.savagelabs.skyblockx.persist.Config
-import me.clip.placeholderapi.PlaceholderAPI
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack

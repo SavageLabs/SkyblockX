@@ -10,7 +10,11 @@ import net.savagelabs.skyblockx.persist.Message
 import org.bukkit.entity.Player
 
 class IslandCreateGUI :
-    BaseGUI(Config.instance.islandCreateGUITitle, Config.instance.islandCreateGUIBackgroundItem, Config.instance.islandCreateGUIRows) {
+    BaseGUI(
+        Config.instance.islandCreateGUITitle,
+        Config.instance.islandCreateGUIBackgroundItem,
+        Config.instance.islandCreateGUIRows
+    ) {
 
     override fun populatePane(context: IPlayer) {
         val guiItems = buildFullBackgroundItemlist()

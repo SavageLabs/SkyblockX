@@ -498,7 +498,10 @@ data class Island(
             val iplayer = getIPlayerByUUID(memberUUID)
             iplayer?.unassignIsland()
             val player = iplayer?.getPlayer()
-            teleportAsync(player, Bukkit.getWorld(Config.instance.defaultWorld)!!.spawnLocation.add(0.0, 1.0, 0.0), Runnable { })
+            teleportAsync(
+                player,
+                Bukkit.getWorld(Config.instance.defaultWorld)!!.spawnLocation.add(0.0, 1.0, 0.0),
+                Runnable { })
             if (Config.instance.islandDeleteClearInventory) player?.inventory?.clear()
             if (Config.instance.islandDeleteClearEnderChest) player?.enderChest?.clear()
         }
@@ -566,7 +569,8 @@ fun getIslandByOwnerTag(ownerTag: String): Island? {
 
 fun createIsland(player: Player?, schematic: String, teleport: Boolean = true): Island {
     var size = if (player == null) Config.instance.islandMaxSizeInBlocks else getMaxPermission(player, "skyblockx.size")
-    size = if (size <= 0 || size > Config.instance.islandMaxSizeInBlocks) Config.instance.islandMaxSizeInBlocks else size
+    size =
+        if (size <= 0 || size > Config.instance.islandMaxSizeInBlocks) Config.instance.islandMaxSizeInBlocks else size
     val island =
         Island(
             Data.instance.nextIslandID,
@@ -587,7 +591,14 @@ fun createIsland(player: Player?, schematic: String, teleport: Boolean = true): 
     }
     // Use deprecated method for 1.8 support.
     player?.sendTitle(color(Message.instance.islandCreatedTitle), color(Message.instance.islandCreatedSubtitle))
-    player?.sendMessage(color("${Message.instance.messagePrefix}${String.format(Message.instance.islandCreationMessage, size)}"))
+    player?.sendMessage(
+        color(
+            "${Message.instance.messagePrefix}${String.format(
+                Message.instance.islandCreationMessage,
+                size
+            )}"
+        )
+    )
     if (player != null) updateWorldBorder(player, player.location, 10L)
     island.islandGoPoint = getSLocation(island.getIslandCenter())
     return island

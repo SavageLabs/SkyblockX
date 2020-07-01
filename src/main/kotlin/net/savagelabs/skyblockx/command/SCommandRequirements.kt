@@ -7,13 +7,14 @@ import net.savagelabs.skyblockx.persist.Message
 import org.bukkit.entity.Player
 
 
-
 class SCommandRequirements(
     val permission: Permission?,
     var asIslandMember: Boolean,
     var asLeader: Boolean,
     asPlayer: Boolean,
-    rawPermission: String?) : CommandRequirements<SCommandInfo>(asPlayer,
+    rawPermission: String?
+) : CommandRequirements<SCommandInfo>(
+    asPlayer,
     rawPermission
 ) {
 

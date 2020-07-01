@@ -6,7 +6,9 @@ import net.savagelabs.savagepluginx.command.Argument
 import net.savagelabs.savagepluginx.command.Command
 import net.savagelabs.savagepluginx.command.argument.IntArgument
 import net.savagelabs.skyblockx.SkyblockX
-import net.savagelabs.skyblockx.command.*
+import net.savagelabs.skyblockx.command.SCommandInfo
+import net.savagelabs.skyblockx.command.SCommandRequirements
+import net.savagelabs.skyblockx.command.SCommandRequirementsBuilder
 import net.savagelabs.skyblockx.core.Permission
 import net.savagelabs.skyblockx.core.buildBar
 import net.savagelabs.skyblockx.core.color
@@ -75,11 +77,13 @@ class CmdTop : Command<SCommandInfo, SCommandRequirements>() {
                     .forEach { xmat -> lineBasicParsed = lineBasicParsed.replace("{${xmat.name}}", 0.toString()) }
                 tooltip += color("\n$lineBasicParsed")
             }
-            val line = color(Config.instance.islandTopLineFormat
-                .replace("{name}", island.islandName)
-                .replace("{rank}", counter.toString())
-                .replace("{leader}", island.ownerTag)
-                .replace("{amount}", decimalFormat.format(entry.worth)))
+            val line = color(
+                Config.instance.islandTopLineFormat
+                    .replace("{name}", island.islandName)
+                    .replace("{rank}", counter.toString())
+                    .replace("{leader}", island.ownerTag)
+                    .replace("{amount}", decimalFormat.format(entry.worth))
+            )
             if (info.isPlayer()) {
                 JSONMessage.create(line).tooltip(tooltip).send(info.player)
             } else {

@@ -58,7 +58,12 @@ class IslandBaseCommand : Command<SCommandInfo, SCommandRequirements>(), Command
         instance = this
     }
 
-    override fun onCommand(sender: CommandSender, command: org.bukkit.command.Command, label: String, args: Array<out String>): Boolean {
+    override fun onCommand(
+        sender: CommandSender,
+        command: org.bukkit.command.Command,
+        label: String,
+        args: Array<out String>
+    ): Boolean {
         execute(
             SCommandInfo(
                 sender,
@@ -104,7 +109,6 @@ class IslandBaseCommand : Command<SCommandInfo, SCommandRequirements>(), Command
     ): List<String>? {
         return handleTabComplete(sender, command, alias, args)
     }
-
 
 
 }

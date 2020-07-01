@@ -36,11 +36,6 @@ class BlockValues : ConfigContainer {
     )
 
 
-
-
-
-
-
 //    fun load() {
 //        XMaterial.values().toList().forEach{ xmat -> instance.putIfAbsent(xmat, 0.0) }
 //        EntityType.values().forEach {

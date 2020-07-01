@@ -13,7 +13,11 @@ import org.bukkit.inventory.ItemStack
 import java.text.DecimalFormat
 
 class IslandQuestGUI :
-    BaseGUI(Quests.instance.islandQuestGUITitle, Quests.instance.islandQuestGUIBackgroundItem, Quests.instance.islandQuestGUIRows) {
+    BaseGUI(
+        Quests.instance.islandQuestGUITitle,
+        Quests.instance.islandQuestGUIBackgroundItem,
+        Quests.instance.islandQuestGUIRows
+    ) {
 
     override fun populatePane(context: IPlayer) {
         val guiItems = buildFullBackgroundItemlist()

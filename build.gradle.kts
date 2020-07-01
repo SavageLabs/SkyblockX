@@ -1,5 +1,5 @@
-import org.apache.tools.ant.filters.ReplaceTokens
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+import org.apache.tools.ant.filters.ReplaceTokens
 
 plugins {
     kotlin("jvm") version "1.3.61"
@@ -48,9 +48,11 @@ tasks {
     }
 
     processResources {
-        filter<ReplaceTokens>("tokens" to mapOf(
-            "project.version" to project.version
-        ))
+        filter<ReplaceTokens>(
+            "tokens" to mapOf(
+                "project.version" to project.version
+            )
+        )
     }
 
     val build by existing {
@@ -71,7 +73,6 @@ tasks {
         exclude("META-INF/*.RSA")
         archiveBaseName.set("SkyblockX")
     }
-
 
 
     val ci = task("ci") {

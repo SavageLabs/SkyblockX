@@ -43,7 +43,8 @@ fun teleportAsync(player: Player?, location: Location, runnable: Runnable) {
 }
 
 
-inline fun <reified T : Enum<*>> enumValueOrNull(name: String): T? = T::class.java.enumConstants.firstOrNull { it.name == name }
+inline fun <reified T : Enum<*>> enumValueOrNull(name: String): T? =
+    T::class.java.enumConstants.firstOrNull { it.name == name }
 
 fun updateWorldBorder(player: Player, location: Location, delay: Long) {
     if (isNotInSkyblockWorld(location.world!!)) {
