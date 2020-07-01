@@ -1,6 +1,5 @@
 package net.savagelabs.skyblockx.command.island.cmd.home
 
-import com.sun.jdi.connect.Connector
 import net.savagelabs.savagepluginx.command.Argument
 import net.savagelabs.savagepluginx.command.Command
 import net.savagelabs.savagepluginx.command.argument.StringArgument
