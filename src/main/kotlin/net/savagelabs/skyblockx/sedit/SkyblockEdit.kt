@@ -2,7 +2,7 @@ package net.savagelabs.skyblockx.sedit
 
 
 import com.cryptomorin.xseries.XMaterial
-import net.prosavage.baseplugin.ItemBuilder
+import net.savagelabs.savagepluginx.item.ItemBuilder
 import net.savagelabs.skyblockx.SkyblockX
 import net.savagelabs.skyblockx.core.color
 import net.savagelabs.skyblockx.core.enumValueOrNull
@@ -28,21 +28,21 @@ class SkyblockEdit {
         * @inputName string that need to be translated
         * */
         val regex = """(Optional|optional)\[(\w+\s*)+]""".toRegex()
-        if(regex.matches(xmaterialDefaultName)){
-          return xmaterialDefaultName
-              .toUpperCase()
-              .replace("OPTIONAL", "")
-              .replace(" ", "_")
-              .replace("[", "")
-              .replace("]", "")
-        }else{
-          return xmaterialDefaultName
+        if (regex.matches(xmaterialDefaultName)) {
+            return xmaterialDefaultName
+                .toUpperCase()
+                .replace("OPTIONAL", "")
+                .replace(" ", "_")
+                .replace("[", "")
+                .replace("]", "")
+        } else {
+            return xmaterialDefaultName
         }
     }
 
     fun saveStructure(pos1: Location, pos2: Location, player: Player, name: String, skipAir: Boolean = false) {
         if (pos1.world != pos2.world) {
-            player.sendMessage(Message.messagePrefix + Message.skyblockEditErrorPositionsNotInSameWorld)
+            player.sendMessage(Message.instance.messagePrefix + Message.instance.skyblockEditErrorPositionsNotInSameWorld)
             return
         }
         val playerLoc = player.location
@@ -62,7 +62,7 @@ class SkyblockEdit {
         val yEnd = if (pos1.y < pos2.y) pos2.y else pos1.y
         val zEnd = if (pos1.z < pos2.z) pos2.z else pos1.z
 
-        for (x in xStart.toInt() - 1  until xEnd.toInt() + 1) {
+        for (x in xStart.toInt() - 1 until xEnd.toInt() + 1) {
             for (y in yStart.toInt() - 1 until yEnd.toInt() + 1) {
                 for (z in zStart.toInt() - 1 until zEnd.toInt() + 1) {
                     val block = world!!.getBlockAt(x, y, z)
@@ -79,7 +79,13 @@ class SkyblockEdit {
                         for (slot in 0 until chest.blockInventory.size) {
                             val item = chest.blockInventory.getItem(slot) ?: continue
 
-                            items.add(SbfChestItem(slot, item.amount, normalizeBlockName(XMaterial.matchXMaterial(item.type.name).toString()) ))
+                            items.add(
+                                SbfChestItem(
+                                    slot,
+                                    item.amount,
+                                    normalizeBlockName(XMaterial.matchXMaterial(item.type.name).toString())
+                                )
+                            )
                         }
 //                        val directionalState = chest.blockData as Directional
 //                        val direction = when (directionalState.facing) {
@@ -93,7 +99,14 @@ class SkyblockEdit {
                         continue
                     }
 
-                    container.blocks.add(SbfBlock(xRel, yRel, zRel, normalizeBlockName(XMaterial.matchXMaterial(block.type.name).toString()) ))
+                    container.blocks.add(
+                        SbfBlock(
+                            xRel,
+                            yRel,
+                            zRel,
+                            normalizeBlockName(XMaterial.matchXMaterial(block.type.name).toString())
+                        )
+                    )
                 }
             }
         }
@@ -102,8 +115,8 @@ class SkyblockEdit {
         SbfWriter(container).write(File(structuresDir, "${name}.structure"))
         player.sendMessage(
             color(
-                Message.messagePrefix + String.format(
-                    Message.skyblockEditStructureSaved,
+                Message.instance.messagePrefix + String.format(
+                    Message.instance.skyblockEditStructureSaved,
                     "${name}.structure"
                 )
             )
@@ -164,7 +177,7 @@ class SkyblockEdit {
                 chestState.blockInventory.setItem(item.slot, ItemBuilder(valueOf).amount(item.amount).build())
             }
         }
-        player?.sendMessage(Message.commandSEPasteStructurePasted)
+        player?.sendMessage(Message.instance.commandSEPasteStructurePasted)
     }
 
 }

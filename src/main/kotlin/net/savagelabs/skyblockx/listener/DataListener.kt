@@ -16,7 +16,7 @@ class DataListener : Listener {
 
     @EventHandler
     fun onPlayerConnect(event: PlayerJoinEvent) {
-        val iPlayer = Data.IPlayers[event.player.uniqueId.toString()]
+        val iPlayer = Data.instance.IPlayers[event.player.uniqueId.toString()]
         if (iPlayer != null) {
             iPlayer.falling = false
             // Update owner tag changes :)
@@ -33,7 +33,8 @@ class DataListener : Listener {
             updateWorldBorder(event.player, event.player.location, 10L)
             return
         }
-        Data.IPlayers[event.player.uniqueId.toString()] = IPlayer(event.player.uniqueId.toString())
+        Data.instance.IPlayers[event.player.uniqueId.toString()] =
+            IPlayer(event.player.uniqueId.toString(), event.player.name)
         SkyblockX.skyblockX.logger.info("${event.player.name}'s IPlayer instance was created")
     }
 

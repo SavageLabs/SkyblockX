@@ -35,7 +35,7 @@ class BlockListener : Listener {
 
         // Check if they dont have an island or a co-op island, if not, deny.
         if (!iPlayer.hasCoopIsland() && !iPlayer.hasIsland() && !iPlayer.inBypass) {
-            iPlayer.message(Message.listenerActionDeniedCreateAnIslandFirst)
+            iPlayer.message(Message.instance.listenerActionDeniedCreateAnIslandFirst)
             event.isCancelled = true
             return
         }
@@ -43,7 +43,7 @@ class BlockListener : Listener {
 
         // Check using the general #canUseBlockAtLocation, will actually check co-op and own island.
         if (!canUseBlockAtLocation(iPlayer, event.block.location)) {
-            iPlayer.message(Message.listenerBlockPlacementDenied)
+            iPlayer.message(Message.instance.listenerBlockPlacementDenied)
             event.isCancelled = true
             return
         }
@@ -56,7 +56,7 @@ class BlockListener : Listener {
             val currentQuest = island.currentQuest!!
             // Find the quest that the island has activated.
             val targetQuest =
-                Quests.islandQuests.find { quest -> quest.type == QuestGoal.PLACE_BLOCKS && quest.id == currentQuest }
+                Quests.instance.islandQuests.find { quest -> quest.type == QuestGoal.PLACE_BLOCKS && quest.id == currentQuest }
                     ?: return
             // Use XMaterial to parse the material, if null, try to use native material just in case.
             val material = event.block.type.toString()
@@ -76,7 +76,8 @@ class BlockListener : Listener {
 
 
         // Anti-abuse for skyblock.
-        event.block.setMetadata("skyblock-placed-by-player", FixedMetadataValue(SkyblockX.skyblockX, true)
+        event.block.setMetadata(
+            "skyblock-placed-by-player", FixedMetadataValue(SkyblockX.skyblockX, true)
         )
     }
 
@@ -92,17 +93,16 @@ class BlockListener : Listener {
         val iPlayer = getIPlayer(event.player)
 
 
-
         // Check if they have an island or co-op island, if not, deny.
         if (!iPlayer.hasCoopIsland() && !iPlayer.hasIsland() && !iPlayer.inBypass) {
-            iPlayer.message(Message.listenerActionDeniedCreateAnIslandFirst)
+            iPlayer.message(Message.instance.listenerActionDeniedCreateAnIslandFirst)
             event.isCancelled = true
             return
         }
 
         // Check if they can use the block on the island, or co-op island.
         if (!canUseBlockAtLocation(iPlayer, event.block.location)) {
-            iPlayer.message(Message.listenerBlockPlacementDenied)
+            iPlayer.message(Message.instance.listenerBlockPlacementDenied)
             event.isCancelled = true
             return
         }
@@ -118,7 +118,7 @@ class BlockListener : Listener {
 
             // Find the quest that the island has activated.
             val targetQuest =
-                Quests.islandQuests.find { quest -> quest.type == QuestGoal.BREAK_BLOCKS && quest.id == currentQuest }
+                Quests.instance.islandQuests.find { quest -> quest.type == QuestGoal.BREAK_BLOCKS && quest.id == currentQuest }
                     ?: return
 
             // Use XMaterial to parse the material, if null, try to use native material just in case.
@@ -142,7 +142,7 @@ class BlockListener : Listener {
     @EventHandler
     fun onBlockFromToEvent(event: BlockFromToEvent) {
         // No skyblock world or generating from down block face.
-        if (!Config.islandOreGeneratorEnabled || event.face == BlockFace.DOWN || isNotInSkyblockWorld(event.block.world)) return
+        if (!Config.instance.islandOreGeneratorEnabled || event.face == BlockFace.DOWN || isNotInSkyblockWorld(event.block.world)) return
 
         Bukkit.getScheduler().runTask(SkyblockX.skyblockX, Runnable {
             run {

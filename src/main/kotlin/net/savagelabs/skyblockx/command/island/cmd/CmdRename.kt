@@ -1,15 +1,18 @@
 package net.savagelabs.skyblockx.command.island.cmd
 
-import net.savagelabs.skyblockx.command.CommandInfo
-import net.savagelabs.skyblockx.command.CommandRequirementsBuilder
-import net.savagelabs.skyblockx.command.SCommand
-import net.savagelabs.skyblockx.core.Island
+import net.savagelabs.savagepluginx.command.Argument
+import net.savagelabs.savagepluginx.command.Command
+import net.savagelabs.savagepluginx.command.argument.StringArgument
+import net.savagelabs.savagepluginx.strings.isAlphaNumeric
+import net.savagelabs.skyblockx.command.SCommandInfo
+import net.savagelabs.skyblockx.command.SCommandRequirements
+import net.savagelabs.skyblockx.command.SCommandRequirementsBuilder
 import net.savagelabs.skyblockx.core.Permission
 import net.savagelabs.skyblockx.core.isIslandNameTaken
 import net.savagelabs.skyblockx.persist.Config
 import net.savagelabs.skyblockx.persist.Message
 
-class CmdRename : SCommand() {
+class CmdRename : Command<SCommandInfo, SCommandRequirements>() {
 
     init {
         aliases.add("rename")
@@ -17,7 +20,7 @@ class CmdRename : SCommand() {
 
         requiredArgs.add(Argument("new-name", 0, StringArgument()))
 
-        commandRequirements = CommandRequirementsBuilder()
+        commandRequirements = SCommandRequirementsBuilder()
             .withPermission(Permission.RENAME)
             .asLeader(true)
             .asIslandMember(true)
@@ -25,29 +28,33 @@ class CmdRename : SCommand() {
     }
 
 
-    override fun perform(info: CommandInfo) {
+    override fun perform(info: SCommandInfo) {
         val newName = info.args[0]
-        if (Config.islandNameEnforceLength && (newName.length < Config.islandNameMinLength || newName.length > Config.islandNameMaxLength)) {
-            info.message(Message.commandCreateLength, Config.islandNameMinLength.toString(), Config.islandNameMaxLength.toString())
+        if (Config.instance.islandNameEnforceLength && (newName.length < Config.instance.islandNameMinLength || newName.length > Config.instance.islandNameMaxLength)) {
+            info.message(
+                Message.instance.commandCreateLength,
+                Config.instance.islandNameMinLength.toString(),
+                Config.instance.islandNameMaxLength.toString()
+            )
             return
         }
 
-        if (Config.islandNameEnforceAlphaNumeric && !newName.chars().allMatch(Character::isLetterOrDigit)) {
-            info.message(Message.commandCreateNonAlphaNumeric)
+        if (Config.instance.islandNameEnforceAlphaNumeric && !newName.isAlphaNumeric()) {
+            info.message(Message.instance.commandCreateNonAlphaNumeric)
             return
         }
 
         if (isIslandNameTaken(newName)) {
-            info.message(Message.commandRenameIslandNameIsTaken)
+            info.message(Message.instance.commandRenameIslandNameIsTaken)
             return
         }
 
         info.island?.islandName = newName
-        info.message(Message.commandRenameSuccess, newName)
+        info.message(Message.instance.commandRenameSuccess, newName)
     }
 
 
     override fun getHelpInfo(): String {
-        return Message.commandRenameHelp
+        return Message.instance.commandRenameHelp
     }
 }

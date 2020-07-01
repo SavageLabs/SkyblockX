@@ -1,8 +1,8 @@
-import org.apache.tools.ant.filters.ReplaceTokens
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+import org.apache.tools.ant.filters.ReplaceTokens
 
 plugins {
-    kotlin("jvm") version "1.3.50"
+    kotlin("jvm") version "1.3.61"
     id("com.github.johnrengelman.shadow") version "5.1.0"
 }
 
@@ -22,17 +22,22 @@ repositories {
 }
 
 dependencies {
-    compile("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.2")
-    compile("org.ocpsoft.prettytime:prettytime:4.0.1.Final")
-    compile("com.github.stefvanschie.inventoryframework:IF:0.5.18")
-    compile("org.bstats:bstats-bukkit:1.7")
-    compile("com.google.code.gson:gson:2.8.5")
-    compile("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    compile("net.prosavage:BasePlugin:1.7.4")
-    compile("me.rayzr522:jsonmessage:1.2.0")
-    compile("com.cryptomorin:XSeries:6.0.0")
-    compile("io.papermc:paperlib:1.0.2")
+    implementation("org.ocpsoft.prettytime:prettytime:4.0.1.Final")
+    implementation("com.github.stefvanschie.inventoryframework:IF:0.5.18")
+    implementation("org.bstats:bstats-bukkit:1.7")
+    implementation("com.cryptomorin:XSeries:6.0.0")
+    implementation("io.papermc:paperlib:1.0.2")
+    implementation(project(":WorldBorderUtil"))
+    implementation(project(":SavagePluginX"))
 
+
+    compileOnly(kotlin("stdlib-jdk8"))
+    compileOnly(kotlin("reflect"))
+    compileOnly("me.rayzr522:jsonmessage:1.2.0")
+    compileOnly("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.7")
+    compileOnly("com.fasterxml.jackson.module:jackson-module-kotlin:2.11.0")
+    compileOnly("com.fasterxml.jackson.core:jackson-databind:2.11.0")
+    compileOnly("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.11.1")
     compileOnly("org.spigotmc:spigot-api:1.16.1-R0.1-SNAPSHOT")
     compileOnly("me.clip:placeholderapi:2.9.2")
 }
@@ -43,10 +48,15 @@ tasks {
     }
 
     processResources {
-        println("Task ***** processResources*****")
-        filter<ReplaceTokens>("tokens" to mapOf(
-            "project.version" to project.version
-        ))
+        filter<ReplaceTokens>(
+            "tokens" to mapOf(
+                "project.version" to project.version
+            )
+        )
+    }
+
+    val build by existing {
+        dependsOn(shadowJar)
     }
 
     val copyResources by registering(Copy::class) {
@@ -55,30 +65,13 @@ tasks {
         dependsOn(processResources)
     }
 
-
     val shadowJar = named<ShadowJar>("shadowJar") {
         dependsOn(copyResources)
         mergeServiceFiles()
         exclude("META-INF/*.DSA")
         exclude("META-INF/*.RSA")
-        relocate(
-            "com.github.stefvanschie.inventoryframework",
-            "net.savagelabs.skyblockx.shade.stefvanschie.inventoryframework"
-        )
-        relocate("com.google.gson", "net.savagelabs.skyblockx.shade.com.google.gson")
-        relocate("net.prosavage.baseplugin", "net.savagelabs.skyblockx.shade.baseplugin")
-        relocate("org.jetbrains.kotlin", "net.savagelabs.skyblockx.shade.kotlin")
-        relocate("me.rayzr522.jsonmessage", "net.savagelabs.skyblockx.shade.jsonmessage")
-        relocate("org.bstats", "net.savagelabs.skyblockx.shade.bstats")
-        relocate("io.papermc.lib", "net.savagelabs.skyblockx.shade.paperlib")
-        relocate("kotlin", "net.savagelabs.skyblockx.shade.kotlin")
-        relocate("org.jetbrains.annotations", "net.savagelabs.skyblockx.shade.jetbrains-annotations")
-        relocate("com.cryptomorin.xseries", "net.savagelabs.skyblockx.shade.xseries")
-        relocate("fonts", "net.savagelabs.skyblockx.shade.fonts")
-        archiveBaseName.set("SkyblockX")
-        minimize()
+        archiveFileName.set("SkyblockX-${version}.jar")
     }
-
 
 
     val ci = task("ci") {

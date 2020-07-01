@@ -1,20 +1,21 @@
 package net.savagelabs.skyblockx.command.island.cmd
 
-import net.savagelabs.skyblockx.command.CommandInfo
-import net.savagelabs.skyblockx.command.CommandRequirementsBuilder
-import net.savagelabs.skyblockx.command.SCommand
+import net.savagelabs.savagepluginx.command.Command
+import net.savagelabs.skyblockx.command.SCommandInfo
+import net.savagelabs.skyblockx.command.SCommandRequirements
+import net.savagelabs.skyblockx.command.SCommandRequirementsBuilder
 import net.savagelabs.skyblockx.core.Permission
 import net.savagelabs.skyblockx.core.getIslandFromLocation
 import net.savagelabs.skyblockx.persist.Message
 import net.savagelabs.skyblockx.persist.data.getSLocation
 
-class CmdSetGo : SCommand() {
+class CmdSetGo : Command<SCommandInfo, SCommandRequirements>() {
 
     init {
         aliases.add("set-go")
 
         commandRequirements =
-            CommandRequirementsBuilder()
+            SCommandRequirementsBuilder()
                 .asIslandMember(true)
                 .asPlayer(true)
                 .asLeader(true)
@@ -23,17 +24,17 @@ class CmdSetGo : SCommand() {
     }
 
 
-    override fun perform(info: CommandInfo) {
+    override fun perform(info: SCommandInfo) {
         if (getIslandFromLocation(info.player!!.location) != info.island) {
-            info.message(Message.commandGoSetYouMustBeOnYourIsland)
+            info.message(Message.instance.commandGoSetYouMustBeOnYourIsland)
             return
         }
 
         info.island!!.islandGoPoint = getSLocation(info.player!!.location)
-        info.message(Message.commandGoSetSuccess)
+        info.message(Message.instance.commandGoSetSuccess)
     }
 
     override fun getHelpInfo(): String {
-        return Message.commandGoSetHelp
+        return Message.instance.commandGoSetHelp
     }
 }

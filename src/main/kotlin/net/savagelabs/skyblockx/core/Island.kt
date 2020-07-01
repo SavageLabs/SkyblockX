@@ -1,6 +1,7 @@
 package net.savagelabs.skyblockx.core
 
 import com.cryptomorin.xseries.XMaterial
+import com.fasterxml.jackson.annotation.JsonIgnore
 import io.papermc.lib.PaperLib
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
@@ -21,13 +22,15 @@ import org.bukkit.block.Biome
 import org.bukkit.block.CreatureSpawner
 import org.bukkit.entity.EntityType
 import org.bukkit.entity.Player
+import org.bukkit.inventory.Inventory
 import java.lang.reflect.InvocationTargetException
 import java.text.DecimalFormat
 import java.util.*
+import java.util.stream.Collectors
+import kotlin.collections.HashMap
 import kotlin.collections.HashSet
 import kotlin.math.floor
 import kotlin.math.sqrt
-import kotlin.streams.toList
 import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
 import kotlin.time.TimedValue
@@ -46,16 +49,16 @@ data class Island(
 
     var islandName = ownerTag
 
-    var inventory = Bukkit.createInventory(null, (Config.chestRows[1] ?: 3) * 9)
+    var inventory: Inventory? = Bukkit.createInventory(null, (Config.instance.chestRows[1] ?: 3) * 9)
         get() {
-            if (field == null) field = Bukkit.createInventory(null, (Config.chestRows[1] ?: 3) * 9)
+            if (field == null) field = Bukkit.createInventory(null, (Config.instance.chestRows[1] ?: 3) * 9)
             return field
         }
 
     var beenToNether = false
     var netherFilePath = "nether-island.structure"
 
-    lateinit var islandGoPoint: SLocation
+    var islandGoPoint: SLocation? = null
 
     val minLocation: SLocation = getSLocation(point.getLocation())
     val maxLocation: SLocation = getSLocation(
@@ -66,12 +69,12 @@ data class Island(
     var lastManualCalc: Long = -1L
 
     fun canManualCalc(): Boolean {
-        return lastManualCalc == -1L || System.currentTimeMillis() - lastManualCalc > Config.islandTopManualCalcCooldownMiliseconds
+        return lastManualCalc == -1L || System.currentTimeMillis() - lastManualCalc > Config.instance.islandTopManualCalcCooldownMiliseconds
     }
 
 
     fun setBiome(biome: Biome) {
-        val world = Bukkit.getWorld(Config.skyblockWorldName)!!
+        val world = Bukkit.getWorld(Config.instance.skyblockWorldName)!!
         for (x in minLocation.x.toInt()..maxLocation.x.toInt()) {
             for (y in 0 until 256) {
                 for (z in minLocation.z.toInt()..maxLocation.z.toInt()) {
@@ -82,8 +85,8 @@ data class Island(
     }
 
 
-    var maxCoopPlayers = Config.defaultMaxCoopPlayers
-    var maxIslandHomes = Config.defaultMaxIslandHomes
+    var maxCoopPlayers = Config.instance.defaultMaxCoopPlayers
+    var maxIslandHomes = Config.instance.defaultMaxIslandHomes
 
 
     var questData = HashMap<String, Int>()
@@ -93,7 +96,7 @@ data class Island(
 
     var oneTimeQuestsCompleted = mutableSetOf<String>()
 
-    var memberLimit = Config.defaultIslandMemberLimit
+    var memberLimit = Config.instance.defaultIslandMemberLimit
 
     val members = mutableSetOf<String>()
 
@@ -121,7 +124,7 @@ data class Island(
             time = measureTimedValue {
                 val chunkList = mutableSetOf<Chunk>()
                 var chunks = mutableSetOf<ChunkSnapshot>()
-                val world = Bukkit.getWorld(Config.skyblockWorldName)!!
+                val world = Bukkit.getWorld(Config.instance.skyblockWorldName)!!
                 for (x in minLocation.x.toInt()..maxLocation.x.toInt()) {
                     for (z in minLocation.z.toInt()..maxLocation.z.toInt()) {
                         Bukkit.getScheduler().runTask(SkyblockX.skyblockX, Runnable {
@@ -130,7 +133,7 @@ data class Island(
                         })
 
                     }
-                    delay(Config.islandTopChunkLoadDelayInMiliseconds)
+                    delay(Config.instance.islandTopChunkLoadDelayInMiliseconds)
                 }
                 chunks = chunkList.map { it.chunkSnapshot }.toMutableSet()
                 val useNewGetBlockTypeSnapshotMethod = XMaterial.getVersion() >= 12.0
@@ -157,13 +160,13 @@ data class Island(
                                         val state = it.getBlock(x, y, z).state
                                         state as CreatureSpawner
                                         val spawnedType = state.spawnedType
-                                        price += (BlockValues.spawnerValues[spawnedType] ?: 0.0)
+                                        price += (BlockValues.instance.spawnerValues[spawnedType] ?: 0.0)
                                         val spawnerAmount = spawnerMap.getOrDefault(spawnedType, 0)
                                         spawnerMap[spawnedType] = spawnerAmount + 1
                                     }
                                     continue
                                 }
-                                price += BlockValues.blockValues[xmat] ?: 0.0
+                                price += BlockValues.instance.blockValues[xmat] ?: 0.0
                                 mapAmt[xmat] = mapAmt.getOrDefault(xmat, 0) + 1
                             }
                         }
@@ -228,7 +231,7 @@ data class Island(
 
     fun getIslandMembers(): Set<IPlayer> {
         if (members == null || members.size == 0) return emptySet()
-        return members.stream().map { uuid -> getIPlayerByUUID(uuid) }?.toList()?.toSet() as Set<IPlayer>
+        return members.stream().map { uuid -> getIPlayerByUUID(uuid)!! }?.collect(Collectors.toList())!!.toSet()
     }
 
     fun getAllMemberUUIDs(): Set<String> {
@@ -268,7 +271,7 @@ data class Island(
     }
 
     fun getLevel(): Double {
-        return floor((25 + sqrt(Config.levelIncrementFactor * Config.levelIncrementFactor - 4 * Config.levelIncrementFactor * (-1 * this.getValue()))) / (2 * Config.levelIncrementFactor))
+        return floor((25 + sqrt(Config.instance.levelIncrementFactor * Config.instance.levelIncrementFactor - 4 * Config.instance.levelIncrementFactor * (-1 * this.getValue()))) / (2 * Config.instance.levelIncrementFactor))
     }
 
     /**
@@ -288,7 +291,7 @@ data class Island(
         if (owner != null) {
             maxCoopPlayers = getMaxPermission(owner, "skyblockx.limits.coop-players")
             if (maxCoopPlayers == 0) {
-                maxCoopPlayers = Config.defaultMaxCoopPlayers
+                maxCoopPlayers = Config.instance.defaultMaxCoopPlayers
             }
         }
 
@@ -305,7 +308,7 @@ data class Island(
         if (owner != null) {
             maxIslandHomes = getMaxPermission(owner, "skyblockx.limits.island-homes")
             if (maxIslandHomes == 0) {
-                maxIslandHomes = Config.defaultMaxIslandHomes
+                maxIslandHomes = Config.instance.defaultMaxIslandHomes
             }
         }
 
@@ -333,9 +336,9 @@ data class Island(
             oneTimeQuestsCompleted.add(quest.id)
         }
         // Check for quest ordering system.
-        if (Quests.useQuestOrder && Quests.questOrder.contains(quest.id)) {
-            val indexOfQuest = Quests.questOrder.indexOf(quest.id) + 1
-            currentQuestOrderIndex = if (Quests.questOrder.size > indexOfQuest) {
+        if (Quests.instance.useQuestOrder && Quests.instance.questOrder.contains(quest.id)) {
+            val indexOfQuest = Quests.instance.questOrder.indexOf(quest.id) + 1
+            currentQuestOrderIndex = if (Quests.instance.questOrder.size > indexOfQuest) {
                 indexOfQuest
             } else {
                 null
@@ -349,12 +352,12 @@ data class Island(
         val progressAmt = (getQuestCompletedAmount(quest.id).toDouble() / quest.amountTillComplete.toDouble()) * 10
         var progress = ""
         for (completed in 0..9) {
-            progress += if (completed < progressAmt) Message.questProgressCompletedChar else Message.questProgressInCompleteChar
+            progress += if (completed < progressAmt) Message.instance.questProgressCompletedChar else Message.instance.questProgressInCompleteChar
         }
 
         JSONMessage.actionbar(
             color(
-                Message.questProgressBarMessage
+                Message.instance.questProgressBarMessage
                     .replace("{quest-name}", quest.name)
                     .replace("{progress-bar}", progress)
                     .replace("{percentage}", DecimalFormat("##").format(progressAmt * 10))
@@ -414,7 +417,7 @@ data class Island(
             if (notify) {
                 authorizer.message(
                     String.format(
-                        Message.commandCoopAuthorized,
+                        Message.instance.commandCoopAuthorized,
                         authorizer.getPlayer().name,
                         iPlayer.getPlayer().name
                     )
@@ -438,22 +441,24 @@ data class Island(
         iPlayer.coopedIslandIds.remove(islandID)
         currentCoopPlayers.remove(UUID.fromString(iPlayer.uuid))
         if (notify) {
-            iPlayer.message(String.format(Message.commandCoopLoggedOut))
+            iPlayer.message(String.format(Message.instance.commandCoopLoggedOut))
         }
     }
 
 
+    @JsonIgnore
     fun getOwnerIPlayer(): IPlayer? {
-        return Data.IPlayers[ownerUUID]
+        return Data.instance.IPlayers[ownerUUID]
     }
 
 
+    @JsonIgnore
     fun getIslandCenter(): Location {
         return Location(
             minLocation.getLocation().world,
-            minLocation.x + (Config.islandMaxSizeInBlocks / 2),
+            minLocation.x + (Config.instance.islandMaxSizeInBlocks / 2),
             101.toDouble(),
-            minLocation.z + (Config.islandMaxSizeInBlocks / 2)
+            minLocation.z + (Config.instance.islandMaxSizeInBlocks / 2)
         )
     }
 
@@ -486,25 +491,28 @@ data class Island(
         val ownerIPlayer = getIPlayerByUUID(ownerUUID)
         ownerIPlayer?.unassignIsland()
         val player = ownerIPlayer?.getPlayer()
-        teleportAsync(player, Bukkit.getWorld(Config.defaultWorld)!!.spawnLocation, Runnable { })
-        if (Config.islandDeleteClearInventory) player?.inventory?.clear()
-        if (Config.islandDeleteClearEnderChest) player?.enderChest?.clear()
+        teleportAsync(player, Bukkit.getWorld(Config.instance.defaultWorld)!!.spawnLocation, Runnable { })
+        if (Config.instance.islandDeleteClearInventory) player?.inventory?.clear()
+        if (Config.instance.islandDeleteClearEnderChest) player?.enderChest?.clear()
         getAllMemberUUIDs().forEach { memberUUID ->
             val iplayer = getIPlayerByUUID(memberUUID)
             iplayer?.unassignIsland()
             val player = iplayer?.getPlayer()
-            teleportAsync(player, Bukkit.getWorld(Config.defaultWorld)!!.spawnLocation.add(0.0, 1.0, 0.0), Runnable { })
-            if (Config.islandDeleteClearInventory) player?.inventory?.clear()
-            if (Config.islandDeleteClearEnderChest) player?.enderChest?.clear()
+            teleportAsync(
+                player,
+                Bukkit.getWorld(Config.instance.defaultWorld)!!.spawnLocation.add(0.0, 1.0, 0.0),
+                Runnable { })
+            if (Config.instance.islandDeleteClearInventory) player?.inventory?.clear()
+            if (Config.instance.islandDeleteClearEnderChest) player?.enderChest?.clear()
         }
-        Data.islands.remove(islandID)
+        Data.instance.islands.remove(islandID)
         // Delete island from value map.
         SkyblockX.islandValues?.map?.remove(islandID)
         deleteIslandBlocks()
     }
 
     fun deleteIslandBlocks() {
-        if (!Config.removeBlocksOnIslandDelete) return
+        if (!Config.instance.removeBlocksOnIslandDelete) return
         val start = minLocation.getLocation()
         val end = maxLocation.getLocation()
         val world = Bukkit.getWorld(start.world!!.name)!!
@@ -536,11 +544,11 @@ data class Island(
 }
 
 fun getIslandById(id: Int): Island? {
-    return Data.islands[id]
+    return Data.instance.islands[id]
 }
 
 fun getIslandFromLocation(location: Location): Island? {
-    for (island in Data.islands.values) {
+    for (island in Data.instance.islands.values) {
         if (island.locationInIsland(location)) {
             return island
         }
@@ -550,7 +558,7 @@ fun getIslandFromLocation(location: Location): Island? {
 
 fun getIslandByOwnerTag(ownerTag: String): Island? {
     val lowerCaseOwnerTag = ownerTag.toLowerCase()
-    for (island in Data.islands.values) {
+    for (island in Data.instance.islands.values) {
         if (island.ownerTag.toLowerCase() == lowerCaseOwnerTag) {
             return island
         }
@@ -560,18 +568,19 @@ fun getIslandByOwnerTag(ownerTag: String): Island? {
 }
 
 fun createIsland(player: Player?, schematic: String, teleport: Boolean = true): Island {
-    var size = if (player == null) Config.islandMaxSizeInBlocks else getMaxPermission(player, "skyblockx.size")
-    size = if (size <= 0 || size > Config.islandMaxSizeInBlocks) Config.islandMaxSizeInBlocks else size
+    var size = if (player == null) Config.instance.islandMaxSizeInBlocks else getMaxPermission(player, "skyblockx.size")
+    size =
+        if (size <= 0 || size > Config.instance.islandMaxSizeInBlocks) Config.instance.islandMaxSizeInBlocks else size
     val island =
         Island(
-            Data.nextIslandID,
-            spiral(Data.nextIslandID),
+            Data.instance.nextIslandID,
+            spiral(Data.instance.nextIslandID),
             player?.uniqueId.toString(),
             player?.name ?: "SYSTEM_OWNED",
             size
         )
-    Data.islands[Data.nextIslandID] = island
-    Data.nextIslandID++
+    Data.instance.islands[Data.instance.nextIslandID] = island
+    Data.instance.nextIslandID++
     // Make player null because we dont want to send them the SkyblockEdit Engine's success upon pasting the island.
     SkyblockEdit().pasteIsland(schematic, island.getIslandCenter(), null)
     if (player != null) {
@@ -581,8 +590,15 @@ fun createIsland(player: Player?, schematic: String, teleport: Boolean = true): 
         incrementQuestInOrder(island)
     }
     // Use deprecated method for 1.8 support.
-    player?.sendTitle(color(Message.islandCreatedTitle), color(Message.islandCreatedSubtitle))
-    player?.sendMessage(color("${Message.messagePrefix}${String.format(Message.islandCreationMessage, size)}"))
+    player?.sendTitle(color(Message.instance.islandCreatedTitle), color(Message.instance.islandCreatedSubtitle))
+    player?.sendMessage(
+        color(
+            "${Message.instance.messagePrefix}${String.format(
+                Message.instance.islandCreationMessage,
+                size
+            )}"
+        )
+    )
     if (player != null) updateWorldBorder(player, player.location, 10L)
     island.islandGoPoint = getSLocation(island.getIslandCenter())
     return island
@@ -591,7 +607,7 @@ fun createIsland(player: Player?, schematic: String, teleport: Boolean = true): 
 fun deleteIsland(player: Player) {
     val iPlayer = getIPlayer(player)
     if (iPlayer.hasIsland()) {
-        Data.islands.remove(iPlayer.getIsland()!!.islandID)
+        Data.instance.islands.remove(iPlayer.getIsland()!!.islandID)
         iPlayer.unassignIsland()
     }
 }
@@ -605,7 +621,7 @@ data class IslandTopInfo(val map: HashMap<Int, Island.CalcInfo>, val time: Long)
 fun calculateAllIslands() {
     val islandVals = hashMapOf<Int, Island.CalcInfo>()
     val pluginManager = Bukkit.getPluginManager()
-    for ((key, island) in Data.islands) {
+    for ((key, island) in Data.instance.islands) {
         val islandPreCalcEvent = IslandPreLevelCalcEvent(island, island.getValue())
         Bukkit.getScheduler().callSyncMethod(SkyblockX.skyblockX) { pluginManager.callEvent(islandPreCalcEvent) }
         if (islandPreCalcEvent.isCancelled) continue
@@ -620,7 +636,7 @@ fun calculateAllIslands() {
 }
 
 fun isIslandNameTaken(tag: String): Boolean {
-    for ((id, island) in Data.islands) {
+    for ((id, island) in Data.instance.islands) {
         if (tag == island.islandName) return true
     }
     return false

@@ -1,12 +1,16 @@
 package net.savagelabs.skyblockx.command.island.cmd
 
-import net.savagelabs.skyblockx.command.CommandInfo
-import net.savagelabs.skyblockx.command.CommandRequirementsBuilder
-import net.savagelabs.skyblockx.command.SCommand
+
+import net.savagelabs.savagepluginx.command.Argument
+import net.savagelabs.savagepluginx.command.Command
+import net.savagelabs.savagepluginx.command.argument.BooleanArgument
+import net.savagelabs.skyblockx.command.SCommandInfo
+import net.savagelabs.skyblockx.command.SCommandRequirements
+import net.savagelabs.skyblockx.command.SCommandRequirementsBuilder
 import net.savagelabs.skyblockx.core.Permission
 import net.savagelabs.skyblockx.persist.Message
 
-class CmdAllowVisitors : SCommand() {
+class CmdAllowVisitors : Command<SCommandInfo, SCommandRequirements>() {
 
     init {
         aliases.add("allow-visitors")
@@ -19,10 +23,14 @@ class CmdAllowVisitors : SCommand() {
                 BooleanArgument()
             )
         )
-        commandRequirements = CommandRequirementsBuilder().withPermission(Permission.ALLOWVISITOR).asIslandMember(true).asLeader(true).build()
+        commandRequirements = SCommandRequirementsBuilder()
+            .withPermission(Permission.ALLOWVISITOR)
+            .asIslandMember(true)
+            .asLeader(true)
+            .build()
     }
 
-    override fun perform(info: CommandInfo) {
+    override fun perform(info: SCommandInfo) {
         if (info.args.size == 1) {
             val argAsBoolean = info.getArgAsBoolean(0) ?: return
             info.island!!.allowVisitors = argAsBoolean
@@ -30,10 +38,10 @@ class CmdAllowVisitors : SCommand() {
             info.island!!.allowVisitors = !info.island!!.allowVisitors
         }
 
-        info.message(String.format(Message.commandAllowVisitorsStatus, info.island!!.allowVisitors))
+        info.message(String.format(Message.instance.commandAllowVisitorsStatus, info.island!!.allowVisitors))
     }
 
     override fun getHelpInfo(): String {
-        return Message.commandAllowVisitorsHelp
+        return Message.instance.commandAllowVisitorsHelp
     }
 }

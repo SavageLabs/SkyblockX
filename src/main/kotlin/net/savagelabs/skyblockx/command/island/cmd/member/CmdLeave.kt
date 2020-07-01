@@ -1,31 +1,35 @@
 package net.savagelabs.skyblockx.command.island.cmd.member
 
-import net.savagelabs.skyblockx.command.CommandInfo
-import net.savagelabs.skyblockx.command.CommandRequirementsBuilder
-import net.savagelabs.skyblockx.command.SCommand
+import net.savagelabs.savagepluginx.command.Command
+import net.savagelabs.skyblockx.command.SCommandInfo
+import net.savagelabs.skyblockx.command.SCommandRequirements
+import net.savagelabs.skyblockx.command.SCommandRequirementsBuilder
 import net.savagelabs.skyblockx.core.Permission
 import net.savagelabs.skyblockx.persist.Message
 
-class CmdLeave : SCommand() {
+class CmdLeave : Command<SCommandInfo, SCommandRequirements>() {
 
 
     init {
         aliases.add("leave")
 
-        commandRequirements = CommandRequirementsBuilder().withPermission(Permission.LEAVE).asIslandMember(true).build()
+        commandRequirements = SCommandRequirementsBuilder()
+            .withPermission(Permission.LEAVE)
+            .asIslandMember(true)
+            .build()
     }
 
 
-    override fun perform(info: CommandInfo) {
+    override fun perform(info: SCommandInfo) {
         if (info.iPlayer!!.isLeader()) {
-            info.message(Message.commandLeaveDeniedLeader)
+            info.message(Message.instance.commandLeaveDeniedLeader)
             return
         }
 
-        info.message(Message.commandLeaveSuccess)
+        info.message(Message.instance.commandLeaveSuccess)
         info.island!!.messageAllOnlineIslandMembers(
             String.format(
-                Message.commandLeaveMemberLeftIsland,
+                Message.instance.commandLeaveMemberLeftIsland,
                 info.player!!.name
             )
         )
@@ -35,6 +39,6 @@ class CmdLeave : SCommand() {
     }
 
     override fun getHelpInfo(): String {
-        return Message.commandLeaveHelp
+        return Message.instance.commandLeaveHelp
     }
 }

@@ -1,14 +1,16 @@
 package net.savagelabs.skyblockx.command.skyblock.cmd
 
-import net.savagelabs.skyblockx.command.CommandInfo
-import net.savagelabs.skyblockx.command.CommandRequirementsBuilder
-import net.savagelabs.skyblockx.command.SCommand
+import net.savagelabs.savagepluginx.command.Argument
+import net.savagelabs.savagepluginx.command.Command
+import net.savagelabs.savagepluginx.command.argument.PlayerArgument
+import net.savagelabs.skyblockx.command.SCommandInfo
+import net.savagelabs.skyblockx.command.SCommandRequirements
+import net.savagelabs.skyblockx.command.SCommandRequirementsBuilder
 import net.savagelabs.skyblockx.core.Permission
 import net.savagelabs.skyblockx.core.getIPlayerByName
 import net.savagelabs.skyblockx.persist.Message
-import org.bukkit.Bukkit
 
-class CmdSbOwner : SCommand() {
+class CmdSbOwner : Command<SCommandInfo, SCommandRequirements>() {
 
 
     init {
@@ -19,16 +21,16 @@ class CmdSbOwner : SCommand() {
 
         requiredArgs.add(Argument("new-owner", 1, PlayerArgument()))
 
-        commandRequirements = CommandRequirementsBuilder().withPermission(Permission.ADMIN_NEWOWNER).build()
+        commandRequirements = SCommandRequirementsBuilder().withPermission(Permission.ADMIN_NEWOWNER).build()
     }
 
-    override fun perform(info: CommandInfo) {
+    override fun perform(info: SCommandInfo) {
         println(info)
         val newOwner = info.getArgAsIPlayer(1, cannotReferenceYourSelf = false) ?: return
         val iPlayerByName = getIPlayerByName(info.args[0])
         val island = iPlayerByName?.getIsland()
         if (island == null || island.getOwnerIPlayer() != iPlayerByName) {
-            info.message(Message.commandSkyblockRemoveNotAnIslandOwner)
+            info.message(Message.instance.commandSkyblockRemoveNotAnIslandOwner)
             return
         }
 
@@ -36,12 +38,12 @@ class CmdSbOwner : SCommand() {
         island.getOwnerIPlayer()?.unassignIsland()
 
 
-        info.message(Message.commandSkyblockNewOwnerSuccess)
+        info.message(Message.instance.commandSkyblockNewOwnerSuccess)
 
     }
 
     override fun getHelpInfo(): String {
-        return Message.commandSkyblockNewOwnerHelp
+        return Message.instance.commandSkyblockNewOwnerHelp
     }
 
 }

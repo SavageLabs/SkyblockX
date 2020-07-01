@@ -1,12 +1,15 @@
 package net.savagelabs.skyblockx.command.island.cmd.home
 
-import net.savagelabs.skyblockx.command.SCommand
+import net.savagelabs.savagepluginx.command.Argument
+import net.savagelabs.savagepluginx.command.Command
+import net.savagelabs.skyblockx.command.SCommandInfo
+import net.savagelabs.skyblockx.command.SCommandRequirements
+import net.savagelabs.skyblockx.command.SCommandRequirementsBuilder
+import net.savagelabs.skyblockx.command.argument.HomeArgument
 import net.savagelabs.skyblockx.core.Permission
 import net.savagelabs.skyblockx.persist.Message
-import net.savagelabs.skyblockx.command.CommandInfo
-import net.savagelabs.skyblockx.command.CommandRequirementsBuilder
 
-class CmdHome : SCommand() {
+class CmdHome : Command<SCommandInfo, SCommandRequirements>() {
 
     init {
         aliases.add("home")
@@ -14,8 +17,11 @@ class CmdHome : SCommand() {
         optionalArgs.add(Argument("home-name", 0, HomeArgument()))
 
         commandRequirements =
-            CommandRequirementsBuilder().withPermission(Permission.HOME).asPlayer(true)
-                .asIslandMember(true).build()
+            SCommandRequirementsBuilder()
+                .withPermission(Permission.HOME)
+                .asPlayer(true)
+                .asIslandMember(true)
+                .build()
 
         subCommands.add(CmdHomeList())
         subCommands.add(CmdHomeSet())
@@ -24,10 +30,10 @@ class CmdHome : SCommand() {
     }
 
 
-    override fun perform(info: CommandInfo) {
+    override fun perform(info: SCommandInfo) {
         // No Args / Invalid args specified.
         if (info.args.size != 1) {
-            generateHelp(1, info.player!!)
+            generateHelp(1, info.player!!, info.args)
             return
         }
 
@@ -38,7 +44,7 @@ class CmdHome : SCommand() {
     }
 
     override fun getHelpInfo(): String {
-        return Message.commandHomeHelp
+        return Message.instance.commandHomeHelp
     }
 }
 

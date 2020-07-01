@@ -61,15 +61,20 @@ class QuestActions(val actions: List<String>) {
     fun doMessage(context: QuestContext, actionParams: List<String>) {
         actionParams.forEach { messageParam -> context.contextIPlayer.message(messageParam) }
     }
+
     fun doTitle(context: QuestContext, actionParams: List<String>) {
         // Not using new method with the time cuz 1.8 :/
         context.contextIPlayer.getPlayer().sendTitle(color(actionParams[0] ?: ""), color(actionParams[1] ?: ""))
     }
+
     fun doCommand(context: QuestContext, actionParams: List<String>) {
         actionParams.forEach { commandParam -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), commandParam) }
     }
+
     fun doActionbarMessage(context: QuestContext, actionParams: List<String>) {
-        actionParams.forEach { actionbarMessage -> JSONMessage.create(color(actionbarMessage)).actionbar(context.contextIPlayer.getPlayer()) }
+        actionParams.forEach { actionbarMessage ->
+            JSONMessage.create(color(actionbarMessage)).actionbar(context.contextIPlayer.getPlayer())
+        }
     }
 
 
@@ -94,21 +99,28 @@ fun failsQuestCheckingPreRequisites(iPlayer: IPlayer, island: Island?, location:
 }
 
 fun incrementQuestInOrder(island: Island) {
-    if (Quests.sendNextQuestInOrderMessages) sendQuestOrderMessage(island)
+    if (Quests.instance.sendNextQuestInOrderMessages) sendQuestOrderMessage(island)
     if (island.currentQuestOrderIndex == null) return
-    val quest = Quests.islandQuests.find { quest -> quest.id == Quests.questOrder[island.currentQuestOrderIndex!!] }
+    val quest =
+        Quests.instance.islandQuests.find { quest -> quest.id == Quests.instance.questOrder[island.currentQuestOrderIndex!!] }
     island.changeCurrentQuest(quest?.id)
 
 }
 
 fun sendQuestOrderMessage(island: Island) {
     if (island.currentQuestOrderIndex == null) return
-    val quest = Quests.islandQuests.find { quest -> quest.id == Quests.questOrder[island.currentQuestOrderIndex!!] }
+    val quest =
+        Quests.instance.islandQuests.find { quest -> quest.id == Quests.instance.questOrder[island.currentQuestOrderIndex!!] }
 
     if (quest == null) {
-        island.messageAllOnlineIslandMembers(Message.messagePrefix + Message.questOrderNoNextQuestWasFound)
+        island.messageAllOnlineIslandMembers(Message.instance.messagePrefix + Message.instance.questOrderNoNextQuestWasFound)
         return
     }
 
-    island.messageAllOnlineIslandMembers(Message.messagePrefix + String.format(Message.nextQuestMessage, quest.name))
+    island.messageAllOnlineIslandMembers(
+        Message.instance.messagePrefix + String.format(
+            Message.instance.nextQuestMessage,
+            quest.name
+        )
+    )
 }

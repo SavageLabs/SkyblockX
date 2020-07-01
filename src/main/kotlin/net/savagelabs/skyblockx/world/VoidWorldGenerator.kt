@@ -3,7 +3,6 @@ package net.savagelabs.skyblockx.world
 import net.savagelabs.skyblockx.persist.Config
 import org.bukkit.Location
 import org.bukkit.World
-import org.bukkit.block.Biome
 import org.bukkit.generator.BlockPopulator
 import org.bukkit.generator.ChunkGenerator
 import java.util.*
@@ -26,12 +25,11 @@ class VoidWorldGenerator : ChunkGenerator() {
         val createChunkData = createChunkData(world)
         for (cx in 0..15) {
             for (cz in 0..15) {
-                biome.setBiome(cx, cz, Config.skyblockWorldBiome)
+                biome.setBiome(cx, cz, Config.instance.skyblockWorldBiome)
             }
         }
         return createChunkData
     }
-
 
 
     override fun getFixedSpawnLocation(world: World, random: Random): Location {

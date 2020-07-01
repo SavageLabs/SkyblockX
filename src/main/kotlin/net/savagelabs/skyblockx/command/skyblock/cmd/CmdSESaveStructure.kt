@@ -1,13 +1,16 @@
 package net.savagelabs.skyblockx.command.skyblock.cmd
 
-import net.savagelabs.skyblockx.command.CommandInfo
-import net.savagelabs.skyblockx.command.CommandRequirementsBuilder
-import net.savagelabs.skyblockx.command.SCommand
+import net.savagelabs.savagepluginx.command.Argument
+import net.savagelabs.savagepluginx.command.Command
+import net.savagelabs.savagepluginx.command.argument.StringArgument
+import net.savagelabs.skyblockx.command.SCommandInfo
+import net.savagelabs.skyblockx.command.SCommandRequirements
+import net.savagelabs.skyblockx.command.SCommandRequirementsBuilder
 import net.savagelabs.skyblockx.core.Permission
 import net.savagelabs.skyblockx.persist.Message
 import net.savagelabs.skyblockx.sedit.SkyblockEdit
 
-class CmdSESaveStructure : SCommand() {
+class CmdSESaveStructure : Command<SCommandInfo, SCommandRequirements>() {
 
     init {
         aliases.add("save-struct")
@@ -16,14 +19,16 @@ class CmdSESaveStructure : SCommand() {
         requiredArgs.add(Argument("filename", 0, StringArgument()))
 
         commandRequirements =
-            CommandRequirementsBuilder().asPlayer(true)
-                .withPermission(Permission.SE_SAVESTUCT).build()
+            SCommandRequirementsBuilder()
+                .asPlayer(true)
+                .withPermission(Permission.SE_SAVESTUCT)
+                .build()
     }
 
 
-    override fun perform(info: CommandInfo) {
+    override fun perform(info: SCommandInfo) {
         if (info.iPlayer!!.pos1 == null || info.iPlayer!!.pos2 == null) {
-            info.message(Message.commandSESaveStructurePositionsNotSet)
+            info.message(Message.instance.commandSESaveStructurePositionsNotSet)
             return
         }
         SkyblockEdit().saveStructure(info.iPlayer!!.pos1!!, info.iPlayer!!.pos2!!, info.player!!, info.args[0])
@@ -31,7 +36,7 @@ class CmdSESaveStructure : SCommand() {
 
 
     override fun getHelpInfo(): String {
-        return Message.commandSESaveStructureHelp
+        return Message.instance.commandSESaveStructureHelp
     }
 
 }

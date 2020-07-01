@@ -1,7 +1,7 @@
 package net.savagelabs.skyblockx.gui
 
 import com.github.stefvanschie.inventoryframework.GuiItem
-import net.prosavage.baseplugin.ItemBuilder
+import net.savagelabs.savagepluginx.item.ItemBuilder
 import net.savagelabs.skyblockx.core.IPlayer
 import net.savagelabs.skyblockx.core.Island
 import net.savagelabs.skyblockx.core.color
@@ -13,24 +13,28 @@ import org.bukkit.inventory.ItemStack
 import java.text.DecimalFormat
 
 class IslandQuestGUI :
-    BaseGUI(Quests.islandQuestGUITitle, Quests.islandQuestGUIBackgroundItem, Quests.islandQuestGUIRows) {
+    BaseGUI(
+        Quests.instance.islandQuestGUITitle,
+        Quests.instance.islandQuestGUIBackgroundItem,
+        Quests.instance.islandQuestGUIRows
+    ) {
 
     override fun populatePane(context: IPlayer) {
         val guiItems = buildFullBackgroundItemlist()
-        for (quest in Quests.islandQuests) {
+        for (quest in Quests.instance.islandQuests) {
             guiItems[quest.guiDisplayIndex] =
                 GuiItem(buildItem(context.getIsland()!!, quest.guiDisplayItem, quest)) { e ->
                     run {
                         e.isCancelled = true
                         val player = e.whoClicked as Player
                         if (quest.oneTime && context.getIsland()!!.isOneTimeQuestAlreadyCompleted(quest.id)) {
-                            player.sendMessage(color(Message.questIsOneTimeAndAlreadyCompleted))
+                            player.sendMessage(color(Message.instance.questIsOneTimeAndAlreadyCompleted))
                             return@run
                         }
                         context.getIsland()!!.currentQuest = quest.id
                         val islandQuestGUI = IslandQuestGUI()
                         islandQuestGUI.showGui(player)
-                        player.sendMessage(color(Message.questActivationTrigger.replace("{quest}", quest.id)))
+                        player.sendMessage(color(Message.instance.questActivationTrigger.replace("{quest}", quest.id)))
                         quest.executeActivationTrigger(context)
                     }
                 }
@@ -56,7 +60,7 @@ class IslandQuestGUI :
             )
         }
 
-        return ItemBuilder(serializableItem.material.parseItem())
+        return ItemBuilder(serializableItem.material.parseItem()!!)
             .name(serializableItem.name)
             .amount(serializableItem.amt).lore(lore)
             .glowing(island.currentQuest == quest.id)
@@ -64,9 +68,9 @@ class IslandQuestGUI :
     }
 
     private fun getProgressPlaceholder(island: Island, quest: Quest): String {
-        if (quest.id == island.currentQuest) return color(Message.questInProgressPlaceholder)
-        return if (island.isOneTimeQuestAlreadyCompleted(quest.id)) color(Message.questCompletedPlaceholder) else color(
-            Message.questNotStarted
+        if (quest.id == island.currentQuest) return color(Message.instance.questInProgressPlaceholder)
+        return if (island.isOneTimeQuestAlreadyCompleted(quest.id)) color(Message.instance.questCompletedPlaceholder) else color(
+            Message.instance.questNotStarted
         )
     }
 

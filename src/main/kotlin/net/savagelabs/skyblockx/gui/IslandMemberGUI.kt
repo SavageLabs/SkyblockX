@@ -3,7 +3,7 @@ package net.savagelabs.skyblockx.gui
 import com.cryptomorin.xseries.XMaterial
 import com.github.stefvanschie.inventoryframework.GuiItem
 import me.clip.placeholderapi.PlaceholderAPI
-import net.prosavage.baseplugin.ItemBuilder
+import net.savagelabs.savagepluginx.item.ItemBuilder
 import net.savagelabs.skyblockx.SkyblockX
 import net.savagelabs.skyblockx.core.IPlayer
 import net.savagelabs.skyblockx.core.color
@@ -16,18 +16,22 @@ import java.util.*
 
 
 class IslandMemberGUI :
-    BaseGUI(Config.islandMemberGUITitle, Config.islandMemberGUIBackgroundItem, Config.islandMemberGUIRows) {
+    BaseGUI(
+        Config.instance.islandMemberGUITitle,
+        Config.instance.islandMemberGUIBackgroundItem,
+        Config.instance.islandMemberGUIRows
+    ) {
 
     override fun populatePane(context: IPlayer) {
         val guiItems = buildFullBackgroundItemlist()
         var slotListIndexesUsed = 0
         for (memberName in context.getIsland()!!.getIslandMembers()) {
-            if (slotListIndexesUsed >= Config.islandMemberGUIHeadSlots.size) {
+            if (slotListIndexesUsed >= Config.instance.islandMemberGUIHeadSlots.size) {
                 SkyblockX.skyblockX.logger.info("Skipping for $memberName due to not having a configured slot for the ${slotListIndexesUsed + 1}th member.")
                 continue
             }
-            guiItems[Config.islandMemberGUIHeadSlots[slotListIndexesUsed]] =
-                GuiItem(getSkullOfPlayer(memberName.name, Config.islandMemberGUIItemMeta)!!) { e ->
+            guiItems[Config.instance.islandMemberGUIHeadSlots[slotListIndexesUsed]] =
+                GuiItem(getSkullOfPlayer(memberName.name, Config.instance.islandMemberGUIItemMeta)!!) { e ->
                     run {
                         e.isCancelled = true
                         IslandMemberActionGUI(memberName.name).showGui(context.getPlayer())
@@ -36,12 +40,12 @@ class IslandMemberGUI :
             slotListIndexesUsed++
         }
 
-        if (slotListIndexesUsed < Config.islandMemberGUIHeadSlots.size) {
-            for (slot in slotListIndexesUsed until Config.islandMemberGUIHeadSlots.size) {
-                guiItems[Config.islandMemberGUIHeadSlots[slot]] =
+        if (slotListIndexesUsed < Config.instance.islandMemberGUIHeadSlots.size) {
+            for (slot in slotListIndexesUsed until Config.instance.islandMemberGUIHeadSlots.size) {
+                guiItems[Config.instance.islandMemberGUIHeadSlots[slot]] =
                     GuiItem(
-                        ItemBuilder(XMaterial.PLAYER_HEAD.parseItem()).name(Config.islandMemberGUINoMemberName)
-                            .lore(Config.islandMemberGUINoMemberLore).build()
+                        ItemBuilder(XMaterial.PLAYER_HEAD.parseItem()!!).name(Config.instance.islandMemberGUINoMemberName)
+                            .lore(Config.instance.islandMemberGUINoMemberLore).build()
                     ) { e ->
                         e.isCancelled = true
                     }

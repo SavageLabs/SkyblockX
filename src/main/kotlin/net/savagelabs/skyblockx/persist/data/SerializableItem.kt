@@ -1,7 +1,7 @@
 package net.savagelabs.skyblockx.persist.data
 
 import com.cryptomorin.xseries.XMaterial
-import net.prosavage.baseplugin.ItemBuilder
+import net.savagelabs.savagepluginx.item.ItemBuilder
 import org.bukkit.inventory.ItemStack
 
 class SerializableItem(
@@ -12,7 +12,7 @@ class SerializableItem(
 ) {
 
     fun buildItem(): ItemStack {
-        return ItemBuilder(material.parseItem()).name(name).lore(lore).amount(amt).glowing(false).build()
+        return ItemBuilder(material.parseItem()!!).name(name).lore(lore).amount(amt).glowing(false).build()
     }
 
 }

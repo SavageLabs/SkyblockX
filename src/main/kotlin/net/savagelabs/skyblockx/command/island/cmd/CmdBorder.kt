@@ -1,27 +1,30 @@
 package net.savagelabs.skyblockx.command.island.cmd
 
-import net.savagelabs.skyblockx.command.CommandInfo
-import net.savagelabs.skyblockx.command.CommandRequirementsBuilder
-import net.savagelabs.skyblockx.command.SCommand
+import net.savagelabs.savagepluginx.command.Command
+import net.savagelabs.skyblockx.command.SCommandInfo
+import net.savagelabs.skyblockx.command.SCommandRequirements
+import net.savagelabs.skyblockx.command.SCommandRequirementsBuilder
 import net.savagelabs.skyblockx.core.Permission
 import net.savagelabs.skyblockx.gui.IslandBorderGUI
 import net.savagelabs.skyblockx.persist.Message
 
 
-class CmdBorder : SCommand() {
+class CmdBorder : Command<SCommandInfo, SCommandRequirements>() {
 
     init {
         aliases.add("border")
 
-        commandRequirements =
-            CommandRequirementsBuilder().withPermission(Permission.BORDER).asIslandMember(true).build()
+        commandRequirements = SCommandRequirementsBuilder()
+            .withPermission(Permission.BORDER)
+            .asIslandMember(true)
+            .build()
     }
 
-    override fun perform(info: CommandInfo) {
+    override fun perform(info: SCommandInfo) {
         IslandBorderGUI().showGui(info.player!!)
     }
 
     override fun getHelpInfo(): String {
-        return Message.commandBorderHelp
+        return Message.instance.commandBorderHelp
     }
 }

@@ -1,13 +1,16 @@
 package net.savagelabs.skyblockx.command.island.cmd
 
 import me.rayzr522.jsonmessage.JSONMessage
-import net.savagelabs.skyblockx.command.CommandInfo
-import net.savagelabs.skyblockx.command.CommandRequirementsBuilder
-import net.savagelabs.skyblockx.command.SCommand
+import net.savagelabs.savagepluginx.command.Argument
+import net.savagelabs.savagepluginx.command.Command
+import net.savagelabs.savagepluginx.command.argument.PlayerArgument
+import net.savagelabs.skyblockx.command.SCommandInfo
+import net.savagelabs.skyblockx.command.SCommandRequirements
+import net.savagelabs.skyblockx.command.SCommandRequirementsBuilder
 import net.savagelabs.skyblockx.core.*
 import net.savagelabs.skyblockx.persist.Message
 
-class CmdVisit : SCommand() {
+class CmdVisit : Command<SCommandInfo, SCommandRequirements>() {
 
     init {
         aliases.add("visit")
@@ -18,12 +21,12 @@ class CmdVisit : SCommand() {
         optionalArgs.add(Argument("island owner's name", 0, PlayerArgument()))
 
         commandRequirements =
-            CommandRequirementsBuilder().asPlayer(true).withPermission(Permission.TELEPORT)
+            SCommandRequirementsBuilder().asPlayer(true).withPermission(Permission.TELEPORT)
                 .build()
     }
 
 
-    override fun perform(info: CommandInfo) {
+    override fun perform(info: SCommandInfo) {
         // list possible locations if empty.
         if (info.args.isEmpty()) {
             val possibleLocations = ArrayList<String>()
@@ -40,9 +43,17 @@ class CmdVisit : SCommand() {
             }
 
             // Message them.
-            info.message(Message.commandVisitPossibleLocationsHeader)
+            info.message(Message.instance.commandVisitPossibleLocationsHeader)
             for ((index, location) in possibleLocations.withIndex()) {
-                JSONMessage.create(color(String.format(Message.commandVisitPossibleLocationsFormat, index + 1, location)))
+                JSONMessage.create(
+                    color(
+                        String.format(
+                            Message.instance.commandVisitPossibleLocationsFormat,
+                            index + 1,
+                            location
+                        )
+                    )
+                )
                     .suggestCommand("/is tp $location")
                     .tooltip("Click to run /is tp $location")
                     .send(info.player)
@@ -52,25 +63,26 @@ class CmdVisit : SCommand() {
         // Location was specified, so we can teleport to it.
         val targetLocation = getIslandByOwnerTag(info.args[0])
         if (targetLocation == null) {
-            info.message(String.format(Message.commandVisitThisIslandIsNotValid, info.args[0]))
+            info.message(String.format(Message.instance.commandVisitThisIslandIsNotValid, info.args[0]))
             return
         }
 
         // Check if they can actually go to the location
         if (!targetLocation.allowVisitors && info.iPlayer!!.islandID != targetLocation.islandID
-            && !info.iPlayer!!.isCoopedIsland(targetLocation.islandID)) {
-            info.message(Message.commandVisitNoPermission)
+            && !info.iPlayer!!.isCoopedIsland(targetLocation.islandID)
+        ) {
+            info.message(Message.instance.commandVisitNoPermission)
             return
         }
 
         teleportAsync(
             info.player!!,
-            targetLocation.islandGoPoint.getLocation(),
-            Runnable { info.message(String.format(Message.commandVisitTeleporting, targetLocation.ownerTag)) })
+            targetLocation.islandGoPoint!!.getLocation(),
+            Runnable { info.message(String.format(Message.instance.commandVisitTeleporting, targetLocation.ownerTag)) })
     }
 
     override fun getHelpInfo(): String {
-        return Message.commandVisitHelp
+        return Message.instance.commandVisitHelp
     }
 
 

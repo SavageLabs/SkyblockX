@@ -1,13 +1,14 @@
 package net.savagelabs.skyblockx.command.island.cmd
 
-import net.savagelabs.skyblockx.command.CommandInfo
-import net.savagelabs.skyblockx.command.CommandRequirementsBuilder
-import net.savagelabs.skyblockx.command.SCommand
+import net.savagelabs.savagepluginx.command.Command
+import net.savagelabs.skyblockx.command.SCommandInfo
+import net.savagelabs.skyblockx.command.SCommandRequirements
+import net.savagelabs.skyblockx.command.SCommandRequirementsBuilder
 import net.savagelabs.skyblockx.core.Permission
 import net.savagelabs.skyblockx.core.teleportAsync
 import net.savagelabs.skyblockx.persist.Message
 
-class CmdGo : SCommand() {
+class CmdGo : Command<SCommandInfo, SCommandRequirements>() {
 
 
     init {
@@ -15,22 +16,22 @@ class CmdGo : SCommand() {
 
 
         commandRequirements =
-           CommandRequirementsBuilder().asIslandMember(true).asPlayer(true)
+            SCommandRequirementsBuilder().asIslandMember(true).asPlayer(true)
                 .withPermission(Permission.GO).build()
     }
 
 
-    override fun perform(info: CommandInfo) {
+    override fun perform(info: SCommandInfo) {
         val island = info.iPlayer!!.getIsland()!!
         teleportAsync(
             info.player!!,
-            island.islandGoPoint.getLocation(),
-            Runnable { info.message(Message.commandGoTeleporting) })
+            island.islandGoPoint!!.getLocation(),
+            Runnable { info.message(Message.instance.commandGoTeleporting) })
     }
 
 
     override fun getHelpInfo(): String {
-        return Message.commandGoHelp
+        return Message.instance.commandGoHelp
     }
 
 }

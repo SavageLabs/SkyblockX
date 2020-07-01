@@ -45,7 +45,7 @@ enum class Permission(val node: String, val description: String, val permissionD
 
 
     fun getFullPermissionNode(): String {
-        return "${Config.skyblockPermissionPrefix}.${this.node}"
+        return "${Config.instance.skyblockPermissionPrefix}.${this.node}"
     }
 
 }
@@ -62,7 +62,7 @@ fun registerAllPermissions(pluginManager: PluginManager) {
                 )
             )
         }
-        Config.islandCreateGUIIslandTypes.forEach { islandType ->
+        Config.instance.islandCreateGUIIslandTypes.forEach { islandType ->
             if (pluginManager.getPermission(islandType.requirementPermission) == null) {
                 pluginManager.addPermission(
                     org.bukkit.permissions.Permission(

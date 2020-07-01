@@ -1,13 +1,16 @@
 package net.savagelabs.skyblockx.command.island.cmd.home
 
-import net.savagelabs.skyblockx.command.SCommand
+import net.savagelabs.savagepluginx.command.Argument
+import net.savagelabs.savagepluginx.command.Command
+import net.savagelabs.savagepluginx.command.argument.StringArgument
+import net.savagelabs.skyblockx.command.SCommandInfo
+import net.savagelabs.skyblockx.command.SCommandRequirements
+import net.savagelabs.skyblockx.command.SCommandRequirementsBuilder
 import net.savagelabs.skyblockx.core.Permission
 import net.savagelabs.skyblockx.persist.Message
 import net.savagelabs.skyblockx.persist.data.getSLocation
-import net.savagelabs.skyblockx.command.CommandInfo
-import net.savagelabs.skyblockx.command.CommandRequirementsBuilder
 
-class CmdHomeSet : SCommand() {
+class CmdHomeSet : Command<SCommandInfo, SCommandRequirements>() {
 
 
     init {
@@ -17,13 +20,13 @@ class CmdHomeSet : SCommand() {
         this.requiredArgs.add(Argument("home-name", 0, StringArgument()))
 
         this.commandRequirements =
-            CommandRequirementsBuilder().withPermission(Permission.HOME)
+            SCommandRequirementsBuilder().withPermission(Permission.HOME)
                 .asIslandMember(true).build()
     }
 
-    override fun perform(info: CommandInfo) {
+    override fun perform(info: SCommandInfo) {
         if (!info.iPlayer!!.getIsland()!!.canHaveMoreHomes()) {
-            info.message(Message.commandHomeCannotHaveMoreHomes)
+            info.message(Message.instance.commandHomeCannotHaveMoreHomes)
             return
         }
 
@@ -33,15 +36,15 @@ class CmdHomeSet : SCommand() {
 
         // Check if the island even contains the location for the new home.
         if (!info.island!!.containsBlock(playerLocation)) {
-            info.message(Message.commandHomeSetNotInIsland)
+            info.message(Message.instance.commandHomeSetNotInIsland)
             return
         }
         info.iPlayer!!.getIsland()!!.addHome(homeName, getSLocation(playerLocation))
-        info.message(String.format(Message.commandHomeHomeSet, homeName))
+        info.message(String.format(Message.instance.commandHomeHomeSet, homeName))
     }
 
     override fun getHelpInfo(): String {
-        return Message.commandHomeSetHelp
+        return Message.instance.commandHomeSetHelp
     }
 
 }

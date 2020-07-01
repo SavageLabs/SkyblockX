@@ -28,12 +28,14 @@ class SEditListener : Listener {
             iPlayer.pos1 = event.clickedBlock!!.location
             event.player.sendMessage(
                 color(
-                    Message.messagePrefix +
-                            color(String.format(
-                                Message.skyblockEditPositionSet,
-                                1.toString(),
-                                "${iPlayer.pos1!!.x}, ${iPlayer.pos1!!.y}, ${iPlayer.pos1!!.z} in ${iPlayer.pos1!!.world!!.name}"
-                            ))
+                    Message.instance.messagePrefix +
+                            color(
+                                String.format(
+                                    Message.instance.skyblockEditPositionSet,
+                                    1.toString(),
+                                    "${iPlayer.pos1!!.x}, ${iPlayer.pos1!!.y}, ${iPlayer.pos1!!.z} in ${iPlayer.pos1!!.world!!.name}"
+                                )
+                            )
                 )
             )
             iPlayer.choosingPosition = false
@@ -42,12 +44,14 @@ class SEditListener : Listener {
 
             event.player.sendMessage(
                 color(
-                    Message.messagePrefix +
-                            color(String.format(
-                                Message.skyblockEditPositionSet,
-                                2.toString(),
-                                "${iPlayer.pos2!!.x}, ${iPlayer.pos2!!.y}, ${iPlayer.pos2!!.z} in ${iPlayer.pos2!!.world!!.name}"
-                            ))
+                    Message.instance.messagePrefix +
+                            color(
+                                String.format(
+                                    Message.instance.skyblockEditPositionSet,
+                                    2.toString(),
+                                    "${iPlayer.pos2!!.x}, ${iPlayer.pos2!!.y}, ${iPlayer.pos2!!.z} in ${iPlayer.pos2!!.world!!.name}"
+                                )
+                            )
                 )
             )
             iPlayer.choosingPosition = false

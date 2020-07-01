@@ -1,21 +1,18 @@
 package net.savagelabs.skyblockx.command.skyblock
 
-import net.savagelabs.skyblockx.command.CommandInfo
-import net.savagelabs.skyblockx.command.CommandRequirementsBuilder
-import net.savagelabs.skyblockx.command.SCommand
-import net.savagelabs.skyblockx.command.skyblock.cmd.CmdSEPasteStructure
-import net.savagelabs.skyblockx.command.skyblock.cmd.CmdSEPosition
-import net.savagelabs.skyblockx.command.skyblock.cmd.CmdSESaveStructure
+import net.savagelabs.savagepluginx.command.Command
+import net.savagelabs.skyblockx.command.SCommandInfo
+import net.savagelabs.skyblockx.command.SCommandRequirements
+import net.savagelabs.skyblockx.command.SCommandRequirementsBuilder
 import net.savagelabs.skyblockx.command.skyblock.cmd.*
 import net.savagelabs.skyblockx.persist.Message
-import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
 import org.bukkit.command.TabCompleter
 import java.util.*
 
 
-class SkyblockBaseCommand : SCommand(), CommandExecutor, TabCompleter {
+class SkyblockBaseCommand : Command<SCommandInfo, SCommandRequirements>(), CommandExecutor, TabCompleter {
 
 
     companion object {
@@ -23,7 +20,7 @@ class SkyblockBaseCommand : SCommand(), CommandExecutor, TabCompleter {
     }
 
     init {
-        this.commandRequirements = CommandRequirementsBuilder().build()
+        this.commandRequirements = SCommandRequirementsBuilder().build()
 
         subCommands.add(CmdSEPosition())
         subCommands.add(CmdSESaveStructure())
@@ -42,9 +39,14 @@ class SkyblockBaseCommand : SCommand(), CommandExecutor, TabCompleter {
         instance = this
     }
 
-    override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
+    override fun onCommand(
+        sender: CommandSender,
+        command: org.bukkit.command.Command,
+        label: String,
+        args: Array<out String>
+    ): Boolean {
         execute(
-            CommandInfo(
+            SCommandInfo(
                 sender,
                 ArrayList(args.toList()),
                 label
@@ -54,17 +56,17 @@ class SkyblockBaseCommand : SCommand(), CommandExecutor, TabCompleter {
     }
 
     override fun getHelpInfo(): String {
-        return Message.commandSkyblockBaseHelp
+        return Message.instance.commandSkyblockBaseHelp
     }
 
-    override fun perform(info: CommandInfo) {
-        info.message(Message.commandSkyblockBaseHelpMessage)
-        generateHelp(1, info.commandSender)
+    override fun perform(info: SCommandInfo) {
+        info.message(Message.instance.commandSkyblockBaseHelpMessage)
+        generateHelp(1, info.commandSender, info.args)
     }
 
     override fun onTabComplete(
         sender: CommandSender,
-        command: Command,
+        command: org.bukkit.command.Command,
         alias: String,
         args: Array<String>
     ): List<String>? {

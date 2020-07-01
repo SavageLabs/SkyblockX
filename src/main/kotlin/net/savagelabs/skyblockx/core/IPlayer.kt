@@ -1,17 +1,17 @@
 package net.savagelabs.skyblockx.core
 
-import net.prosavage.baseplugin.WorldBorderUtil
+import com.fasterxml.jackson.annotation.JsonIgnore
 import net.savagelabs.skyblockx.persist.Config
 import net.savagelabs.skyblockx.persist.Data
 import net.savagelabs.skyblockx.persist.Message
 import net.savagelabs.skyblockx.sedit.Position
+import net.savagelabs.worldborder.WorldBorderUtil
 import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.entity.Player
 import java.util.*
 
-data class IPlayer(val uuid: String) {
-    var name: String = Bukkit.getPlayer(UUID.fromString(uuid))!!.player!!.name
+data class IPlayer(val uuid: String, val name: String) {
 
     var lastIslandResetTime = -1L
 
@@ -19,7 +19,7 @@ data class IPlayer(val uuid: String) {
 
     var falling = false
 
-    @Transient
+    @JsonIgnore
     var teleportDeath: Location? = null
 
     var islandID = -1
@@ -43,32 +43,37 @@ data class IPlayer(val uuid: String) {
 
     // This is for the coop players that this iplayer instance has authorized.
     // So that we can remove the co-op status of these players when this guy logs out.
-    @Transient
+    @JsonIgnore
     var coopedPlayersAuthorized = HashSet<IPlayer>()
 
-    @Transient
+    @JsonIgnore
     var pos1: Location? = null
-    @Transient
+
+    @JsonIgnore
     var pos2: Location? = null
 
+    @JsonIgnore
     fun getPlayer(): Player {
         return Bukkit.getPlayer(UUID.fromString(uuid))!!
     }
 
+    @JsonIgnore
     fun isLeader(): Boolean {
         return hasIsland() && getIsland()!!.ownerUUID == uuid
     }
 
+    @JsonIgnore
     fun isOnline(): Boolean {
         return Bukkit.getPlayer(UUID.fromString(uuid)) != null
     }
 
+    @JsonIgnore
     fun isOnOwnIsland(): Boolean {
         return !(this.hasIsland() && this.getIsland()!!.containsBlock(getPlayer().location))
     }
 
     fun message(message: String) {
-        getPlayer().sendMessage(color(Message.messagePrefix + message))
+        getPlayer().sendMessage(color(Message.instance.messagePrefix + message))
     }
 
     fun isCoopedIsland(id: Int): Boolean {
@@ -93,12 +98,12 @@ data class IPlayer(val uuid: String) {
     }
 
     fun hasCoopIsland(): Boolean {
-        // It's not supposed to be null, but fuckin gson man.
+        // net.savagelabs.savagepluginx.item.It's not supposed to be null, but fuckin gson man.
         return coopedIslandIds != null && coopedIslandIds.isNotEmpty()
     }
 
     fun hasIsland(): Boolean {
-        return islandID != -1 && Data.islands.containsKey(islandID)
+        return islandID != -1 && Data.instance.islands.containsKey(islandID)
     }
 
     fun unassignIsland() {
@@ -123,7 +128,6 @@ data class IPlayer(val uuid: String) {
     }
 
 
-
     fun coopIslandsContainBlock(location: Location): Boolean {
         for (id in coopedIslandIds) {
             // Island was not found, continue to next island.
@@ -140,27 +144,27 @@ data class IPlayer(val uuid: String) {
 
 fun getIPlayer(player: Player): IPlayer {
     // Check data, if not, The IPlayer instance does not exist, create it.
-    return Data.IPlayers[player.uniqueId.toString()] ?: createIPlayer(player)
+    return Data.instance.IPlayers[player.uniqueId.toString()] ?: createIPlayer(player)
 }
 
 fun getIPlayerByName(name: String): IPlayer? {
-    return Data.IPlayers.values.find { iPlayer -> iPlayer.name == name }
+    return Data.instance.IPlayers.values.find { iPlayer -> iPlayer.name == name }
 }
 
 fun getIPlayerByUUID(uuid: String): IPlayer? {
-    return Data.IPlayers[uuid]
+    return Data.instance.IPlayers[uuid]
 }
 
 fun createIPlayer(player: Player): IPlayer {
-    val iPlayer = IPlayer(player.uniqueId.toString())
-    Data.IPlayers[player.uniqueId.toString()] = iPlayer
+    val iPlayer = IPlayer(player.uniqueId.toString(), player.name)
+    Data.instance.IPlayers[player.uniqueId.toString()] = iPlayer
     return iPlayer
 }
 
 
 fun canUseBlockAtLocation(iPlayer: IPlayer, location: Location): Boolean {
     // If the world is not the skyblock world, we will not interfere.
-    if (location.world!!.name != Config.skyblockWorldName) return true
+    if (location.world!!.name != Config.instance.skyblockWorldName) return true
     if (iPlayer.inBypass) return true
     // If they dont have any co-op island or an island of their own, then they cannot do anything.
     if (!iPlayer.hasIsland() && !iPlayer.hasCoopIsland()) return false

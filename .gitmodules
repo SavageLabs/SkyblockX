@@ -1,0 +1,6 @@
+[submodule "SavagePluginX-Framework"]
+	path = SavagePluginX
+	url = https://github.com/SavageLabs/SavagePluginX.git
+[submodule "WorldBorderUtility"]
+	path = WorldBorderUtil
+	url = https://github.com/SavageLabs/WorldBorderUtil.git

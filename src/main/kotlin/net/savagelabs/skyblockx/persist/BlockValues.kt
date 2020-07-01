@@ -1,13 +1,19 @@
 package net.savagelabs.skyblockx.persist
 
 import com.cryptomorin.xseries.XMaterial
-import net.prosavage.baseplugin.serializer.Serializer
+import com.fasterxml.jackson.annotation.JsonIgnore
+import net.savagelabs.savagepluginx.persist.container.ConfigContainer
 import org.bukkit.entity.EntityType
 
-object BlockValues {
+class BlockValues : ConfigContainer {
 
-    @Transient
-    private val instance = this
+    @JsonIgnore
+    override val name = "blockvalues"
+
+
+    companion object {
+        lateinit var instance: BlockValues
+    }
 
     var blockValues = mutableMapOf(
         XMaterial.GRASS_BLOCK to 3.0,
@@ -30,20 +36,13 @@ object BlockValues {
     )
 
 
+//    fun load() {
+//        XMaterial.values().toList().forEach{ xmat -> instance.putIfAbsent(xmat, 0.0) }
+//        EntityType.values().forEach {
+//            spawnerValues.putIfAbsent(it, 1000.0)
+//        }
+//        Serializer().load(instance, BlockValues::class.java, "blockvalues")
+//
+//    }
 
-
-
-
-    fun save() {
-        Serializer().save(instance)
-    }
-
-    fun load() {
-        XMaterial.values().toList().forEach{ xmat -> blockValues.putIfAbsent(xmat, 0.0) }
-        EntityType.values().forEach {
-            spawnerValues.putIfAbsent(it, 1000.0)
-        }
-        Serializer().load(instance, BlockValues::class.java, "blockvalues")
-
-    }
 }

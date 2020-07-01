@@ -1,12 +1,15 @@
 package net.savagelabs.skyblockx.command.island.cmd
 
-import net.savagelabs.skyblockx.command.CommandInfo
-import net.savagelabs.skyblockx.command.CommandRequirementsBuilder
-import net.savagelabs.skyblockx.command.SCommand
+import net.savagelabs.savagepluginx.command.Argument
+import net.savagelabs.savagepluginx.command.Command
+import net.savagelabs.savagepluginx.command.argument.PlayerArgument
+import net.savagelabs.skyblockx.command.SCommandInfo
+import net.savagelabs.skyblockx.command.SCommandRequirements
+import net.savagelabs.skyblockx.command.SCommandRequirementsBuilder
 import net.savagelabs.skyblockx.core.Permission
 import net.savagelabs.skyblockx.persist.Message
 
-class CmdCoop : SCommand() {
+class CmdCoop : Command<SCommandInfo, SCommandRequirements>() {
 
     init {
         aliases.add("co-op")
@@ -15,27 +18,27 @@ class CmdCoop : SCommand() {
         requiredArgs.add(Argument("player", 0, PlayerArgument()))
 
         commandRequirements =
-           CommandRequirementsBuilder().asPlayer(true).asIslandMember(true)
+            SCommandRequirementsBuilder().asPlayer(true).asIslandMember(true)
                 .withPermission(Permission.COOP).build()
     }
 
 
-    override fun perform(info: CommandInfo) {
+    override fun perform(info: SCommandInfo) {
         val target = info.getArgAsIPlayer(0) ?: return
         if (!info.iPlayer!!.getIsland()!!.canHaveMoreCoopPlayers()) {
-            info.message(Message.commandCoopCannotHaveMoreCoopPlayers)
+            info.message(Message.instance.commandCoopCannotHaveMoreCoopPlayers)
             return
         }
 
         info.iPlayer!!.getIsland()!!.coopPlayer(info.iPlayer, target)
 
-        target.message(String.format(Message.commandCoopMessageRecipient, info.player!!.name))
-        info.iPlayer!!.message(String.format(Message.commandCoopInvokerSuccess, target.getPlayer().name))
+        target.message(String.format(Message.instance.commandCoopMessageRecipient, info.player!!.name))
+        info.iPlayer!!.message(String.format(Message.instance.commandCoopInvokerSuccess, target.getPlayer().name))
     }
 
 
     override fun getHelpInfo(): String {
-        return Message.commandCoopHelp
+        return Message.instance.commandCoopHelp
     }
 
 

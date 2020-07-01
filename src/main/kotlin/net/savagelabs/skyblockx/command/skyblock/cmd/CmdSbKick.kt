@@ -1,28 +1,31 @@
 package net.savagelabs.skyblockx.command.skyblock.cmd
 
-import net.savagelabs.skyblockx.command.CommandInfo
-import net.savagelabs.skyblockx.command.CommandRequirementsBuilder
-import net.savagelabs.skyblockx.command.SCommand
+import net.savagelabs.savagepluginx.command.Argument
+import net.savagelabs.savagepluginx.command.Command
+import net.savagelabs.savagepluginx.command.argument.PlayerArgument
+import net.savagelabs.skyblockx.command.SCommandInfo
+import net.savagelabs.skyblockx.command.SCommandRequirements
+import net.savagelabs.skyblockx.command.SCommandRequirementsBuilder
 import net.savagelabs.skyblockx.core.Permission
 import net.savagelabs.skyblockx.core.getIPlayerByName
 import net.savagelabs.skyblockx.core.getIPlayerByUUID
 import net.savagelabs.skyblockx.persist.Message
 
-class CmdSbKick : SCommand() {
+class CmdSbKick : Command<SCommandInfo, SCommandRequirements>() {
 
     init {
         aliases.add("kick")
 
         requiredArgs.add(Argument("player-to-kick", 0, PlayerArgument()))
 
-        commandRequirements = CommandRequirementsBuilder().withPermission(Permission.ADMIN_KICKFROMISLAND).build()
+        commandRequirements = SCommandRequirementsBuilder().withPermission(Permission.ADMIN_KICKFROMISLAND).build()
     }
 
 
-    override fun perform(info: CommandInfo) {
+    override fun perform(info: SCommandInfo) {
         val iPlayerByName = getIPlayerByName(info.args[0])
         if (iPlayerByName?.getIsland() == null) {
-            info.message(Message.genericPlayerNotAnIslandMember)
+            info.message(Message.instance.genericPlayerNotAnIslandMember)
             return
         }
 
@@ -30,7 +33,7 @@ class CmdSbKick : SCommand() {
         val island = iPlayerByName.getIsland()!!
         if (island.getOwnerIPlayer() != iPlayerByName) {
             if (!island.getIslandMembers().contains(iPlayerByName)) {
-                info.message(Message.commandMemberKickNotFound)
+                info.message(Message.instance.commandMemberKickNotFound)
                 return
             }
 
@@ -40,7 +43,7 @@ class CmdSbKick : SCommand() {
             iPlayerByName.unassignIsland()
             if (island.getAllMemberUUIDs().isEmpty()) {
                 island.delete()
-                info.message(Message.commandSkyblockKickIslandDeleted)
+                info.message(Message.instance.commandSkyblockKickIslandDeleted)
                 return
             }
             val firstMember = island.getAllMemberUUIDs().toList()[0]
@@ -51,16 +54,14 @@ class CmdSbKick : SCommand() {
             iPlayerByUUID!!.assignIsland(island)
             island.ownerTag = iPlayerByUUID.name
             island.ownerUUID = iPlayerByUUID.uuid
-            info.message(String.format(Message.commandSkyblockKickMemberKickedOwner, iPlayerByUUID.name))
+            info.message(String.format(Message.instance.commandSkyblockKickMemberKickedOwner, iPlayerByUUID.name))
         }
-        info.message(String.format(Message.commandSkyblockKickMemberKicked, iPlayerByName.name))
-
-
+        info.message(String.format(Message.instance.commandSkyblockKickMemberKicked, iPlayerByName.name))
 
 
     }
 
     override fun getHelpInfo(): String {
-        return Message.commandSkyblockKickHelp
+        return Message.instance.commandSkyblockKickHelp
     }
 }

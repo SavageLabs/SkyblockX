@@ -1,5 +1,6 @@
 package net.savagelabs.skyblockx.world
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import net.savagelabs.skyblockx.persist.Config
 import org.bukkit.Bukkit
 import org.bukkit.Location
@@ -7,11 +8,13 @@ import org.bukkit.Location
 
 data class Point(val x: Int, val z: Int) {
 
+    @JsonIgnore
     fun getLocation(): Location {
         return Location(
-            Bukkit.getWorld(Config.skyblockWorldName),
-            (Config.islandMaxSizeInBlocks + Config.islandPaddingSizeInBlocks + 1) * x.toDouble(), 0.toDouble(),
-            (Config.islandMaxSizeInBlocks + Config.islandPaddingSizeInBlocks + 1) * z.toDouble()
+            Bukkit.getWorld(Config.instance.skyblockWorldName),
+            (Config.instance.islandMaxSizeInBlocks + Config.instance.islandPaddingSizeInBlocks + 1) * x.toDouble(),
+            0.toDouble(),
+            (Config.instance.islandMaxSizeInBlocks + Config.instance.islandPaddingSizeInBlocks + 1) * z.toDouble()
         )
     }
 
