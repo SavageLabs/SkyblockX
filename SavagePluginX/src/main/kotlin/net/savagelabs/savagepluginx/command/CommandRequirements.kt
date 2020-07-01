@@ -9,7 +9,7 @@ open class CommandRequirements<T: CommandInfo>(
     var rawPermission: String?
 ) {
 
-    fun checkRequirements(info: T, informIfNot: Boolean = true): Boolean {
+    open fun checkRequirements(info: T, informIfNot: Boolean = true): Boolean {
         // Check if the commandSender is a player
         if (checkPlayerRequirement(info, informIfNot).not()) return false
 

@@ -1,12 +1,13 @@
 package net.savagelabs.skyblockx.command.island.cmd
 
-import net.savagelabs.skyblockx.command.CommandInfo
-import net.savagelabs.skyblockx.command.CommandRequirementsBuilder
-import net.savagelabs.skyblockx.command.SCommand
+import net.savagelabs.savagepluginx.command.Argument
+import net.savagelabs.savagepluginx.command.Command
+import net.savagelabs.savagepluginx.command.argument.PlayerArgument
+import net.savagelabs.skyblockx.command.*
 import net.savagelabs.skyblockx.core.Permission
 import net.savagelabs.skyblockx.persist.Message
 
-class CmdCoop : SCommand() {
+class CmdCoop : Command<SCommandInfo, SCommandRequirements>() {
 
     init {
         aliases.add("co-op")
@@ -15,12 +16,12 @@ class CmdCoop : SCommand() {
         requiredArgs.add(Argument("player", 0, PlayerArgument()))
 
         commandRequirements =
-           CommandRequirementsBuilder().asPlayer(true).asIslandMember(true)
+           SCommandRequirementsBuilder().asPlayer(true).asIslandMember(true)
                 .withPermission(Permission.COOP).build()
     }
 
 
-    override fun perform(info: CommandInfo) {
+    override fun perform(info: SCommandInfo) {
         val target = info.getArgAsIPlayer(0) ?: return
         if (!info.iPlayer!!.getIsland()!!.canHaveMoreCoopPlayers()) {
             info.message(Message.instance.commandCoopCannotHaveMoreCoopPlayers)

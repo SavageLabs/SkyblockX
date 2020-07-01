@@ -1,22 +1,23 @@
 package net.savagelabs.skyblockx.command.island.cmd.home
 
-import net.savagelabs.skyblockx.command.CommandInfo
-import net.savagelabs.skyblockx.command.CommandRequirementsBuilder
-import net.savagelabs.skyblockx.command.SCommand
+import net.savagelabs.savagepluginx.command.Argument
+import net.savagelabs.savagepluginx.command.Command
+import net.savagelabs.skyblockx.command.*
+import net.savagelabs.skyblockx.command.island.cmd.argument.HomeArgument
 import net.savagelabs.skyblockx.core.teleportAsync
 import net.savagelabs.skyblockx.persist.Message
 
-class CmdHomeGo : SCommand() {
+class CmdHomeGo : Command<SCommandInfo, SCommandRequirements>() {
 
     init {
         aliases.add("go")
 
         requiredArgs.add(Argument("home-name", 0, HomeArgument()))
 
-        commandRequirements = CommandRequirementsBuilder().asIslandMember(true).build()
+        commandRequirements = SCommandRequirementsBuilder().asIslandMember(true).build()
     }
 
-    override fun perform(info: CommandInfo) {
+    override fun perform(info: SCommandInfo) {
         val home = info.args[0]
         if (!info.island!!.hasHome(home)) {
             info.message(Message.instance.commandHomeDoesNotExist)

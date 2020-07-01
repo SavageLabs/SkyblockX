@@ -1,22 +1,21 @@
 package net.savagelabs.skyblockx.command.island
 
-import net.savagelabs.skyblockx.command.CommandInfo
-import net.savagelabs.skyblockx.command.CommandRequirementsBuilder
-import net.savagelabs.skyblockx.command.SCommand
+import net.savagelabs.savagepluginx.command.Command
+import net.savagelabs.skyblockx.command.SCommandInfo
+import net.savagelabs.skyblockx.command.SCommandRequirements
+import net.savagelabs.skyblockx.command.SCommandRequirementsBuilder
 import net.savagelabs.skyblockx.command.island.cmd.*
 import net.savagelabs.skyblockx.command.island.cmd.home.CmdHome
 import net.savagelabs.skyblockx.command.island.cmd.member.*
-
 import net.savagelabs.skyblockx.persist.Config
 import net.savagelabs.skyblockx.persist.Message
-import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
 import org.bukkit.command.TabCompleter
 import java.util.*
 
 
-class IslandBaseCommand : SCommand(), CommandExecutor, TabCompleter {
+class IslandBaseCommand : Command<SCommandInfo, SCommandRequirements>(), CommandExecutor, TabCompleter {
 
 
     companion object {
@@ -25,7 +24,7 @@ class IslandBaseCommand : SCommand(), CommandExecutor, TabCompleter {
 
 
     init {
-        this.commandRequirements = CommandRequirementsBuilder().build()
+        this.commandRequirements = SCommandRequirementsBuilder().build()
         subCommands.add(CmdCreate())
         subCommands.add(CmdGo())
         subCommands.add(CmdDelete())
@@ -59,9 +58,9 @@ class IslandBaseCommand : SCommand(), CommandExecutor, TabCompleter {
         instance = this
     }
 
-    override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
+    override fun onCommand(sender: CommandSender, command: org.bukkit.command.Command, label: String, args: Array<out String>): Boolean {
         execute(
-            CommandInfo(
+            SCommandInfo(
                 sender,
                 ArrayList(args.toList()),
                 label
@@ -74,11 +73,11 @@ class IslandBaseCommand : SCommand(), CommandExecutor, TabCompleter {
         return Message.instance.commandBaseHelp
     }
 
-    override fun perform(info: CommandInfo) {
+    override fun perform(info: SCommandInfo) {
         // If console
         if (info.player == null) {
             info.message(Message.instance.commandBaseHelpMessage)
-            generateHelp(1, info.commandSender)
+            generateHelp(1, info.commandSender, info.args)
             return
         }
 
@@ -92,18 +91,21 @@ class IslandBaseCommand : SCommand(), CommandExecutor, TabCompleter {
             }
         } else {
             info.message(Message.instance.commandBaseHelpMessage)
-            generateHelp(1, info.player!!)
+            generateHelp(1, info.player!!, info.args)
         }
     }
 
+
     override fun onTabComplete(
         sender: CommandSender,
-        command: Command,
+        command: org.bukkit.command.Command,
         alias: String,
         args: Array<String>
     ): List<String>? {
         return handleTabComplete(sender, command, alias, args)
     }
+
+
 
 }
 

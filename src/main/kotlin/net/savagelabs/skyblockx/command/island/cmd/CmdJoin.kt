@@ -1,22 +1,23 @@
 package net.savagelabs.skyblockx.command.island.cmd
 
-import net.savagelabs.skyblockx.command.CommandInfo
-import net.savagelabs.skyblockx.command.CommandRequirementsBuilder
-import net.savagelabs.skyblockx.command.SCommand
+import net.savagelabs.savagepluginx.command.Argument
+import net.savagelabs.savagepluginx.command.Command
+import net.savagelabs.savagepluginx.command.argument.PlayerArgument
+import net.savagelabs.skyblockx.command.*
 import net.savagelabs.skyblockx.persist.Message
 
-class CmdJoin : SCommand() {
+class CmdJoin : Command<SCommandInfo, SCommandRequirements>() {
 
     init {
         aliases.add("join")
 
         requiredArgs.add(Argument("player-name", 0, PlayerArgument()))
 
-        commandRequirements = CommandRequirementsBuilder().asPlayer(true).build()
+        commandRequirements = SCommandRequirementsBuilder().asPlayer(true).build()
     }
 
 
-    override fun perform(info: CommandInfo) {
+    override fun perform(info: SCommandInfo) {
         val targetIPlayer = info.getArgAsIPlayer(0) ?: return
         if (info.iPlayer!!.hasIsland()) {
             info.message(Message.instance.commandJoinHaveIsland)

@@ -1,15 +1,16 @@
 package net.savagelabs.skyblockx.command.island.cmd.member
 
-import net.savagelabs.skyblockx.command.CommandInfo
-import net.savagelabs.skyblockx.command.CommandRequirementsBuilder
-import net.savagelabs.skyblockx.command.SCommand
 import net.savagelabs.skyblockx.core.Permission
 import net.savagelabs.skyblockx.core.color
 import net.savagelabs.skyblockx.persist.Message
 import me.rayzr522.jsonmessage.JSONMessage
+import net.savagelabs.savagepluginx.command.Argument
+import net.savagelabs.savagepluginx.command.Command
+import net.savagelabs.savagepluginx.command.argument.PlayerArgument
+import net.savagelabs.skyblockx.command.*
 import net.savagelabs.skyblockx.command.island.IslandBaseCommand
 
-class CmdMemberInvite : SCommand() {
+class CmdMemberInvite : Command<SCommandInfo, SCommandRequirements>() {
 
 
     init {
@@ -18,11 +19,11 @@ class CmdMemberInvite : SCommand() {
         requiredArgs.add(Argument("player", 0, PlayerArgument()))
 
         commandRequirements =
-            CommandRequirementsBuilder().withPermission(Permission.MEMBER).asIslandMember(true).build()
+            SCommandRequirementsBuilder().withPermission(Permission.MEMBER).asIslandMember(true).build()
     }
 
 
-    override fun perform(info: CommandInfo) {
+    override fun perform(info: SCommandInfo) {
         val island = info.island!!
         if (island.memberLimit <= island.getIslandMembers().size) {
             info.message(String.format(Message.instance.commandMemberInviteLimit, island.memberLimit))
@@ -51,15 +52,15 @@ class CmdMemberInvite : SCommand() {
 
 }
 
-class CmdInvite : SCommand() {
+class CmdInvite : Command<SCommandInfo, SCommandRequirements>() {
     init {
         aliases.add("invite")
         requiredArgs.add(Argument("player", 0, PlayerArgument()))
         commandRequirements =
-            CommandRequirementsBuilder().withPermission(Permission.MEMBER).asIslandMember(true).build()
+            SCommandRequirementsBuilder().withPermission(Permission.MEMBER).asIslandMember(true).build()
     }
 
-    override fun perform(info: CommandInfo) {
+    override fun perform(info: SCommandInfo) {
         IslandBaseCommand.instance.subCommands.find { command -> command is CmdMember }
             ?.subCommands?.find { subcommand -> subcommand is CmdMemberInvite }?.perform(info)
     }

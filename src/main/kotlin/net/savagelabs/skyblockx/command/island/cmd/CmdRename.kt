@@ -1,15 +1,17 @@
 package net.savagelabs.skyblockx.command.island.cmd
 
-import net.savagelabs.skyblockx.command.CommandInfo
-import net.savagelabs.skyblockx.command.CommandRequirementsBuilder
-import net.savagelabs.skyblockx.command.SCommand
+import net.savagelabs.savagepluginx.command.Argument
+import net.savagelabs.savagepluginx.command.Command
+import net.savagelabs.savagepluginx.command.argument.StringArgument
+import net.savagelabs.savagepluginx.strings.isAlphaNumeric
+import net.savagelabs.skyblockx.command.*
 import net.savagelabs.skyblockx.core.Island
 import net.savagelabs.skyblockx.core.Permission
 import net.savagelabs.skyblockx.core.isIslandNameTaken
 import net.savagelabs.skyblockx.persist.Config
 import net.savagelabs.skyblockx.persist.Message
 
-class CmdRename : SCommand() {
+class CmdRename : Command<SCommandInfo, SCommandRequirements>() {
 
     init {
         aliases.add("rename")
@@ -17,7 +19,7 @@ class CmdRename : SCommand() {
 
         requiredArgs.add(Argument("new-name", 0, StringArgument()))
 
-        commandRequirements = CommandRequirementsBuilder()
+        commandRequirements = SCommandRequirementsBuilder()
             .withPermission(Permission.RENAME)
             .asLeader(true)
             .asIslandMember(true)
@@ -25,14 +27,14 @@ class CmdRename : SCommand() {
     }
 
 
-    override fun perform(info: CommandInfo) {
+    override fun perform(info: SCommandInfo) {
         val newName = info.args[0]
         if (Config.instance.islandNameEnforceLength && (newName.length < Config.instance.islandNameMinLength || newName.length > Config.instance.islandNameMaxLength)) {
             info.message(Message.instance.commandCreateLength, Config.instance.islandNameMinLength.toString(), Config.instance.islandNameMaxLength.toString())
             return
         }
 
-        if (Config.instance.islandNameEnforceAlphaNumeric && !newName.chars().allMatch(Character::isLetterOrDigit)) {
+        if (Config.instance.islandNameEnforceAlphaNumeric && !newName.isAlphaNumeric()) {
             info.message(Message.instance.commandCreateNonAlphaNumeric)
             return
         }

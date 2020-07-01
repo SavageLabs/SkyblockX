@@ -21,14 +21,14 @@ abstract class Command<T: CommandInfo, R: CommandRequirements<T>> {
 
     val subCommands = LinkedList<Command<T, R>>()
 
-    fun run(info: T) {
+    fun execute(info: T) {
         if (info.args.isNotEmpty()) {
             for (command in subCommands) {
                 if (command.aliases.contains(info.args.first().toLowerCase())) {
                     // Remove the first arg so when the CommandInfo is passed to subcommand,
                     // first arg is relative.
                     info.args.removeAt(0)
-                    command.run(info)
+                    command.execute(info)
                     return
                 }
             }
@@ -43,10 +43,10 @@ abstract class Command<T: CommandInfo, R: CommandRequirements<T>> {
                 return
             }
         }
-        execute(info)
+        perform(info)
     }
 
-    abstract fun execute(info: T)
+    abstract fun perform(info: T)
 
 
     fun initializeSubCommandData() {
@@ -199,22 +199,14 @@ abstract class Command<T: CommandInfo, R: CommandRequirements<T>> {
 
     }
 
-    class Argument(
-        val name: String,
-        val argumentOrder: Int,
-        val argumentType: ArgumentType
-    )
 
-    abstract class ArgumentType {
-        abstract fun getPossibleValues(player: Player?): List<String>
-    }
 
-    fun handleTabComplete(
-        sender: CommandSender,
-        command: Command<T, R>,
-        alias: String,
-        args: Array<String>
-    ): List<String> {
+        fun handleTabComplete(
+            sender: CommandSender,
+            command: org.bukkit.command.Command,
+            alias: String,
+            args: Array<String>
+        ): List<String> {
         // This is for basic subcommand tabbing. /souls <subcommand>
 
         // Spigot has an empty arg instead of making the array so we gotta check if it's empty :).
@@ -266,7 +258,8 @@ abstract class Command<T: CommandInfo, R: CommandRequirements<T>> {
                 val arg = list.find { argument -> argument.argumentOrder == argToComplete }
                 if (arg != null) {
                     val start = args[args.size - 1]
-                    var possibleValuesArg = arg.argumentType.getPossibleValues(if (sender is Player) sender else null)
+                    var possibleValuesArg = if (sender !is Player) emptyList() else
+                     arg.argumentType.getPossibleValues(sender)
                     if (!start.isNullOrEmpty()) possibleValuesArg = possibleValuesArg.filter { possibleValue -> possibleValue.startsWith(start, true) }
                     possibleValues.addAll(possibleValuesArg.toList())
                 }

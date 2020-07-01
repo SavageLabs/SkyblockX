@@ -80,3 +80,7 @@ fun updateWorldBorder(player: Player, location: Location, delay: Long) {
 fun isPlaceholderAPIPresent(): Boolean {
     return Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null
 }
+
+fun Player.getIPlayer(): IPlayer {
+    return getIPlayer(this)
+}

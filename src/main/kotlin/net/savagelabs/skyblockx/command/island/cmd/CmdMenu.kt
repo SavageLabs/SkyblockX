@@ -1,23 +1,25 @@
 package net.savagelabs.skyblockx.command.island.cmd
 
-import net.savagelabs.skyblockx.command.CommandInfo
-import net.savagelabs.skyblockx.command.CommandRequirementsBuilder
-import net.savagelabs.skyblockx.command.SCommand
+import net.savagelabs.savagepluginx.command.Command
+import net.savagelabs.skyblockx.command.*
 import net.savagelabs.skyblockx.core.Permission
 import net.savagelabs.skyblockx.gui.IslandMenuGUI
 import net.savagelabs.skyblockx.persist.Config
 import net.savagelabs.skyblockx.persist.Message
 
-class CmdMenu : SCommand() {
+class CmdMenu : Command<SCommandInfo, SCommandRequirements>() {
 
     init {
         aliases.add("menu")
 
 
-        commandRequirements = CommandRequirementsBuilder().withPermission(Permission.MENU).asIslandMember(true).build()
+        commandRequirements = SCommandRequirementsBuilder()
+            .withPermission(Permission.MENU)
+            .asIslandMember(true)
+            .build()
     }
 
-    override fun perform(info: CommandInfo) {
+    override fun perform(info: SCommandInfo) {
         if (Config.instance.openIslandMenuOnBaseCommand) IslandMenuGUI().showGui(info.player!!)
     }
 

@@ -1,9 +1,10 @@
 package net.savagelabs.skyblockx.command.island.cmd
 
 import me.rayzr522.jsonmessage.JSONMessage
-import net.savagelabs.skyblockx.command.CommandInfo
-import net.savagelabs.skyblockx.command.CommandRequirementsBuilder
-import net.savagelabs.skyblockx.command.SCommand
+import net.savagelabs.savagepluginx.command.Argument
+import net.savagelabs.savagepluginx.command.Command
+import net.savagelabs.savagepluginx.command.argument.StringArgument
+import net.savagelabs.skyblockx.command.*
 import net.savagelabs.skyblockx.core.Permission
 import net.savagelabs.skyblockx.core.color
 import net.savagelabs.skyblockx.core.createIsland
@@ -12,19 +13,20 @@ import net.savagelabs.skyblockx.persist.Config
 import net.savagelabs.skyblockx.persist.Message
 
 
-class CmdCreate : SCommand() {
+class CmdCreate : Command<SCommandInfo, SCommandRequirements>() {
 
     init {
         aliases.add("create")
 
-        optionalArgs.add(Argument("island-type", 0, StringArgument()))
+        optionalArgs.add(
+            Argument("island-type", 0, StringArgument()))
 
         commandRequirements =
-           CommandRequirementsBuilder().asIslandMember(false).asPlayer(true)
+           SCommandRequirementsBuilder().asIslandMember(false).asPlayer(true)
                 .withPermission(Permission.CREATE).build()
     }
 
-    override fun perform(info: CommandInfo) {
+    override fun perform(info: SCommandInfo) {
         if (info.iPlayer!!.hasIsland()) {
             info.message(Message.instance.commandCreateAlreadyHaveAnIsland)
             return
