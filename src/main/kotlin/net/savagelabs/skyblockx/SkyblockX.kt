@@ -56,7 +56,7 @@ class SkyblockX : SavagePluginX() {
             loadPlaceholderAPIHook()
             startIslandTopTask()
             startAutoSaveTask()
-//            loadMetrics()
+            loadMetrics()
             registerListeners(
                 DataListener(),
                 SEditListener(),

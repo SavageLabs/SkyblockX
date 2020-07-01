@@ -77,14 +77,12 @@ class QuestActions(val actions: List<String>) {
         }
     }
 
-
     fun parseQuestPlaceholders(context: QuestContext, line: String): String {
         return line
             .replace("{player}", context.contextIPlayer.name)
             .replace("{uuid}", context.contextIPlayer.uuid)
             .replace("{quest-name}", context.quest.name)
             .replace("{quest-amount-till-complete}", "${context.quest.amountTillComplete}")
-
     }
 
     class QuestContext(val contextIPlayer: IPlayer, val contextIsland: Island, val quest: Quest)

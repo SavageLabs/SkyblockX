@@ -70,6 +70,7 @@ tasks {
         mergeServiceFiles()
         exclude("META-INF/*.DSA")
         exclude("META-INF/*.RSA")
+        relocate("org.bstats", "net.savagelabs.skyblockx.shade.bstats")
         archiveFileName.set("SkyblockX-${version}.jar")
     }
 
