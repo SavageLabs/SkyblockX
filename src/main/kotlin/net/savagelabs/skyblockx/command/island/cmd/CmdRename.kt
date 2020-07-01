@@ -9,8 +9,10 @@ import net.savagelabs.skyblockx.command.SCommandRequirements
 import net.savagelabs.skyblockx.command.SCommandRequirementsBuilder
 import net.savagelabs.skyblockx.core.Permission
 import net.savagelabs.skyblockx.core.isIslandNameTaken
+import net.savagelabs.skyblockx.event.IslandRenameEvent
 import net.savagelabs.skyblockx.persist.Config
 import net.savagelabs.skyblockx.persist.Message
+import org.bukkit.Bukkit
 
 class CmdRename : Command<SCommandInfo, SCommandRequirements>() {
 
@@ -48,7 +50,7 @@ class CmdRename : Command<SCommandInfo, SCommandRequirements>() {
             info.message(Message.instance.commandRenameIslandNameIsTaken)
             return
         }
-
+        Bukkit.getPluginManager().callEvent(IslandRenameEvent(info.island!!, info.island!!.islandName, newName))
         info.island?.islandName = newName
         info.message(Message.instance.commandRenameSuccess, newName)
     }
