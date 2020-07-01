@@ -53,8 +53,8 @@ data class IPlayer(val uuid: String, val name: String) {
     var pos2: Location? = null
 
     @JsonIgnore
-    fun getPlayer(): Player {
-        return Bukkit.getPlayer(UUID.fromString(uuid))!!
+    fun getPlayer(): Player? {
+        return Bukkit.getPlayer(UUID.fromString(uuid))
     }
 
     @JsonIgnore
@@ -69,11 +69,11 @@ data class IPlayer(val uuid: String, val name: String) {
 
     @JsonIgnore
     fun isOnOwnIsland(): Boolean {
-        return !(this.hasIsland() && this.getIsland()!!.containsBlock(getPlayer().location))
+        return !(this.hasIsland() && this.getIsland()!!.containsBlock(getPlayer()!!.location))
     }
 
     fun message(message: String) {
-        getPlayer().sendMessage(color(Message.instance.messagePrefix + message))
+        getPlayer()!!.sendMessage(color(Message.instance.messagePrefix + message))
     }
 
     fun isCoopedIsland(id: Int): Boolean {

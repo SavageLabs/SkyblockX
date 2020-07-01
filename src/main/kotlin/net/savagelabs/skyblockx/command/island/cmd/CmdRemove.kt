@@ -31,7 +31,7 @@ class CmdRemove : Command<SCommandInfo, SCommandRequirements>() {
         if (target.hasCoopIsland() && target.coopedIslandIds.contains(info.iPlayer!!.islandID)) {
             target.removeCoopIsland(info.iPlayer!!.getIsland()!!)
             target.message(Message.instance.commandRemovedCoopStatus)
-            info.message(String.format(Message.instance.commandRemoveInvokerCoopRemoved, target.getPlayer().name))
+            info.message(String.format(Message.instance.commandRemoveInvokerCoopRemoved, target.name))
         }
 
 
@@ -39,14 +39,14 @@ class CmdRemove : Command<SCommandInfo, SCommandRequirements>() {
             target.getIsland()?.getIslandCenter() ?: Bukkit.getWorld(Config.instance.defaultWorld)!!.spawnLocation
 
         // Check if they're even on the island, to prevent abuse.
-        if (!info.iPlayer!!.getIsland()!!.containsBlock(target.getPlayer().location)) {
+        if (!info.iPlayer!!.getIsland()!!.containsBlock(target.getPlayer()!!.location)) {
             info.message(Message.instance.commandRemoveInvokerPlayerNotOnIsland)
             return
         }
 
         // Teleport them cuz they're on the island.
         teleportAsync(target.getPlayer(), targetNewLocation, Runnable { })
-        info.message(String.format(Message.instance.commandRemoveInvokerSuccess, target.getPlayer().name))
+        info.message(String.format(Message.instance.commandRemoveInvokerSuccess, target.name))
 
 
     }
