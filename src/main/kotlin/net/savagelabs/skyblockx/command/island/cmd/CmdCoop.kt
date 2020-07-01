@@ -33,7 +33,7 @@ class CmdCoop : Command<SCommandInfo, SCommandRequirements>() {
         info.iPlayer!!.getIsland()!!.coopPlayer(info.iPlayer, target)
 
         target.message(String.format(Message.instance.commandCoopMessageRecipient, info.player!!.name))
-        info.iPlayer!!.message(String.format(Message.instance.commandCoopInvokerSuccess, target.getPlayer().name))
+        info.iPlayer!!.message(String.format(Message.instance.commandCoopInvokerSuccess, target.name))
     }
 
 

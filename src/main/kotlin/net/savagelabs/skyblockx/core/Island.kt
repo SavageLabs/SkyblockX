@@ -253,8 +253,8 @@ data class Island(
         if (memberLimit <= members.size) {
             return
         }
-        if (!members.contains(iPlayer.getPlayer().uniqueId.toString())) {
-            members.add(iPlayer.getPlayer().uniqueId.toString())
+        if (!members.contains(iPlayer.uuid)) {
+            members.add(iPlayer.uuid)
         }
 
         iPlayer.assignIsland(this)
@@ -418,8 +418,8 @@ data class Island(
                 authorizer.message(
                     String.format(
                         Message.instance.commandCoopAuthorized,
-                        authorizer.getPlayer().name,
-                        iPlayer.getPlayer().name
+                        authorizer.name,
+                        iPlayer.name
                     )
                 )
             }
@@ -533,7 +533,7 @@ data class Island(
         members.remove(Bukkit.getPlayer(name)?.uniqueId.toString())
         // Make old leader a member
         val oldleader = getIPlayerByName(ownerTag)!!
-        members.add(oldleader.getPlayer().uniqueId.toString())
+        members.add(oldleader.uuid)
         // Assign again just in case :P
         oldleader.assignIsland(this)
         // Actually make the leader the leader of the island

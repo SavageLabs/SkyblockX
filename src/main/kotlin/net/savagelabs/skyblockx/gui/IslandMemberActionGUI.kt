@@ -22,7 +22,7 @@ class IslandMemberActionGUI(val name: String) :
         for (item in Config.instance.islandMemberActionItems) {
             guiItems[item.slot] = GuiItem(buildMenuItem(item)) { e ->
                 e.isCancelled = true
-                executeCommands(item.commandsToExecute, context.getPlayer())
+                executeCommands(item.commandsToExecute, context.getPlayer()!!)
             }
         }
         pane.populateWithGuiItems(guiItems)

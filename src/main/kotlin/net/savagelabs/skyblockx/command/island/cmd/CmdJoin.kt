@@ -27,14 +27,14 @@ class CmdJoin : Command<SCommandInfo, SCommandRequirements>() {
         }
 
         if (!info.iPlayer!!.isInvitedToIsland(targetIPlayer.getIsland()!!)) {
-            info.message(String.format(Message.instance.commandJoinNotInvited, targetIPlayer.getPlayer().name))
+            info.message(String.format(Message.instance.commandJoinNotInvited, targetIPlayer.name))
             return
         }
 
 
         targetIPlayer.getIsland()!!.addMember(info.iPlayer!!)
         info.iPlayer!!.islandsInvitedTo.remove(targetIPlayer.getIsland()!!.islandID)
-        info.message(String.format(Message.instance.commandJoinSuccess, targetIPlayer.getPlayer().name))
+        info.message(String.format(Message.instance.commandJoinSuccess, targetIPlayer.name))
     }
 
 

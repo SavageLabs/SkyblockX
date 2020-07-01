@@ -29,7 +29,7 @@ class CmdSbChest : Command<SCommandInfo, SCommandRequirements>() {
             return
         }
         val inventory = iPlayerByName.getIsland()!!.inventory
-        iPlayerByName.getPlayer().openInventory(inventory!!)
+        iPlayerByName.getPlayer()!!.openInventory(inventory!!)
         info.message(Message.instance.commandSkyblockOpenChestOpening)
 
     }

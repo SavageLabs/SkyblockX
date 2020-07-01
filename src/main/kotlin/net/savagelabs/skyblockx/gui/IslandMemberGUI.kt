@@ -34,7 +34,7 @@ class IslandMemberGUI :
                 GuiItem(getSkullOfPlayer(memberName.name, Config.instance.islandMemberGUIItemMeta)!!) { e ->
                     run {
                         e.isCancelled = true
-                        IslandMemberActionGUI(memberName.name).showGui(context.getPlayer())
+                        IslandMemberActionGUI(memberName.name).showGui(context.getPlayer()!!)
                     }
                 }
             slotListIndexesUsed++
