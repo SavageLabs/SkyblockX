@@ -6,6 +6,7 @@ import net.savagelabs.skyblockx.command.SCommandRequirements
 import net.savagelabs.skyblockx.command.SCommandRequirementsBuilder
 import net.savagelabs.skyblockx.core.Permission
 import net.savagelabs.skyblockx.gui.IslandBorderGUI
+import net.savagelabs.skyblockx.gui.menu.BorderMenu
 import net.savagelabs.skyblockx.persist.Message
 
 
@@ -21,7 +22,7 @@ class CmdBorder : Command<SCommandInfo, SCommandRequirements>() {
     }
 
     override fun perform(info: SCommandInfo) {
-        IslandBorderGUI().showGui(info.player!!)
+        BorderMenu().build().open(info.player)
     }
 
     override fun getHelpInfo(): String {

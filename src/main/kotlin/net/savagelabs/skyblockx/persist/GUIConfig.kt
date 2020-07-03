@@ -5,13 +5,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore
 import fr.minuskube.inv.content.SlotIterator
 import net.savagelabs.savagepluginx.persist.container.ConfigContainer
 import net.savagelabs.skyblockx.gui.*
-import net.savagelabs.skyblockx.gui.menu.CoopInviteMenu
-import net.savagelabs.skyblockx.gui.menu.CoopMenuConfig
-import net.savagelabs.skyblockx.gui.menu.CoopMenuInviteConfig
+import net.savagelabs.skyblockx.gui.menu.*
 import net.savagelabs.skyblockx.gui.wrapper.GUICoordinate
 import net.savagelabs.skyblockx.gui.wrapper.GUIItem
 import net.savagelabs.skyblockx.gui.wrapper.MenuItem
+import net.savagelabs.skyblockx.persist.data.IslandCreateInfo
 import net.savagelabs.skyblockx.persist.data.SerializableItem
+import net.savagelabs.worldborder.WorldBorderUtil
 
 class GUIConfig(@JsonIgnore override val name: String = "GUIConfig") : ConfigContainer {
 
@@ -327,6 +327,122 @@ class GUIConfig(@JsonIgnore override val name: String = "GUIConfig") : ConfigCon
             )
         )
 
+    )
+
+    val borderMenuConfig = BorderMenuConfig(
+        "&aChange Border Color",
+        SerializableItem(
+            XMaterial.BLACK_STAINED_GLASS_PANE,
+            "",
+            emptyList(),
+            1
+        ),
+        3,
+        hashMapOf(
+            WorldBorderUtil.Color.BLUE to GUIItem(
+                SerializableItem(
+                    XMaterial.LIGHT_BLUE_STAINED_GLASS,
+                    "&bBlue Border",
+                    listOf(
+                        "&e&l→&a Set your border color to blue"
+                    ),
+                    1,
+                    skullTexture = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjNmNWY2OWI5NGI2NGNkNTJhY2MyZTg3ZDg0NmY2MzUyYTRjYjA3MDU2YjE0N2UyNDhhZjZlZjlmMjc4ZWY4ZiJ9fX0="
+                ),
+                GUICoordinate(1, 1)
+            ),
+            WorldBorderUtil.Color.GREEN to GUIItem(
+                SerializableItem(
+                    XMaterial.LIME_STAINED_GLASS,
+                    "&aGreen Border",
+                    listOf(
+                        "&e&l→&a Set your border color to blue"
+                    ),
+                    1,
+                    skullTexture = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWIyYmExNWNiYWNkNzZkOWU2NDFkZDM4NTk4MTZmMjIyYTgyYzljODhjYzUwMzVhNTBlNDcwNWJiZTczNTRlZiJ9fX0="
+                ),
+                GUICoordinate(1, 3)
+            ),
+            WorldBorderUtil.Color.RED to GUIItem(
+                SerializableItem(
+                    XMaterial.RED_STAINED_GLASS,
+                    "&cRed Border",
+                    listOf(
+                        "&e&l→&a Set your border color to red"
+                    ),
+                    1,
+                    skullTexture = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYjQ0OGE0YmFlMTY0MDJiYzk1ZmQyYzFlMWFlNmE2MzJjODQ3NWQ3MmJkZjk4NmQzNmYwYjc2YjFiNzA2NjYzYyJ9fX0="
+                ),
+                GUICoordinate(1, 5)
+            ),
+            WorldBorderUtil.Color.NONE to GUIItem(
+                SerializableItem(
+                    XMaterial.GLASS,
+                    "&fNo Border",
+                    listOf(
+                        "&e&l→&a Turn your border off."
+                    ),
+                    1,
+                    skullTexture = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYThjODU2MzY2YzY0Nzc0YWY2MjJkZjkwY2ViMTNjYzkxNjcyNzk0ZTc0OWE2MmJkMDFjYjg3MmRhNzE2ZCJ9fX0="
+                ),
+                GUICoordinate(1, 7)
+            )
+        ),
+        listOf(
+            MenuItem(
+                SerializableItem(
+                    XMaterial.OAK_DOOR,
+                    "&aBack to Main Menu",
+                    listOf(
+                        "&e&l←&a Go back to the main menu."
+                    ),
+                    1,
+                    skullTexture = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZWQ3MDdkYjQ2YTVhY2JmZWJmNjEyMzk1MzZkMjU2NDgxMzRiYjQzYjY1YzE2NzE2YmEzMjljNmRiZjQxMiJ9fX0="
+                ),
+                listOf(
+                    "is menu"
+                ),
+                GUICoordinate(0,0)
+            )
+        )
+    )
+
+    val createGUIConfig = CreateMenuConfig(
+        "&aCreate an Island",
+        SerializableItem(
+            XMaterial.BLACK_STAINED_GLASS_PANE,
+            "",
+            listOf(),
+            1
+        ),
+        3,
+        listOf(
+            IslandCreateInfo(
+                "normal",
+                "skyblockx.islands.default",
+                GUICoordinate(3,1),
+                SerializableItem(
+                    XMaterial.GRASS_BLOCK,
+                    "&aBasic Island",
+                    listOf("&aThis is the basic starter island", "&aComes with everything you need to get started."),
+                    1
+                ), "island.structure",
+                "nether-island.structure"
+            ),
+            IslandCreateInfo(
+                "bedrock",
+                "skyblockx.islands.bedrock",
+                GUICoordinate(6,1),
+                SerializableItem(
+                    XMaterial.BEDROCK,
+                    "&aBedrock Island",
+                    listOf("&aThis is the basic starter island", "&aComes with everything you need to get started."),
+                    1
+                ), "island.structure",
+                "nether-island.structure"
+            )
+        ),
+        emptyList()
     )
 
 

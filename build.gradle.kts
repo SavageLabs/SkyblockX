@@ -31,7 +31,7 @@ dependencies {
     implementation("com.cryptomorin:XSeries:6.0.0")
     implementation("io.papermc:paperlib:1.0.2")
     implementation("com.github.MinusKube:SmartInvs:master-SNAPSHOT")
-    implementation("com.deanveloper:skullcreator:2.0.1")
+    implementation("com.deanveloper:skullcreator:2.0.0")
     implementation(project(":WorldBorderUtil"))
     implementation(project(":SavagePluginX"))
 

@@ -237,34 +237,6 @@ class Config(@JsonIgnore override val name: String = "config") :
     )
 
 
-
-    var islandCreateGUITitle = "Choose an island!"
-    var islandCreateGUIRows = 1
-    var islandCreateGUIBackgroundItem = SerializableItem(XMaterial.BLACK_STAINED_GLASS_PANE, "&9", listOf(""), 1)
-    var islandCreateGUIIslandTypes = listOf(
-        IslandCreateInfo(
-            "normal",
-            "skyblockx.islands.default", 2, SerializableItem(
-                XMaterial.GRASS_BLOCK,
-                "&aBasic Island",
-                listOf("&aThis is the basic starter island", "&aComes with everything you need to get started."),
-                1
-            ), "island.structure",
-            "nether-island.structure"
-        ),
-        IslandCreateInfo(
-            "bedrock",
-            "skyblockx.islands.bedrock", 6, SerializableItem(
-                XMaterial.BEDROCK,
-                "&aBedrock Island",
-                listOf("&aThis is the basic starter island", "&aComes with everything you need to get started."),
-                1
-            ), "island.structure",
-            "nether-island.structure"
-        )
-    )
-
-
     var removeBlocksOnIslandDelete = false
 
 
