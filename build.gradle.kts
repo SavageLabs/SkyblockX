@@ -11,6 +11,7 @@ version = "v1.5"
 
 repositories {
     mavenCentral()
+    mavenLocal()
     maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots")
     maven("https://nexus.savagelabs.net/repository/maven-releases/")
     maven("https://rayzr.dev/repo/")
@@ -19,6 +20,8 @@ repositories {
     maven("http://repo.extendedclip.com/content/repositories/placeholderapi/")
     maven("https://papermc.io/repo/repository/maven-public/")
     maven("https://repo.codemc.org/repository/maven-public")
+    maven("https://jitpack.io")
+    maven("https://dl.bintray.com/deanveloper/SkullCreator")
 }
 
 dependencies {
@@ -27,6 +30,8 @@ dependencies {
     implementation("org.bstats:bstats-bukkit:1.7")
     implementation("com.cryptomorin:XSeries:6.0.0")
     implementation("io.papermc:paperlib:1.0.2")
+    implementation("com.github.MinusKube:SmartInvs:master-SNAPSHOT")
+    implementation("com.deanveloper:skullcreator:2.0.1")
     implementation(project(":WorldBorderUtil"))
     implementation(project(":SavagePluginX"))
 

@@ -4,26 +4,28 @@ import com.github.stefvanschie.inventoryframework.GuiItem
 import me.clip.placeholderapi.PlaceholderAPI
 import net.savagelabs.skyblockx.core.IPlayer
 import net.savagelabs.skyblockx.core.isPlaceholderAPIPresent
+import net.savagelabs.skyblockx.gui.wrapper.MenuItem
 import net.savagelabs.skyblockx.persist.Config
+import net.savagelabs.skyblockx.persist.GUIConfig
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 
 class IslandMemberActionGUI(val name: String) :
     BaseGUI(
-        Config.instance.islandMemberActionGUITitle.replace("{player}", name),
-        Config.instance.islandMemberActionGUIBackgroundItem,
-        Config.instance.islandMemberActionGUIRows
+        GUIConfig.instance.islandMenuGUI.guiTitle,
+        GUIConfig.instance.islandMenuGUI.guiBackgroundItem,
+        GUIConfig.instance.islandMenuGUI.guiRows
     ) {
 
     override fun populatePane(context: IPlayer) {
         val guiItems = buildFullBackgroundItemlist()
 
-        for (item in Config.instance.islandMemberActionItems) {
-            guiItems[item.slot] = GuiItem(buildMenuItem(item)) { e ->
-                e.isCancelled = true
-                executeCommands(item.commandsToExecute, context.getPlayer()!!)
-            }
+        for (item in GUIConfig.instance.islandMenuGUI.menuItems) {
+//            guiItems[item.slot] = GuiItem(buildMenuItem(item)) { e ->
+//                e.isCancelled = true
+//                executeCommands(item.commandsToExecute, context.getPlayer()!!)
+//            }
         }
         pane.populateWithGuiItems(guiItems)
     }

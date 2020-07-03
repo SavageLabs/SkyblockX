@@ -85,6 +85,19 @@ data class IPlayer(val uuid: String, val name: String) {
         island.currentCoopPlayers.remove(UUID.fromString(uuid))
     }
 
+    fun attemptToCoopPlayer(target: IPlayer) {
+        val island = getIsland()!!
+        if (!island.canHaveMoreCoopPlayers()) {
+            message(Message.instance.commandCoopCannotHaveMoreCoopPlayers)
+            return
+        }
+
+        island.coopPlayer(this, target)
+
+        target.message(String.format(Message.instance.commandCoopMessageRecipient, name))
+        message(String.format(Message.instance.commandCoopInvokerSuccess, target.name))
+    }
+
     fun addCoopIsland(island: Island) {
         coopedIslandIds.add(island.islandID)
     }
@@ -95,6 +108,30 @@ data class IPlayer(val uuid: String, val name: String) {
             islands.add(getIslandById(id) ?: continue)
         }
         return islands
+    }
+
+    fun attemptExpel(target: IPlayer) {
+        // Remove the target's co-op status if theyre co-op.
+        val island = getIsland()!!
+        if (target.hasCoopIsland() && target.coopedIslandIds.contains(islandID)) {
+            target.removeCoopIsland(island)
+            target.message(Message.instance.commandRemovedCoopStatus)
+            message(String.format(Message.instance.commandRemoveInvokerCoopRemoved, target.name))
+        }
+
+
+        val targetNewLocation =
+            target.getIsland()?.getIslandCenter() ?: Bukkit.getWorld(Config.instance.defaultWorld)!!.spawnLocation
+
+        // Check if they're even on the island, to prevent abuse.
+        if (!island.containsBlock(target.getPlayer()!!.location)) {
+            message(Message.instance.commandRemoveInvokerPlayerNotOnIsland)
+            return
+        }
+
+        // Teleport them cuz they're on the island.
+        teleportAsync(target.getPlayer(), targetNewLocation, Runnable { })
+        message(String.format(Message.instance.commandRemoveInvokerSuccess, target.name))
     }
 
     fun hasCoopIsland(): Boolean {

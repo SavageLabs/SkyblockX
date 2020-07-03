@@ -5,6 +5,7 @@ import net.savagelabs.skyblockx.core.IPlayer
 import net.savagelabs.skyblockx.core.getIPlayer
 import net.savagelabs.skyblockx.core.updateWorldBorder
 import net.savagelabs.skyblockx.persist.Config
+import net.savagelabs.skyblockx.persist.data.SerializableItem
 import net.savagelabs.worldborder.WorldBorderUtil
 import org.bukkit.entity.Player
 
@@ -33,4 +34,4 @@ class IslandBorderGUI :
 
 }
 
-class IslandBorderItem(val slot: Int, val displayItem: net.savagelabs.skyblockx.persist.data.SerializableItem)
+class IslandBorderItem(val slot: Int, val displayItem: SerializableItem)

@@ -26,7 +26,7 @@ class CmdMemberPromote : Command<SCommandInfo, SCommandRequirements>() {
 
     override fun perform(info: SCommandInfo) {
         val island = info.island!!
-        if (island.getIslandMembers().isEmpty()) {
+        if (island.getIslandMembers(false).isEmpty()) {
             info.message(Message.instance.commandMemberNoMembers)
             return
         }
@@ -38,7 +38,7 @@ class CmdMemberPromote : Command<SCommandInfo, SCommandRequirements>() {
             return
         }
 
-        if (!info.island!!.getIslandMembers().contains(getIPlayerByName(playerNameToPromote))) {
+        if (!info.island!!.getIslandMembers(false).contains(getIPlayerByName(playerNameToPromote))) {
             info.message(Message.instance.commandMemberPromoteNotFound)
             return
         }

@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore
 import net.savagelabs.savagepluginx.persist.container.ConfigContainer
 import net.savagelabs.skyblockx.gui.HeadFormat
 import net.savagelabs.skyblockx.gui.IslandBorderItem
-import net.savagelabs.skyblockx.gui.MenuItem
 import net.savagelabs.skyblockx.persist.data.IslandCreateInfo
 import net.savagelabs.skyblockx.persist.data.SerializableItem
 import net.savagelabs.skyblockx.persist.data.WeightedItem
@@ -169,50 +168,50 @@ class Config(@JsonIgnore override val name: String = "config") :
         listOf("&7Invite another island member to manage them.", "&7Format: &b/is members invite <player>")
     var islandMemberShowMenu = true
 
-    var islandMemberActionGUITitle = "&b&l{player}"
-    var islandMemberActionGUIBackgroundItem = SerializableItem(XMaterial.GRAY_STAINED_GLASS_PANE, "&7", listOf(""), 1)
-    var islandMemberActionGUIRows = 3
-    var islandMemberActionItems = listOf(
-        MenuItem(
-            SerializableItem(
-                XMaterial.PLAYER_HEAD,
-                "&bBack",
-                listOf("&7Click to go back."),
-                1
-            ),
-            listOf("is member"),
-            0
-        ),
-        MenuItem(
-            SerializableItem(
-                XMaterial.BARRIER,
-                "&7Kick &b&l{player}",
-                listOf("&7Click to kick"),
-                1
-            ),
-            listOf("is members kick {player}"),
-            10
-        ), MenuItem(
-            SerializableItem(
-                XMaterial.DIAMOND_SWORD,
-                "&7Kick &b&l{player}",
-                listOf("&7Click to kick"),
-                1
-            ),
-            listOf("is members kick {player}"),
-            13
-        ),
-        MenuItem(
-            SerializableItem(
-                XMaterial.GOLDEN_APPLE,
-                "&7Promote &b&l{player}&7 to leader",
-                listOf("&7The current leader &b&lWILL &7lose their position", "&7Click to promote"),
-                1
-            ),
-            listOf("is members promote {player}"),
-            16
-        )
-    )
+//    var islandMemberActionGUITitle = "&b&l{player}"
+//    var islandMemberActionGUIBackgroundItem = SerializableItem(XMaterial.GRAY_STAINED_GLASS_PANE, "&7", listOf(""), 1)
+//    var islandMemberActionGUIRows = 3
+//    var islandMemberActionItems = listOf(
+//        MenuItem(
+//            SerializableItem(
+//                XMaterial.PLAYER_HEAD,
+//                "&bBack",
+//                listOf("&7Click to go back."),
+//                1
+//            ),
+//            listOf("is member"),
+//            0
+//        ),
+//        MenuItem(
+//            SerializableItem(
+//                XMaterial.BARRIER,
+//                "&7Kick &b&l{player}",
+//                listOf("&7Click to kick"),
+//                1
+//            ),
+//            listOf("is members kick {player}"),
+//            10
+//        ), MenuItem(
+//            SerializableItem(
+//                XMaterial.DIAMOND_SWORD,
+//                "&7Kick &b&l{player}",
+//                listOf("&7Click to kick"),
+//                1
+//            ),
+//            listOf("is members kick {player}"),
+//            13
+//        ),
+//        MenuItem(
+//            SerializableItem(
+//                XMaterial.GOLDEN_APPLE,
+//                "&7Promote &b&l{player}&7 to leader",
+//                listOf("&7The current leader &b&lWILL &7lose their position", "&7Click to promote"),
+//                1
+//            ),
+//            listOf("is members promote {player}"),
+//            16
+//        )
+//    )
 
 
     var islandBorderGUITitle = "&7Change border color"
@@ -237,41 +236,6 @@ class Config(@JsonIgnore override val name: String = "config") :
         )
     )
 
-    var islandMenuGUITitle = "Island Menu"
-    var islandMenuGUIRows = 3
-    var islandMenuGUIBackgroundItem = SerializableItem(XMaterial.GRAY_STAINED_GLASS_PANE, "&9", listOf(""), 1)
-    var islandMenuGUIItems = listOf(
-        MenuItem(
-            SerializableItem(
-                XMaterial.GRASS_BLOCK,
-                "&bGo to island",
-                listOf("&7Click to go to island"),
-                1
-            ),
-            listOf("is go"),
-            10
-        ),
-        MenuItem(
-            SerializableItem(
-                XMaterial.BOOK,
-                "&bIsland Quests",
-                listOf("&7Click to open quests"),
-                1
-            ),
-            listOf("is quest"),
-            13
-        ),
-        MenuItem(
-            SerializableItem(
-                XMaterial.PLAYER_HEAD,
-                "&bManage Members",
-                listOf("&7Click to manage island members"),
-                1
-            ),
-            listOf("is members"),
-            16
-        )
-    )
 
 
     var islandCreateGUITitle = "Choose an island!"

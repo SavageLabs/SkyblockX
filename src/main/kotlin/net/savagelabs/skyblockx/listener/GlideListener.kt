@@ -24,7 +24,7 @@ class GlideListener : Listener {
         val island = getIslandFromLocation(event.entity.location) ?: return
         val iPlayer = getIPlayer(event.entity as Player)
         if (!island.allowVisitors && !island.hasCoopPlayer(iPlayer) && !island.getIslandMembers()
-                .contains(iPlayer) && island.getOwnerIPlayer() != iPlayer
+                .contains(iPlayer)
         ) {
             if (iPlayer.hasIsland()) {
                 event.entity.teleport(island.islandGoPoint!!.getLocation())

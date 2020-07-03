@@ -1,6 +1,7 @@
 package net.savagelabs.skyblockx
 
 import com.cryptomorin.xseries.XMaterial
+import fr.minuskube.inv.InventoryManager
 import io.papermc.lib.PaperLib
 import kotlinx.coroutines.runBlocking
 import net.savagelabs.savagepluginx.SavagePluginX
@@ -39,6 +40,7 @@ class SkyblockX : SavagePluginX() {
         lateinit var worldBorderUtil: WorldBorderUtil
         lateinit var generatorAlgorithm: Map<Int, Items<XMaterial>>
         var islandValues: IslandTopInfo? = null
+        lateinit var inventoryManager: InventoryManager
     }
 
 
@@ -65,6 +67,7 @@ class SkyblockX : SavagePluginX() {
                 EntityListener(),
                 GlideListener()
             )
+            startInventoryManager()
             logInfo("Loaded ${Data.instance.IPlayers.size} players.")
             logInfo("Loaded ${Data.instance.islands.size} islands.")
             migrateData()
@@ -79,6 +82,11 @@ class SkyblockX : SavagePluginX() {
         logInfo("\t- Review the plugin on Spigot: https://www.spigotmc.org/resources/73135/", ChatColor.GREEN)
         loadWorlds()
         PaperLib.suggestPaper(this)
+    }
+
+    private fun startInventoryManager() {
+        inventoryManager = InventoryManager(this)
+        inventoryManager.init()
     }
 
     private fun migrateData() {
@@ -182,6 +190,7 @@ class SkyblockX : SavagePluginX() {
         BlockValues.instance = ConfigManager.readOrSave(BlockValues())
         Quests.instance = ConfigManager.readOrSave(Quests())
         Message.instance = ConfigManager.readOrSave(Message())
+        GUIConfig.instance = ConfigManager.readOrSave(GUIConfig())
     }
 
     private fun initWorldBorderUtility() {

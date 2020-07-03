@@ -30,7 +30,7 @@ class CmdMemberList : Command<SCommandInfo, SCommandRequirements>() {
             .runCommand("/is member kick ${info.island!!.ownerTag}")
             .send(info.player!!)
 
-        for ((index, member) in info.iPlayer!!.getIsland()!!.getIslandMembers().withIndex()) {
+        for ((index, member) in info.iPlayer!!.getIsland()!!.getIslandMembers().filter { member -> member.isLeader().not() }.withIndex()) {
             JSONMessage.create(color(String.format(Message.instance.commandMemberListFormat, index + 2, member.name)))
                 .tooltip(color(Message.instance.commandMemberListRemoveTooltip))
                 .runCommand("/is member kick ${member.name}")
