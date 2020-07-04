@@ -17,18 +17,13 @@ data class IslandMenuGUIConfig(
     val guiBackgroundItem: SerializableItem,
     val guiRows: Int,
     val guiMenuItems: List<MenuItem>
-) : MenuConfig(
-    guiTitle,
-    guiBackgroundItem,
-    guiRows,
-    guiMenuItems
 )
 
 class IslandMenu : BaseMenu(true, MenuConfig(
     GUIConfig.instance.islandMenuGUI.guiTitle,
-    GUIConfig.instance.islandMenuGUI.backgroundItem,
-    GUIConfig.instance.islandMenuGUI.rows,
-    GUIConfig.instance.islandMenuGUI.menuItems
+    GUIConfig.instance.islandMenuGUI.guiBackgroundItem,
+    GUIConfig.instance.islandMenuGUI.guiRows,
+    GUIConfig.instance.islandMenuGUI.guiMenuItems
 )) {
     override fun fillContents(player: Player, contents: InventoryContents) {
         // Menu item GUI, nothing to be done.

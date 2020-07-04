@@ -52,12 +52,12 @@ abstract class PagedMenu(val pagedMenuConfig: PagedMenuConfig, val fillBackgroun
         ))
         val nextPageItem = pagedMenuConfig.nextPageItem
         contents.set(nextPageItem.guiCoordinate.row, nextPageItem.guiCoordinate.column, ClickableItem.of(nextPageItem.item.buildItem()) {
-            this.build().open(player, pagination.previous().page)
+            buildMenu(this).open(player, pagination.previous().page)
         })
 
         val previousPageItem = pagedMenuConfig.previousPageItem
         contents.set(previousPageItem.guiCoordinate.row, previousPageItem.guiCoordinate.column, ClickableItem.of(previousPageItem.item.buildItem()) {
-            this.build().open(player, pagination.previous().page)
+            buildMenu(this).open(player, pagination.previous().page)
         })
     }
 

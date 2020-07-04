@@ -19,11 +19,6 @@ data class BorderMenuConfig(
     val guiRows: Int,
     val borderItems: HashMap<WorldBorderUtil.Color, GUIItem>,
     val guiMenuItems: List<MenuItem>
-) : MenuConfig(
-    guiTitle,
-    guiBackgroundItem,
-    guiRows,
-    guiMenuItems
 )
 
 class BorderMenu : BaseMenu(true, MenuConfig(

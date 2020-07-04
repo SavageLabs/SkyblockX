@@ -15,7 +15,6 @@ import java.util.*
 open class MenuConfig(val title: String, val backgroundItem: SerializableItem, val rows: Int, val menuItems: List<MenuItem>)
 
 abstract class BaseMenu(val fillBackground: Boolean = true, val menuConfig: MenuConfig) : InventoryProvider {
-
     abstract fun fillContents(player: Player, contents: InventoryContents)
 
     override fun init(player: Player, contents: InventoryContents) {
@@ -26,13 +25,14 @@ abstract class BaseMenu(val fillBackground: Boolean = true, val menuConfig: Menu
         fillContents(player, contents)
     }
 
-    fun build(): SmartInventory {
-        return SmartInventory.builder()
-            .manager(SkyblockX.inventoryManager)
-            .id(UUID.randomUUID().toString())
-            .provider(this)
-            .size(menuConfig.rows, 9)
-            .title(color(menuConfig.title))
-            .build()
-    }
+}
+
+fun buildMenu(instance: BaseMenu): SmartInventory {
+    return SmartInventory.builder()
+        .manager(SkyblockX.inventoryManager)
+        .id(UUID.randomUUID().toString())
+        .provider(instance)
+        .size(instance.menuConfig.rows, 9)
+        .title(color(instance.menuConfig.title))
+        .build()
 }

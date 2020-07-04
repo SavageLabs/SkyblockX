@@ -23,7 +23,7 @@ class GUIConfig(@JsonIgnore override val name: String = "GUIConfig") : ConfigCon
     val islandMenuGUI = IslandMenuGUIConfig(
         "&a&lIsland Menu",
         SerializableItem(
-            XMaterial.BLACK_STAINED_GLASS_PANE,
+            XMaterial.RED_STAINED_GLASS_PANE,
             "",
             listOf(),
             1
@@ -361,7 +361,7 @@ class GUIConfig(@JsonIgnore override val name: String = "GUIConfig") : ConfigCon
                     1,
                     skullTexture = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWIyYmExNWNiYWNkNzZkOWU2NDFkZDM4NTk4MTZmMjIyYTgyYzljODhjYzUwMzVhNTBlNDcwNWJiZTczNTRlZiJ9fX0="
                 ),
-                GUICoordinate(1, 3)
+                GUICoordinate(3, 1)
             ),
             WorldBorderUtil.Color.RED to GUIItem(
                 SerializableItem(
@@ -373,7 +373,7 @@ class GUIConfig(@JsonIgnore override val name: String = "GUIConfig") : ConfigCon
                     1,
                     skullTexture = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYjQ0OGE0YmFlMTY0MDJiYzk1ZmQyYzFlMWFlNmE2MzJjODQ3NWQ3MmJkZjk4NmQzNmYwYjc2YjFiNzA2NjYzYyJ9fX0="
                 ),
-                GUICoordinate(1, 5)
+                GUICoordinate(5, 1)
             ),
             WorldBorderUtil.Color.NONE to GUIItem(
                 SerializableItem(
@@ -385,7 +385,7 @@ class GUIConfig(@JsonIgnore override val name: String = "GUIConfig") : ConfigCon
                     1,
                     skullTexture = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYThjODU2MzY2YzY0Nzc0YWY2MjJkZjkwY2ViMTNjYzkxNjcyNzk0ZTc0OWE2MmJkMDFjYjg3MmRhNzE2ZCJ9fX0="
                 ),
-                GUICoordinate(1, 7)
+                GUICoordinate(7, 1)
             )
         ),
         listOf(

@@ -2,12 +2,17 @@ package net.savagelabs.skyblockx.gui.menu
 
 import com.deanveloper.skullcreator.SkullCreator
 import fr.minuskube.inv.ClickableItem
+import fr.minuskube.inv.SmartInventory
 import fr.minuskube.inv.content.SlotIterator
 import net.savagelabs.savagepluginx.item.ItemBuilder
+import net.savagelabs.skyblockx.SkyblockX
 import net.savagelabs.skyblockx.core.Island
+import net.savagelabs.skyblockx.core.color
 import net.savagelabs.skyblockx.core.getIPlayer
+import net.savagelabs.skyblockx.gui.BaseMenu
 import net.savagelabs.skyblockx.gui.PagedMenu
 import net.savagelabs.skyblockx.gui.PagedMenuConfig
+import net.savagelabs.skyblockx.gui.buildMenu
 import net.savagelabs.skyblockx.gui.wrapper.GUICoordinate
 import net.savagelabs.skyblockx.gui.wrapper.GUIItem
 import net.savagelabs.skyblockx.gui.wrapper.MenuItem
@@ -17,6 +22,7 @@ import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
+import java.util.*
 
 
 data class CoopMenuInviteConfig(
@@ -59,10 +65,11 @@ class CoopInviteMenu(val player: Player, val island: Island) : PagedMenu(
                         .build()
                 ) {
                     player.getIPlayer().attemptToCoopPlayer(plyr.getIPlayer())
-                    this.build().open(player)
+                    buildMenu(this).open(player)
                 }
             }
 
     }
+
 }
 

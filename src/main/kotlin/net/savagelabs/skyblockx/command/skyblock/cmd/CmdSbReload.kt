@@ -8,7 +8,9 @@ import net.savagelabs.skyblockx.command.SCommandRequirements
 import net.savagelabs.skyblockx.command.SCommandRequirementsBuilder
 import net.savagelabs.skyblockx.core.Permission
 import net.savagelabs.skyblockx.persist.Data
+import net.savagelabs.skyblockx.persist.GUIConfig
 import net.savagelabs.skyblockx.persist.Message
+import org.bukkit.Bukkit
 
 class CmdSbReload : Command<SCommandInfo, SCommandRequirements>() {
 
@@ -26,8 +28,6 @@ class CmdSbReload : Command<SCommandInfo, SCommandRequirements>() {
         SkyblockX.skyblockX.loadDataFiles()
         SkyblockX.skyblockX.setupOreGeneratorAlgorithm()
         info.message(Message.instance.commandReloadSuccess)
-
-
     }
 
 

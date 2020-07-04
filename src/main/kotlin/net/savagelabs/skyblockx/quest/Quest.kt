@@ -6,13 +6,14 @@ import net.savagelabs.skyblockx.core.Island
 import net.savagelabs.skyblockx.core.color
 import net.savagelabs.skyblockx.persist.Message
 import net.savagelabs.skyblockx.persist.Quests
+import net.savagelabs.skyblockx.persist.data.SerializableItem
 import org.bukkit.Bukkit
 import org.bukkit.Location
 
 data class Quest(
     val id: String,
     val name: String,
-    val guiDisplayItem: net.savagelabs.skyblockx.persist.data.SerializableItem,
+    val guiDisplayItem: SerializableItem,
     val guiDisplayIndex: Int,
     val type: QuestGoal,
     val goalParameter: String,

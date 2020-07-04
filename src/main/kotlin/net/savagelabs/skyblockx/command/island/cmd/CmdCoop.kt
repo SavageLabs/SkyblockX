@@ -7,6 +7,7 @@ import net.savagelabs.skyblockx.command.SCommandInfo
 import net.savagelabs.skyblockx.command.SCommandRequirements
 import net.savagelabs.skyblockx.command.SCommandRequirementsBuilder
 import net.savagelabs.skyblockx.core.Permission
+import net.savagelabs.skyblockx.gui.buildMenu
 import net.savagelabs.skyblockx.gui.menu.CoopInviteMenu
 import net.savagelabs.skyblockx.gui.menu.CoopManageMenu
 import net.savagelabs.skyblockx.persist.Message
@@ -26,7 +27,7 @@ class CmdCoop : Command<SCommandInfo, SCommandRequirements>() {
 
     override fun perform(info: SCommandInfo) {
         if (info.args.isEmpty()) {
-                CoopInviteMenu(info.player!!, info.island!!).build().open(info.player!!)
+               buildMenu(CoopInviteMenu(info.player!!, info.island!!)).open(info.player!!)
             return
         }
         if (info.args[0].equals("manage", true)) {
@@ -38,7 +39,7 @@ class CmdCoop : Command<SCommandInfo, SCommandRequirements>() {
     }
 
     fun openManageMenu(info: SCommandInfo) {
-        CoopManageMenu(info.player!!).build().open(info.player!!)
+        buildMenu(CoopManageMenu(info.player!!)).open(info.player!!)
     }
 
 

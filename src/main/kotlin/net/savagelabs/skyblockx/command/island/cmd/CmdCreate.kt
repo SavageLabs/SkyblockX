@@ -10,8 +10,10 @@ import net.savagelabs.skyblockx.command.SCommandRequirementsBuilder
 import net.savagelabs.skyblockx.core.Permission
 import net.savagelabs.skyblockx.core.color
 import net.savagelabs.skyblockx.core.createIsland
-import net.savagelabs.skyblockx.gui.IslandCreateGUI
+import net.savagelabs.skyblockx.gui.buildMenu
+import net.savagelabs.skyblockx.gui.menu.CreateMenu
 import net.savagelabs.skyblockx.persist.Config
+import net.savagelabs.skyblockx.persist.GUIConfig
 import net.savagelabs.skyblockx.persist.Message
 
 
@@ -51,7 +53,7 @@ class CmdCreate : Command<SCommandInfo, SCommandRequirements>() {
 
         if (info.args.size == 1) {
             val listOfNames = ArrayList<String>()
-            for (islandCreationInfo in Config.instance.islandCreateGUIIslandTypes) {
+            for (islandCreationInfo in GUIConfig.instance.createGUIConfig.islandInfo) {
                 if (islandCreationInfo.name.equals(info.args[0], true)) {
                     createIsland(info.player, islandCreationInfo.structureFile.replace(".structure", ""))
                     return
@@ -70,7 +72,7 @@ class CmdCreate : Command<SCommandInfo, SCommandRequirements>() {
             }
             return
         }
-        IslandCreateGUI().showGui(info.player!!)
+        buildMenu(CreateMenu(info.player!!)).open(info.player)
     }
 
 

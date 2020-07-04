@@ -8,10 +8,7 @@ import fr.minuskube.inv.content.SlotIterator
 import net.savagelabs.savagepluginx.item.ItemBuilder
 import net.savagelabs.skyblockx.core.getIPlayer
 import net.savagelabs.skyblockx.core.getIPlayerByUUID
-import net.savagelabs.skyblockx.gui.BaseMenu
-import net.savagelabs.skyblockx.gui.MenuConfig
-import net.savagelabs.skyblockx.gui.PagedMenu
-import net.savagelabs.skyblockx.gui.PagedMenuConfig
+import net.savagelabs.skyblockx.gui.*
 import net.savagelabs.skyblockx.gui.wrapper.GUICoordinate
 import net.savagelabs.skyblockx.gui.wrapper.GUIItem
 import net.savagelabs.skyblockx.gui.wrapper.MenuItem
@@ -58,7 +55,7 @@ class CoopManageMenu(val player: Player) : PagedMenu(
                     .build(), UUID.fromString(iPlayer.uuid)
             )) {
                 player.getIPlayer().attemptExpel(iPlayer)
-                this.build().open(player)
+                buildMenu(this).open(player)
             }
         }
     }
