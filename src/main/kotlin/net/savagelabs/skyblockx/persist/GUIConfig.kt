@@ -4,7 +4,7 @@ import com.cryptomorin.xseries.XMaterial
 import com.fasterxml.jackson.annotation.JsonIgnore
 import fr.minuskube.inv.content.SlotIterator
 import net.savagelabs.savagepluginx.persist.container.ConfigContainer
-import net.savagelabs.skyblockx.gui.*
+import net.savagelabs.skyblockx.gui.menu.IslandMenuGUIConfig
 import net.savagelabs.skyblockx.gui.menu.*
 import net.savagelabs.skyblockx.gui.wrapper.GUICoordinate
 import net.savagelabs.skyblockx.gui.wrapper.GUIItem
@@ -44,42 +44,6 @@ class GUIConfig(@JsonIgnore override val name: String = "GUIConfig") : ConfigCon
             ),
             MenuItem(
                 SerializableItem(
-                    XMaterial.HOPPER,
-                    "&aValue Breakdown",
-                    listOf("&e&l→&a &aBreak down your island value."),
-                    1
-                ),
-                listOf(
-                    "is breakdown"
-                ),
-                GUICoordinate(4, 0)
-            ),
-            MenuItem(
-                SerializableItem(
-                    XMaterial.DIAMOND,
-                    "&aIsland Leaderboard",
-                    listOf("&e&l→&a &aView the best islands on the server."),
-                    1
-                ),
-                listOf(
-                    "is leaderboard"
-                ),
-                GUICoordinate(4, 1)
-            ),
-            MenuItem(
-                SerializableItem(
-                    XMaterial.GOLD_NUGGET,
-                    "&eIsland Shop",
-                    listOf("&e&l→&a &aBuy items from the island shop."),
-                    1
-                ),
-                listOf(
-                    "is shop"
-                ),
-                GUICoordinate(4, 3)
-            ),
-            MenuItem(
-                SerializableItem(
                     XMaterial.ENDER_EYE,
                     "&aVisit Islands",
                     listOf("&e&l→&a &aCheck out other's islands!"),
@@ -87,18 +51,6 @@ class GUIConfig(@JsonIgnore override val name: String = "GUIConfig") : ConfigCon
                 ),
                 listOf(
                     "is visit"
-                ),
-                GUICoordinate(4, 4)
-            ),
-            MenuItem(
-                SerializableItem(
-                    XMaterial.BIRCH_SAPLING,
-                    "&aIsland Biome",
-                    listOf("&e&l→&a &aChange your island's biome."),
-                    1
-                ),
-                listOf(
-                    "is biome"
                 ),
                 GUICoordinate(2, 1)
             ),
@@ -113,18 +65,6 @@ class GUIConfig(@JsonIgnore override val name: String = "GUIConfig") : ConfigCon
                     "is border"
                 ),
                 GUICoordinate(1, 2)
-            ),
-            MenuItem(
-                SerializableItem(
-                    XMaterial.RED_BED,
-                    "&eManage Island Homes",
-                    listOf("&e&l→&a &aView, Set, and Delete Island Homes"),
-                    1
-                ),
-                listOf(
-                    "is home"
-                ),
-                GUICoordinate(2, 3)
             ),
             MenuItem(
                 SerializableItem(
@@ -161,6 +101,18 @@ class GUIConfig(@JsonIgnore override val name: String = "GUIConfig") : ConfigCon
                     "is quest"
                 ),
                 GUICoordinate(6, 3)
+            ),
+            MenuItem(
+                SerializableItem(
+                    XMaterial.GREEN_BANNER,
+                    "&eMember Manager",
+                    listOf("&e&l→&a &aInvite or Kick Island Members."),
+                    1
+                ),
+                listOf(
+                    "is member"
+                ),
+                GUICoordinate(2, 3)
             )
         )
     )
@@ -209,7 +161,7 @@ class GUIConfig(@JsonIgnore override val name: String = "GUIConfig") : ConfigCon
                         skullTexture = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNzZjYmFlNzI0NmNjMmM2ZTg4ODU4NzE5OGM3OTU5OTc5NjY2YjRmNWE0MDg4ZjI0ZTI2ZTA3NWYxNDBhZTZjMyJ9fX0="
                     ),
                     emptyList(),
-                    GUICoordinate(4,0)
+                    GUICoordinate(4, 0)
                 ),
                 MenuItem(
                     SerializableItem(
@@ -234,12 +186,12 @@ class GUIConfig(@JsonIgnore override val name: String = "GUIConfig") : ConfigCon
                             "&e&l←&a Go back to the main menu."
                         ),
                         1,
-                        skullTexture = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZWQ3MDdkYjQ2YTVhY2JmZWJmNjEyMzk1MzZkMjU2NDgxMzRiYjQzYjY1YzE2NzE2YmEzMjljNmRiZjQxMiJ9fX0="
+                        skullTexture = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODY1MmUyYjkzNmNhODAyNmJkMjg2NTFkN2M5ZjI4MTlkMmU5MjM2OTc3MzRkMThkZmRiMTM1NTBmOGZkYWQ1ZiJ9fX0="
                     ),
                     listOf(
                         "is menu"
                     ),
-                    GUICoordinate(0,0)
+                    GUICoordinate(0, 0)
                 )
             ),
             "&a{player}",
@@ -293,7 +245,7 @@ class GUIConfig(@JsonIgnore override val name: String = "GUIConfig") : ConfigCon
                     skullTexture = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNzZjYmFlNzI0NmNjMmM2ZTg4ODU4NzE5OGM3OTU5OTc5NjY2YjRmNWE0MDg4ZjI0ZTI2ZTA3NWYxNDBhZTZjMyJ9fX0="
                 ),
                 emptyList(),
-                GUICoordinate(4,0)
+                GUICoordinate(4, 0)
             ),
             MenuItem(
                 SerializableItem(
@@ -318,12 +270,12 @@ class GUIConfig(@JsonIgnore override val name: String = "GUIConfig") : ConfigCon
                         "&e&l←&a Go back to the main menu."
                     ),
                     1,
-                    skullTexture = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZWQ3MDdkYjQ2YTVhY2JmZWJmNjEyMzk1MzZkMjU2NDgxMzRiYjQzYjY1YzE2NzE2YmEzMjljNmRiZjQxMiJ9fX0="
+                    skullTexture = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODY1MmUyYjkzNmNhODAyNmJkMjg2NTFkN2M5ZjI4MTlkMmU5MjM2OTc3MzRkMThkZmRiMTM1NTBmOGZkYWQ1ZiJ9fX0="
                 ),
                 listOf(
                     "is menu"
                 ),
-                GUICoordinate(0,0)
+                GUICoordinate(0, 0)
             )
         )
 
@@ -397,12 +349,12 @@ class GUIConfig(@JsonIgnore override val name: String = "GUIConfig") : ConfigCon
                         "&e&l←&a Go back to the main menu."
                     ),
                     1,
-                    skullTexture = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZWQ3MDdkYjQ2YTVhY2JmZWJmNjEyMzk1MzZkMjU2NDgxMzRiYjQzYjY1YzE2NzE2YmEzMjljNmRiZjQxMiJ9fX0="
+                    skullTexture = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODY1MmUyYjkzNmNhODAyNmJkMjg2NTFkN2M5ZjI4MTlkMmU5MjM2OTc3MzRkMThkZmRiMTM1NTBmOGZkYWQ1ZiJ9fX0="
                 ),
                 listOf(
                     "is menu"
                 ),
-                GUICoordinate(0,0)
+                GUICoordinate(0, 0)
             )
         )
     )
@@ -420,7 +372,7 @@ class GUIConfig(@JsonIgnore override val name: String = "GUIConfig") : ConfigCon
             IslandCreateInfo(
                 "normal",
                 "skyblockx.islands.default",
-                GUICoordinate(3,1),
+                GUICoordinate(3, 1),
                 SerializableItem(
                     XMaterial.GRASS_BLOCK,
                     "&aBasic Island",
@@ -432,7 +384,7 @@ class GUIConfig(@JsonIgnore override val name: String = "GUIConfig") : ConfigCon
             IslandCreateInfo(
                 "bedrock",
                 "skyblockx.islands.bedrock",
-                GUICoordinate(6,1),
+                GUICoordinate(6, 1),
                 SerializableItem(
                     XMaterial.BEDROCK,
                     "&aBedrock Island",
@@ -443,6 +395,146 @@ class GUIConfig(@JsonIgnore override val name: String = "GUIConfig") : ConfigCon
             )
         ),
         emptyList()
+    )
+
+    val memberMenuConfig = MemberMenuConfig(
+        "&cManage Members",
+        SerializableItem(
+            XMaterial.BLACK_STAINED_GLASS_PANE,
+            "",
+            listOf(),
+            1
+        ),
+        3,
+        listOf(
+            MenuItem(
+                SerializableItem(
+                    XMaterial.OAK_DOOR,
+                    "&aBack to Main Menu",
+                    listOf(
+                        "&e&l←&a Go back to the main menu."
+                    ),
+                    1,
+                    skullTexture = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODY1MmUyYjkzNmNhODAyNmJkMjg2NTFkN2M5ZjI4MTlkMmU5MjM2OTc3MzRkMThkZmRiMTM1NTBmOGZkYWQ1ZiJ9fX0="
+                ),
+                listOf(
+                    "is menu"
+                ),
+                GUICoordinate(0, 0)
+            ),
+            MenuItem(
+                SerializableItem(
+                    XMaterial.PAPER,
+                    "&e&lInvite Members",
+                    listOf(
+                        "&e&l→&a Go to invite menu."
+                    ),
+                    1
+                ),
+                listOf(
+                    "is invite"
+                ),
+                GUICoordinate(8, 0)
+            )
+        ),
+        "&a{player}",
+        listOf(
+            "&e&l→&a Left-Click to kick",
+            "&e&l→&a Right-Click to promote"
+        ),
+        GUICoordinate(2,1),
+        5,
+        GUIItem(
+            SerializableItem(
+                XMaterial.ARROW,
+                "&aNext Page →",
+                listOf(),
+                1,
+                "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZDllY2NjNWMxYzc5YWE3ODI2YTE1YTdmNWYxMmZiNDAzMjgxNTdjNTI0MjE2NGJhMmFlZjQ3ZTVkZTlhNWNmYyJ9fX0="
+            ),
+            GUICoordinate(6, 0)
+        ),
+        GUIItem(
+            SerializableItem(
+                XMaterial.ARROW,
+                "&c← Previous Page",
+                listOf(),
+                1,
+                "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODY0Zjc3OWE4ZTNmZmEyMzExNDNmYTY5Yjk2YjE0ZWUzNWMxNmQ2NjllMTljNzVmZDFhN2RhNGJmMzA2YyJ9fX0="
+            ),
+            GUICoordinate(2, 0)
+        )
+
+    )
+
+
+    val inviteMenuConfig = InviteMenuConfig(
+        "&7Invite Members",
+        SerializableItem(
+            XMaterial.BLACK_STAINED_GLASS_PANE,
+            "",
+            listOf(),
+            1
+        ),
+        5,
+        SlotIterator.Type.HORIZONTAL,
+        GUICoordinate(0, 1),
+        36,
+        GUIItem(
+            SerializableItem(
+                XMaterial.ARROW,
+                "&aNext Page →",
+                listOf(),
+                1,
+                "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZDllY2NjNWMxYzc5YWE3ODI2YTE1YTdmNWYxMmZiNDAzMjgxNTdjNTI0MjE2NGJhMmFlZjQ3ZTVkZTlhNWNmYyJ9fX0="
+            ),
+            GUICoordinate(6, 0)
+        ),
+        GUIItem(
+            SerializableItem(
+                XMaterial.ARROW,
+                "&c← Previous Page",
+                listOf(),
+                1,
+                "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODY0Zjc3OWE4ZTNmZmEyMzExNDNmYTY5Yjk2YjE0ZWUzNWMxNmQ2NjllMTljNzVmZDFhN2RhNGJmMzA2YyJ9fX0="
+            ),
+            GUICoordinate(2, 0)
+        ),
+        "{player}",
+        listOf(
+            "&e&l→ &aClick to invite."
+        ),
+        listOf(
+            MenuItem(
+                SerializableItem(
+                    XMaterial.PAPER,
+                    "&e&lInvite Members",
+                    listOf(
+                        "&e&l→ &aClick to invite a player."
+                    ),
+                    1
+                ),
+                listOf(),
+                GUICoordinate(4, 0)
+            ),
+            MenuItem(
+                SerializableItem(
+                    XMaterial.OAK_DOOR,
+                    "&aBack to Main Menu",
+                    listOf(
+                        "&e&l←&a Go back to the main menu."
+                    ),
+                    1,
+                    skullTexture = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODY1MmUyYjkzNmNhODAyNmJkMjg2NTFkN2M5ZjI4MTlkMmU5MjM2OTc3MzRkMThkZmRiMTM1NTBmOGZkYWQ1ZiJ9fX0="
+                ),
+                listOf(
+                    "is menu"
+                ),
+                GUICoordinate(0, 0)
+            )
+        )
+
+
     )
 
 

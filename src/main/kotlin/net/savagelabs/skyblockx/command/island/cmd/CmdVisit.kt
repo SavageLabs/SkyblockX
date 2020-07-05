@@ -8,6 +8,7 @@ import net.savagelabs.skyblockx.command.SCommandInfo
 import net.savagelabs.skyblockx.command.SCommandRequirements
 import net.savagelabs.skyblockx.command.SCommandRequirementsBuilder
 import net.savagelabs.skyblockx.core.*
+import net.savagelabs.skyblockx.persist.Data
 import net.savagelabs.skyblockx.persist.Message
 
 class CmdVisit : Command<SCommandInfo, SCommandRequirements>() {
@@ -21,7 +22,9 @@ class CmdVisit : Command<SCommandInfo, SCommandRequirements>() {
         optionalArgs.add(Argument("island owner's name", 0, PlayerArgument()))
 
         commandRequirements =
-            SCommandRequirementsBuilder().asPlayer(true).withPermission(Permission.TELEPORT)
+            SCommandRequirementsBuilder()
+                .asPlayer(true)
+                .withPermission(Permission.TELEPORT)
                 .build()
     }
 
@@ -32,13 +35,19 @@ class CmdVisit : Command<SCommandInfo, SCommandRequirements>() {
             val possibleLocations = ArrayList<String>()
             // If we own an island, show ours.
             if (info.iPlayer!!.hasIsland()) {
-                possibleLocations.add(info.iPlayer!!.getIsland()!!.ownerTag)
+                possibleLocations.add(info.iPlayer!!.getIsland()!!.islandName)
             }
             // Show co-op islands
             if (info.iPlayer!!.hasCoopIsland()) {
                 for (id in info.iPlayer!!.coopedIslandIds) {
                     val island = getIslandById(id) ?: continue
-                    possibleLocations.add(island.ownerTag)
+                    possibleLocations.add(island.islandName)
+                }
+            }
+
+            for (island in Data.instance.islands.values) {
+                if (island.allowVisitors) {
+                    island.islandName
                 }
             }
 

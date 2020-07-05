@@ -1,6 +1,9 @@
 package net.savagelabs.skyblockx.core
 
 import com.fasterxml.jackson.annotation.JsonIgnore
+import net.savagelabs.savagepluginx.command.Command
+import net.savagelabs.skyblockx.command.SCommandInfo
+import net.savagelabs.skyblockx.command.SCommandRequirements
 import net.savagelabs.skyblockx.persist.Config
 import net.savagelabs.skyblockx.persist.Data
 import net.savagelabs.skyblockx.persist.Message

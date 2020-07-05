@@ -6,7 +6,6 @@ import net.savagelabs.skyblockx.command.SCommandRequirements
 import net.savagelabs.skyblockx.command.SCommandRequirementsBuilder
 import net.savagelabs.skyblockx.core.Permission
 import net.savagelabs.skyblockx.gui.BaseMenu
-import net.savagelabs.skyblockx.gui.IslandBorderGUI
 import net.savagelabs.skyblockx.gui.buildMenu
 import net.savagelabs.skyblockx.gui.menu.BorderMenu
 import net.savagelabs.skyblockx.persist.Message

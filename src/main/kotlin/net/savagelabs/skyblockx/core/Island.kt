@@ -98,6 +98,7 @@ data class Island(
 
     var memberLimit = Config.instance.defaultIslandMemberLimit
 
+    // UUIDS
     val members = mutableSetOf<String>()
 
     var currentQuestOrderIndex: Int? = 0
@@ -227,7 +228,6 @@ data class Island(
 
 
     fun getIslandMembers(withLeader: Boolean = true): Set<IPlayer> {
-        if (members == null || members.size == 0) return emptySet()
         val collect = members.stream().map { uuid -> getIPlayerByUUID(uuid)!! }?.collect(Collectors.toList())!!
         if (withLeader) collect.add(getOwnerIPlayer())
         return collect.toSet();
@@ -524,6 +524,24 @@ data class Island(
                 }
             }
         }
+    }
+
+    fun attemptInvite(inviter: IPlayer, target: IPlayer) {
+        if (memberLimit <= getIslandMembers().size) {
+            inviter.message(String.format(Message.instance.commandMemberInviteLimit, memberLimit))
+            return
+        }
+        if (members.contains(target.name)) {
+            inviter.message(Message.instance.commandMemberAlreadyPartOfIsland)
+            return
+        }
+        inviteMember(target)
+        inviter.message(String.format(Message.instance.commandMemberInviteSuccess, target.name))
+        val player = inviter.getPlayer()!!
+        JSONMessage.create(color(String.format(Message.instance.commandMemberInviteMessage, player.name)))
+            .tooltip(color("&7Click to paste &f\"/is join ${player.name}\""))
+            .runCommand("/is join ${player.name}")
+            .send(target.getPlayer())
     }
 
     fun promoteNewLeader(name: String) {

@@ -84,13 +84,13 @@ class SkyblockX : SavagePluginX() {
         PaperLib.suggestPaper(this)
     }
 
-    fun startInventoryManager() {
+    private fun startInventoryManager() {
         inventoryManager = InventoryManager(this)
         inventoryManager.init()
     }
 
     private fun migrateData() {
-        Data.instance.islands.forEach { id, island ->
+        Data.instance.islands.forEach { (_, island) ->
             if (island.islandName == null) {
                 logInfo("Island Names Update: Migrated ${island.ownerTag}'s Island Data.instance.")
                 island.islandName = island.ownerTag

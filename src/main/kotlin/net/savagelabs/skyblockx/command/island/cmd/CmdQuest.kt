@@ -6,7 +6,8 @@ import net.savagelabs.skyblockx.command.SCommandInfo
 import net.savagelabs.skyblockx.command.SCommandRequirements
 import net.savagelabs.skyblockx.command.SCommandRequirementsBuilder
 import net.savagelabs.skyblockx.core.Permission
-import net.savagelabs.skyblockx.gui.IslandQuestGUI
+import net.savagelabs.skyblockx.gui.menu.QuestMenu
+import net.savagelabs.skyblockx.gui.buildMenu
 import net.savagelabs.skyblockx.persist.Message
 
 class CmdQuest : Command<SCommandInfo, SCommandRequirements>() {
@@ -23,7 +24,7 @@ class CmdQuest : Command<SCommandInfo, SCommandRequirements>() {
 
 
     override fun perform(info: SCommandInfo) {
-        IslandQuestGUI().showGui(info.player!!)
+        buildMenu(QuestMenu(info.iPlayer!!, info.island!!)).open(info.player!!)
     }
 
 

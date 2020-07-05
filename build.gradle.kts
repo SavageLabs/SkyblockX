@@ -26,7 +26,6 @@ repositories {
 
 dependencies {
     implementation("org.ocpsoft.prettytime:prettytime:4.0.1.Final")
-    implementation("com.github.stefvanschie.inventoryframework:IF:0.5.18")
     implementation("org.bstats:bstats-bukkit:1.7")
     implementation("com.cryptomorin:XSeries:6.0.0")
     implementation("io.papermc:paperlib:1.0.2")
