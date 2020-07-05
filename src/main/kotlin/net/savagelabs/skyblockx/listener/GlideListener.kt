@@ -27,7 +27,7 @@ class GlideListener : Listener {
                 .contains(iPlayer)
         ) {
             if (iPlayer.hasIsland()) {
-                event.entity.teleport(island.islandGoPoint!!.getLocation())
+                event.entity.teleport(iPlayer.getIsland()!!.islandGoPoint!!.getLocation())
             } else {
                 event.entity.teleport(
                     Bukkit.getWorld(Config.instance.defaultWorld)!!.spawnLocation.add(0.0, 1.0, 0.0),
