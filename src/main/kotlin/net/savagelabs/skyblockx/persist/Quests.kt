@@ -1,6 +1,7 @@
 package net.savagelabs.skyblockx.persist
 
 import com.cryptomorin.xseries.XMaterial
+import com.fasterxml.jackson.annotation.JsonIgnore
 import net.savagelabs.savagepluginx.persist.container.ConfigContainer
 import net.savagelabs.skyblockx.gui.wrapper.GUICoordinate
 import net.savagelabs.skyblockx.gui.wrapper.GUIItem
@@ -13,6 +14,7 @@ import org.bukkit.entity.EntityType
 
 class Quests : ConfigContainer {
 
+    @JsonIgnore
     override val name = "quests"
 
     companion object {

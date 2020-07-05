@@ -190,9 +190,7 @@ class SkyblockX : SavagePluginX() {
         BlockValues.instance = ConfigManager.readOrSave(BlockValues())
         Quests.instance = ConfigManager.readOrSave(Quests())
         Message.instance = ConfigManager.readOrSave(Message())
-        println(GUIConfig().islandMenuGUI.guiBackgroundItem.material.toString())
         GUIConfig.instance = ConfigManager.readOrSave(GUIConfig())
-        println(GUIConfig.instance.islandMenuGUI.guiBackgroundItem.material.toString())
     }
 
     private fun initWorldBorderUtility() {

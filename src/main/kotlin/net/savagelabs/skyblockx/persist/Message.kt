@@ -1,11 +1,13 @@
 package net.savagelabs.skyblockx.persist
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import net.savagelabs.savagepluginx.persist.container.ConfigContainer
 import net.savagelabs.skyblockx.core.color
 import org.bukkit.ChatColor
 
 class Message : ConfigContainer {
 
+    @JsonIgnore
     override val name = "message"
 
     companion object {
