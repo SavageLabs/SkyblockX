@@ -4,16 +4,17 @@ import me.rayzr522.jsonmessage.JSONMessage
 import net.savagelabs.skyblockx.core.IPlayer
 import net.savagelabs.skyblockx.core.Island
 import net.savagelabs.skyblockx.core.color
+import net.savagelabs.skyblockx.gui.wrapper.GUICoordinate
 import net.savagelabs.skyblockx.persist.Message
 import net.savagelabs.skyblockx.persist.Quests
+import net.savagelabs.skyblockx.persist.data.SerializableItem
 import org.bukkit.Bukkit
 import org.bukkit.Location
 
 data class Quest(
     val id: String,
     val name: String,
-    val guiDisplayItem: net.savagelabs.skyblockx.persist.data.SerializableItem,
-    val guiDisplayIndex: Int,
+    val guiDisplayItem: SerializableItem,
     val type: QuestGoal,
     val goalParameter: String,
     val amountTillComplete: Int,
@@ -47,7 +48,7 @@ class QuestActions(val actions: List<String>) {
                     "title" -> doTitle(context, getActionParams(context, action))
                     "command" -> doCommand(context, getActionParams(context, action))
                     "actionbar" -> doActionbarMessage(context, getActionParams(context, action))
-                    else -> pass
+                    else -> {}
                 }
             }
         }
@@ -90,9 +91,6 @@ class QuestActions(val actions: List<String>) {
     class QuestContext(val contextIPlayer: IPlayer, val contextIsland: Island, val quest: Quest)
 
 }
-
-
-val pass: Unit = Unit
 
 fun failsQuestCheckingPreRequisites(iPlayer: IPlayer, island: Island?, location: Location): Boolean {
     return (!iPlayer.hasIsland() || island!!.currentQuest == null || !island.containsBlock(location))

@@ -98,6 +98,7 @@ data class Island(
 
     var memberLimit = Config.instance.defaultIslandMemberLimit
 
+    // UUIDS
     val members = mutableSetOf<String>()
 
     var currentQuestOrderIndex: Int? = 0
@@ -219,9 +220,6 @@ data class Island(
         // Color message in case.
         val messageFormatted = color(message)
 
-        // Message the owner
-        Bukkit.getPlayer(UUID.fromString(ownerUUID))?.sendMessage(messageFormatted)
-
         // Message island members
         for (member in members) {
             Bukkit.getPlayer(member)?.sendMessage(messageFormatted)
@@ -229,9 +227,10 @@ data class Island(
     }
 
 
-    fun getIslandMembers(): Set<IPlayer> {
-        if (members == null || members.size == 0) return emptySet()
-        return members.stream().map { uuid -> getIPlayerByUUID(uuid)!! }?.collect(Collectors.toList())!!.toSet()
+    fun getIslandMembers(withLeader: Boolean = true): Set<IPlayer> {
+        val collect = members.stream().map { uuid -> getIPlayerByUUID(uuid)!! }?.collect(Collectors.toList())!!
+        if (withLeader) collect.add(getOwnerIPlayer())
+        return collect.toSet();
     }
 
     fun getAllMemberUUIDs(): Set<String> {
@@ -301,6 +300,7 @@ data class Island(
         // Return if the current size is less than the max, if so we gucci.
         return currentCoopPlayers.size < maxCoopPlayers
     }
+
 
     fun canHaveMoreHomes(): Boolean {
         // If the instance is null, the player is offline.
@@ -418,8 +418,8 @@ data class Island(
                 authorizer.message(
                     String.format(
                         Message.instance.commandCoopAuthorized,
-                        authorizer.name,
-                        iPlayer.name
+                        iPlayer.name,
+                        authorizer.name
                     )
                 )
             }
@@ -524,6 +524,24 @@ data class Island(
                 }
             }
         }
+    }
+
+    fun attemptInvite(inviter: IPlayer, target: IPlayer) {
+        if (memberLimit <= getIslandMembers().size) {
+            inviter.message(String.format(Message.instance.commandMemberInviteLimit, memberLimit))
+            return
+        }
+        if (members.contains(target.name)) {
+            inviter.message(Message.instance.commandMemberAlreadyPartOfIsland)
+            return
+        }
+        inviteMember(target)
+        inviter.message(String.format(Message.instance.commandMemberInviteSuccess, target.name))
+        val player = inviter.getPlayer()!!
+        JSONMessage.create(color(String.format(Message.instance.commandMemberInviteMessage, player.name)))
+            .tooltip(color("&7Click to paste &f\"/is join ${player.name}\""))
+            .runCommand("/is join ${player.name}")
+            .send(target.getPlayer())
     }
 
     fun promoteNewLeader(name: String) {

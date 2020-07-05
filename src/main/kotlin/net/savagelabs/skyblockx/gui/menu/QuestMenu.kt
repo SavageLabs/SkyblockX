@@ -1,50 +1,61 @@
-package net.savagelabs.skyblockx.gui
+package net.savagelabs.skyblockx.gui.menu
 
-import com.github.stefvanschie.inventoryframework.GuiItem
+import fr.minuskube.inv.ClickableItem
+import fr.minuskube.inv.content.SlotIterator
 import net.savagelabs.savagepluginx.item.ItemBuilder
 import net.savagelabs.skyblockx.core.IPlayer
 import net.savagelabs.skyblockx.core.Island
 import net.savagelabs.skyblockx.core.color
+import net.savagelabs.skyblockx.gui.PagedMenu
+import net.savagelabs.skyblockx.gui.PagedMenuConfig
+import net.savagelabs.skyblockx.gui.buildMenu
 import net.savagelabs.skyblockx.persist.Message
 import net.savagelabs.skyblockx.persist.Quests
+import net.savagelabs.skyblockx.persist.data.SerializableItem
 import net.savagelabs.skyblockx.quest.Quest
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import java.text.DecimalFormat
 
-class IslandQuestGUI :
-    BaseGUI(
+
+class QuestMenu(val iPlayer: IPlayer, val island: Island) : PagedMenu(
+    PagedMenuConfig(
         Quests.instance.islandQuestGUITitle,
         Quests.instance.islandQuestGUIBackgroundItem,
-        Quests.instance.islandQuestGUIRows
-    ) {
-
-    override fun populatePane(context: IPlayer) {
-        val guiItems = buildFullBackgroundItemlist()
-        for (quest in Quests.instance.islandQuests) {
-            guiItems[quest.guiDisplayIndex] =
-                GuiItem(buildItem(context.getIsland()!!, quest.guiDisplayItem, quest)) { e ->
-                    run {
-                        e.isCancelled = true
-                        val player = e.whoClicked as Player
-                        if (quest.oneTime && context.getIsland()!!.isOneTimeQuestAlreadyCompleted(quest.id)) {
-                            player.sendMessage(color(Message.instance.questIsOneTimeAndAlreadyCompleted))
-                            return@run
-                        }
-                        context.getIsland()!!.currentQuest = quest.id
-                        val islandQuestGUI = IslandQuestGUI()
-                        islandQuestGUI.showGui(player)
-                        player.sendMessage(color(Message.instance.questActivationTrigger.replace("{quest}", quest.id)))
-                        quest.executeActivationTrigger(context)
-                    }
+        Quests.instance.islandQuestGUIRows,
+        SlotIterator.Type.HORIZONTAL,
+        Quests.instance.islandQuestGUIStartCoordinate,
+        Quests.instance.islandQuestGUIItemsPerPage,
+        Quests.instance.questsNextPageItem,
+        Quests.instance.questPreviousPageItem,
+        Quests.instance.questMenuItems
+    )
+) {
+    override fun getPageItems(): List<ClickableItem> {
+        return Quests.instance.islandQuests.map { quest ->
+            ClickableItem.of(buildItem(island, quest.guiDisplayItem, quest)) {
+                e ->
+                val player = e.whoClicked as Player
+                if (quest.oneTime && island.isOneTimeQuestAlreadyCompleted(quest.id)) {
+                    player.sendMessage(color(Message.instance.questIsOneTimeAndAlreadyCompleted))
+                    return@of
                 }
+                island.currentQuest = quest.id
+                buildMenu(
+                    QuestMenu(
+                        iPlayer,
+                        island
+                    )
+                ).open(iPlayer.getPlayer())
+                player.sendMessage(color(Message.instance.questActivationTrigger.replace("{quest}", quest.id)))
+                quest.executeActivationTrigger(iPlayer)
+            }
         }
-        pane.populateWithGuiItems(guiItems)
     }
 
     private fun buildItem(
         island: Island,
-        serializableItem: net.savagelabs.skyblockx.persist.data.SerializableItem,
+        serializableItem: SerializableItem,
         quest: Quest
     ): ItemStack {
         val lore = ArrayList<String>()

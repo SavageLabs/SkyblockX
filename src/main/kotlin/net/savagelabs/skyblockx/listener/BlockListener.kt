@@ -16,10 +16,17 @@ import org.bukkit.event.Listener
 import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.block.BlockFromToEvent
 import org.bukkit.event.block.BlockPlaceEvent
+import org.bukkit.event.player.PlayerMoveEvent
 import org.bukkit.metadata.FixedMetadataValue
 
 
 class BlockListener : Listener {
+
+//
+//    @EventHandler
+//    fun onPlayerMove(event: PlayerMoveEvent) {
+//        println(event.player.itemInHand.serialize())
+//    }
 
 
     @EventHandler

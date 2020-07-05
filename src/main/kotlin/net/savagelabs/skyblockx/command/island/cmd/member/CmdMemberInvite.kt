@@ -10,6 +10,8 @@ import net.savagelabs.skyblockx.command.SCommandRequirementsBuilder
 import net.savagelabs.skyblockx.command.island.IslandBaseCommand
 import net.savagelabs.skyblockx.core.Permission
 import net.savagelabs.skyblockx.core.color
+import net.savagelabs.skyblockx.gui.buildMenu
+import net.savagelabs.skyblockx.gui.menu.InviteMenu
 import net.savagelabs.skyblockx.persist.Message
 
 class CmdMemberInvite : Command<SCommandInfo, SCommandRequirements>() {
@@ -18,7 +20,7 @@ class CmdMemberInvite : Command<SCommandInfo, SCommandRequirements>() {
     init {
         aliases.add("invite")
 
-        requiredArgs.add(Argument("player", 0, PlayerArgument()))
+        optionalArgs.add(Argument("player", 0, PlayerArgument()))
 
         commandRequirements =
             SCommandRequirementsBuilder().withPermission(Permission.MEMBER).asIslandMember(true).build()
@@ -27,25 +29,20 @@ class CmdMemberInvite : Command<SCommandInfo, SCommandRequirements>() {
 
     override fun perform(info: SCommandInfo) {
         val island = info.island!!
-        if (island.memberLimit <= island.getIslandMembers().size) {
-            info.message(String.format(Message.instance.commandMemberInviteLimit, island.memberLimit))
+
+        if (info.args.isEmpty()) {
+            buildMenu(InviteMenu(info.island!!, info.iPlayer!!)).open(info.player!!)
             return
         }
+
         val playerToInvite = info.getArgAsPlayer(0) ?: return
         if (playerToInvite == info.player) {
             info.message(Message.instance.genericCannotReferenceYourSelf)
             return
         }
-        if (island.members.contains(playerToInvite.name)) {
-            info.message(Message.instance.commandMemberAlreadyPartOfIsland)
-            return
-        }
-        island.inviteMember(info.getArgAsIPlayer(0)!!)
-        info.message(String.format(Message.instance.commandMemberInviteSuccess, playerToInvite.name))
-        JSONMessage.create(color(String.format(Message.instance.commandMemberInviteMessage, info.player?.name)))
-            .tooltip(color("&7Click to paste &f\"/is join ${info.player!!.name}\""))
-            .runCommand("/is join ${info.player!!.name}")
-            .send(info.getArgAsPlayer(0)!!)
+
+        island.attemptInvite(info.iPlayer!!, info.getArgAsIPlayer(0)!!)
+
     }
 
     override fun getHelpInfo(): String {
@@ -57,7 +54,7 @@ class CmdMemberInvite : Command<SCommandInfo, SCommandRequirements>() {
 class CmdInvite : Command<SCommandInfo, SCommandRequirements>() {
     init {
         aliases.add("invite")
-        requiredArgs.add(Argument("player", 0, PlayerArgument()))
+        optionalArgs.add(Argument("player", 0, PlayerArgument()))
         commandRequirements =
             SCommandRequirementsBuilder().withPermission(Permission.MEMBER).asIslandMember(true).build()
     }

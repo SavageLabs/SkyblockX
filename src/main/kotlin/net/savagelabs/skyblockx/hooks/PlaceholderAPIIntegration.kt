@@ -33,13 +33,13 @@ class PlacholderAPIIntegration : PlaceholderExpansion() {
         val iPlayer = getIPlayer(player)
         return when (s) {
             "island_owner" -> iPlayer.getIsland()?.ownerTag ?: "N/A"
-            "island_member_amount", "island_member_count" -> (iPlayer.getIsland()?.getIslandMembers()?.size?.plus(1)
+            "island_member_amount", "island_member_count" -> (iPlayer.getIsland()?.getIslandMembers(false)?.size?.plus(1)
                 ?: 0).toString()
-            "island_member_online_amount", "island_member_online_count" -> (iPlayer.getIsland()?.getIslandMembers()
+            "island_member_online_amount", "island_member_online_count" -> (iPlayer.getIsland()?.getIslandMembers(false)
                 ?.filter { member -> member.isOnline() }?.size?.plus(
                     if (iPlayer.getIsland()?.getOwnerIPlayer()?.isOnline() == true) 1 else 0
                 ) ?: 0).toString()
-            "island_member_list" -> iPlayer.getIsland()?.getIslandMembers()?.stream()!!.map { member -> member.name }
+            "island_member_list" -> iPlayer.getIsland()?.getIslandMembers(false)?.stream()!!.map { member -> member.name }
                 .collect(joining(", ")) ?: "N/A"
             "island_worth" -> SkyblockX.islandValues?.map?.get(iPlayer.getIsland()?.islandID)?.worth?.toString() ?: "0"
             "island_worth_formatted" -> decimalFormat.format(

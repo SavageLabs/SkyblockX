@@ -1,6 +1,7 @@
 package net.savagelabs.skyblockx.core
 
 import net.savagelabs.skyblockx.persist.Config
+import net.savagelabs.skyblockx.persist.GUIConfig
 import org.bukkit.entity.HumanEntity
 import org.bukkit.permissions.Permissible
 import org.bukkit.permissions.PermissionAttachmentInfo
@@ -62,7 +63,7 @@ fun registerAllPermissions(pluginManager: PluginManager) {
                 )
             )
         }
-        Config.instance.islandCreateGUIIslandTypes.forEach { islandType ->
+        GUIConfig.instance.createGUIConfig.islandInfo.forEach { islandType ->
             if (pluginManager.getPermission(islandType.requirementPermission) == null) {
                 pluginManager.addPermission(
                     org.bukkit.permissions.Permission(

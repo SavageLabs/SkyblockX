@@ -23,7 +23,7 @@ class CmdMemberKick : Command<SCommandInfo, SCommandRequirements>() {
 
     override fun perform(info: SCommandInfo) {
         val island = info.island!!
-        if (island.getIslandMembers().isEmpty()) {
+        if (island.getIslandMembers(false).isEmpty()) {
             info.message(Message.instance.commandMemberKickLimit)
             return
         }
@@ -33,7 +33,9 @@ class CmdMemberKick : Command<SCommandInfo, SCommandRequirements>() {
             return
         }
 
-        if (!info.island!!.getIslandMembers().map { member -> member.name }.contains(playerNameToRemove)) {
+        if (!info.island!!.getIslandMembers(false)
+                .map { member -> member.name }
+                .contains(playerNameToRemove)) {
             info.message(Message.instance.commandMemberKickNotFound)
             return
         }
@@ -59,7 +61,8 @@ class CmdKick : Command<SCommandInfo, SCommandRequirements>() {
 
     override fun perform(info: SCommandInfo) {
         // Execute command go just to make a shorthand version for /is member kick <member>.
-        IslandBaseCommand.instance.subCommands.find { command -> command is CmdMember }
+        IslandBaseCommand.instance.subCommands
+            .find { command -> command is CmdMember }
             ?.subCommands?.find { command -> command is CmdMemberKick }?.perform(info)
     }
 

@@ -1,11 +1,13 @@
 package net.savagelabs.skyblockx.persist
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import net.savagelabs.savagepluginx.persist.container.ConfigContainer
 import net.savagelabs.skyblockx.core.color
 import org.bukkit.ChatColor
 
 class Message : ConfigContainer {
 
+    @JsonIgnore
     override val name = "message"
 
     companion object {
@@ -16,31 +18,16 @@ class Message : ConfigContainer {
 
     var islandCreationMessage = "&7Island created with size %1\$s."
 
-    var commandRequirementsNotAPlayer = "&cThis command requires the executor to be a player."
     var commandRequirementsNotAnIslandMember =
         "&cThis command requires the executor to be a island member, create one using \"/is create\"."
     var commandRequirementsNotAnIslandLeader = "&cThis command requires the executor to be an island leader."
     var commandRequirementsPlayerDoesNotHavePermission = "&cThis command requires the permission %1\$s"
 
-    var commandHelpGeneratorPageInvalid = "&cThe page %1\$s does not exist."
-    var commandHelpGeneratorFormat = "&b/%1\$s %2\$s &8> &7 %3\$s"
-    var commandHelpGeneratorBackgroundColor = ChatColor.GRAY
-    var commandHelpGeneratorNotRequired = "&cNo&r"
-    var commandHelpGeneratorRequires = "&aYes&r"
-    var commandHelpGeneratorIslandRequired = "&7Island member requirement: %1\$s"
-    var commandHelpGeneratorClickMeToPaste = "&7Click me to autocomplete."
-    var commandHelpGeneratorPageNavBack = "&b<<<"
-    var commandHelpGeneratorPageNavNext = "&b>>>"
 
 
-    var commandParsingArgIsNotInt = "&cThis argument is not an integer, please make it one."
     var commandParsingPlayerDoesNotExist = "&cThis player does not exist."
-    var commandParsingArgIsNotBoolean = "&cThis argument is not a boolean, please make it 'true' or 'false'"
     var commandParsingPlayerIsYou = "&cYou cannot reference yourself."
 
-
-    var genericCommandsTooFewArgs = "&cThis command requires more arguments."
-    var genericCommandsTooManyArgs = "&cThis command requires less arguments."
     var genericActionRequiresPermission = "&cThis action requires the permission %1\$s"
     var genericCannotReferenceYourSelf = "&cYou cannot reference yourself."
     var genericPlayerNotAnIslandMember = "&cThis player is not an island member."
@@ -204,7 +191,6 @@ class Message : ConfigContainer {
     var commandValueHelp = "&7Get the monetary value of a block you're holding."
     var commandValueInfo = "&7The value of this block is &b%1\$s"
 
-    var commandSkyblockOpenChestHelp = "Open an island chest."
     var commandSkyblockOpenChestNotAnIslandMember = "&7This player is &bnot&7 an island member."
     var commandSkyblockOpenChestOpening = "&7Opening target island's chest..."
 
@@ -222,7 +208,6 @@ class Message : ConfigContainer {
     var commandSkyblockNewOwnerSuccess = "&7New owner successfully set."
 
     var commandSkyblockCalcHelp = "&7Calculates every island's price."
-    var commandSkyblockCalcDone = "&7Calculated %1\$s islands."
     var commandSkyblockCalcStart = "&7Starting Calculation..."
 
     var commandAllowVisitorsHelp = "&7Allow visitors to your island using /is teleport <owner-name>."

@@ -1,7 +1,11 @@
 package net.savagelabs.skyblockx.persist
 
 import com.cryptomorin.xseries.XMaterial
+import com.fasterxml.jackson.annotation.JsonIgnore
 import net.savagelabs.savagepluginx.persist.container.ConfigContainer
+import net.savagelabs.skyblockx.gui.wrapper.GUICoordinate
+import net.savagelabs.skyblockx.gui.wrapper.GUIItem
+import net.savagelabs.skyblockx.gui.wrapper.MenuItem
 import net.savagelabs.skyblockx.persist.data.SerializableItem
 import net.savagelabs.skyblockx.quest.Quest
 import net.savagelabs.skyblockx.quest.QuestActions
@@ -10,6 +14,7 @@ import org.bukkit.entity.EntityType
 
 class Quests : ConfigContainer {
 
+    @JsonIgnore
     override val name = "quests"
 
     companion object {
@@ -21,6 +26,49 @@ class Quests : ConfigContainer {
     var islandQuestGUIBackgroundItem = SerializableItem(XMaterial.BLACK_STAINED_GLASS_PANE, "&9", listOf(), 1)
 
     var islandQuestGUIRows: Int = 3
+
+    val islandQuestGUIStartCoordinate = GUICoordinate(0, 1)
+
+    val islandQuestGUIItemsPerPage = 18
+
+    val questsNextPageItem = GUIItem(
+        SerializableItem(
+            XMaterial.ARROW,
+            "&aNext Page →",
+            listOf(),
+            1,
+            "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZDllY2NjNWMxYzc5YWE3ODI2YTE1YTdmNWYxMmZiNDAzMjgxNTdjNTI0MjE2NGJhMmFlZjQ3ZTVkZTlhNWNmYyJ9fX0="
+        ),
+        GUICoordinate(8, 0)
+    )
+
+
+    val questPreviousPageItem = GUIItem(
+        SerializableItem(
+            XMaterial.ARROW,
+            "&c← Previous Page",
+            listOf(),
+            1,
+            "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODY0Zjc3OWE4ZTNmZmEyMzExNDNmYTY5Yjk2YjE0ZWUzNWMxNmQ2NjllMTljNzVmZDFhN2RhNGJmMzA2YyJ9fX0="
+        ),
+        GUICoordinate(0, 0)
+    )
+
+    val questMenuItems = listOf(
+        MenuItem(
+            SerializableItem(
+                XMaterial.WRITABLE_BOOK,
+                "&e&lIsland Quests",
+                listOf(
+                    "&e&l→ &aClick to activate a quest."
+                ),
+                1
+            ),
+            emptyList(),
+            GUICoordinate(4, 0)
+        )
+    )
+
 
     var questOrder = listOf(
         "Quest-1",
@@ -60,7 +108,6 @@ class Quests : ConfigContainer {
                 ),
                 1
             ),
-            0,
             QuestGoal.BREAK_BLOCKS,
             XMaterial.OAK_LOG.parseMaterial().toString(),
             1,
@@ -91,7 +138,6 @@ class Quests : ConfigContainer {
                 ),
                 1
             ),
-            1,
             QuestGoal.CRAFT,
             XMaterial.WOODEN_PICKAXE.parseMaterial().toString(),
             1,
@@ -121,7 +167,6 @@ class Quests : ConfigContainer {
                 ),
                 1
             ),
-            2,
             QuestGoal.BREAK_BLOCKS,
             XMaterial.COBBLESTONE.parseMaterial().toString(),
             3,
@@ -148,7 +193,6 @@ class Quests : ConfigContainer {
                 listOf("&7Craft a Stone Pickaxe", "&7Completion: &b{currentAmount}&7/&b{finalAmount}"),
                 1
             ),
-            3,
             QuestGoal.CRAFT,
             XMaterial.STONE_PICKAXE.parseMaterial().toString(),
             1,
@@ -175,7 +219,6 @@ class Quests : ConfigContainer {
                 listOf("&7Mine &b3 Iron Ore.", "&7Completion: &b{currentAmount}&7/&b{finalAmount}"),
                 1
             ),
-            4,
             QuestGoal.BREAK_BLOCKS,
             XMaterial.IRON_ORE.parseMaterial().toString(),
             3,
@@ -205,7 +248,6 @@ class Quests : ConfigContainer {
                 ),
                 1
             ),
-            5,
             QuestGoal.CRAFT,
             XMaterial.FURNACE.parseMaterial().toString(),
             1,
@@ -233,7 +275,6 @@ class Quests : ConfigContainer {
                 listOf("&7Smelt 3 Iron Ingots in a furnace.", "&7Completion: &b{currentAmount}&7/&b{finalAmount}"),
                 1
             ),
-            6,
             QuestGoal.SMELT,
             XMaterial.IRON_INGOT.parseMaterial().toString(),
             3,
@@ -263,7 +304,6 @@ class Quests : ConfigContainer {
                 ),
                 1
             ),
-            7,
             QuestGoal.CRAFT,
             XMaterial.IRON_PICKAXE.parseMaterial().toString(),
             1,
@@ -293,7 +333,6 @@ class Quests : ConfigContainer {
                 ),
                 1
             ),
-            8,
             QuestGoal.PLACE_BLOCKS,
             XMaterial.OAK_SAPLING.parseMaterial().toString(),
             1,
@@ -323,7 +362,6 @@ class Quests : ConfigContainer {
                 ),
                 1
             ),
-            9,
             QuestGoal.BREAK_BLOCKS,
             XMaterial.SAND.parseMaterial().toString(),
             3,
@@ -354,7 +392,6 @@ class Quests : ConfigContainer {
                 ),
                 1
             ),
-            10,
             QuestGoal.PLACE_BLOCKS,
             XMaterial.CACTUS.parseMaterial().toString(),
             1,
@@ -385,7 +422,6 @@ class Quests : ConfigContainer {
                 ),
                 1
             ),
-            11,
             QuestGoal.PLACE_BLOCKS,
             if (XMaterial.isNewVersion()) XMaterial.SUGAR_CANE.parseMaterial().toString() else "SUGAR_CANE_BLOCK",
             1,
@@ -416,7 +452,6 @@ class Quests : ConfigContainer {
                 ),
                 1
             ),
-            12,
             QuestGoal.BREAK_BLOCKS,
             XMaterial.MELON.parseMaterial().toString(),
             1,
@@ -447,7 +482,6 @@ class Quests : ConfigContainer {
                 ),
                 1
             ),
-            13,
             QuestGoal.PLACE_BLOCKS,
             XMaterial.CACTUS.parseMaterial().toString(),
             20,
@@ -478,7 +512,6 @@ class Quests : ConfigContainer {
                 ),
                 1
             ),
-            14,
             QuestGoal.BREAK_BLOCKS,
             if (XMaterial.isNewVersion()) XMaterial.WHEAT.parseMaterial().toString() else "CROPS",
             30,
@@ -509,7 +542,6 @@ class Quests : ConfigContainer {
                 ),
                 1
             ),
-            15,
             QuestGoal.BREAK_BLOCKS,
             XMaterial.PUMPKIN.parseMaterial().toString(),
             1,
@@ -540,7 +572,6 @@ class Quests : ConfigContainer {
                 ),
                 1
             ),
-            16,
             QuestGoal.KILL_MOBS,
             EntityType.ZOMBIE.toString(),
             100,
@@ -571,7 +602,6 @@ class Quests : ConfigContainer {
                 ),
                 1
             ),
-            17,
             QuestGoal.KILL_MOBS,
             EntityType.SKELETON.toString(),
             100,
@@ -602,7 +632,6 @@ class Quests : ConfigContainer {
                 ),
                 1
             ),
-            16,
             QuestGoal.KILL_MOBS,
             EntityType.CREEPER.toString(),
             100,

@@ -24,10 +24,10 @@ class GlideListener : Listener {
         val island = getIslandFromLocation(event.entity.location) ?: return
         val iPlayer = getIPlayer(event.entity as Player)
         if (!island.allowVisitors && !island.hasCoopPlayer(iPlayer) && !island.getIslandMembers()
-                .contains(iPlayer) && island.getOwnerIPlayer() != iPlayer
+                .contains(iPlayer)
         ) {
             if (iPlayer.hasIsland()) {
-                event.entity.teleport(island.islandGoPoint!!.getLocation())
+                event.entity.teleport(iPlayer.getIsland()!!.islandGoPoint!!.getLocation())
             } else {
                 event.entity.teleport(
                     Bukkit.getWorld(Config.instance.defaultWorld)!!.spawnLocation.add(0.0, 1.0, 0.0),
