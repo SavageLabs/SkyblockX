@@ -36,7 +36,7 @@ The plugin is available on our Nexus Repository.
 </repository>
 
 <dependency>
-  <groupId>io.illyria</groupId>
+  <groupId>net.savagelabs</groupId>
   <artifactId>SkyblockX</artifactId>
   <version>VERSION</version>
 </dependency>
@@ -50,7 +50,7 @@ repositories {
 }
 
 dependencies {
-  implementation 'io.illyria:SkyblockX:VERSION'
+  implementation 'net.savagelabs:SkyblockX:VERSION'
 }
 ```
 
