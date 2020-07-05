@@ -54,6 +54,7 @@ class IslandBaseCommand : Command<SCommandInfo, SCommandRequirements>(), Command
         subCommands.add(CmdRename())
         prefix = "/is"
 
+        isBaseCommand = true
         initializeSubCommandData()
         instance = this
     }

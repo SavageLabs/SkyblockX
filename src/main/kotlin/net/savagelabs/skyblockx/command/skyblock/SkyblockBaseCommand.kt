@@ -34,6 +34,7 @@ class SkyblockBaseCommand : Command<SCommandInfo, SCommandRequirements>(), Comma
         subCommands.add(CmdSbBypass())
         subCommands.add(CmdSbChest())
         prefix = "/sbx"
+        isBaseCommand = true
 
         initializeSubCommandData()
         instance = this
