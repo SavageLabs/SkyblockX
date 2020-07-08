@@ -561,10 +561,13 @@ data class Island(
         inviteMember(target)
         inviter.message(String.format(Message.instance.commandMemberInviteSuccess, target.name))
         val player = inviter.getPlayer()!!
-        JSONMessage.create(color(String.format(Message.instance.commandMemberInviteMessage, player.name)))
-            .tooltip(color("&7Click to paste &f\"/is join ${player.name}\""))
-            .runCommand("/is join ${player.name}")
-            .send(target.getPlayer())
+        if (target.isOnline()) {
+            JSONMessage.create(color(String.format(Message.instance.commandMemberInviteMessage, player.name)))
+                .tooltip(color("&7Click to paste &f\"/is join ${player.name}\""))
+                .runCommand("/is join ${player.name}")
+                .send(target.getPlayer())
+        }
+
     }
 
     fun promoteNewLeader(name: String) {

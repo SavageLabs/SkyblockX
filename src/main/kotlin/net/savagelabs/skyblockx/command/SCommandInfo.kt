@@ -26,7 +26,15 @@ class SCommandInfo(commandSender: CommandSender, args: ArrayList<String>, aliasU
     fun getArgAsIPlayer(index: Int, searchOffline: Boolean = false, cannotReferenceYourSelf: Boolean = true, informIfNot: Boolean = true): IPlayer? {
         if (searchOffline) {
             for (value in Data.instance.IPlayers.values) {
-                if (value.name.equals(args[index], true)) return iPlayer
+                if (value.name.equals(args[index], false)) {
+                    if (cannotReferenceYourSelf && value == iPlayer) {
+                        if (informIfNot) {
+                            message(Message.instance.commandParsingPlayerIsYou)
+                        }
+                        return null
+                    }
+                    return value
+                }
             }
         }
         val player = Bukkit.getPlayer(args[index])
