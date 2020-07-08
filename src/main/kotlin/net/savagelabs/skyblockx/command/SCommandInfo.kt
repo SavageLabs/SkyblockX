@@ -4,6 +4,7 @@ import net.savagelabs.savagepluginx.command.CommandInfo
 import net.savagelabs.skyblockx.core.IPlayer
 import net.savagelabs.skyblockx.core.Island
 import net.savagelabs.skyblockx.core.getIPlayer
+import net.savagelabs.skyblockx.persist.Data
 import net.savagelabs.skyblockx.persist.Message
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
@@ -22,7 +23,12 @@ class SCommandInfo(commandSender: CommandSender, args: ArrayList<String>, aliasU
         return iPlayer!!.inBypass
     }
 
-    fun getArgAsIPlayer(index: Int, cannotReferenceYourSelf: Boolean = true, informIfNot: Boolean = true): IPlayer? {
+    fun getArgAsIPlayer(index: Int, searchOffline: Boolean = false, cannotReferenceYourSelf: Boolean = true, informIfNot: Boolean = true): IPlayer? {
+        if (searchOffline) {
+            for (value in Data.instance.IPlayers.values) {
+                if (value.name.equals(args[index], true)) return iPlayer
+            }
+        }
         val player = Bukkit.getPlayer(args[index])
         if (player == null) {
             if (informIfNot) {

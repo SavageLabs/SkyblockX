@@ -34,14 +34,13 @@ class CmdMemberInvite : Command<SCommandInfo, SCommandRequirements>() {
             buildMenu(InviteMenu(info.island!!, info.iPlayer!!)).open(info.player!!)
             return
         }
-        val playerToInvite = info.getArgAsPlayer(0) ?: return
-        if (playerToInvite == info.player) {
+        val playerToInvite = info.getArgAsIPlayer(0) ?: return
+        if (playerToInvite.getPlayer() == info.player) {
             info.message(Message.instance.genericCannotReferenceYourSelf)
             return
         }
 
-        island.attemptInvite(info.iPlayer!!, info.getArgAsIPlayer(0)!!)
-
+        island.attemptInvite(info.iPlayer!!, playerToInvite)
     }
 
     override fun getHelpInfo(): String {
