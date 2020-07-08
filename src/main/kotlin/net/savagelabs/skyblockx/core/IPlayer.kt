@@ -56,6 +56,9 @@ data class IPlayer(val uuid: String, val name: String) {
     var pos2: Location? = null
 
     @JsonIgnore
+    var syncData = false
+
+    @JsonIgnore
     fun getPlayer(): Player? {
         return Bukkit.getPlayer(UUID.fromString(uuid))
     }

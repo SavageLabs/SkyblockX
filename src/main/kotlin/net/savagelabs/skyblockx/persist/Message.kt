@@ -112,6 +112,7 @@ class Message : ConfigContainer {
     var commandHomeDoesNotExist = "&7This home does not exist."
     var commandHomeRemoveSuccess = "&7The home &b%1\$s&7 has been removed."
 
+    var commandCalcStart = "&7Starting Island Calc."
     var commandCalcMessage = "&7Calculated Island."
     var commandCalcCooldown =
         "&7You are trying to calculate the island value too often, Cooldown: &b%1\$s seconds left."
@@ -241,6 +242,9 @@ class Message : ConfigContainer {
 
     var commandCreateNonAlphaNumeric = "&7This island tag is not &balphanumeric&7."
     var commandCreateLength = "&7island tag must be between &b%1\$s&7 and &b%2\$s&7 characters long."
+
+    var commandUpgradesOpening = "&7Opening upgrade menu..."
+    var commandUpgradesHelp = "&7View the upgrades menu."
 
     var islandCreatedTitle = "&9SkyblockX"
     var islandCreatedSubtitle = "&7By: ProSavage"

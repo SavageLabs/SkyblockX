@@ -3,11 +3,13 @@ package net.savagelabs.skyblockx.listener
 import net.savagelabs.skyblockx.SkyblockX
 import net.savagelabs.skyblockx.core.canUseBlockAtLocation
 import net.savagelabs.skyblockx.core.getIPlayer
+import net.savagelabs.skyblockx.core.getIslandFromLocation
 import net.savagelabs.skyblockx.core.isNotInSkyblockWorld
 import net.savagelabs.skyblockx.persist.Config
 import net.savagelabs.skyblockx.persist.Message
 import net.savagelabs.skyblockx.persist.Quests
 import net.savagelabs.skyblockx.quest.QuestGoal
+import net.savagelabs.skyblockx.upgrade.UpgradeType
 import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.block.BlockFace
@@ -151,10 +153,13 @@ class BlockListener : Listener {
         // No skyblock world or generating from down block face.
         if (!Config.instance.islandOreGeneratorEnabled || event.face == BlockFace.DOWN || isNotInSkyblockWorld(event.block.world)) return
 
+        // Im looking at this later I remember that i needed a task to make this work, IDK why and I dont have time to fix,
+        // Future ProSavage: Fix this pls, tasks have overhead we do not need.
         Bukkit.getScheduler().runTask(SkyblockX.skyblockX, Runnable {
             run {
+                val level = getIslandFromLocation(event.block.location)?.upgrades?.get(UpgradeType.GENERATOR) ?: 0
                 if (event.toBlock.type == Material.COBBLESTONE) event.toBlock.location.block.type =
-                    SkyblockX.generatorAlgorithm[1]!!.choose().parseMaterial()!!
+                    (SkyblockX.generatorAlgorithm[level] ?: error("Generator level was not found in config.")).choose().parseMaterial()!!
             }
         })
 

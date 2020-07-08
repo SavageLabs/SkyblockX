@@ -34,7 +34,6 @@ class CmdMemberInvite : Command<SCommandInfo, SCommandRequirements>() {
             buildMenu(InviteMenu(info.island!!, info.iPlayer!!)).open(info.player!!)
             return
         }
-
         val playerToInvite = info.getArgAsPlayer(0) ?: return
         if (playerToInvite == info.player) {
             info.message(Message.instance.genericCannotReferenceYourSelf)

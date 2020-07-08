@@ -1,5 +1,7 @@
 package net.savagelabs.skyblockx.command.island.cmd
 
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import net.savagelabs.savagepluginx.command.Command
 import net.savagelabs.skyblockx.SkyblockX
 import net.savagelabs.skyblockx.command.SCommandInfo
@@ -31,10 +33,14 @@ class CmdCalc : Command<SCommandInfo, SCommandRequirements>() {
             )
             return
         }
-        info.island!!.lastManualCalc = System.currentTimeMillis()
-        val calcInfo = info.island!!.calcIsland()
-        SkyblockX.islandValues?.map?.put(info.island!!.islandID, calcInfo)
-        info.message(Message.instance.commandCalcMessage)
+        GlobalScope.launch {
+            info.message(Message.instance.commandCalcStart)
+            info.island!!.lastManualCalc = System.currentTimeMillis()
+            val calcInfo = info.island!!.calcIsland()
+            SkyblockX.islandValues?.map?.put(info.island!!.islandID, calcInfo)
+            info.message(Message.instance.commandCalcMessage)
+        }
+
     }
 
     override fun getHelpInfo(): String {

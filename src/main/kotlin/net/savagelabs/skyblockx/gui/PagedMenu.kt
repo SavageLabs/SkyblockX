@@ -55,7 +55,6 @@ abstract class PagedMenu(val pagedMenuConfig: PagedMenuConfig, val fillBackgroun
             nextPageItem.guiCoordinate.row,
             nextPageItem.guiCoordinate.column,
             ClickableItem.of(nextPageItem.item.buildItem()) {
-                println("next page")
                 buildMenu(this).open(player, pagination.next().page)
             }
         )

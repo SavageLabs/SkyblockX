@@ -25,7 +25,6 @@ class CmdSbOwner : Command<SCommandInfo, SCommandRequirements>() {
     }
 
     override fun perform(info: SCommandInfo) {
-        println(info)
         val newOwner = info.getArgAsIPlayer(1, cannotReferenceYourSelf = false) ?: return
         val iPlayerByName = getIPlayerByName(info.args[0])
         val island = iPlayerByName?.getIsland()

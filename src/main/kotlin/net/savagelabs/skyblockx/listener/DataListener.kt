@@ -10,6 +10,7 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.event.player.PlayerQuitEvent
+import java.util.*
 
 class DataListener : Listener {
 
@@ -29,6 +30,8 @@ class DataListener : Listener {
                     SkyblockX.skyblockX.logger.info("Updated ${event.player.name}'s tag since they changed their name.")
                 }
             }
+            island.lastLoginTime = Date()
+            island.syncIsland = true
             // Delay to handle other plugins teleporting on login etc...
             updateWorldBorder(event.player, event.player.location, 10L)
             return

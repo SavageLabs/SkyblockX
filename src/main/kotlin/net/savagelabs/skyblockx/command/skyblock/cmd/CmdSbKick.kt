@@ -49,7 +49,6 @@ class CmdSbKick : Command<SCommandInfo, SCommandRequirements>() {
             val firstMember = island.getAllMemberUUIDs().toList()[0]
 
             // just in case
-            println(firstMember)
             val iPlayerByUUID = getIPlayerByUUID(firstMember)
             iPlayerByUUID!!.assignIsland(island)
             island.ownerTag = iPlayerByUUID.name

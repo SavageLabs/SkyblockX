@@ -21,7 +21,6 @@ repositories {
     maven("https://papermc.io/repo/repository/maven-public/")
     maven("https://repo.codemc.org/repository/maven-public")
     maven("https://jitpack.io")
-    maven("https://dl.bintray.com/deanveloper/SkullCreator")
 }
 
 dependencies {
@@ -29,6 +28,7 @@ dependencies {
     implementation("org.bstats:bstats-bukkit:1.7")
     implementation("com.cryptomorin:XSeries:6.0.0")
     implementation("io.papermc:paperlib:1.0.2")
+    implementation("org.litote.kmongo:kmongo-coroutine:4.0.2")
     implementation("com.github.MinusKube:SmartInvs:master-SNAPSHOT")
     implementation("com.deanveloper:skullcreator:2.0.0")
     implementation(project(":WorldBorderUtil"))
@@ -74,6 +74,7 @@ tasks {
         mergeServiceFiles()
         exclude("META-INF/*.DSA")
         exclude("META-INF/*.RSA")
+        relocate("org.bstats", "net.savagelabs.skyblock.shade.bstats")
         archiveFileName.set("SkyblockX-${version}.jar")
     }
 

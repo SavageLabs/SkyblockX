@@ -538,4 +538,34 @@ class GUIConfig(@JsonIgnore override val name: String = "GUIConfig") : ConfigCon
     )
 
 
+
+    val upgradeMenuConfig = UpgradeMenuConfig(
+        "&f&lUpgrades GUI",
+        SerializableItem(
+            XMaterial.BLACK_STAINED_GLASS_PANE,
+            "",
+            listOf(),
+            1
+        ),
+        3,
+        listOf(
+            MenuItem(
+                SerializableItem(
+                    XMaterial.OAK_DOOR,
+                    "&aBack to Main Menu",
+                    listOf(
+                        "&e&l←&a Go back to the main menu."
+                    ),
+                    1,
+                    skullTexture = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODY1MmUyYjkzNmNhODAyNmJkMjg2NTFkN2M5ZjI4MTlkMmU5MjM2OTc3MzRkMThkZmRiMTM1NTBmOGZkYWQ1ZiJ9fX0="
+                ),
+                listOf(
+                    "is menu"
+                ),
+                GUICoordinate(0, 0)
+            )
+        )
+
+    )
+
 }

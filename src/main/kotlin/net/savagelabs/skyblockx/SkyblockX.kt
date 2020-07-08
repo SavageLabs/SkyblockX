@@ -9,10 +9,7 @@ import net.savagelabs.savagepluginx.persist.engine.ConfigManager
 import net.savagelabs.savagepluginx.persist.engine.FlatDataManager
 import net.savagelabs.skyblockx.command.island.IslandBaseCommand
 import net.savagelabs.skyblockx.command.skyblock.SkyblockBaseCommand
-import net.savagelabs.skyblockx.core.IslandTopInfo
-import net.savagelabs.skyblockx.core.calculateAllIslands
-import net.savagelabs.skyblockx.core.color
-import net.savagelabs.skyblockx.core.registerAllPermissions
+import net.savagelabs.skyblockx.core.*
 import net.savagelabs.skyblockx.hooks.PlacholderAPIIntegration
 import net.savagelabs.skyblockx.listener.*
 import net.savagelabs.skyblockx.persist.*
@@ -58,7 +55,7 @@ class SkyblockX : SavagePluginX() {
             loadPlaceholderAPIHook()
             startIslandTopTask()
             startAutoSaveTask()
-//            loadMetrics()
+            loadMetrics()
             registerListeners(
                 DataListener(),
                 SEditListener(),
@@ -112,7 +109,7 @@ class SkyblockX : SavagePluginX() {
     private fun startAutoSaveTask() {
         Bukkit.getScheduler().runTaskTimerAsynchronously(this, Runnable {
             if (Config.instance.islandSaveBroadcastMessage) Bukkit.broadcastMessage(color(Config.instance.islandSaveBroadcastMessageStart))
-            val time = measureTimedValue { FlatDataManager.save(Data.instance) }
+            val time = measureTimedValue { saveDataFiles() }
             if (Config.instance.islandSaveBroadcastMessage) Bukkit.broadcastMessage(
                 color(
                     String.format(
@@ -121,7 +118,7 @@ class SkyblockX : SavagePluginX() {
                     )
                 )
             )
-        }, 20L, Config.instance.islandSaveTaskPeriodTicks.toLong())
+        }, Config.instance.islandSaveTaskPeriodTicks.toLong(), Config.instance.islandSaveTaskPeriodTicks.toLong())
     }
 
     @ExperimentalTime
@@ -186,7 +183,12 @@ class SkyblockX : SavagePluginX() {
     fun loadDataFiles() {
         logInfo("Loading data files.")
         Config.instance = ConfigManager.readOrSave(Config())
-        Data.instance = FlatDataManager.readOrSave(Data())
+        runBlocking {
+            Data.instance = if (Config.instance.useDatabase) MongoManager.load() else FlatDataManager.readOrSave(Data())
+            if (Config.instance.useDatabase) {
+                Bukkit.getOnlinePlayers().forEach { player -> player.getIPlayer().getIsland()?.syncIsland = true }
+            }
+        }
         BlockValues.instance = ConfigManager.readOrSave(BlockValues())
         Quests.instance = ConfigManager.readOrSave(Quests())
         Message.instance = ConfigManager.readOrSave(Message())
@@ -220,7 +222,7 @@ class SkyblockX : SavagePluginX() {
 
     fun setupOreGeneratorAlgorithm() {
         val generatorStrategyMap = HashMap<Int, Items<XMaterial>>()
-        Config.instance.generatorProbability.forEach { (key, value) ->
+        Config.instance.generatorUpgrades.forEach { (key, value) ->
             run {
                 generatorStrategyMap[key] = Items(value)
             }
@@ -235,7 +237,9 @@ class SkyblockX : SavagePluginX() {
 
 
         // Don't load this as people shouldn't be touching this file anyways.
-        FlatDataManager.save(Data.instance)
+        runBlocking {
+            if (Config.instance.useDatabase) MongoManager.save(Data.instance) else FlatDataManager.save(Data.instance)
+        }
 
     }
 

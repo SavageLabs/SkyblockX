@@ -15,6 +15,7 @@ import net.savagelabs.skyblockx.persist.data.getSLocation
 import net.savagelabs.skyblockx.quest.Quest
 import net.savagelabs.skyblockx.quest.incrementQuestInOrder
 import net.savagelabs.skyblockx.sedit.SkyblockEdit
+import net.savagelabs.skyblockx.upgrade.UpgradeType
 import net.savagelabs.skyblockx.world.Point
 import net.savagelabs.skyblockx.world.spiral
 import org.bukkit.*
@@ -55,15 +56,36 @@ data class Island(
             return field
         }
 
+
+    @JsonIgnore
+    fun getIslandCenter(): Location {
+        return Location(
+            point.getLocation().world,
+            point.getLocation().x + (Config.instance.islandMaxSizeInBlocks / 2),
+            101.toDouble(),
+            point.getLocation().z + (Config.instance.islandMaxSizeInBlocks / 2)
+        )
+    }
+
+    @JsonIgnore
+    var syncIsland = false
+
+    var upgrades = hashMapOf<UpgradeType, Int>()
+
+    var lastLoginTime = Date()
+
     var beenToNether = false
     var netherFilePath = "nether-island.structure"
 
     var islandGoPoint: SLocation? = null
 
-    val minLocation: SLocation = getSLocation(point.getLocation())
-    val maxLocation: SLocation = getSLocation(
-        point.getLocation()
-            .add(islandSize.toDouble(), 256.0, islandSize.toDouble())
+    val minLocation: SLocation
+    get() = getSLocation(getIslandCenter().subtract(islandSize.toDouble() / 2, 101.0, islandSize.toDouble() / 2))
+
+    val maxLocation: SLocation
+    get() = getSLocation(
+        getIslandCenter()
+            .add(islandSize.toDouble() / 2, 256.0, islandSize.toDouble() / 2)
     )
 
     var lastManualCalc: Long = -1L
@@ -85,8 +107,7 @@ data class Island(
     }
 
 
-    var maxCoopPlayers = Config.instance.defaultMaxCoopPlayers
-    var maxIslandHomes = Config.instance.defaultMaxIslandHomes
+
 
 
     var questData = HashMap<String, Int>()
@@ -96,7 +117,17 @@ data class Island(
 
     var oneTimeQuestsCompleted = mutableSetOf<String>()
 
-    var memberLimit = Config.instance.defaultIslandMemberLimit
+    var memberBoost = 0
+    var coopBoost = 0
+    var homeBoost = 0
+
+    var maxCoopPlayers = Config.instance.defaultMaxCoopPlayers
+    get() = field + coopBoost
+    var maxIslandHomes = Config.instance.defaultMaxIslandHomes
+    get() = field + homeBoost
+    var maxMembers = Config.instance.defaultIslandMemberLimit
+    get() = field + memberBoost
+
 
     // UUIDS
     val members = mutableSetOf<String>()
@@ -239,7 +270,7 @@ data class Island(
     }
 
     fun inviteMember(iPlayer: IPlayer) {
-        if (memberLimit <= members.size) {
+        if (maxMembers <= members.size) {
             return
         }
         if (iPlayer.islandsInvitedTo == null) {
@@ -249,7 +280,7 @@ data class Island(
     }
 
     fun addMember(iPlayer: IPlayer) {
-        if (memberLimit <= members.size) {
+        if (maxMembers <= members.size) {
             return
         }
         if (!members.contains(iPlayer.uuid)) {
@@ -317,7 +348,7 @@ data class Island(
         }
 
         // Return if the current size is less than the max, if so we gucci.
-        return homes.size < maxIslandHomes
+        return homes.size <= maxIslandHomes
     }
 
     fun getQuestCompletedAmount(id: String): Int {
@@ -452,15 +483,7 @@ data class Island(
     }
 
 
-    @JsonIgnore
-    fun getIslandCenter(): Location {
-        return Location(
-            minLocation.getLocation().world,
-            minLocation.x + (Config.instance.islandMaxSizeInBlocks / 2),
-            101.toDouble(),
-            minLocation.z + (Config.instance.islandMaxSizeInBlocks / 2)
-        )
-    }
+
 
 
     fun containsBlock(v: Location): Boolean {
@@ -527,8 +550,8 @@ data class Island(
     }
 
     fun attemptInvite(inviter: IPlayer, target: IPlayer) {
-        if (memberLimit <= getIslandMembers().size) {
-            inviter.message(String.format(Message.instance.commandMemberInviteLimit, memberLimit))
+        if (maxMembers <= getIslandMembers().size) {
+            inviter.message(String.format(Message.instance.commandMemberInviteLimit, maxMembers))
             return
         }
         if (members.contains(target.name)) {
@@ -586,7 +609,8 @@ fun getIslandByOwnerTag(ownerTag: String): Island? {
 }
 
 fun createIsland(player: Player?, schematic: String, teleport: Boolean = true): Island {
-    var size = if (player == null) Config.instance.islandMaxSizeInBlocks else getMaxPermission(player, "skyblockx.size")
+    var size = if (player == null) Config.instance.islandStartSizeInBlocks else getMaxPermission(player, "skyblockx.size")
+    if (size == -1) size = Config.instance.islandStartSizeInBlocks
     size =
         if (size <= 0 || size > Config.instance.islandMaxSizeInBlocks) Config.instance.islandMaxSizeInBlocks else size
     val island =
