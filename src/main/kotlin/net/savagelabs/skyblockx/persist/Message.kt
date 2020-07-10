@@ -113,7 +113,7 @@ class Message : ConfigContainer {
     var commandHomeRemoveSuccess = "&7The home &b%1\$s&7 has been removed."
 
     var commandCalcStart = "&7Starting Island Calc."
-    var commandCalcMessage = "&7Calculated Island."
+    var commandCalcMessage = "&7Calculated Island. (%1\$s)"
     var commandCalcCooldown =
         "&7You are trying to calculate the island value too often, Cooldown: &b%1\$s seconds left."
     var commandCalcHelp = "&7Calculate your own island's value."

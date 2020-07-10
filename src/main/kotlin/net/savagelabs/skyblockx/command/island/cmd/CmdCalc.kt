@@ -33,12 +33,14 @@ class CmdCalc : Command<SCommandInfo, SCommandRequirements>() {
             )
             return
         }
+
+        // Async launch.
         GlobalScope.launch {
             info.message(Message.instance.commandCalcStart)
             info.island!!.lastManualCalc = System.currentTimeMillis()
             val calcInfo = info.island!!.calcIsland()
             SkyblockX.islandValues?.map?.put(info.island!!.islandID, calcInfo)
-            info.message(Message.instance.commandCalcMessage)
+            info.message(Message.instance.commandCalcMessage, calcInfo.timeDuration.toString())
         }
 
     }

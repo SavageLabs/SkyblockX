@@ -20,6 +20,7 @@ import net.savagelabs.skyblockx.world.Point
 import net.savagelabs.skyblockx.world.spiral
 import org.bukkit.*
 import org.bukkit.block.Biome
+import org.bukkit.block.BlockState
 import org.bukkit.block.CreatureSpawner
 import org.bukkit.entity.EntityType
 import org.bukkit.entity.Player
@@ -27,6 +28,7 @@ import org.bukkit.inventory.Inventory
 import java.lang.reflect.InvocationTargetException
 import java.text.DecimalFormat
 import java.util.*
+import java.util.concurrent.ConcurrentSkipListSet
 import java.util.stream.Collectors
 import kotlin.collections.HashMap
 import kotlin.collections.HashSet
@@ -80,13 +82,13 @@ data class Island(
     var islandGoPoint: SLocation? = null
 
     val minLocation: SLocation
-    get() = getSLocation(getIslandCenter().subtract(islandSize.toDouble() / 2, 101.0, islandSize.toDouble() / 2))
+        get() = getSLocation(getIslandCenter().subtract(islandSize.toDouble() / 2, 101.0, islandSize.toDouble() / 2))
 
     val maxLocation: SLocation
-    get() = getSLocation(
-        getIslandCenter()
-            .add(islandSize.toDouble() / 2, 256.0, islandSize.toDouble() / 2)
-    )
+        get() = getSLocation(
+            getIslandCenter()
+                .add(islandSize.toDouble() / 2, 256.0, islandSize.toDouble() / 2)
+        )
 
     var lastManualCalc: Long = -1L
 
@@ -107,9 +109,6 @@ data class Island(
     }
 
 
-
-
-
     var questData = HashMap<String, Int>()
     var currentQuest: String? = null
 
@@ -122,11 +121,11 @@ data class Island(
     var homeBoost = 0
 
     var maxCoopPlayers = Config.instance.defaultMaxCoopPlayers
-    get() = field + coopBoost
+        get() = field + coopBoost
     var maxIslandHomes = Config.instance.defaultMaxIslandHomes
-    get() = field + homeBoost
+        get() = field + homeBoost
     var maxMembers = Config.instance.defaultIslandMemberLimit
-    get() = field + memberBoost
+        get() = field + memberBoost
 
 
     // UUIDS
@@ -145,6 +144,8 @@ data class Island(
         ownerTag = ownerTag
     }
 
+    val isPaper13OrHigher = PaperLib.isPaper() && XMaterial.isNewVersion()
+
 
     @ExperimentalTime
     fun calcIsland(): CalcInfo {
@@ -154,58 +155,67 @@ data class Island(
         var time: TimedValue<Unit>? = null
         runBlocking {
             time = measureTimedValue {
-                val chunkList = mutableSetOf<Chunk>()
-                var chunks = mutableSetOf<ChunkSnapshot>()
+                val chunks = HashSet<Pair<ChunkSnapshot, Array<BlockState>>>()
                 val world = Bukkit.getWorld(Config.instance.skyblockWorldName)!!
-                for (x in minLocation.x.toInt()..maxLocation.x.toInt()) {
-                    for (z in minLocation.z.toInt()..maxLocation.z.toInt()) {
-                        Bukkit.getScheduler().runTask(SkyblockX.skyblockX, Runnable {
-                            PaperLib.getChunkAtAsync(Location(world, x.toDouble(), 0.0, z.toDouble()))
-                                .thenAccept { chunkList.add(it) }
-                        })
-
+                data class ChunkLocation(val x: Int, val z: Int)
+                val chunkLocations = HashSet<ChunkLocation>()
+                for (x in minLocation.x.toInt()..maxLocation.x.toInt() step 16) {
+                    for (z in minLocation.z.toInt()..maxLocation.z.toInt() step 16) {
+                        chunkLocations.add(ChunkLocation(x, z))
                     }
-                    delay(Config.instance.islandTopChunkLoadDelayInMiliseconds)
                 }
-                chunks = chunkList.map { it.chunkSnapshot }.toMutableSet()
-                val useNewGetBlockTypeSnapshotMethod = XMaterial.getVersion() >= 12.0
-                for (chunkSnapshot in chunks) {
-                    for (x in 0 until 16) {
-                        for (y in 0 until 256) {
-                            for (z in 0 until 16) {
-                                val blockType =
-                                    getChunkSnapshotBlockType(
-                                        useNewGetBlockTypeSnapshotMethod,
-                                        chunkSnapshot,
-                                        x,
-                                        y,
-                                        z
-                                    )!!
-                                if (blockType == Material.AIR) continue
-                                val xmat = XMaterial.matchXMaterial(blockType) ?: continue
-                                if (xmat == XMaterial.SPAWNER) {
-                                    PaperLib.getChunkAtAsync(
-                                        Bukkit.getWorld(chunkSnapshot.worldName)!!,
-                                        chunkSnapshot.x,
-                                        chunkSnapshot.z
-                                    ).thenAccept {
-                                        val state = it.getBlock(x, y, z).state
-                                        state as CreatureSpawner
-                                        val spawnedType = state.spawnedType
-                                        price += (BlockValues.instance.spawnerValues[spawnedType] ?: 0.0)
-                                        val spawnerAmount = spawnerMap.getOrDefault(spawnedType, 0)
-                                        spawnerMap[spawnedType] = spawnerAmount + 1
-                                    }
-                                    continue
-                                }
-                                price += BlockValues.instance.blockValues[xmat] ?: 0.0
-                                mapAmt[xmat] = mapAmt.getOrDefault(xmat, 0) + 1
+
+                val iterator = chunkLocations.iterator()
+                var counter = 0
+                while (iterator.hasNext()) {
+                    val chunkLocation = iterator.next()
+                    Bukkit.getScheduler().runTask(SkyblockX.skyblockX, Runnable {
+                        PaperLib.getChunkAtAsync(Location(world, chunkLocation.x.toDouble(), 0.0, chunkLocation.z.toDouble()))
+                            .thenAccept {
+                                chunks.add(Pair(it.chunkSnapshot, it.tileEntities))
                             }
+                    })
+                    counter++
+                    if (counter == 25 && !isPaper13OrHigher) {
+                        delay(Config.instance.islandTopChunkLoadDelayInMiliseconds)
+                        counter = 0
+                    }
+                }
+                val size = chunkLocations.size
+                while (size > chunks.size) {
+                    delay(1)
+                }
+                val useNewGetBlockTypeSnapshotMethod = XMaterial.getVersion() >= 12.0
+                for (chunkData in chunks) {
+                    val chunkSnapshot = chunkData.first
+                    for (sy in 0 until 16) {
+                        if (chunkSnapshot.isSectionEmpty(sy)) continue
+                        for (x in 0 until 16) for (y in 0 until 16) for (z in 0 until 16) {
+                            val blockType =
+                                getChunkSnapshotBlockType(
+                                    useNewGetBlockTypeSnapshotMethod,
+                                    chunkSnapshot,
+                                    x,
+                                    sy * 16 + y,
+                                    z
+                                )!!
+                            if (blockType == Material.AIR) continue
+                            val xmat = XMaterial.matchXMaterial(blockType)
+                            price += BlockValues.instance.blockValues[xmat] ?: 0.0
+                            mapAmt[xmat] = mapAmt.getOrDefault(xmat, 0) + 1
+                        }
+                    }
+                    for (tileEntity in chunkData.second) {
+                        if (tileEntity is CreatureSpawner) {
+                            val spawnedType = tileEntity.spawnedType
+                            price += (BlockValues.instance.spawnerValues[spawnedType] ?: 0.0)
+                            spawnerMap[spawnedType] = spawnerMap.getOrDefault(spawnedType, 0) + 1
                         }
                     }
                 }
             }
         }
+
         return CalcInfo(time?.duration ?: Duration.ZERO, price, mapAmt, spawnerMap, islandID)
     }
 
@@ -233,12 +243,13 @@ data class Island(
         return if (useNew) chunkSnapshot.getBlockType(x, y, z)
         // TODO: Optimize this by caching the methods as this is reflection being called for EVERY block.
         else {
-            val id = chunkSnapshot.javaClass.getMethod(
+            val getBlockTypeChunkSnapshotMethod = chunkSnapshot.javaClass.getMethod(
                 "getBlockTypeId",
                 Int::class.javaPrimitiveType,
                 Int::class.javaPrimitiveType,
                 Int::class.javaPrimitiveType
             )
+            val id = getBlockTypeChunkSnapshotMethod
                 .invoke(chunkSnapshot, x, y, z) as Int
             return Class.forName("org.bukkit.Material").getMethod("getMaterial", Int::class.javaPrimitiveType).invoke(
                 null,
@@ -483,9 +494,6 @@ data class Island(
     }
 
 
-
-
-
     fun containsBlock(v: Location): Boolean {
         if (v.world !== minLocation.getLocation().world) return false
         val x = v.x
@@ -611,8 +619,9 @@ fun getIslandByOwnerTag(ownerTag: String): Island? {
     return null
 }
 
-fun createIsland(player: Player?, schematic: String, teleport: Boolean = true): Island {
-    var size = if (player == null) Config.instance.islandStartSizeInBlocks else getMaxPermission(player, "skyblockx.size")
+fun createIsland(player: Player?, schematic: String, teleport: Boolean = true, systemOwnedName: String = "SYSTEM_OWNED"): Island {
+    var size =
+        if (player == null) Config.instance.islandStartSizeInBlocks else getMaxPermission(player, "skyblockx.size")
     if (size == -1) size = Config.instance.islandStartSizeInBlocks
     size =
         if (size <= 0 || size > Config.instance.islandMaxSizeInBlocks) Config.instance.islandMaxSizeInBlocks else size
@@ -621,7 +630,7 @@ fun createIsland(player: Player?, schematic: String, teleport: Boolean = true): 
             Data.instance.nextIslandID,
             spiral(Data.instance.nextIslandID),
             player?.uniqueId.toString(),
-            player?.name ?: "SYSTEM_OWNED",
+            player?.name ?: systemOwnedName,
             size
         )
     Data.instance.islands[Data.instance.nextIslandID] = island
@@ -675,7 +684,7 @@ fun calculateAllIslands() {
         Bukkit.getScheduler().callSyncMethod(SkyblockX.skyblockX) { pluginManager.callEvent(islandPostCalcEvent) }
         worth.worth = islandPostCalcEvent.levelAfterCalc ?: worth.worth
         islandVals[key] = worth
-        SkyblockX.skyblockX.logger.info("Finished Island ${island.ownerTag}")
+        SkyblockX.skyblockX.logger.info("Finished Island ${island.ownerTag} ${worth.timeDuration}")
     }
     SkyblockX.islandValues = IslandTopInfo(islandVals, System.nanoTime())
 }
