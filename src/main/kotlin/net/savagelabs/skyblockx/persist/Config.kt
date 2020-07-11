@@ -489,4 +489,7 @@ class Config(@JsonIgnore override val name: String = "config") :
     var removeBlocksOnIslandDelete = false
 
 
+    var chatFormat = "&bIsland Chat &r{player}: {message}"
+
+
 }

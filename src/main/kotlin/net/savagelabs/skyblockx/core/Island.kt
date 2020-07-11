@@ -262,10 +262,8 @@ data class Island(
         // Color message in case.
         val messageFormatted = color(message)
 
-        // Message island members
-        for (member in members) {
-            Bukkit.getPlayer(member)?.sendMessage(messageFormatted)
-        }
+
+        getIslandMembers().forEach { it.message(messageFormatted) }
     }
 
 

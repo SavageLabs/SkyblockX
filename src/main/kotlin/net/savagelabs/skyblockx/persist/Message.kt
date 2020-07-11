@@ -205,6 +205,12 @@ class Message : ConfigContainer {
     var commandSkyblockKickIslandDeleted =
         "&7The island has been deleted since the island has no members left to inherit the island."
 
+    var commandChatOn = "on"
+    var commandChatOff = "off"
+    var commandChatChange = "&7You have turned island chat &b%1\$s&7."
+    var commandChatHelp = "&7switch between global and island chat."
+
+
     var commandSkyblockNewOwnerHelp = "&7Set a new owner for an island."
     var commandSkyblockNewOwnerSuccess = "&7New owner successfully set."
 

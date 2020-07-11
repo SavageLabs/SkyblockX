@@ -20,10 +20,7 @@ import org.bukkit.event.inventory.CraftItemEvent
 import org.bukkit.event.inventory.InventoryAction
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.inventory.InventoryType
-import org.bukkit.event.player.PlayerFishEvent
-import org.bukkit.event.player.PlayerInteractEvent
-import org.bukkit.event.player.PlayerPortalEvent
-import org.bukkit.event.player.PlayerTeleportEvent
+import org.bukkit.event.player.*
 
 class PlayerListener : Listener {
 
@@ -241,6 +238,16 @@ class PlayerListener : Listener {
         }
     }
 
+
+    @EventHandler
+    fun onPlayerChat(event: AsyncPlayerChatEvent) {
+        val iPlayer = event.player.getIPlayer()
+        if (!iPlayer.hasIsland() || !iPlayer.isUsingIslandChat) return
+        event.isCancelled = true
+        iPlayer.getIsland()!!.messageAllOnlineIslandMembers(
+            Config.instance.chatFormat.replace("{player}", event.player.name).replace("{message}", event.message)
+        )
+    }
 
     @EventHandler
     fun onPlayerInteract(event: PlayerInteractEvent) {
