@@ -27,9 +27,11 @@ data class IPlayer(val uuid: String, val name: String) {
 
     var islandID = -1
 
-    var choosingPosition = false
-    var chosenPosition = Position.POSITION1
+    var islandRank: Rank? = null
 
+    var choosingPosition = false
+
+    var chosenPosition = Position.POSITION1
 
     var coopedIslandIds = HashSet<Int>()
 
@@ -79,8 +81,8 @@ data class IPlayer(val uuid: String, val name: String) {
         return !(this.hasIsland() && this.getIsland()!!.containsBlock(getPlayer()!!.location))
     }
 
-    fun message(message: String) {
-        getPlayer()!!.sendMessage(color(Message.instance.messagePrefix + message))
+    fun message(message: String, prefix: Boolean = true) {
+        getPlayer()!!.sendMessage(color((if (prefix) Message.instance.messagePrefix else "") + message))
     }
 
     fun isCoopedIsland(id: Int): Boolean {
@@ -183,6 +185,22 @@ data class IPlayer(val uuid: String, val name: String) {
         return true
     }
 
+    // Check if player has the permission in his current island
+    fun hasIslandPermission(permission: IslandPermission): Boolean {
+        if (!hasIsland() || islandRank == null) {
+            return false
+        }
+
+        if (isLeader()) {
+            return true
+        }
+
+        return getIsland()!!.getPermissionsForRank(islandRank!!).contains(permission)
+    }
+
+    fun messageNoPermission(permission: IslandPermission) {
+        message(Message.instance.genericNoPermissionMessage.replace("{permission}", permission.data.internalName))
+    }
 
 }
 

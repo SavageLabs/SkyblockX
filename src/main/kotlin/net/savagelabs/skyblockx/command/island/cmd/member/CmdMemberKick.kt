@@ -7,7 +7,9 @@ import net.savagelabs.skyblockx.command.SCommandRequirements
 import net.savagelabs.skyblockx.command.SCommandRequirementsBuilder
 import net.savagelabs.skyblockx.command.argument.MemberArgument
 import net.savagelabs.skyblockx.command.island.IslandBaseCommand
+import net.savagelabs.skyblockx.core.IslandPermission
 import net.savagelabs.skyblockx.core.Permission
+import net.savagelabs.skyblockx.core.getIPlayerByName
 import net.savagelabs.skyblockx.persist.Message
 
 class CmdMemberKick : Command<SCommandInfo, SCommandRequirements>() {
@@ -17,9 +19,8 @@ class CmdMemberKick : Command<SCommandInfo, SCommandRequirements>() {
 
         requiredArgs.add(Argument("island-member", 0, MemberArgument()))
         commandRequirements =
-            SCommandRequirementsBuilder().withPermission(Permission.MEMBER).asIslandMember(true).asLeader(true).build()
+            SCommandRequirementsBuilder().withPermission(Permission.MEMBER).asIslandMember(true).withIslandPermission(IslandPermission.MEMBER_KICK).build()
     }
-
 
     override fun perform(info: SCommandInfo) {
         val island = info.island!!
@@ -40,6 +41,10 @@ class CmdMemberKick : Command<SCommandInfo, SCommandRequirements>() {
             return
         }
 
+        if (getIPlayerByName(playerNameToRemove)!!.islandRank!!.weight >= info.iPlayer!!.islandRank!!.weight) {
+            info.iPlayer!!.message(Message.instance.cantKickHigher.replace("{target}", playerNameToRemove))
+            return
+        }
 
         info.island!!.kickMember(playerNameToRemove)
         info.message(String.format(Message.instance.commandMemberKicked, playerNameToRemove))
@@ -56,7 +61,7 @@ class CmdKick : Command<SCommandInfo, SCommandRequirements>() {
 
         requiredArgs.add(Argument("island-member", 0, MemberArgument()))
         commandRequirements =
-            SCommandRequirementsBuilder().withPermission(Permission.MEMBER).asIslandMember(true).asLeader(true).build()
+            SCommandRequirementsBuilder().withPermission(Permission.MEMBER).asIslandMember(true).withIslandPermission(IslandPermission.MEMBER_KICK).build()
     }
 
     override fun perform(info: SCommandInfo) {

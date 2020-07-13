@@ -4,6 +4,7 @@ import net.savagelabs.savagepluginx.command.Command
 import net.savagelabs.skyblockx.command.SCommandInfo
 import net.savagelabs.skyblockx.command.SCommandRequirements
 import net.savagelabs.skyblockx.command.SCommandRequirementsBuilder
+import net.savagelabs.skyblockx.core.IslandPermission
 import net.savagelabs.skyblockx.core.Permission
 import net.savagelabs.skyblockx.gui.menu.IslandMenu
 import net.savagelabs.skyblockx.gui.buildMenu
@@ -19,6 +20,7 @@ class CmdMenu : Command<SCommandInfo, SCommandRequirements>() {
         commandRequirements = SCommandRequirementsBuilder()
             .withPermission(Permission.MENU)
             .asIslandMember(true)
+            .withIslandPermission(IslandPermission.ISLAND_MENU)
             .build()
     }
 

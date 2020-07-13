@@ -27,6 +27,7 @@ class Message : ConfigContainer {
 
     var commandParsingPlayerDoesNotExist = "&cThis player does not exist."
     var commandParsingPlayerIsYou = "&cYou cannot reference yourself."
+    var commandParsingArgIsNotIsland = "&cThat island doesn't exist"
 
     var genericActionRequiresPermission = "&cThis action requires the permission %1\$s"
     var genericCannotReferenceYourSelf = "&cYou cannot reference yourself."
@@ -167,11 +168,14 @@ class Message : ConfigContainer {
     var commandMemberKickNotFound = "&7Your island does not have this member, names are &cCase Sensitive!"
     var commandMemberKicked = "&7You have successfully removed %1\$s from your island."
 
-    var commandMemberPromoteHelp = "&7Promote a member to leader."
+    var commandMemberLeaderHelp = "&7Promote a member to leader."
     var commandMemberNoMembers = "&7Your island does not have any members to promote."
     var commandMemberPromoteNotFound = "&7Your island does not have this member, names are &cCase Sensitive!"
     var commandMemberPromotedSuccess = "&b%1\$s&7 was promoted to leader."
     var commandMemberPromoteYouHaveBeenPromoted = "&7You have been promoted to &bisland leader&7."
+
+    var commandMemberPromoteHelp = "&7promote an island member"
+    var commandMemberDemoteHelp = "&7demote an island member"
 
     var commandMemberListHelp = "&7List all the members."
     var commandMemberListHeader = "&7&m-------&r &bMembers &7&m-------"
@@ -210,7 +214,6 @@ class Message : ConfigContainer {
     var commandChatChange = "&7You have turned island chat &b%1\$s&7."
     var commandChatHelp = "&7switch between global and island chat."
 
-
     var commandSkyblockNewOwnerHelp = "&7Set a new owner for an island."
     var commandSkyblockNewOwnerSuccess = "&7New owner successfully set."
 
@@ -223,6 +226,42 @@ class Message : ConfigContainer {
     var commandBiomeHelp = "&7Change your island's biome."
     var commandBiomeSuccess = "&7You have changed your island's biome to %1\$s, you need to re-log to see changes."
     var commandBiomeInvalidBiome = "&7The specified biome is invalid."
+
+    var commandNameHelp = "&7View island name."
+    var commandNameSuccess = "&7Your island name is &6%1\$s."
+
+    var commandPaypalHelp = "&7View your island's paypal."
+    var commandPaypalSuccess = "&7Your island's paypal is &b%1\$s."
+    var commandPaypalNotSet = "&7Your island doesn't have a paypal set"
+
+    var commandPermsHelp = "&7View island permission"
+
+    var commandSetPaypalHelp = "&7Set your island's paypal."
+    var commandSetPaypalSuccess = "&7Changed paypal to &b%1\$s."
+
+    var commandWhoHelp = "&7View data about an island"
+    var commandWhoFormat = listOf(
+        "&8&m---------------------------",
+        "&8| &7Name: &b{name}",
+        "&8| &7Leader: &b{ownerName}",
+        "&8| &7Value: &b{value}",
+        "&8| &7Members online: &b{onlineMembers}",
+        "&8| &7Members offline: &b{offlineMembers}",
+        "&8&m---------------------------"
+    )
+
+    var commandSkyblockCheckPaypalHelp = "&7Check island's paypal"
+    var commandSkyblockCheckPaypalNotSet = "&7That island doesn't have a paypal"
+    var commandSkyblockCheckPaypalSuccess = "&7Island &b{islandName} has paypal &b{paypal}"
+
+
+    var memberPromoteMessage = "{promoter} has promoted {promoted} to {rank}"
+    var cantPromoteHigher = "You can't promote {target} because they are a higher rank"
+    var memberDemoteMessage = "{demoter} has demoted {demoted} to {rank}"
+    var cantDemoteHigher = "You can't demote {target} because they are a higher rank"
+    var cantDemoteLower = "{target} is already the lowest rank"
+
+    var cantKickHigher = "You can't kick {target} because they are a higher rank"
 
 
     var listenerVoidDeathPrevented = "&7You fell into the void, teleporting you back."
@@ -246,15 +285,18 @@ class Message : ConfigContainer {
 
     var islandNetherTeleported = "&7You have been teleported to your nether island."
 
+    var genericNoPermissionMessage = "&7Missing permission: {permission}"
+
     var commandCreateNonAlphaNumeric = "&7This island tag is not &balphanumeric&7."
     var commandCreateLength = "&7island tag must be between &b%1\$s&7 and &b%2\$s&7 characters long."
 
     var commandUpgradesOpening = "&7Opening upgrade menu..."
     var commandUpgradesHelp = "&7View the upgrades menu."
 
+    var genericHigherRankMessage = "Your rank is too low"
+
     var islandCreatedTitle = "&9SkyblockX"
     var islandCreatedSubtitle = "&7By: ProSavage"
-
 
     override fun toString(): String {
         return color(super.toString())

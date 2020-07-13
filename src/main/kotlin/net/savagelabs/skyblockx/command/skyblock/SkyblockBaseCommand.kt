@@ -33,6 +33,7 @@ class SkyblockBaseCommand : Command<SCommandInfo, SCommandRequirements>(), Comma
         subCommands.add(CmdSbCalc())
         subCommands.add(CmdSbBypass())
         subCommands.add(CmdSbChest())
+        subCommands.add(CmdSbCheckPaypal())
         prefix = "/sbx"
         isBaseCommand = true
 

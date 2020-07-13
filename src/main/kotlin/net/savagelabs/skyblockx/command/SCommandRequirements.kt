@@ -1,6 +1,7 @@
 package net.savagelabs.skyblockx.command
 
 import net.savagelabs.savagepluginx.command.CommandRequirements
+import net.savagelabs.skyblockx.core.IslandPermission
 import net.savagelabs.skyblockx.core.Permission
 import net.savagelabs.skyblockx.core.hasPermission
 import net.savagelabs.skyblockx.persist.Message
@@ -11,6 +12,7 @@ class SCommandRequirements(
     val permission: Permission?,
     var asIslandMember: Boolean,
     var asLeader: Boolean,
+    val islandPermission: IslandPermission?,
     asPlayer: Boolean,
     rawPermission: String?
 ) : CommandRequirements<SCommandInfo>(
@@ -30,6 +32,8 @@ class SCommandRequirements(
         if (checkPermissionRequirement(info, informIfNot).not()) return false
 
         if (checkIslandMemberRequirement(info, informIfNot).not()) return false
+
+        if (checkIslandPermissionRequirement(info, informIfNot).not()) return false
 
         if (checkIslandLeaderRequirement(info, informIfNot).not()) return false
 
@@ -59,6 +63,18 @@ class SCommandRequirements(
                 return false
             }
         }
+        return true
+    }
+
+    private fun checkIslandPermissionRequirement(info: SCommandInfo, informIfNot: Boolean = true): Boolean {
+        if (islandPermission != null && !info.iPlayer!!.hasIslandPermission(islandPermission)) {
+            if (informIfNot){
+                info.iPlayer!!.messageNoPermission(islandPermission)
+            }
+
+            return false
+        }
+
         return true
     }
 

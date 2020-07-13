@@ -4,6 +4,7 @@ import net.savagelabs.savagepluginx.command.Command
 import net.savagelabs.skyblockx.command.SCommandInfo
 import net.savagelabs.skyblockx.command.SCommandRequirements
 import net.savagelabs.skyblockx.command.SCommandRequirementsBuilder
+import net.savagelabs.skyblockx.core.IslandPermission
 import net.savagelabs.skyblockx.core.Permission
 import net.savagelabs.skyblockx.gui.buildMenu
 import net.savagelabs.skyblockx.gui.menu.MemberMenu
@@ -20,12 +21,15 @@ class CmdMember : Command<SCommandInfo, SCommandRequirements>() {
             SCommandRequirementsBuilder()
                 .withPermission(Permission.MEMBER)
                 .asIslandMember(true)
+                .withIslandPermission(IslandPermission.MEMBER_LIST)
                 .build()
 
         subCommands.add(CmdMemberInvite())
         subCommands.add(CmdMemberList())
         subCommands.add(CmdMemberKick())
         subCommands.add(CmdMemberPromote())
+        subCommands.add(CmdMemberDemote())
+        subCommands.add(CmdMemberLeader())
     }
 
     override fun perform(info: SCommandInfo) {

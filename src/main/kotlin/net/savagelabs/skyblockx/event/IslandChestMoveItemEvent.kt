@@ -1,11 +1,15 @@
 package net.savagelabs.skyblockx.event
 
+import net.savagelabs.skyblockx.core.IPlayer
 import net.savagelabs.skyblockx.core.Island
+import net.savagelabs.skyblockx.listener.InventoryMoveAction
+import org.bukkit.entity.Player
 import org.bukkit.event.Cancellable
 import org.bukkit.event.Event
 import org.bukkit.event.HandlerList
 
-class IslandPreLevelCalcEvent(val island: Island, val levelBeforeCalc: Double) : Event(true), Cancellable {
+class IslandChestMoveItemEvent(val iPlayer: IPlayer, val island: Island, val action: Action, val moveActionList: List<InventoryMoveAction>) : Event(), Cancellable {
+
 
     private var isCancelled = false
 
@@ -13,7 +17,7 @@ class IslandPreLevelCalcEvent(val island: Island, val levelBeforeCalc: Double) :
         private val HANDLERS = HandlerList()
 
         @JvmStatic
-        fun getHandlerList(): HandlerList? {
+        fun getHandlerList(): HandlerList {
             return HANDLERS
         }
     }
@@ -30,5 +34,9 @@ class IslandPreLevelCalcEvent(val island: Island, val levelBeforeCalc: Double) :
         return this.isCancelled
     }
 
+    enum class Action {
+        CLICK,
+        DRAG
+    }
 
 }

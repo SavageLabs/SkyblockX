@@ -3,6 +3,7 @@ package net.savagelabs.skyblockx.command
 import net.savagelabs.savagepluginx.command.CommandInfo
 import net.savagelabs.skyblockx.core.IPlayer
 import net.savagelabs.skyblockx.core.Island
+import net.savagelabs.skyblockx.core.Rank
 import net.savagelabs.skyblockx.core.getIPlayer
 import net.savagelabs.skyblockx.persist.Data
 import net.savagelabs.skyblockx.persist.Message
@@ -52,4 +53,39 @@ class SCommandInfo(commandSender: CommandSender, args: ArrayList<String>, aliasU
         }
         return getIPlayer(player)
     }
+
+    fun getArgAsRank(index: Int, informIfNot: Boolean = true): Rank? {
+        return Rank.values().find { rank -> args[index] == rank.data.identifier.toLowerCase() }
+    }
+
+    private fun getArgAsIPlayerUnsafe(index: Int): IPlayer? {
+        val arg = args[index].toLowerCase()
+        return Data.instance.IPlayers.values.find { player -> player.name.toLowerCase() == arg }
+    }
+
+    fun getArgAsIsland(index: Int, informIfNot: Boolean = true): Island? {
+        val arg = args[index].toLowerCase()
+        val player = getArgAsIPlayerUnsafe(index)
+        if (player == null) {
+            val potentialIsland = Data.instance.islands.values.find { island -> island.islandName.toLowerCase() == arg }
+            if (potentialIsland != null) {
+                return potentialIsland
+            }
+
+            if (informIfNot) {
+                this.message(Message.instance.commandParsingArgIsNotIsland)
+            }
+            return null
+        }
+
+        if (!player.hasIsland() || player.getIsland() == null) {
+            if (informIfNot) {
+                this.message(Message.instance.commandParsingArgIsNotIsland)
+            }
+            return null
+        }
+
+        return player.getIsland()
+    }
+
 }

@@ -4,6 +4,7 @@ import net.savagelabs.savagepluginx.command.Command
 import net.savagelabs.skyblockx.command.SCommandInfo
 import net.savagelabs.skyblockx.command.SCommandRequirements
 import net.savagelabs.skyblockx.command.SCommandRequirementsBuilder
+import net.savagelabs.skyblockx.core.IslandPermission
 import net.savagelabs.skyblockx.core.Permission
 import net.savagelabs.skyblockx.persist.Config
 import net.savagelabs.skyblockx.persist.Message
@@ -18,6 +19,7 @@ class CmdWorth : Command<SCommandInfo, SCommandRequirements>() {
         commandRequirements = SCommandRequirementsBuilder()
             .withPermission(Permission.WORTH)
             .asIslandMember(true)
+            .withIslandPermission(IslandPermission.ISLAND_WORTH)
             .build()
     }
 

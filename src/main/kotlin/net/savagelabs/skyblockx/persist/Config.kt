@@ -3,8 +3,11 @@ package net.savagelabs.skyblockx.persist
 import com.cryptomorin.xseries.XMaterial
 import com.fasterxml.jackson.annotation.JsonIgnore
 import net.savagelabs.savagepluginx.persist.container.ConfigContainer
+import net.savagelabs.skyblockx.core.generateDefaultPermissionMap
+import net.savagelabs.skyblockx.core.generateDefaultRankMap
 import net.savagelabs.skyblockx.gui.wrapper.GUICoordinate
 import net.savagelabs.skyblockx.gui.wrapper.GUIItem
+import net.savagelabs.skyblockx.gui.wrapper.MenuItem
 import net.savagelabs.skyblockx.persist.data.SerializableItem
 import net.savagelabs.skyblockx.persist.data.WeightedItem
 import net.savagelabs.skyblockx.upgrade.UpgradeType
@@ -488,6 +491,9 @@ class Config(@JsonIgnore override val name: String = "config") :
 
     var removeBlocksOnIslandDelete = false
 
+    var islandRanks = generateDefaultRankMap()
+
+    var islandPermissions = generateDefaultPermissionMap()
 
     var chatFormat = "&bIsland Chat &r{player}: {message}"
 

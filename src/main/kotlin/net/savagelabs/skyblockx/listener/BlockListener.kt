@@ -1,10 +1,8 @@
 package net.savagelabs.skyblockx.listener
 
+import com.cryptomorin.xseries.XMaterial
 import net.savagelabs.skyblockx.SkyblockX
-import net.savagelabs.skyblockx.core.canUseBlockAtLocation
-import net.savagelabs.skyblockx.core.getIPlayer
-import net.savagelabs.skyblockx.core.getIslandFromLocation
-import net.savagelabs.skyblockx.core.isNotInSkyblockWorld
+import net.savagelabs.skyblockx.core.*
 import net.savagelabs.skyblockx.persist.Config
 import net.savagelabs.skyblockx.persist.Message
 import net.savagelabs.skyblockx.persist.Quests
@@ -55,6 +53,22 @@ class BlockListener : Listener {
             iPlayer.message(Message.instance.listenerBlockPlacementDenied)
             event.isCancelled = true
             return
+        }
+
+        if (iPlayer.hasIsland()) {
+            if (event.block.type == XMaterial.SPAWNER.parseMaterial()) {
+                if (!iPlayer.hasIslandPermission(IslandPermission.SPAWNER_PLACE)) {
+                    iPlayer.messageNoPermission(IslandPermission.SPAWNER_PLACE)
+                    event.isCancelled = true
+                    return
+                }
+            } else {
+                if (!iPlayer.hasIslandPermission(IslandPermission.PLACE)) {
+                    iPlayer.messageNoPermission(IslandPermission.PLACE)
+                    event.isCancelled = true
+                    return
+                }
+            }
         }
 
         // We're gonna need this more than once here, store to prevent lookups.
@@ -119,6 +133,22 @@ class BlockListener : Listener {
 
         // We're gonna need this more than once here, store to prevent lookups.
         val island = iPlayer.getIsland()
+
+        if (iPlayer.hasIsland()) {
+            if (event.block.type == XMaterial.SPAWNER.parseMaterial()) {
+                if (!iPlayer.hasIslandPermission(IslandPermission.SPAWNER_MINE)) {
+                    iPlayer.messageNoPermission(IslandPermission.SPAWNER_MINE)
+                    event.isCancelled = true
+                    return
+                }
+            } else {
+                if (!iPlayer.hasIslandPermission(IslandPermission.BUILD)) {
+                    iPlayer.messageNoPermission(IslandPermission.BUILD)
+                    event.isCancelled = true
+                    return
+                }
+            }
+        }
 
         // Quest checking block.
         if (iPlayer.hasIsland() && island!!.currentQuest != null) {

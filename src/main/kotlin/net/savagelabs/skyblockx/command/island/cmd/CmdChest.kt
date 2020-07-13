@@ -4,6 +4,7 @@ import net.savagelabs.savagepluginx.command.Command
 import net.savagelabs.skyblockx.command.SCommandInfo
 import net.savagelabs.skyblockx.command.SCommandRequirements
 import net.savagelabs.skyblockx.command.SCommandRequirementsBuilder
+import net.savagelabs.skyblockx.core.IslandPermission
 import net.savagelabs.skyblockx.core.Permission
 import net.savagelabs.skyblockx.persist.Message
 
@@ -16,7 +17,7 @@ class CmdChest : Command<SCommandInfo, SCommandRequirements>() {
 
 
         commandRequirements =
-            SCommandRequirementsBuilder().withPermission(Permission.CHEST).asIslandMember(true).build()
+            SCommandRequirementsBuilder().withPermission(Permission.CHEST).asIslandMember(true).withIslandPermission(IslandPermission.CHEST_OPEN).build()
     }
 
 

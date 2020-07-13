@@ -568,4 +568,54 @@ class GUIConfig(@JsonIgnore override val name: String = "GUIConfig") : ConfigCon
 
     )
 
+    var permsMenuConfig = PermsMenuConfig(
+        "&7Edit permissions",
+        SerializableItem(XMaterial.GRAY_STAINED_GLASS_PANE, "&7", listOf(""), 1),
+        3,
+        listOf(
+            MenuItem(
+                SerializableItem(XMaterial.STONE_SWORD,
+                    "&aEdit permissions for Rookie",
+                    listOf("&7Edit permission for Rookie"),
+                    1
+                ),
+                listOf("is perms recruit"),
+                GUICoordinate(1, 1)
+            ),
+            MenuItem(
+                SerializableItem(XMaterial.GOLDEN_SWORD,
+                    "&aEdit permissions for Member",
+                    listOf("&7Edit permission for Member"),
+                    1
+                ),
+                listOf("is perms member"),
+                GUICoordinate(3, 1)
+            ),
+            MenuItem(
+                SerializableItem(XMaterial.IRON_SWORD,
+                    "&aEdit permissions for Moderator",
+                    listOf("&7Edit permission for Moderator"),
+                    1
+                ),
+                listOf("is perms mod"),
+                GUICoordinate(5, 1)
+            ),
+            MenuItem(
+                SerializableItem(XMaterial.DIAMOND_SWORD,
+                    "&cView permissions for Leader",
+                    listOf("&8View permission for Leader"),
+                    1
+                ),
+                listOf("is perms owner"),
+                GUICoordinate(7, 1)
+            )
+        )
+    )
+
+    var permsMenuManageConfig = PermsMenuManageConfig(
+        "&7Manage permissions for {rank}",
+        SerializableItem(XMaterial.GRAY_STAINED_GLASS_PANE, "&7", listOf(""), 1),
+        6
+    )
+
 }

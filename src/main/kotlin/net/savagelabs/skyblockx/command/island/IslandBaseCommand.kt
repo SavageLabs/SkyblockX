@@ -42,6 +42,8 @@ class IslandBaseCommand : Command<SCommandInfo, SCommandRequirements>(), Command
         subCommands.add(CmdInvite())
         subCommands.add(CmdLeave())
         subCommands.add(CmdPromote())
+        subCommands.add(CmdDemote())
+        subCommands.add(CmdLeader())
         subCommands.add(CmdReset())
         subCommands.add(CmdAllowVisitors())
         subCommands.add(CmdTop())
@@ -54,6 +56,11 @@ class IslandBaseCommand : Command<SCommandInfo, SCommandRequirements>(), Command
         subCommands.add(CmdRename())
         subCommands.add(CmdUpgrade())
         subCommands.add(CmdChat())
+        subCommands.add(CmdName())
+        subCommands.add(CmdPaypal())
+        subCommands.add(CmdPerms())
+        subCommands.add(CmdSetPaypal())
+        subCommands.add(CmdWho())
         prefix = "/is"
 
         isBaseCommand = true

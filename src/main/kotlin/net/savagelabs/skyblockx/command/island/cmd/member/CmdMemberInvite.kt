@@ -8,6 +8,7 @@ import net.savagelabs.skyblockx.command.SCommandInfo
 import net.savagelabs.skyblockx.command.SCommandRequirements
 import net.savagelabs.skyblockx.command.SCommandRequirementsBuilder
 import net.savagelabs.skyblockx.command.island.IslandBaseCommand
+import net.savagelabs.skyblockx.core.IslandPermission
 import net.savagelabs.skyblockx.core.Permission
 import net.savagelabs.skyblockx.core.color
 import net.savagelabs.skyblockx.gui.buildMenu
@@ -23,9 +24,8 @@ class CmdMemberInvite : Command<SCommandInfo, SCommandRequirements>() {
         optionalArgs.add(Argument("player", 0, PlayerArgument()))
 
         commandRequirements =
-            SCommandRequirementsBuilder().withPermission(Permission.MEMBER).asIslandMember(true).build()
+            SCommandRequirementsBuilder().withPermission(Permission.MEMBER).asIslandMember(true).withIslandPermission(IslandPermission.MEMBER_INVITE).build()
     }
-
 
     override fun perform(info: SCommandInfo) {
         val island = info.island!!
@@ -50,7 +50,7 @@ class CmdInvite : Command<SCommandInfo, SCommandRequirements>() {
         aliases.add("invite")
         optionalArgs.add(Argument("player", 0, PlayerArgument()))
         commandRequirements =
-            SCommandRequirementsBuilder().withPermission(Permission.MEMBER).asIslandMember(true).build()
+            SCommandRequirementsBuilder().withPermission(Permission.MEMBER).asIslandMember(true).withIslandPermission(IslandPermission.MEMBER_INVITE).build()
     }
 
     override fun perform(info: SCommandInfo) {

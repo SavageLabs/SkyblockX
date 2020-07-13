@@ -6,6 +6,7 @@ import io.papermc.lib.PaperLib
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import me.rayzr522.jsonmessage.JSONMessage
+import net.prosavage.factiontop.FactionTop
 import net.savagelabs.skyblockx.SkyblockX
 import net.savagelabs.skyblockx.event.IslandPostLevelCalcEvent
 import net.savagelabs.skyblockx.event.IslandPreLevelCalcEvent
@@ -58,7 +59,6 @@ data class Island(
             return field
         }
 
-
     @JsonIgnore
     fun getIslandCenter(): Location {
         return Location(
@@ -71,6 +71,8 @@ data class Island(
 
     @JsonIgnore
     var syncIsland = false
+
+    var paypal: String? = null
 
     var upgrades = hashMapOf<UpgradeType, Int>()
 
@@ -116,6 +118,8 @@ data class Island(
 
     var oneTimeQuestsCompleted = mutableSetOf<String>()
 
+    val rankPermission = getDefaultPermissionMap()
+
     var memberBoost = 0
     var coopBoost = 0
     var homeBoost = 0
@@ -126,7 +130,6 @@ data class Island(
         get() = field + homeBoost
     var maxMembers = Config.instance.defaultIslandMemberLimit
         get() = field + memberBoost
-
 
     // UUIDS
     val members = mutableSetOf<String>()
@@ -258,10 +261,11 @@ data class Island(
         }
     }
 
+    fun getPermissionsForRank(rank: Rank): MutableSet<IslandPermission> = rankPermission[rank]!!
+
     fun messageAllOnlineIslandMembers(message: String) {
         // Color message in case.
         val messageFormatted = color(message)
-
 
         getIslandMembers().forEach { it.message(messageFormatted) }
     }
@@ -297,16 +301,29 @@ data class Island(
         }
 
         iPlayer.assignIsland(this)
+        iPlayer.islandRank = Rank.RECRUIT
     }
 
 
     fun kickMember(name: String) {
         members.remove(getIPlayerByName(name)?.uuid)
-        getIPlayerByName(name)?.assignIsland(-1)
+        val iPlayer = getIPlayerByName(name)
+        iPlayer?.assignIsland(-1)
+        iPlayer?.islandRank = null
     }
 
+    // Now support SavageFTop, yay
     fun getValue(): Double {
-        return SkyblockX.islandValues?.map?.get(islandID)?.worth ?: 0.0
+        if (!Bukkit.getPluginManager().isPluginEnabled("SavageFTOP")) {
+            return SkyblockX.islandValues?.map?.get(islandID)?.worth ?: 0.0
+        }
+
+        val sortedFiltered = FactionTop.getInstance().sortedFactions.filter { (_, island) -> island.factionId == islandID.toString() }
+        if (sortedFiltered.iterator().hasNext()) {
+            return sortedFiltered.iterator().next().value.worth.toDouble()
+        }
+
+        return 0.0
     }
 
     fun getLevel(): Double {
@@ -512,6 +529,15 @@ data class Island(
         return x >= minLocation.x && x < maxLocation.x + 1 && z >= minLocation.z && z < maxLocation.z + 1
     }
 
+    // This is the same as locationInIsland except it will return true if "location" is "amount" blocks outside the border
+    fun locationInIslandWide(v: Location, amount: Int): Boolean {
+        if (isNotInSkyblockWorld(v.world!!))
+            return false
+
+        val x = v.x
+        val z = v.z
+        return x >= minLocation.x - amount && x < maxLocation.x + 1 + amount && z >= minLocation.z - amount && z < maxLocation.z + 1 + amount
+    }
 
     /**
      * Delete the players island by removing the whole team, Deleting the actual blocks is too intensive.
@@ -519,6 +545,7 @@ data class Island(
     fun delete() {
         val ownerIPlayer = getIPlayerByUUID(ownerUUID)
         ownerIPlayer?.unassignIsland()
+        ownerIPlayer?.islandRank = null
         val player = ownerIPlayer?.getPlayer()
         teleportAsync(player, Bukkit.getWorld(Config.instance.defaultWorld)!!.spawnLocation, Runnable { })
         if (Config.instance.islandDeleteClearInventory) player?.inventory?.clear()
@@ -526,13 +553,15 @@ data class Island(
         getAllMemberUUIDs().forEach { memberUUID ->
             val iplayer = getIPlayerByUUID(memberUUID)
             iplayer?.unassignIsland()
-            val player = iplayer?.getPlayer()
+            iplayer?.islandRank = null
+            // This will throw an error if the player is null
+            val player = iplayer?.getPlayer() ?: return@forEach
             teleportAsync(
                 player,
                 Bukkit.getWorld(Config.instance.defaultWorld)!!.spawnLocation.add(0.0, 1.0, 0.0),
                 Runnable { })
-            if (Config.instance.islandDeleteClearInventory) player?.inventory?.clear()
-            if (Config.instance.islandDeleteClearEnderChest) player?.enderChest?.clear()
+            if (Config.instance.islandDeleteClearInventory) player.inventory.clear()
+            if (Config.instance.islandDeleteClearEnderChest) player.enderChest.clear()
         }
         Data.instance.islands.remove(islandID)
         // Delete island from value map.
@@ -606,6 +635,16 @@ fun getIslandFromLocation(location: Location): Island? {
     return null
 }
 
+// This is the same as getIslandFromLocation but it returns an island if the "location" is "amount" of blocks outside of said island
+fun getIslandFromLocationWide(location: Location, amount: Int): Island? {
+    for (island in Data.instance.islands.values) {
+        if (island.locationInIslandWide(location, amount)) {
+            return island
+        }
+    }
+    return null
+}
+
 fun getIslandByOwnerTag(ownerTag: String): Island? {
     val lowerCaseOwnerTag = ownerTag.toLowerCase()
     for (island in Data.instance.islands.values) {
@@ -640,6 +679,7 @@ fun createIsland(player: Player?, schematic: String, teleport: Boolean = true, s
         iPlayer.assignIsland(island)
         if (teleport) teleportAsync(player, island.getIslandCenter(), Runnable { })
         incrementQuestInOrder(island)
+        iPlayer.islandRank = Rank.OWNER
     }
     // Use deprecated method for 1.8 support.
     player?.sendTitle(color(Message.instance.islandCreatedTitle), color(Message.instance.islandCreatedSubtitle))
@@ -688,7 +728,7 @@ fun calculateAllIslands() {
 }
 
 fun isIslandNameTaken(tag: String): Boolean {
-    for ((id, island) in Data.instance.islands) {
+    for ((_, island) in Data.instance.islands) {
         if (tag == island.islandName) return true
     }
     return false

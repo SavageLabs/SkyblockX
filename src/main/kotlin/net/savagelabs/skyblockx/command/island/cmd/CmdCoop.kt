@@ -6,6 +6,7 @@ import net.savagelabs.savagepluginx.command.argument.PlayerArgument
 import net.savagelabs.skyblockx.command.SCommandInfo
 import net.savagelabs.skyblockx.command.SCommandRequirements
 import net.savagelabs.skyblockx.command.SCommandRequirementsBuilder
+import net.savagelabs.skyblockx.core.IslandPermission
 import net.savagelabs.skyblockx.core.Permission
 import net.savagelabs.skyblockx.gui.buildMenu
 import net.savagelabs.skyblockx.gui.menu.CoopInviteMenu
@@ -22,7 +23,7 @@ class CmdCoop : Command<SCommandInfo, SCommandRequirements>() {
 
         commandRequirements =
             SCommandRequirementsBuilder().asPlayer(true).asIslandMember(true)
-                .withPermission(Permission.COOP).build()
+                .withPermission(Permission.COOP).withIslandPermission(IslandPermission.ISLAND_COOP).build()
     }
 
     override fun perform(info: SCommandInfo) {

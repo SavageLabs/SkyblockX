@@ -10,6 +10,7 @@ import net.savagelabs.skyblockx.command.SCommandInfo
 import net.savagelabs.skyblockx.command.SCommandRequirements
 import net.savagelabs.skyblockx.command.SCommandRequirementsBuilder
 import net.savagelabs.skyblockx.command.argument.BiomeArgument
+import net.savagelabs.skyblockx.core.IslandPermission
 import net.savagelabs.skyblockx.core.Permission
 import net.savagelabs.skyblockx.core.createIsland
 import net.savagelabs.skyblockx.core.enumValueOrNull
@@ -29,6 +30,7 @@ class CmdBiome : Command<SCommandInfo, SCommandRequirements>() {
         commandRequirements = SCommandRequirementsBuilder()
             .asIslandMember(true)
             .withPermission(Permission.BIOME)
+            .withIslandPermission(IslandPermission.ISLAND_BIOME)
             .build()
     }
 

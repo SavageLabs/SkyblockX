@@ -1,5 +1,6 @@
 package net.savagelabs.skyblockx.command
 
+import net.savagelabs.skyblockx.core.IslandPermission
 import net.savagelabs.skyblockx.core.Permission
 
 class SCommandRequirementsBuilder {
@@ -9,6 +10,7 @@ class SCommandRequirementsBuilder {
     var asLeader = false
     var permission: Permission? = null
     var rawPermission: String? = null
+    var islandPermission: IslandPermission? = null
 
 
     fun asPlayer(value: Boolean): SCommandRequirementsBuilder {
@@ -33,6 +35,10 @@ class SCommandRequirementsBuilder {
         return this
     }
 
+    fun withIslandPermission(permission: IslandPermission): SCommandRequirementsBuilder {
+        this.islandPermission = permission
+        return this
+    }
 
     fun withRawPermission(permission: String): SCommandRequirementsBuilder {
         this.rawPermission = permission
@@ -44,6 +50,7 @@ class SCommandRequirementsBuilder {
             permission,
             asIslandMember,
             asLeader,
+            islandPermission,
             asPlayer,
             rawPermission
         )

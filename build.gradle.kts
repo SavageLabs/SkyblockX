@@ -45,6 +45,7 @@ dependencies {
     compileOnly("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.11.1")
     compileOnly("org.spigotmc:spigot-api:1.16.1-R0.1-SNAPSHOT")
     compileOnly("me.clip:placeholderapi:2.9.2")
+    implementation(fileTree(mapOf("dir" to "dependencies", "include" to listOf("*.jar"))))
 }
 
 tasks {

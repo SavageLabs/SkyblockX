@@ -6,6 +6,7 @@ import net.savagelabs.savagepluginx.command.argument.StringArgument
 import net.savagelabs.skyblockx.command.SCommandInfo
 import net.savagelabs.skyblockx.command.SCommandRequirements
 import net.savagelabs.skyblockx.command.SCommandRequirementsBuilder
+import net.savagelabs.skyblockx.core.IslandPermission
 import net.savagelabs.skyblockx.core.Permission
 import net.savagelabs.skyblockx.persist.Message
 import net.savagelabs.skyblockx.persist.data.getSLocation
@@ -21,7 +22,7 @@ class CmdHomeSet : Command<SCommandInfo, SCommandRequirements>() {
 
         this.commandRequirements =
             SCommandRequirementsBuilder().withPermission(Permission.HOME)
-                .asIslandMember(true).build()
+                .asIslandMember(true).withIslandPermission(IslandPermission.HOME_SET).build()
     }
 
     override fun perform(info: SCommandInfo) {

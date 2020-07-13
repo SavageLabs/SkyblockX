@@ -6,6 +6,7 @@ import net.savagelabs.skyblockx.command.SCommandInfo
 import net.savagelabs.skyblockx.command.SCommandRequirements
 import net.savagelabs.skyblockx.command.SCommandRequirementsBuilder
 import net.savagelabs.skyblockx.command.argument.HomeArgument
+import net.savagelabs.skyblockx.core.IslandPermission
 import net.savagelabs.skyblockx.core.Permission
 import net.savagelabs.skyblockx.persist.Message
 
@@ -18,7 +19,7 @@ class CmdHomeRemove : Command<SCommandInfo, SCommandRequirements>() {
         requiredArgs.add(Argument("home-name", 0, HomeArgument()))
 
         commandRequirements = SCommandRequirementsBuilder().withPermission(Permission.HOME)
-            .asIslandMember(true).build()
+            .asIslandMember(true).withIslandPermission(IslandPermission.HOME_REMOVE).build()
     }
 
     override fun perform(info: SCommandInfo) {

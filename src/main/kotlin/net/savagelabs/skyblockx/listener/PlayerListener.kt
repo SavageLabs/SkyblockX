@@ -2,6 +2,7 @@ package net.savagelabs.skyblockx.listener
 
 import com.cryptomorin.xseries.XMaterial
 import net.savagelabs.skyblockx.core.*
+import net.savagelabs.skyblockx.event.IslandChatEvent
 import net.savagelabs.skyblockx.persist.Config
 import net.savagelabs.skyblockx.persist.Message
 import net.savagelabs.skyblockx.persist.Quests
@@ -14,6 +15,7 @@ import org.bukkit.enchantments.Enchantment
 import org.bukkit.entity.Item
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
+import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 import org.bukkit.event.enchantment.EnchantItemEvent
 import org.bukkit.event.inventory.CraftItemEvent
@@ -242,7 +244,13 @@ class PlayerListener : Listener {
     @EventHandler
     fun onPlayerChat(event: AsyncPlayerChatEvent) {
         val iPlayer = event.player.getIPlayer()
-        if (!iPlayer.hasIsland() || !iPlayer.isUsingIslandChat) return
+        if (!iPlayer.hasIsland() || !iPlayer.isUsingIslandChat || iPlayer.hasIslandPermission(IslandPermission.ISLAND_CHAT)) return
+
+        val chatEvent = IslandChatEvent(event.player, iPlayer.getIsland()!!, event.message)
+        if (chatEvent.isCancelled) {
+            return
+        }
+
         event.isCancelled = true
         iPlayer.getIsland()!!.messageAllOnlineIslandMembers(
             Config.instance.chatFormat.replace("{player}", event.player.name).replace("{message}", event.message)
@@ -270,6 +278,12 @@ class PlayerListener : Listener {
         // Check if they can use the block on the island, or co-op island.
         if (!canUseBlockAtLocation(iPlayer, event.clickedBlock!!.location)) {
             iPlayer.message(Message.instance.listenerPlayerCannotInteract)
+            event.isCancelled = true
+            return
+        }
+
+        if (iPlayer.hasIsland() && !iPlayer.hasIslandPermission(IslandPermission.INTERACT)) {
+            iPlayer.messageNoPermission(IslandPermission.INTERACT)
             event.isCancelled = true
             return
         }

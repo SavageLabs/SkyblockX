@@ -49,6 +49,7 @@ class PlacholderAPIIntegration : PlaceholderExpansion() {
                 SkyblockX.islandValues?.map?.get(iPlayer.getIsland()?.islandID)?.worth ?: 0.0
             ).toString()
             "island_level" -> (iPlayer.getIsland()?.getLevel()?.toInt() ?: 0).toString()
+            "island_name" -> iPlayer.getIsland()?.islandName ?: "N/A"
             else -> null
         }
     }

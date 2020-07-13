@@ -43,8 +43,8 @@ enum class Permission(val node: String, val description: String, val permissionD
     ADMIN_NEWOWNER("admin.newowner", "change an island's owner", PermissionDefault.OP),
     ADMIN_KICKFROMISLAND("admin.kickfromisland", "kick a player from their island.", PermissionDefault.OP),
     ADMIN_BYPASS("admin.bypass", "bypass any island restrictions", PermissionDefault.OP),
-    ADMIN_CALC("admin.calc", "calculate all island's value", PermissionDefault.OP);
-
+    ADMIN_CALC("admin.calc", "calculate all island's value", PermissionDefault.OP),
+    ADMIN_CHECKPAYPAL("admin.checkpaypal", "check islands paypal", PermissionDefault.OP);
 
     fun getFullPermissionNode(): String {
         return "${Config.instance.skyblockPermissionPrefix}.${this.node}"

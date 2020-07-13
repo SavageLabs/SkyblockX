@@ -29,7 +29,6 @@ import kotlin.time.ExperimentalTime
 import kotlin.time.TimedValue
 import kotlin.time.measureTimedValue
 
-
 class SkyblockX : SavagePluginX() {
 
     companion object {
@@ -62,7 +61,8 @@ class SkyblockX : SavagePluginX() {
                 BlockListener(),
                 PlayerListener(),
                 EntityListener(),
-                GlideListener()
+                GlideListener(),
+                InventoryListener()
             )
             startInventoryManager()
             logInfo("Loaded ${Data.instance.IPlayers.size} players.")

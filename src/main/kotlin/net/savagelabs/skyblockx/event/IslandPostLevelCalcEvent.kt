@@ -6,18 +6,22 @@ import org.bukkit.event.HandlerList
 
 class IslandPostLevelCalcEvent(val island: Island, var levelAfterCalc: Double?) : Event(true) {
 
+    companion object {
+        private val HANDLERS = HandlerList()
+
+        @JvmStatic
+        fun getHandlerList(): HandlerList? {
+            return HANDLERS
+        }
+    }
+
     fun setLevelAfterCalc(levelAfterCalc: Double) {
         this.levelAfterCalc = levelAfterCalc
     }
 
-    private val HANDLERS = HandlerList()
     private var isCancelled = false
 
     override fun getHandlers(): HandlerList {
-        return HANDLERS
-    }
-
-    fun getHandlerList(): HandlerList? {
         return HANDLERS
     }
 
