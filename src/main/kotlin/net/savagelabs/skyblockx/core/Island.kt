@@ -2,6 +2,7 @@ package net.savagelabs.skyblockx.core
 
 import com.cryptomorin.xseries.XMaterial
 import com.fasterxml.jackson.annotation.JsonIgnore
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import io.papermc.lib.PaperLib
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
@@ -41,6 +42,7 @@ import kotlin.time.measureTimedValue
 
 
 @Suppress("UNCHECKED_CAST")
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class Island(
     val islandID: Int,
     val point: Point,
@@ -48,8 +50,6 @@ data class Island(
     var ownerTag: String,
     var islandSize: Int
 ) {
-
-
     var islandName = ownerTag
 
     var inventory: Inventory? = Bukkit.createInventory(null, (Config.instance.chestRows[1] ?: 3) * 9)
@@ -182,6 +182,7 @@ data class Island(
                     }
                 }
                 val size = chunkLocations.size
+                // Shitty waiting code for finishing chunk loads :D
                 while (size > chunks.size) {
                     delay(1)
                 }
@@ -215,7 +216,6 @@ data class Island(
                 }
             }
         }
-
         return CalcInfo(time?.duration ?: Duration.ZERO, price, mapAmt, spawnerMap, islandID)
     }
 
@@ -682,7 +682,7 @@ fun calculateAllIslands() {
         Bukkit.getScheduler().callSyncMethod(SkyblockX.skyblockX) { pluginManager.callEvent(islandPostCalcEvent) }
         worth.worth = islandPostCalcEvent.levelAfterCalc ?: worth.worth
         islandVals[key] = worth
-        SkyblockX.skyblockX.logger.info("Finished Island ${island.ownerTag} ${worth.timeDuration}")
+//        SkyblockX.skyblockX.logger.info("Finished Island ${island.ownerTag} ${worth.timeDuration}")
     }
     SkyblockX.islandValues = IslandTopInfo(islandVals, System.nanoTime())
 }

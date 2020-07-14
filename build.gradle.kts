@@ -2,7 +2,7 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import org.apache.tools.ant.filters.ReplaceTokens
 
 plugins {
-    kotlin("jvm") version "1.3.61"
+    kotlin("jvm") version "1.3.72"
     id("com.github.johnrengelman.shadow") version "5.1.0"
 }
 
@@ -30,14 +30,15 @@ dependencies {
     implementation("com.cryptomorin:XSeries:6.0.0")
     implementation("io.papermc:paperlib:1.0.2")
     implementation("org.litote.kmongo:kmongo-coroutine:4.0.2")
-    implementation("com.github.MinusKube:SmartInvs:master-SNAPSHOT")
-    implementation("com.deanveloper:skullcreator:2.0.0")
+
     implementation(project(":WorldBorderUtil"))
     implementation(project(":SavagePluginX"))
 
 
     compileOnly(kotlin("stdlib-jdk8"))
     compileOnly(kotlin("reflect"))
+    compileOnly("com.github.MinusKube:SmartInvs:master-SNAPSHOT")
+    compileOnly("com.deanveloper:skullcreator:2.0.0")
     compileOnly("me.rayzr522:jsonmessage:1.2.0")
     compileOnly("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.7")
     compileOnly("com.fasterxml.jackson.module:jackson-module-kotlin:2.11.0")
@@ -77,6 +78,12 @@ tasks {
         exclude("META-INF/*.RSA")
         relocate("org.bstats", "net.savagelabs.skyblock.shade.bstats")
         archiveFileName.set("SkyblockX-${version}.jar")
+    }
+
+    val copyToDebug by registering(Copy::class) {
+        dependsOn(jar)
+        from(jar.get().archiveFile.get())
+        into(projectDir.resolve("debug/plugins"))
     }
 
 
