@@ -27,23 +27,14 @@ repositories {
 dependencies {
     implementation("org.ocpsoft.prettytime:prettytime:4.0.1.Final")
     implementation("org.bstats:bstats-bukkit:1.7")
-    implementation("com.cryptomorin:XSeries:6.0.0")
     implementation("io.papermc:paperlib:1.0.2")
     implementation("org.litote.kmongo:kmongo-coroutine:4.0.2")
-
     implementation(project(":WorldBorderUtil"))
-    implementation(project(":SavagePluginX"))
 
 
     compileOnly(kotlin("stdlib-jdk8"))
     compileOnly(kotlin("reflect"))
-    compileOnly("com.github.MinusKube:SmartInvs:master-SNAPSHOT")
-    compileOnly("com.deanveloper:skullcreator:2.0.0")
-    compileOnly("me.rayzr522:jsonmessage:1.2.0")
-    compileOnly("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.7")
-    compileOnly("com.fasterxml.jackson.module:jackson-module-kotlin:2.11.0")
-    compileOnly("com.fasterxml.jackson.core:jackson-databind:2.11.0")
-    compileOnly("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.11.1")
+    compileOnly("net.savagelabs:XCore:1.0.0")
     compileOnly("org.spigotmc:spigot-api:1.16.1-R0.1-SNAPSHOT")
     compileOnly("me.clip:placeholderapi:2.9.2")
 }
