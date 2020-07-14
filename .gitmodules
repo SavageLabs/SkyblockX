@@ -1,3 +1,6 @@
 [submodule "WorldBorderUtility"]
 	path = WorldBorderUtil
 	url = https://github.com/SavageLabs/WorldBorderUtil.git
+[submodule "SavagePluginX"]
+	path = SavagePluginX
+	url = https://github.com/SavageLabs/SavagePluginX.git
