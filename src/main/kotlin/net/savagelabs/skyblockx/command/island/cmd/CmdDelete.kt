@@ -9,26 +9,26 @@ import net.savagelabs.skyblockx.persist.Message
 
 class CmdDelete : Command<SCommandInfo, SCommandRequirements>() {
 
-    init {
-        aliases.add("delete")
+	init {
+		aliases.add("delete")
 
-        commandRequirements =
-            SCommandRequirementsBuilder()
-                .asPlayer(true)
-                .asIslandMember(true)
-                .withPermission(Permission.DELETE)
-                .build()
-    }
-
-
-    override fun perform(info: SCommandInfo) {
-        info.island!!.delete()
-        info.message(Message.instance.commandDeleteDeletedIsland)
-    }
+		commandRequirements =
+			SCommandRequirementsBuilder()
+				.asPlayer(true)
+				.asIslandMember(true)
+				.withPermission(Permission.DELETE)
+				.build()
+	}
 
 
-    override fun getHelpInfo(): String {
-        return Message.instance.commandDeleteHelp
-    }
+	override fun perform(info: SCommandInfo) {
+		info.island!!.delete()
+		info.message(Message.instance.commandDeleteDeletedIsland)
+	}
+
+
+	override fun getHelpInfo(): String {
+		return Message.instance.commandDeleteHelp
+	}
 
 }

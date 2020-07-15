@@ -9,21 +9,22 @@ import net.savagelabs.skyblockx.persist.data.SerializableItem
 import org.bukkit.entity.Player
 
 data class IslandMenuGUIConfig(
-    val guiTitle: String,
-    val guiBackgroundItem: SerializableItem,
-    val guiRows: Int,
-    val guiMenuItems: List<MenuItem>
+	val guiTitle: String,
+	val guiBackgroundItem: SerializableItem,
+	val guiRows: Int,
+	val guiMenuItems: List<MenuItem>
 )
 
-class IslandMenu : BaseMenu(true,
-    MenuConfig(
-        GUIConfig.instance.islandMenuGUI.guiTitle,
-        GUIConfig.instance.islandMenuGUI.guiBackgroundItem,
-        GUIConfig.instance.islandMenuGUI.guiRows,
-        GUIConfig.instance.islandMenuGUI.guiMenuItems
-    )
+class IslandMenu : BaseMenu(
+	true,
+	MenuConfig(
+		GUIConfig.instance.islandMenuGUI.guiTitle,
+		GUIConfig.instance.islandMenuGUI.guiBackgroundItem,
+		GUIConfig.instance.islandMenuGUI.guiRows,
+		GUIConfig.instance.islandMenuGUI.guiMenuItems
+	)
 ) {
-    override fun fillContents(player: Player, contents: InventoryContents) {
-        // Menu item GUI, nothing to be done.
-    }
+	override fun fillContents(player: Player, contents: InventoryContents) {
+		// Menu item GUI, nothing to be done.
+	}
 }

@@ -10,23 +10,23 @@ import net.savagelabs.skyblockx.persist.Message
 
 class CmdReset : Command<SCommandInfo, SCommandRequirements>() {
 
-    init {
-        aliases.add("reset")
+	init {
+		aliases.add("reset")
 
-        commandRequirements = SCommandRequirementsBuilder()
-            .withPermission(Permission.RESET)
-            .asIslandMember(true)
-            .asLeader(true)
-            .build()
-    }
+		commandRequirements = SCommandRequirementsBuilder()
+			.withPermission(Permission.RESET)
+			.asIslandMember(true)
+			.asLeader(true)
+			.build()
+	}
 
-    override fun perform(info: SCommandInfo) {
-        IslandBaseCommand.instance.subCommands.find { command -> command is CmdDelete }?.perform(info)
-        IslandBaseCommand.instance.subCommands.find { command -> command is CmdCreate }?.perform(info)
-    }
+	override fun perform(info: SCommandInfo) {
+		IslandBaseCommand.instance.subCommands.find { command -> command is CmdDelete }?.perform(info)
+		IslandBaseCommand.instance.subCommands.find { command -> command is CmdCreate }?.perform(info)
+	}
 
-    override fun getHelpInfo(): String {
-        return Message.instance.commandResetHelp
-    }
+	override fun getHelpInfo(): String {
+		return Message.instance.commandResetHelp
+	}
 
 }

@@ -5,8 +5,8 @@ import org.bukkit.block.Biome
 import org.bukkit.entity.Player
 
 class BiomeArgument : ArgumentType {
-    override fun getPossibleValues(player: Player): List<String> {
-        return Biome.values().map { biome -> biome.name }.toList()
-    }
+	override fun getPossibleValues(player: Player): List<String> {
+		return Biome.values().map { biome -> biome.name }.toList()
+	}
 
 }

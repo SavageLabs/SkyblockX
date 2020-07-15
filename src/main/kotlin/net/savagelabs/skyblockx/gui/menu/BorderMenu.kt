@@ -14,26 +14,28 @@ import net.savagelabs.worldborder.WorldBorderUtil
 import org.bukkit.entity.Player
 
 data class BorderMenuConfig(
-    val guiTitle: String,
-    val guiBackgroundItem: SerializableItem,
-    val guiRows: Int,
-    val borderItems: HashMap<WorldBorderUtil.Color, GUIItem>,
-    val guiMenuItems: List<MenuItem>
+	val guiTitle: String,
+	val guiBackgroundItem: SerializableItem,
+	val guiRows: Int,
+	val borderItems: HashMap<WorldBorderUtil.Color, GUIItem>,
+	val guiMenuItems: List<MenuItem>
 )
 
-class BorderMenu : BaseMenu(true, MenuConfig(
-    GUIConfig.instance.borderMenuConfig.guiTitle,
-    GUIConfig.instance.borderMenuConfig.guiBackgroundItem,
-    GUIConfig.instance.borderMenuConfig.guiRows,
-    GUIConfig.instance.borderMenuConfig.guiMenuItems
-)) {
-    override fun fillContents(player: Player, contents: InventoryContents) {
-        GUIConfig.instance.borderMenuConfig.borderItems.forEach { (color, item) ->
-            contents.set(item.guiCoordinate.row, item.guiCoordinate.column, ClickableItem.of(item.item.buildItem()) {
-                getIPlayer(player).borderColor = color
-                updateWorldBorder(player, player.location, 0L)
-            })
-        }
-    }
+class BorderMenu : BaseMenu(
+	true, MenuConfig(
+		GUIConfig.instance.borderMenuConfig.guiTitle,
+		GUIConfig.instance.borderMenuConfig.guiBackgroundItem,
+		GUIConfig.instance.borderMenuConfig.guiRows,
+		GUIConfig.instance.borderMenuConfig.guiMenuItems
+	)
+) {
+	override fun fillContents(player: Player, contents: InventoryContents) {
+		GUIConfig.instance.borderMenuConfig.borderItems.forEach { (color, item) ->
+			contents.set(item.guiCoordinate.row, item.guiCoordinate.column, ClickableItem.of(item.item.buildItem()) {
+				getIPlayer(player).borderColor = color
+				updateWorldBorder(player, player.location, 0L)
+			})
+		}
+	}
 
 }

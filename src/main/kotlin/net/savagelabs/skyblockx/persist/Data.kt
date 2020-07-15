@@ -9,18 +9,18 @@ import kotlin.collections.HashMap
 
 class Data : FlatDataContainer {
 
-    @JsonIgnore
-    override val name = "data"
+	@JsonIgnore
+	override val name = "data"
 
 
-    companion object {
-        lateinit var instance: Data
-    }
+	companion object {
+		lateinit var instance: Data
+	}
 
-    var nextIslandID = 0
+	var nextIslandID = 0
 
-    var IPlayers = HashMap<UUID, IPlayer>()
-    var islands = HashMap<Int, Island>()
+	var IPlayers = HashMap<UUID, IPlayer>()
+	var islands = HashMap<Int, Island>()
 
 
 }

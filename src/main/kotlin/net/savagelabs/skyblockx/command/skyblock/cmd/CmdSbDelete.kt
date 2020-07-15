@@ -14,28 +14,28 @@ import net.savagelabs.skyblockx.persist.Message
 class CmdSbDelete : Command<SCommandInfo, SCommandRequirements>() {
 
 
-    init {
-        aliases.add("delete")
-        aliases.add("remove")
+	init {
+		aliases.add("delete")
+		aliases.add("remove")
 
-        requiredArgs.add(Argument("owner-tag", 0, PlayerArgument()))
+		requiredArgs.add(Argument("owner-tag", 0, PlayerArgument()))
 
-        commandRequirements = SCommandRequirementsBuilder().withPermission(Permission.ADMIN_DELETEISLAND).build()
-    }
+		commandRequirements = SCommandRequirementsBuilder().withPermission(Permission.ADMIN_DELETEISLAND).build()
+	}
 
-    override fun perform(info: SCommandInfo) {
-        val iPlayerByName = getIPlayerByName(info.args[0])
-        if (iPlayerByName?.getIsland() == null) {
-            info.message(Message.instance.commandSkyblockRemoveNotAnIslandOwner)
-            return
-        }
-        iPlayerByName.getIsland()?.delete()
-        info.message(Message.instance.commandSkyblockRemoveSuccess)
+	override fun perform(info: SCommandInfo) {
+		val iPlayerByName = getIPlayerByName(info.args[0])
+		if (iPlayerByName?.getIsland() == null) {
+			info.message(Message.instance.commandSkyblockRemoveNotAnIslandOwner)
+			return
+		}
+		iPlayerByName.getIsland()?.delete()
+		info.message(Message.instance.commandSkyblockRemoveSuccess)
 
-    }
+	}
 
-    override fun getHelpInfo(): String {
-        return Message.instance.commandSkyblockRemoveHelp
-    }
+	override fun getHelpInfo(): String {
+		return Message.instance.commandSkyblockRemoveHelp
+	}
 
 }

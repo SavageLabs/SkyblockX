@@ -16,26 +16,26 @@ import org.bukkit.event.player.PlayerTeleportEvent
 class GlideListener : Listener {
 
 
-    @EventHandler
-    fun onPlayerToggleGlide(event: EntityToggleGlideEvent) {
-        // We want them to be allowed to glide, but just check where they end up, so they need to be on the ground.
-        if (event.entity !is Player || event.isGliding || !event.entity.isOnGround) return
+	@EventHandler
+	fun onPlayerToggleGlide(event: EntityToggleGlideEvent) {
+		// We want them to be allowed to glide, but just check where they end up, so they need to be on the ground.
+		if (event.entity !is Player || event.isGliding || !event.entity.isOnGround) return
 
-        val island = getIslandFromLocation(event.entity.location) ?: return
-        val iPlayer = getIPlayer(event.entity as Player)
-        if (!island.allowVisitors && !island.hasCoopPlayer(iPlayer) && !island.getIslandMembers()
-                .contains(iPlayer)
-        ) {
-            if (iPlayer.hasIsland()) {
-                event.entity.teleport(iPlayer.getIsland()!!.islandGoPoint!!.getLocation())
-            } else {
-                event.entity.teleport(
-                    Bukkit.getWorld(Config.instance.defaultWorld)!!.spawnLocation.add(0.0, 1.0, 0.0),
-                    PlayerTeleportEvent.TeleportCause.PLUGIN
-                )
-            }
-        }
+		val island = getIslandFromLocation(event.entity.location) ?: return
+		val iPlayer = getIPlayer(event.entity as Player)
+		if (!island.allowVisitors && !island.hasCoopPlayer(iPlayer) && !island.getIslandMembers()
+				.contains(iPlayer)
+		) {
+			if (iPlayer.hasIsland()) {
+				event.entity.teleport(iPlayer.getIsland()!!.islandGoPoint!!.getLocation())
+			} else {
+				event.entity.teleport(
+					Bukkit.getWorld(Config.instance.defaultWorld)!!.spawnLocation.add(0.0, 1.0, 0.0),
+					PlayerTeleportEvent.TeleportCause.PLUGIN
+				)
+			}
+		}
 
-    }
+	}
 
 }

@@ -14,38 +14,38 @@ import kotlin.time.ExperimentalTime
 
 class CmdCalc : Command<SCommandInfo, SCommandRequirements>() {
 
-    init {
-        aliases.add("calc")
+	init {
+		aliases.add("calc")
 
-        commandRequirements =
-            SCommandRequirementsBuilder().withPermission(Permission.CALC).asIslandMember(true).build()
-    }
+		commandRequirements =
+			SCommandRequirementsBuilder().withPermission(Permission.CALC).asIslandMember(true).build()
+	}
 
-    @ExperimentalTime
-    override fun perform(info: SCommandInfo) {
-        if (!info.island!!.canManualCalc()) {
-            val cooldown = (System.currentTimeMillis() - info.island!!.lastManualCalc) / 1000
-            info.message(
-                String.format(
-                    Message.instance.commandCalcCooldown,
-                    (Config.instance.islandTopManualCalcCooldownMiliseconds / 1000) - cooldown
-                )
-            )
-            return
-        }
+	@ExperimentalTime
+	override fun perform(info: SCommandInfo) {
+		if (!info.island!!.canManualCalc()) {
+			val cooldown = (System.currentTimeMillis() - info.island!!.lastManualCalc) / 1000
+			info.message(
+				String.format(
+					Message.instance.commandCalcCooldown,
+					(Config.instance.islandTopManualCalcCooldownMiliseconds / 1000) - cooldown
+				)
+			)
+			return
+		}
 
-        // Async launch.
-        GlobalScope.launch {
-            info.message(Message.instance.commandCalcStart)
-            info.island!!.lastManualCalc = System.currentTimeMillis()
-            val calcInfo = info.island!!.calcIsland()
-            SkyblockX.islandValues?.map?.put(info.island!!.islandID, calcInfo)
-            info.message(Message.instance.commandCalcMessage, calcInfo.timeDuration.toString())
-        }
+		// Async launch.
+		GlobalScope.launch {
+			info.message(Message.instance.commandCalcStart)
+			info.island!!.lastManualCalc = System.currentTimeMillis()
+			val calcInfo = info.island!!.calcIsland()
+			SkyblockX.islandValues?.map?.put(info.island!!.islandID, calcInfo)
+			info.message(Message.instance.commandCalcMessage, calcInfo.timeDuration.toString())
+		}
 
-    }
+	}
 
-    override fun getHelpInfo(): String {
-        return Message.instance.commandCalcHelp
-    }
+	override fun getHelpInfo(): String {
+		return Message.instance.commandCalcHelp
+	}
 }

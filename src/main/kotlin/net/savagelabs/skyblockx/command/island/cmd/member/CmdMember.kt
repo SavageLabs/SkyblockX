@@ -12,35 +12,35 @@ import net.savagelabs.skyblockx.persist.Message
 
 class CmdMember : Command<SCommandInfo, SCommandRequirements>() {
 
-    init {
-        aliases.add("member")
-        aliases.add("members")
+	init {
+		aliases.add("member")
+		aliases.add("members")
 
-        commandRequirements =
-            SCommandRequirementsBuilder()
-                .withPermission(Permission.MEMBER)
-                .asIslandMember(true)
-                .build()
+		commandRequirements =
+			SCommandRequirementsBuilder()
+				.withPermission(Permission.MEMBER)
+				.asIslandMember(true)
+				.build()
 
-        subCommands.add(CmdMemberInvite())
-        subCommands.add(CmdMemberList())
-        subCommands.add(CmdMemberKick())
-        subCommands.add(CmdMemberPromote())
-    }
+		subCommands.add(CmdMemberInvite())
+		subCommands.add(CmdMemberList())
+		subCommands.add(CmdMemberKick())
+		subCommands.add(CmdMemberPromote())
+	}
 
-    override fun perform(info: SCommandInfo) {
-        if (Config.instance.showMemberManagerGUI) buildMenu(MemberMenu(info.player!!, info.island!!)).open(info.player)
-        else
-        // No Args / Invalid args specified.
-            if (info.args.size != 1) {
-                generateHelp(1, info.player!!, info.args)
-                return
-            }
+	override fun perform(info: SCommandInfo) {
+		if (Config.instance.showMemberManagerGUI) buildMenu(MemberMenu(info.player!!, info.island!!)).open(info.player)
+		else
+		// No Args / Invalid args specified.
+			if (info.args.size != 1) {
+				generateHelp(1, info.player!!, info.args)
+				return
+			}
 
-    }
+	}
 
-    override fun getHelpInfo(): String {
-        return Message.instance.commandMemberHelp
-    }
+	override fun getHelpInfo(): String {
+		return Message.instance.commandMemberHelp
+	}
 
 }

@@ -19,70 +19,69 @@ import java.text.DecimalFormat
 
 
 class QuestMenu(val iPlayer: IPlayer, val island: Island) : PagedMenu(
-    PagedMenuConfig(
-        Quests.instance.islandQuestGUITitle,
-        Quests.instance.islandQuestGUIBackgroundItem,
-        Quests.instance.islandQuestGUIRows,
-        SlotIterator.Type.HORIZONTAL,
-        Quests.instance.islandQuestGUIStartCoordinate,
-        Quests.instance.islandQuestGUIItemsPerPage,
-        Quests.instance.questsNextPageItem,
-        Quests.instance.questPreviousPageItem,
-        Quests.instance.questMenuItems
-    )
+	PagedMenuConfig(
+		Quests.instance.islandQuestGUITitle,
+		Quests.instance.islandQuestGUIBackgroundItem,
+		Quests.instance.islandQuestGUIRows,
+		SlotIterator.Type.HORIZONTAL,
+		Quests.instance.islandQuestGUIStartCoordinate,
+		Quests.instance.islandQuestGUIItemsPerPage,
+		Quests.instance.questsNextPageItem,
+		Quests.instance.questPreviousPageItem,
+		Quests.instance.questMenuItems
+	)
 ) {
-    override fun getPageItems(): List<ClickableItem> {
-        return Quests.instance.islandQuests.map { quest ->
-            ClickableItem.of(buildItem(island, quest.guiDisplayItem, quest)) {
-                e ->
-                val player = e.whoClicked as Player
-                if (quest.oneTime && island.isOneTimeQuestAlreadyCompleted(quest.id)) {
-                    player.sendMessage(color(Message.instance.questIsOneTimeAndAlreadyCompleted))
-                    return@of
-                }
-                island.currentQuest = quest.id
-                buildMenu(
-                    QuestMenu(
-                        iPlayer,
-                        island
-                    )
-                ).open(iPlayer.getPlayer())
-                player.sendMessage(color(Message.instance.questActivationTrigger.replace("{quest}", quest.id)))
-                quest.executeActivationTrigger(iPlayer)
-            }
-        }
-    }
+	override fun getPageItems(): List<ClickableItem> {
+		return Quests.instance.islandQuests.map { quest ->
+			ClickableItem.of(buildItem(island, quest.guiDisplayItem, quest)) { e ->
+				val player = e.whoClicked as Player
+				if (quest.oneTime && island.isOneTimeQuestAlreadyCompleted(quest.id)) {
+					player.sendMessage(color(Message.instance.questIsOneTimeAndAlreadyCompleted))
+					return@of
+				}
+				island.currentQuest = quest.id
+				buildMenu(
+					QuestMenu(
+						iPlayer,
+						island
+					)
+				).open(iPlayer.getPlayer())
+				player.sendMessage(color(Message.instance.questActivationTrigger.replace("{quest}", quest.id)))
+				quest.executeActivationTrigger(iPlayer)
+			}
+		}
+	}
 
-    private fun buildItem(
-        island: Island,
-        serializableItem: SerializableItem,
-        quest: Quest
-    ): ItemStack {
-        val lore = ArrayList<String>()
-        for (line in serializableItem.lore) {
-            lore.add(
-                line
-                    .replace(
-                        "{currentAmount}",
-                        DecimalFormat.getInstance().format(island.getQuestCompletedAmount(quest.id))
-                    )
-                    .replace("{finalAmount}", DecimalFormat.getInstance().format(quest.amountTillComplete))
-                    .replace("{progress}", getProgressPlaceholder(island, quest))
-            )
-        }
+	private fun buildItem(
+		island: Island,
+		serializableItem: SerializableItem,
+		quest: Quest
+	): ItemStack {
+		val lore = ArrayList<String>()
+		for (line in serializableItem.lore) {
+			lore.add(
+				line
+					.replace(
+						"{currentAmount}",
+						DecimalFormat.getInstance().format(island.getQuestCompletedAmount(quest.id))
+					)
+					.replace("{finalAmount}", DecimalFormat.getInstance().format(quest.amountTillComplete))
+					.replace("{progress}", getProgressPlaceholder(island, quest))
+			)
+		}
 
-        return ItemBuilder(serializableItem.material.parseItem()!!)
-            .name(serializableItem.name)
-            .amount(serializableItem.amt).lore(lore)
-            .glowing(island.currentQuest == quest.id)
-            .build()
-    }
+		return ItemBuilder(serializableItem.material.parseItem()!!)
+			.name(serializableItem.name)
+			.amount(serializableItem.amt).lore(lore)
+			.glowing(island.currentQuest == quest.id)
+			.build()
+	}
 
-    private fun getProgressPlaceholder(island: Island, quest: Quest): String {
-        if (quest.id == island.currentQuest) return color(Message.instance.questInProgressPlaceholder)
-        return if (island.isOneTimeQuestAlreadyCompleted(quest.id)) color(Message.instance.questCompletedPlaceholder) else color(
-            Message.instance.questNotStarted
-        )
-    }
+	private fun getProgressPlaceholder(island: Island, quest: Quest): String {
+		if (quest.id == island.currentQuest) return color(Message.instance.questInProgressPlaceholder)
+		return if (island.isOneTimeQuestAlreadyCompleted(quest.id)) color(Message.instance.questCompletedPlaceholder) else color(
+			Message.instance.questNotStarted
+		)
+	}
 
 }

@@ -12,27 +12,32 @@ import net.savagelabs.skyblockx.persist.data.SerializableItem
 import org.bukkit.entity.Player
 import java.util.*
 
-open class MenuConfig(val title: String, val backgroundItem: SerializableItem, val rows: Int, val menuItems: List<MenuItem>)
+open class MenuConfig(
+	val title: String,
+	val backgroundItem: SerializableItem,
+	val rows: Int,
+	val menuItems: List<MenuItem>
+)
 
 abstract class BaseMenu(val fillBackground: Boolean = true, val menuConfig: MenuConfig) : InventoryProvider {
-    abstract fun fillContents(player: Player, contents: InventoryContents)
+	abstract fun fillContents(player: Player, contents: InventoryContents)
 
-    override fun init(player: Player, contents: InventoryContents) {
-        if (fillBackground) {
-            contents.fill(ClickableItem.empty(menuConfig.backgroundItem.buildItem()))
-        }
-        contents.populateWithMenuItems(player, menuConfig.menuItems)
-        fillContents(player, contents)
-    }
+	override fun init(player: Player, contents: InventoryContents) {
+		if (fillBackground) {
+			contents.fill(ClickableItem.empty(menuConfig.backgroundItem.buildItem()))
+		}
+		contents.populateWithMenuItems(player, menuConfig.menuItems)
+		fillContents(player, contents)
+	}
 
 }
 
 fun buildMenu(instance: BaseMenu): SmartInventory {
-    return SmartInventory.builder()
-        .manager(SkyblockX.inventoryManager)
-        .id(UUID.randomUUID().toString())
-        .provider(instance)
-        .size(instance.menuConfig.rows, 9)
-        .title(color(instance.menuConfig.title))
-        .build()
+	return SmartInventory.builder()
+		.manager(SkyblockX.inventoryManager)
+		.id(UUID.randomUUID().toString())
+		.provider(instance)
+		.size(instance.menuConfig.rows, 9)
+		.title(color(instance.menuConfig.title))
+		.build()
 }

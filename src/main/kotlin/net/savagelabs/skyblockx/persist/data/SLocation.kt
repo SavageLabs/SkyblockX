@@ -11,13 +11,13 @@ import org.bukkit.Location
  * net.savagelabs.savagepluginx.item.It allows the player to change the worldname in server and in the Config.instance.json.
  */
 data class SLocation(val x: Double, val y: Double, val z: Double) {
-    @JsonIgnore
-    fun getLocation(): Location {
-        return Location(Bukkit.getWorld(Config.instance.skyblockWorldName), x, y, z)
-    }
+	@JsonIgnore
+	fun getLocation(): Location {
+		return Location(Bukkit.getWorld(Config.instance.skyblockWorldName), x, y, z)
+	}
 }
 
 
 fun getSLocation(location: Location): SLocation {
-    return SLocation(location.x, location.y, location.z)
+	return SLocation(location.x, location.y, location.z)
 }

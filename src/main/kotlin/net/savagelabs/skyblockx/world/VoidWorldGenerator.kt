@@ -9,31 +9,31 @@ import java.util.*
 
 class VoidWorldGenerator : ChunkGenerator() {
 
-    override fun getDefaultPopulators(world: World): List<BlockPopulator> {
-        return emptyList()
-    }
+	override fun getDefaultPopulators(world: World): List<BlockPopulator> {
+		return emptyList()
+	}
 
-    override fun canSpawn(world: World, x: Int, z: Int): Boolean {
-        return true
-    }
+	override fun canSpawn(world: World, x: Int, z: Int): Boolean {
+		return true
+	}
 
-    fun generate(world: World, rand: Random, chunkx: Int, chunkz: Int): ByteArray {
-        return ByteArray(world.getMaxHeight() / 16)
-    }
+	fun generate(world: World, rand: Random, chunkx: Int, chunkz: Int): ByteArray {
+		return ByteArray(world.maxHeight / 16)
+	}
 
-    override fun generateChunkData(world: World, random: Random, x: Int, z: Int, biome: BiomeGrid): ChunkData {
-        val createChunkData = createChunkData(world)
-        for (cx in 0..15) {
-            for (cz in 0..15) {
-                biome.setBiome(cx, cz, Config.instance.skyblockWorldBiome)
-            }
-        }
-        return createChunkData
-    }
+	override fun generateChunkData(world: World, random: Random, x: Int, z: Int, biome: BiomeGrid): ChunkData {
+		val createChunkData = createChunkData(world)
+		for (cx in 0..15) {
+			for (cz in 0..15) {
+				biome.setBiome(cx, cz, Config.instance.skyblockWorldBiome)
+			}
+		}
+		return createChunkData
+	}
 
 
-    override fun getFixedSpawnLocation(world: World, random: Random): Location {
-        return Location(world, 0.toDouble(), 128.toDouble(), 0.toDouble())
-    }
+	override fun getFixedSpawnLocation(world: World, random: Random): Location {
+		return Location(world, 0.toDouble(), 128.toDouble(), 0.toDouble())
+	}
 
 }

@@ -8,30 +8,28 @@ import net.savagelabs.skyblockx.command.SCommandRequirements
 import net.savagelabs.skyblockx.command.SCommandRequirementsBuilder
 import net.savagelabs.skyblockx.core.Permission
 import net.savagelabs.skyblockx.persist.Data
-import net.savagelabs.skyblockx.persist.GUIConfig
 import net.savagelabs.skyblockx.persist.Message
-import org.bukkit.Bukkit
 
 class CmdSbReload : Command<SCommandInfo, SCommandRequirements>() {
 
-    init {
-        aliases.add("reload")
+	init {
+		aliases.add("reload")
 
-        commandRequirements = SCommandRequirementsBuilder()
-            .withPermission(Permission.RELOAD)
-            .build()
-    }
-
-
-    override fun perform(info: SCommandInfo) {
-        FlatDataManager.save(Data.instance)
-        SkyblockX.skyblockX.loadDataFiles()
-        SkyblockX.skyblockX.setupOreGeneratorAlgorithm()
-        info.message(Message.instance.commandReloadSuccess)
-    }
+		commandRequirements = SCommandRequirementsBuilder()
+			.withPermission(Permission.RELOAD)
+			.build()
+	}
 
 
-    override fun getHelpInfo(): String {
-        return Message.instance.commandReloadHelp
-    }
+	override fun perform(info: SCommandInfo) {
+		FlatDataManager.save(Data.instance)
+		SkyblockX.skyblockX.loadDataFiles()
+		SkyblockX.skyblockX.setupOreGeneratorAlgorithm()
+		info.message(Message.instance.commandReloadSuccess)
+	}
+
+
+	override fun getHelpInfo(): String {
+		return Message.instance.commandReloadHelp
+	}
 }

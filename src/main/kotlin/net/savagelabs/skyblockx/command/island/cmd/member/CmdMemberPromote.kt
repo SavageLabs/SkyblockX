@@ -15,68 +15,68 @@ import org.bukkit.Bukkit
 
 class CmdMemberPromote : Command<SCommandInfo, SCommandRequirements>() {
 
-    init {
-        aliases.add("promote")
-        aliases.add("leader")
+	init {
+		aliases.add("promote")
+		aliases.add("leader")
 
-        requiredArgs.add(Argument("island-member", 0, MemberArgument()))
-        commandRequirements =
-            SCommandRequirementsBuilder().withPermission(Permission.MEMBER).asIslandMember(true).asLeader(true).build()
-    }
+		requiredArgs.add(Argument("island-member", 0, MemberArgument()))
+		commandRequirements =
+			SCommandRequirementsBuilder().withPermission(Permission.MEMBER).asIslandMember(true).asLeader(true).build()
+	}
 
-    override fun perform(info: SCommandInfo) {
-        val island = info.island!!
-        if (island.getIslandMembers(false).isEmpty()) {
-            info.message(Message.instance.commandMemberNoMembers)
-            return
-        }
+	override fun perform(info: SCommandInfo) {
+		val island = info.island!!
+		if (island.getIslandMembers(false).isEmpty()) {
+			info.message(Message.instance.commandMemberNoMembers)
+			return
+		}
 
 
-        val playerNameToPromote = info.args[0]
-        if (playerNameToPromote == info.player!!.name) {
-            info.message(Message.instance.genericCannotReferenceYourSelf)
-            return
-        }
+		val playerNameToPromote = info.args[0]
+		if (playerNameToPromote == info.player!!.name) {
+			info.message(Message.instance.genericCannotReferenceYourSelf)
+			return
+		}
 
-        if (!info.island!!.getIslandMembers(false).contains(getIPlayerByName(playerNameToPromote))) {
-            info.message(Message.instance.commandMemberPromoteNotFound)
-            return
-        }
+		if (!info.island!!.getIslandMembers(false).contains(getIPlayerByName(playerNameToPromote))) {
+			info.message(Message.instance.commandMemberPromoteNotFound)
+			return
+		}
 
-        island.promoteNewLeader(playerNameToPromote)
-        island.messageAllOnlineIslandMembers(
-            String.format(
-                Message.instance.commandMemberPromotedSuccess,
-                playerNameToPromote
-            )
-        )
-        Bukkit.getPlayer(playerNameToPromote)
-            ?.sendMessage(color(Message.instance.commandMemberPromoteYouHaveBeenPromoted))
-    }
+		island.promoteNewLeader(playerNameToPromote)
+		island.messageAllOnlineIslandMembers(
+			String.format(
+				Message.instance.commandMemberPromotedSuccess,
+				playerNameToPromote
+			)
+		)
+		Bukkit.getPlayer(playerNameToPromote)
+			?.sendMessage(color(Message.instance.commandMemberPromoteYouHaveBeenPromoted))
+	}
 
-    override fun getHelpInfo(): String {
-        return Message.instance.commandMemberPromoteHelp
-    }
+	override fun getHelpInfo(): String {
+		return Message.instance.commandMemberPromoteHelp
+	}
 }
 
 class CmdPromote : Command<SCommandInfo, SCommandRequirements>() {
-    init {
-        aliases.add("promote")
-        aliases.add("leader")
+	init {
+		aliases.add("promote")
+		aliases.add("leader")
 
-        requiredArgs.add(Argument("island-member", 0, MemberArgument()))
-        commandRequirements =
-            SCommandRequirementsBuilder().withPermission(Permission.MEMBER).asIslandMember(true).asLeader(true).build()
-    }
+		requiredArgs.add(Argument("island-member", 0, MemberArgument()))
+		commandRequirements =
+			SCommandRequirementsBuilder().withPermission(Permission.MEMBER).asIslandMember(true).asLeader(true).build()
+	}
 
-    override fun perform(info: SCommandInfo) {
-        // Execute command go just to make a shorthand version for /is member kick <member>.
-        IslandBaseCommand.instance.subCommands.find { command -> command is CmdMember }
-            ?.subCommands?.find { command -> command is CmdMemberPromote }?.perform(info)
-    }
+	override fun perform(info: SCommandInfo) {
+		// Execute command go just to make a shorthand version for /is member kick <member>.
+		IslandBaseCommand.instance.subCommands.find { command -> command is CmdMember }
+			?.subCommands?.find { command -> command is CmdMemberPromote }?.perform(info)
+	}
 
-    override fun getHelpInfo(): String {
-        return Message.instance.commandMemberKickHelp
-    }
+	override fun getHelpInfo(): String {
+		return Message.instance.commandMemberKickHelp
+	}
 
 }

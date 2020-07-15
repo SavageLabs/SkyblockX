@@ -12,24 +12,24 @@ import net.savagelabs.skyblockx.sedit.SkyblockEdit
 
 class CmdSEPasteStructure : Command<SCommandInfo, SCommandRequirements>() {
 
-    init {
-        aliases.add("paste-struct")
-        aliases.add("pastestruct")
+	init {
+		aliases.add("paste-struct")
+		aliases.add("pastestruct")
 
-        requiredArgs.add(Argument("filename", 0, StringArgument()))
+		requiredArgs.add(Argument("filename", 0, StringArgument()))
 
-        commandRequirements = SCommandRequirementsBuilder().asPlayer(true)
-            .withPermission(Permission.SE_PASTESTRUCT).build()
-    }
-
-
-    override fun perform(info: SCommandInfo) {
-        SkyblockEdit().pasteIsland(info.args[0], info.player!!.location, info.player!!)
-    }
+		commandRequirements = SCommandRequirementsBuilder().asPlayer(true)
+			.withPermission(Permission.SE_PASTESTRUCT).build()
+	}
 
 
-    override fun getHelpInfo(): String {
-        return Message.instance.commandSESaveStructureHelp
-    }
+	override fun perform(info: SCommandInfo) {
+		SkyblockEdit().pasteIsland(info.args[0], info.player!!.location, info.player!!)
+	}
+
+
+	override fun getHelpInfo(): String {
+		return Message.instance.commandSESaveStructureHelp
+	}
 
 }

@@ -32,233 +32,233 @@ import kotlin.time.measureTimedValue
 
 class SkyblockX : SavagePluginX() {
 
-    companion object {
-        lateinit var skyblockX: SkyblockX
-        lateinit var worldBorderUtil: WorldBorderUtil
-        lateinit var generatorAlgorithm: Map<Int, Items<XMaterial>>
-        var islandValues: IslandTopInfo? = null
-        lateinit var inventoryManager: InventoryManager
-    }
+	companion object {
+		lateinit var skyblockX: SkyblockX
+		lateinit var worldBorderUtil: WorldBorderUtil
+		lateinit var generatorAlgorithm: Map<Int, Items<XMaterial>>
+		var islandValues: IslandTopInfo? = null
+		lateinit var inventoryManager: InventoryManager
+	}
 
 
-    @ExperimentalTime
-    override fun enable() {
-        val startupTime = measureTimeMillis {
-            printHeader()
-            skyblockX = this
-            loadDataFiles()
-            registerAllPermissions(server.pluginManager)
-            initWorldBorderUtility()
-            setupCommands()
-            setupAdminCommands()
-            setupOreGeneratorAlgorithm()
-            loadPlaceholderAPIHook()
-            startIslandTopTask()
-            startAutoSaveTask()
-            loadMetrics()
-            registerListeners(
-                DataListener(),
-                SEditListener(),
-                BlockListener(),
-                PlayerListener(),
-                EntityListener(),
-                GlideListener()
-            )
-            startInventoryManager()
-            logInfo("Loaded ${Data.instance.IPlayers.size} players.")
-            logInfo("Loaded ${Data.instance.islands.size} islands.")
-            migrateData()
-        }
-        logInfo("Startup Finished (${startupTime}ms)")
-        logInfo("If you need help with the plugin check out our wiki: https://github.com/SavageLabs/SkyblockX/wiki")
-        logInfo("Join our discord: https://discordapp.com/invite/j8CW7x8")
-        logInfo("This plugin is open source: https://github.com/SavageLabs/SkyblockX")
-        logInfo("If you want to support my work consider the following:", ChatColor.GREEN)
-        logInfo("\t- Patreon: https://patreon.com/ProSavage", ChatColor.GREEN)
-        logInfo("\t- Leave a Star on Github: https://github.com/SavageLabs/SkyblockX", ChatColor.GREEN)
-        logInfo("\t- Review the plugin on Spigot: https://www.spigotmc.org/resources/73135/", ChatColor.GREEN)
-        loadWorlds()
-        PaperLib.suggestPaper(this)
-    }
+	@ExperimentalTime
+	override fun enable() {
+		val startupTime = measureTimeMillis {
+			printHeader()
+			skyblockX = this
+			loadDataFiles()
+			registerAllPermissions(server.pluginManager)
+			initWorldBorderUtility()
+			setupCommands()
+			setupAdminCommands()
+			setupOreGeneratorAlgorithm()
+			loadPlaceholderAPIHook()
+			startIslandTopTask()
+			startAutoSaveTask()
+			loadMetrics()
+			registerListeners(
+				DataListener(),
+				SEditListener(),
+				BlockListener(),
+				PlayerListener(),
+				EntityListener(),
+				GlideListener()
+			)
+			startInventoryManager()
+			logInfo("Loaded ${Data.instance.IPlayers.size} players.")
+			logInfo("Loaded ${Data.instance.islands.size} islands.")
+			migrateData()
+		}
+		logInfo("Startup Finished (${startupTime}ms)")
+		logInfo("If you need help with the plugin check out our wiki: https://github.com/SavageLabs/SkyblockX/wiki")
+		logInfo("Join our discord: https://discordapp.com/invite/j8CW7x8")
+		logInfo("This plugin is open source: https://github.com/SavageLabs/SkyblockX")
+		logInfo("If you want to support my work consider the following:", ChatColor.GREEN)
+		logInfo("\t- Patreon: https://patreon.com/ProSavage", ChatColor.GREEN)
+		logInfo("\t- Leave a Star on Github: https://github.com/SavageLabs/SkyblockX", ChatColor.GREEN)
+		logInfo("\t- Review the plugin on Spigot: https://www.spigotmc.org/resources/73135/", ChatColor.GREEN)
+		loadWorlds()
+		PaperLib.suggestPaper(this)
+	}
 
-    private fun startInventoryManager() {
-        inventoryManager = InventoryManager(this)
-        inventoryManager.init()
-    }
+	private fun startInventoryManager() {
+		inventoryManager = InventoryManager(this)
+		inventoryManager.init()
+	}
 
-    private fun migrateData() {
-        Data.instance.islands.forEach { (_, island) ->
-            if (island.islandName == null) {
-                logInfo("Island Names Update: Migrated ${island.islandName}'s Island Data.instance.")
-                island.islandName = island.islandName
-            }
-        }
-    }
+	private fun migrateData() {
+		Data.instance.islands.forEach { (_, island) ->
+			if (island.islandName == null) {
+				logInfo("Island Names Update: Migrated ${island.islandName}'s Island Data.instance.")
+				island.islandName = island.islandName
+			}
+		}
+	}
 
-    private fun loadMetrics() {
-        logInfo("Loading Metrics.")
-        val metrics = Metrics(this, 6970)
-        metrics.addCustomChart(Metrics.SingleLineChart("active_islands", Callable { Data.instance.islands.size }))
-    }
+	private fun loadMetrics() {
+		logInfo("Loading Metrics.")
+		val metrics = Metrics(this, 6970)
+		metrics.addCustomChart(Metrics.SingleLineChart("active_islands", Callable { Data.instance.islands.size }))
+	}
 
-    private fun logInfo(message: String, color: ChatColor = ChatColor.YELLOW) {
-        logger.info("$color$message")
-    }
+	private fun logInfo(message: String, color: ChatColor = ChatColor.YELLOW) {
+		logger.info("$color$message")
+	}
 
-    @ExperimentalTime
-    private fun startAutoSaveTask() {
-        Bukkit.getScheduler().runTaskTimerAsynchronously(this, Runnable {
-            if (Config.instance.islandSaveBroadcastMessage) Bukkit.broadcastMessage(color(Config.instance.islandSaveBroadcastMessageStart))
-            val time = measureTimedValue { saveDataFiles() }
-            if (Config.instance.islandSaveBroadcastMessage) Bukkit.broadcastMessage(
-                color(
-                    String.format(
-                        Config.instance.islandSaveBroadcastMessageEnd,
-                        time.duration
-                    )
-                )
-            )
-        }, Config.instance.islandSaveTaskPeriodTicks.toLong(), Config.instance.islandSaveTaskPeriodTicks.toLong())
-    }
+	@ExperimentalTime
+	private fun startAutoSaveTask() {
+		Bukkit.getScheduler().runTaskTimerAsynchronously(this, Runnable {
+			if (Config.instance.islandSaveBroadcastMessage) Bukkit.broadcastMessage(color(Config.instance.islandSaveBroadcastMessageStart))
+			val time = measureTimedValue { saveDataFiles() }
+			if (Config.instance.islandSaveBroadcastMessage) Bukkit.broadcastMessage(
+				color(
+					String.format(
+						Config.instance.islandSaveBroadcastMessageEnd,
+						time.duration
+					)
+				)
+			)
+		}, Config.instance.islandSaveTaskPeriodTicks.toLong(), Config.instance.islandSaveTaskPeriodTicks.toLong())
+	}
 
-    @ExperimentalTime
-    fun startIslandTopTask() {
-        if (!Config.instance.autoCalcIslands) return
-        Bukkit.getScheduler().runTaskTimer(this, Runnable {
-            runIslandCalc()
-        }, 20L, Config.instance.islandTopCalcPeriodTicks.toLong())
-    }
+	@ExperimentalTime
+	fun startIslandTopTask() {
+		if (!Config.instance.autoCalcIslands) return
+		Bukkit.getScheduler().runTaskTimer(this, Runnable {
+			runIslandCalc()
+		}, 20L, Config.instance.islandTopCalcPeriodTicks.toLong())
+	}
 
-    @ExperimentalTime
-    fun runIslandCalc() {
-        Bukkit.getScheduler().runTaskAsynchronously(this, Runnable {
-            if (Config.instance.islandTopBroadcastMessage) Bukkit.broadcastMessage(color(Config.instance.islandTopBroadcastMessageStart))
-            var time: TimedValue<Unit>? = null
-            runBlocking {
-                time = measureTimedValue {
-                    calculateAllIslands()
-                }
-            }
-            if (Config.instance.islandTopBroadcastMessage)
-                Bukkit.broadcastMessage(
-                    color(
-                        String.format(
-                            Config.instance.islandTopBroadcastMessageEnd,
-                            islandValues?.map?.size,
-                            time?.duration ?: Duration.ZERO
-                        )
-                    )
-                )
-        })
-    }
+	@ExperimentalTime
+	fun runIslandCalc() {
+		Bukkit.getScheduler().runTaskAsynchronously(this, Runnable {
+			if (Config.instance.islandTopBroadcastMessage) Bukkit.broadcastMessage(color(Config.instance.islandTopBroadcastMessageStart))
+			var time: TimedValue<Unit>? = null
+			runBlocking {
+				time = measureTimedValue {
+					calculateAllIslands()
+				}
+			}
+			if (Config.instance.islandTopBroadcastMessage)
+				Bukkit.broadcastMessage(
+					color(
+						String.format(
+							Config.instance.islandTopBroadcastMessageEnd,
+							islandValues?.map?.size,
+							time?.duration ?: Duration.ZERO
+						)
+					)
+				)
+		})
+	}
 
-    private fun loadPlaceholderAPIHook() {
-        if (server.pluginManager.getPlugin("PlaceholderAPI") != null) {
-            logInfo(ChatColor.YELLOW.toString() + "Loading Placeholders...")
-            PlacholderAPIIntegration().register()
-        }
-    }
+	private fun loadPlaceholderAPIHook() {
+		if (server.pluginManager.getPlugin("PlaceholderAPI") != null) {
+			logInfo(ChatColor.YELLOW.toString() + "Loading Placeholders...")
+			PlacholderAPIIntegration().register()
+		}
+	}
 
-    private fun loadWorlds() {
-        logInfo("Loading World: ${Config.instance.skyblockWorldName}")
-        WorldCreator(Config.instance.skyblockWorldName)
-            .generator(VoidWorldGenerator())
-            .createWorld()
-        logInfo("Loading World: ${Config.instance.skyblockWorldNameNether}")
-        WorldCreator(Config.instance.skyblockWorldNameNether)
-            .generator(VoidWorldGenerator())
-            .environment(World.Environment.NETHER)
-            .generateStructures(false)
-            .createWorld()
-    }
+	private fun loadWorlds() {
+		logInfo("Loading World: ${Config.instance.skyblockWorldName}")
+		WorldCreator(Config.instance.skyblockWorldName)
+			.generator(VoidWorldGenerator())
+			.createWorld()
+		logInfo("Loading World: ${Config.instance.skyblockWorldNameNether}")
+		WorldCreator(Config.instance.skyblockWorldNameNether)
+			.generator(VoidWorldGenerator())
+			.environment(World.Environment.NETHER)
+			.generateStructures(false)
+			.createWorld()
+	}
 
-    override fun getDefaultWorldGenerator(worldName: String, id: String?): ChunkGenerator? {
-        return VoidWorldGenerator()
-    }
+	override fun getDefaultWorldGenerator(worldName: String, id: String?): ChunkGenerator? {
+		return VoidWorldGenerator()
+	}
 
-    override fun disable() {
-        saveDataFiles()
-    }
+	override fun disable() {
+		saveDataFiles()
+	}
 
-    fun loadDataFiles() {
-        logInfo("Loading data files.")
-        Config.instance = ConfigManager.readOrSave(Config())
-        runBlocking {
-            Data.instance = if (Config.instance.useDatabase) MongoManager.load() else FlatDataManager.readOrSave(Data())
-            if (Config.instance.useDatabase) {
-                Bukkit.getOnlinePlayers().forEach { player -> player.getIPlayer().getIsland()?.syncIsland = true }
-            }
-        }
-        BlockValues.instance = ConfigManager.readOrSave(BlockValues())
-        Quests.instance = ConfigManager.readOrSave(Quests())
-        Message.instance = ConfigManager.readOrSave(Message())
-        GUIConfig.instance = ConfigManager.readOrSave(GUIConfig())
-    }
+	fun loadDataFiles() {
+		logInfo("Loading data files.")
+		Config.instance = ConfigManager.readOrSave(Config())
+		runBlocking {
+			Data.instance = if (Config.instance.useDatabase) MongoManager.load() else FlatDataManager.readOrSave(Data())
+			if (Config.instance.useDatabase) {
+				Bukkit.getOnlinePlayers().forEach { player -> player.getIPlayer().getIsland()?.syncIsland = true }
+			}
+		}
+		BlockValues.instance = ConfigManager.readOrSave(BlockValues())
+		Quests.instance = ConfigManager.readOrSave(Quests())
+		Message.instance = ConfigManager.readOrSave(Message())
+		GUIConfig.instance = ConfigManager.readOrSave(GUIConfig())
+	}
 
-    private fun initWorldBorderUtility() {
-        logInfo("Starting WorldBorder Packet Util.")
-        worldBorderUtil = WorldBorderUtil(this)
-    }
+	private fun initWorldBorderUtility() {
+		logInfo("Starting WorldBorder Packet Util.")
+		worldBorderUtil = WorldBorderUtil(this)
+	}
 
-    private fun setupCommands() {
-        logInfo("Setting up Commands.")
-        val baseCommand = IslandBaseCommand()
-        baseCommand.prefix = "is"
-        val command = this.getCommand("is")!!
-        command.setExecutor(baseCommand)
-        command.tabCompleter = baseCommand
-        logInfo("${baseCommand.subCommands.size} commands registered.")
-    }
+	private fun setupCommands() {
+		logInfo("Setting up Commands.")
+		val baseCommand = IslandBaseCommand()
+		baseCommand.prefix = "is"
+		val command = this.getCommand("is")!!
+		command.setExecutor(baseCommand)
+		command.tabCompleter = baseCommand
+		logInfo("${baseCommand.subCommands.size} commands registered.")
+	}
 
-    private fun setupAdminCommands() {
-        logInfo("Setting up administrator Commands.")
-        val baseCommand = SkyblockBaseCommand()
-        baseCommand.prefix = "sbx"
-        val command = this.getCommand("skyblockx")!!
-        command.setExecutor(baseCommand)
-        command.tabCompleter = baseCommand
-        logInfo("${baseCommand.subCommands.size} admin commands registered.")
-    }
+	private fun setupAdminCommands() {
+		logInfo("Setting up administrator Commands.")
+		val baseCommand = SkyblockBaseCommand()
+		baseCommand.prefix = "sbx"
+		val command = this.getCommand("skyblockx")!!
+		command.setExecutor(baseCommand)
+		command.tabCompleter = baseCommand
+		logInfo("${baseCommand.subCommands.size} admin commands registered.")
+	}
 
-    fun setupOreGeneratorAlgorithm() {
-        val generatorStrategyMap = HashMap<Int, Items<XMaterial>>()
-        Config.instance.generatorUpgrades.forEach { (key, value) ->
-            run {
-                generatorStrategyMap[key] = Items(value)
-            }
-        }
-        generatorAlgorithm = generatorStrategyMap
-    }
+	fun setupOreGeneratorAlgorithm() {
+		val generatorStrategyMap = HashMap<Int, Items<XMaterial>>()
+		Config.instance.generatorUpgrades.forEach { (key, value) ->
+			run {
+				generatorStrategyMap[key] = Items(value)
+			}
+		}
+		generatorAlgorithm = generatorStrategyMap
+	}
 
-    private fun saveDataFiles() {
-        // Load and save to take in account changes :P
+	private fun saveDataFiles() {
+		// Load and save to take in account changes :P
 //        Config.instance.load()
 //        Config.instance.save()
 
 
-        // Don't load this as people shouldn't be touching this file anyways.
-        runBlocking {
-            if (Config.instance.useDatabase) MongoManager.save(Data.instance) else FlatDataManager.save(Data.instance)
-        }
+		// Don't load this as people shouldn't be touching this file anyways.
+		runBlocking {
+			if (Config.instance.useDatabase) MongoManager.save(Data.instance) else FlatDataManager.save(Data.instance)
+		}
 
-    }
+	}
 
-    private fun printHeader() {
-        logInfo(
-            "\n" +
-                    "   ▄████████    ▄█   ▄█▄ ▄██   ▄   ▀█████████▄   ▄█        ▄██████▄   ▄████████    ▄█   ▄█▄ ▀████    ▐████▀ \n" +
-                    "  ███    ███   ███ ▄███▀ ███   ██▄   ███    ███ ███       ███    ███ ███    ███   ███ ▄███▀   ███▌   ████▀  \n" +
-                    "  ███    █▀    ███▐██▀   ███▄▄▄███   ███    ███ ███       ███    ███ ███    █▀    ███▐██▀      ███  ▐███    \n" +
-                    "  ███         ▄█████▀    ▀▀▀▀▀▀███  ▄███▄▄▄██▀  ███       ███    ███ ███         ▄█████▀       ▀███▄███▀    \n" +
-                    "▀███████████ ▀▀█████▄    ▄██   ███ ▀▀███▀▀▀██▄  ███       ███    ███ ███        ▀▀█████▄       ████▀██▄     \n" +
-                    "         ███   ███▐██▄   ███   ███   ███    ██▄ ███       ███    ███ ███    █▄    ███▐██▄     ▐███  ▀███    \n" +
-                    "   ▄█    ███   ███ ▀███▄ ███   ███   ███    ███ ███▌    ▄ ███    ███ ███    ███   ███ ▀███▄  ▄███     ███▄  \n" +
-                    " ▄████████▀    ███   ▀█▀  ▀█████▀  ▄█████████▀  █████▄▄██  ▀██████▀  ████████▀    ███   ▀█▀ ████       ███▄ \n" +
-                    "               ▀                                ▀                                 ▀                         \n" +
-                    "By: ProSavage - https://github.com/ProSavage - https://savagelabs.net"
-            , ChatColor.AQUA
-        )
-    }
+	private fun printHeader() {
+		logInfo(
+			"\n" +
+					"   ▄████████    ▄█   ▄█▄ ▄██   ▄   ▀█████████▄   ▄█        ▄██████▄   ▄████████    ▄█   ▄█▄ ▀████    ▐████▀ \n" +
+					"  ███    ███   ███ ▄███▀ ███   ██▄   ███    ███ ███       ███    ███ ███    ███   ███ ▄███▀   ███▌   ████▀  \n" +
+					"  ███    █▀    ███▐██▀   ███▄▄▄███   ███    ███ ███       ███    ███ ███    █▀    ███▐██▀      ███  ▐███    \n" +
+					"  ███         ▄█████▀    ▀▀▀▀▀▀███  ▄███▄▄▄██▀  ███       ███    ███ ███         ▄█████▀       ▀███▄███▀    \n" +
+					"▀███████████ ▀▀█████▄    ▄██   ███ ▀▀███▀▀▀██▄  ███       ███    ███ ███        ▀▀█████▄       ████▀██▄     \n" +
+					"         ███   ███▐██▄   ███   ███   ███    ██▄ ███       ███    ███ ███    █▄    ███▐██▄     ▐███  ▀███    \n" +
+					"   ▄█    ███   ███ ▀███▄ ███   ███   ███    ███ ███▌    ▄ ███    ███ ███    ███   ███ ▀███▄  ▄███     ███▄  \n" +
+					" ▄████████▀    ███   ▀█▀  ▀█████▀  ▄█████████▀  █████▄▄██  ▀██████▀  ████████▀    ███   ▀█▀ ████       ███▄ \n" +
+					"               ▀                                ▀                                 ▀                         \n" +
+					"By: ProSavage - https://github.com/ProSavage - https://savagelabs.net"
+			, ChatColor.AQUA
+		)
+	}
 
 
 }

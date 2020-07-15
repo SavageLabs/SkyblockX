@@ -12,36 +12,36 @@ import net.savagelabs.skyblockx.persist.Message
 
 class CmdAllowVisitors : Command<SCommandInfo, SCommandRequirements>() {
 
-    init {
-        aliases.add("allow-visitors")
-        aliases.add("visitors")
+	init {
+		aliases.add("allow-visitors")
+		aliases.add("visitors")
 
-        this.optionalArgs.add(
-            Argument(
-                "toggle",
-                0,
-                BooleanArgument()
-            )
-        )
-        commandRequirements = SCommandRequirementsBuilder()
-            .withPermission(Permission.ALLOWVISITOR)
-            .asIslandMember(true)
-            .asLeader(true)
-            .build()
-    }
+		this.optionalArgs.add(
+			Argument(
+				"toggle",
+				0,
+				BooleanArgument()
+			)
+		)
+		commandRequirements = SCommandRequirementsBuilder()
+			.withPermission(Permission.ALLOWVISITOR)
+			.asIslandMember(true)
+			.asLeader(true)
+			.build()
+	}
 
-    override fun perform(info: SCommandInfo) {
-        if (info.args.size == 1) {
-            val argAsBoolean = info.getArgAsBoolean(0) ?: return
-            info.island!!.allowVisitors = argAsBoolean
-        } else {
-            info.island!!.allowVisitors = !info.island!!.allowVisitors
-        }
+	override fun perform(info: SCommandInfo) {
+		if (info.args.size == 1) {
+			val argAsBoolean = info.getArgAsBoolean(0) ?: return
+			info.island!!.allowVisitors = argAsBoolean
+		} else {
+			info.island!!.allowVisitors = !info.island!!.allowVisitors
+		}
 
-        info.message(String.format(Message.instance.commandAllowVisitorsStatus, info.island!!.allowVisitors))
-    }
+		info.message(String.format(Message.instance.commandAllowVisitorsStatus, info.island!!.allowVisitors))
+	}
 
-    override fun getHelpInfo(): String {
-        return Message.instance.commandAllowVisitorsHelp
-    }
+	override fun getHelpInfo(): String {
+		return Message.instance.commandAllowVisitorsHelp
+	}
 }

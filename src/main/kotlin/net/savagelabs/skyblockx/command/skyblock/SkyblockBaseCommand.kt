@@ -15,64 +15,64 @@ import java.util.*
 class SkyblockBaseCommand : Command<SCommandInfo, SCommandRequirements>(), CommandExecutor, TabCompleter {
 
 
-    companion object {
-        lateinit var instance: SkyblockBaseCommand
-    }
+	companion object {
+		lateinit var instance: SkyblockBaseCommand
+	}
 
-    init {
-        this.commandRequirements = SCommandRequirementsBuilder().build()
+	init {
+		this.commandRequirements = SCommandRequirementsBuilder().build()
 
-        subCommands.add(CmdSEPosition())
-        subCommands.add(CmdSESaveStructure())
-        subCommands.add(CmdSEPasteStructure())
-        subCommands.add(CmdSbDelete())
-        subCommands.add(CmdSbKick())
-        subCommands.add(CmdSbOwner())
-        subCommands.add(CmdSbReload())
-        subCommands.add(CmdSbHelp())
-        subCommands.add(CmdSbCalc())
-        subCommands.add(CmdSbBypass())
-        subCommands.add(CmdSbChest())
-        prefix = "/sbx"
-        isBaseCommand = true
+		subCommands.add(CmdSEPosition())
+		subCommands.add(CmdSESaveStructure())
+		subCommands.add(CmdSEPasteStructure())
+		subCommands.add(CmdSbDelete())
+		subCommands.add(CmdSbKick())
+		subCommands.add(CmdSbOwner())
+		subCommands.add(CmdSbReload())
+		subCommands.add(CmdSbHelp())
+		subCommands.add(CmdSbCalc())
+		subCommands.add(CmdSbBypass())
+		subCommands.add(CmdSbChest())
+		prefix = "/sbx"
+		isBaseCommand = true
 
-        initializeSubCommandData()
-        instance = this
-    }
+		initializeSubCommandData()
+		instance = this
+	}
 
-    override fun onCommand(
-        sender: CommandSender,
-        command: org.bukkit.command.Command,
-        label: String,
-        args: Array<out String>
-    ): Boolean {
-        execute(
-            SCommandInfo(
-                sender,
-                ArrayList(args.toList()),
-                label
-            )
-        )
-        return true
-    }
+	override fun onCommand(
+		sender: CommandSender,
+		command: org.bukkit.command.Command,
+		label: String,
+		args: Array<out String>
+	): Boolean {
+		execute(
+			SCommandInfo(
+				sender,
+				ArrayList(args.toList()),
+				label
+			)
+		)
+		return true
+	}
 
-    override fun getHelpInfo(): String {
-        return Message.instance.commandSkyblockBaseHelp
-    }
+	override fun getHelpInfo(): String {
+		return Message.instance.commandSkyblockBaseHelp
+	}
 
-    override fun perform(info: SCommandInfo) {
-        info.message(Message.instance.commandSkyblockBaseHelpMessage)
-        generateHelp(1, info.commandSender, info.args)
-    }
+	override fun perform(info: SCommandInfo) {
+		info.message(Message.instance.commandSkyblockBaseHelpMessage)
+		generateHelp(1, info.commandSender, info.args)
+	}
 
-    override fun onTabComplete(
-        sender: CommandSender,
-        command: org.bukkit.command.Command,
-        alias: String,
-        args: Array<String>
-    ): List<String>? {
-        return handleTabComplete(sender, command, alias, args)
-    }
+	override fun onTabComplete(
+		sender: CommandSender,
+		command: org.bukkit.command.Command,
+		alias: String,
+		args: Array<String>
+	): List<String>? {
+		return handleTabComplete(sender, command, alias, args)
+	}
 
 
 }

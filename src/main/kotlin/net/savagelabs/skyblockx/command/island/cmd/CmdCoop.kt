@@ -14,37 +14,37 @@ import net.savagelabs.skyblockx.persist.Message
 
 class CmdCoop : Command<SCommandInfo, SCommandRequirements>() {
 
-    init {
-        aliases.add("co-op")
-        aliases.add("coop")
+	init {
+		aliases.add("co-op")
+		aliases.add("coop")
 
-        optionalArgs.add(Argument("manage or (player)", 0, PlayerArgument()))
+		optionalArgs.add(Argument("manage or (player)", 0, PlayerArgument()))
 
-        commandRequirements =
-            SCommandRequirementsBuilder().asPlayer(true).asIslandMember(true)
-                .withPermission(Permission.COOP).build()
-    }
+		commandRequirements =
+			SCommandRequirementsBuilder().asPlayer(true).asIslandMember(true)
+				.withPermission(Permission.COOP).build()
+	}
 
-    override fun perform(info: SCommandInfo) {
-        if (info.args.isEmpty()) {
-               buildMenu(CoopInviteMenu(info.player!!, info.island!!)).open(info.player!!)
-            return
-        }
-        if (info.args[0].equals("manage", true)) {
-            openManageMenu(info)
-            return
-        }
-        val target = info.getArgAsIPlayer(0, cannotReferenceYourSelf = true) ?: return
-        info.iPlayer!!.attemptToCoopPlayer(target)
-    }
+	override fun perform(info: SCommandInfo) {
+		if (info.args.isEmpty()) {
+			buildMenu(CoopInviteMenu(info.player!!, info.island!!)).open(info.player!!)
+			return
+		}
+		if (info.args[0].equals("manage", true)) {
+			openManageMenu(info)
+			return
+		}
+		val target = info.getArgAsIPlayer(0, cannotReferenceYourSelf = true) ?: return
+		info.iPlayer!!.attemptToCoopPlayer(target)
+	}
 
-    fun openManageMenu(info: SCommandInfo) {
-        buildMenu(CoopManageMenu(info.player!!)).open(info.player!!)
-    }
+	fun openManageMenu(info: SCommandInfo) {
+		buildMenu(CoopManageMenu(info.player!!)).open(info.player!!)
+	}
 
 
-    override fun getHelpInfo(): String {
-        return Message.instance.commandCoopHelp
-    }
+	override fun getHelpInfo(): String {
+		return Message.instance.commandCoopHelp
+	}
 
 }

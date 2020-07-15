@@ -6,15 +6,15 @@ import org.bukkit.event.HandlerList
 
 class IslandRenameEvent(val island: Island, var newName: String, val oldName: String) : Event(false) {
 
-    private val HANDLERS = HandlerList()
-    private var isCancelled = false
+	private val HANDLERS = HandlerList()
+	private var isCancelled = false
 
-    override fun getHandlers(): HandlerList {
-        return HANDLERS
-    }
+	override fun getHandlers(): HandlerList {
+		return HANDLERS
+	}
 
-    fun getHandlerList(): HandlerList? {
-        return HANDLERS
-    }
+	fun getHandlerList(): HandlerList? {
+		return HANDLERS
+	}
 
 }

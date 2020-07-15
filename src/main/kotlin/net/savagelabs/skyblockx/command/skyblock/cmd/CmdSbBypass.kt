@@ -9,28 +9,28 @@ import net.savagelabs.skyblockx.persist.Message
 
 class CmdSbBypass : Command<SCommandInfo, SCommandRequirements>() {
 
-    init {
-        aliases.add("bypass")
+	init {
+		aliases.add("bypass")
 
-        commandRequirements =
-            SCommandRequirementsBuilder().asPlayer(true).withPermission(Permission.ADMIN_BYPASS)
-                .build()
-    }
+		commandRequirements =
+			SCommandRequirementsBuilder().asPlayer(true).withPermission(Permission.ADMIN_BYPASS)
+				.build()
+	}
 
 
-    override fun perform(info: SCommandInfo) {
-        info.iPlayer!!.inBypass = !info.isBypassing()
-        info.message(
-            String.format(
-                Message.instance.commandBypassToggle,
-                if (info.iPlayer!!.inBypass) "in" else "out of"
-            )
-        )
-    }
+	override fun perform(info: SCommandInfo) {
+		info.iPlayer!!.inBypass = !info.isBypassing()
+		info.message(
+			String.format(
+				Message.instance.commandBypassToggle,
+				if (info.iPlayer!!.inBypass) "in" else "out of"
+			)
+		)
+	}
 
-    override fun getHelpInfo(): String {
-        return Message.instance.commandBypassHelp
+	override fun getHelpInfo(): String {
+		return Message.instance.commandBypassHelp
 
-    }
+	}
 
 }

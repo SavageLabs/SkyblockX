@@ -10,35 +10,35 @@ import net.savagelabs.skyblockx.persist.Message
 
 class CmdJoin : Command<SCommandInfo, SCommandRequirements>() {
 
-    init {
-        aliases.add("join")
+	init {
+		aliases.add("join")
 
-        requiredArgs.add(Argument("player-name", 0, PlayerArgument()))
+		requiredArgs.add(Argument("player-name", 0, PlayerArgument()))
 
-        commandRequirements = SCommandRequirementsBuilder().asPlayer(true).build()
-    }
-
-
-    override fun perform(info: SCommandInfo) {
-        val targetIPlayer = info.getArgAsIPlayer(0) ?: return
-        if (info.iPlayer!!.hasIsland()) {
-            info.message(Message.instance.commandJoinHaveIsland)
-            return
-        }
-
-        if (!info.iPlayer!!.isInvitedToIsland(targetIPlayer.getIsland()!!)) {
-            info.message(String.format(Message.instance.commandJoinNotInvited, targetIPlayer.name))
-            return
-        }
+		commandRequirements = SCommandRequirementsBuilder().asPlayer(true).build()
+	}
 
 
-        targetIPlayer.getIsland()!!.addMember(info.iPlayer!!)
-        info.iPlayer!!.islandsInvitedTo.remove(targetIPlayer.getIsland()!!.islandID)
-        info.message(String.format(Message.instance.commandJoinSuccess, targetIPlayer.name))
-    }
+	override fun perform(info: SCommandInfo) {
+		val targetIPlayer = info.getArgAsIPlayer(0) ?: return
+		if (info.iPlayer!!.hasIsland()) {
+			info.message(Message.instance.commandJoinHaveIsland)
+			return
+		}
+
+		if (!info.iPlayer!!.isInvitedToIsland(targetIPlayer.getIsland()!!)) {
+			info.message(String.format(Message.instance.commandJoinNotInvited, targetIPlayer.name))
+			return
+		}
 
 
-    override fun getHelpInfo(): String {
-        return Message.instance.commandJoinHelp
-    }
+		targetIPlayer.getIsland()!!.addMember(info.iPlayer!!)
+		info.iPlayer!!.islandsInvitedTo.remove(targetIPlayer.getIsland()!!.islandID)
+		info.message(String.format(Message.instance.commandJoinSuccess, targetIPlayer.name))
+	}
+
+
+	override fun getHelpInfo(): String {
+		return Message.instance.commandJoinHelp
+	}
 }

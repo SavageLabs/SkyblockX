@@ -11,21 +11,21 @@ import kotlin.time.ExperimentalTime
 
 class CmdSbCalc : Command<SCommandInfo, SCommandRequirements>() {
 
-    init {
-        aliases.add("calc")
+	init {
+		aliases.add("calc")
 
 
-        commandRequirements = SCommandRequirementsBuilder().withPermission(Permission.ADMIN_CALC).build()
-    }
+		commandRequirements = SCommandRequirementsBuilder().withPermission(Permission.ADMIN_CALC).build()
+	}
 
-    @ExperimentalTime
-    override fun perform(info: SCommandInfo) {
-        info.message(Message.instance.commandSkyblockCalcStart)
-        SkyblockX.skyblockX.runIslandCalc()
+	@ExperimentalTime
+	override fun perform(info: SCommandInfo) {
+		info.message(Message.instance.commandSkyblockCalcStart)
+		SkyblockX.skyblockX.runIslandCalc()
 
-    }
+	}
 
-    override fun getHelpInfo(): String {
-        return Message.instance.commandSkyblockCalcHelp
-    }
+	override fun getHelpInfo(): String {
+		return Message.instance.commandSkyblockCalcHelp
+	}
 }

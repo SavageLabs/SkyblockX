@@ -11,24 +11,24 @@ import java.text.NumberFormat
 
 class CmdWorth : Command<SCommandInfo, SCommandRequirements>() {
 
-    init {
-        aliases.add("worth")
-        aliases.add("level")
+	init {
+		aliases.add("worth")
+		aliases.add("level")
 
-        commandRequirements = SCommandRequirementsBuilder()
-            .withPermission(Permission.WORTH)
-            .asIslandMember(true)
-            .build()
-    }
+		commandRequirements = SCommandRequirementsBuilder()
+			.withPermission(Permission.WORTH)
+			.asIslandMember(true)
+			.build()
+	}
 
 
-    override fun perform(info: SCommandInfo) {
-        val numberFormat = NumberFormat.getInstance(Config.instance.numberFormatLocale)
-        info.message(Message.instance.commandWorthValue, numberFormat.format(info.island!!.getValue()))
-        info.message(Message.instance.commandWorthLevel, numberFormat.format(info.island!!.getLevel()))
-    }
+	override fun perform(info: SCommandInfo) {
+		val numberFormat = NumberFormat.getInstance(Config.instance.numberFormatLocale)
+		info.message(Message.instance.commandWorthValue, numberFormat.format(info.island!!.getValue()))
+		info.message(Message.instance.commandWorthLevel, numberFormat.format(info.island!!.getLevel()))
+	}
 
-    override fun getHelpInfo(): String {
-        return Message.instance.commandWorthHelp
-    }
+	override fun getHelpInfo(): String {
+		return Message.instance.commandWorthHelp
+	}
 }
