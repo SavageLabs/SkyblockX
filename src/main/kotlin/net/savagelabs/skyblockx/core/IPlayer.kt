@@ -1,9 +1,6 @@
 package net.savagelabs.skyblockx.core
 
 import com.fasterxml.jackson.annotation.JsonIgnore
-import net.savagelabs.savagepluginx.command.Command
-import net.savagelabs.skyblockx.command.SCommandInfo
-import net.savagelabs.skyblockx.command.SCommandRequirements
 import net.savagelabs.skyblockx.persist.Config
 import net.savagelabs.skyblockx.persist.Data
 import net.savagelabs.skyblockx.persist.Message
@@ -14,7 +11,7 @@ import org.bukkit.Location
 import org.bukkit.entity.Player
 import java.util.*
 
-data class IPlayer(val uuid: String, val name: String) {
+data class IPlayer(val uuid: UUID, var name: String) {
 
     var lastIslandResetTime = -1L
 
@@ -61,17 +58,17 @@ data class IPlayer(val uuid: String, val name: String) {
 
     @JsonIgnore
     fun getPlayer(): Player? {
-        return Bukkit.getPlayer(UUID.fromString(uuid))
+        return Bukkit.getPlayer(uuid)
     }
 
     @JsonIgnore
     fun isLeader(): Boolean {
-        return hasIsland() && getIsland()!!.ownerUUID == uuid
+        return hasIsland() && getIsland()!!.leaderUUID == uuid
     }
 
     @JsonIgnore
     fun isOnline(): Boolean {
-        return Bukkit.getPlayer(UUID.fromString(uuid)) != null
+        return Bukkit.getPlayer(uuid) != null
     }
 
     @JsonIgnore
@@ -89,7 +86,7 @@ data class IPlayer(val uuid: String, val name: String) {
 
     fun removeCoopIsland(island: Island) {
         coopedIslandIds.remove(island.islandID)
-        island.currentCoopPlayers.remove(UUID.fromString(uuid))
+        island.currentCoopPlayers.remove(uuid)
     }
 
     fun attemptToCoopPlayer(target: IPlayer) {
@@ -143,7 +140,7 @@ data class IPlayer(val uuid: String, val name: String) {
 
     fun hasCoopIsland(): Boolean {
         // net.savagelabs.savagepluginx.item.It's not supposed to be null, but fuckin gson man.
-        return coopedIslandIds != null && coopedIslandIds.isNotEmpty()
+        return coopedIslandIds.isNotEmpty()
     }
 
     fun hasIsland(): Boolean {
@@ -188,20 +185,20 @@ data class IPlayer(val uuid: String, val name: String) {
 
 fun getIPlayer(player: Player): IPlayer {
     // Check data, if not, The IPlayer instance does not exist, create it.
-    return Data.instance.IPlayers[player.uniqueId.toString()] ?: createIPlayer(player)
+    return Data.instance.IPlayers[player.uniqueId] ?: createIPlayer(player)
 }
 
 fun getIPlayerByName(name: String): IPlayer? {
     return Data.instance.IPlayers.values.find { iPlayer -> iPlayer.name == name }
 }
 
-fun getIPlayerByUUID(uuid: String): IPlayer? {
+fun getIPlayerByUUID(uuid: UUID): IPlayer? {
     return Data.instance.IPlayers[uuid]
 }
 
 fun createIPlayer(player: Player): IPlayer {
-    val iPlayer = IPlayer(player.uniqueId.toString(), player.name)
-    Data.instance.IPlayers[player.uniqueId.toString()] = iPlayer
+    val iPlayer = IPlayer(player.uniqueId, player.name)
+    Data.instance.IPlayers[player.uniqueId] = iPlayer
     return iPlayer
 }
 

@@ -8,7 +8,6 @@ import net.savagelabs.skyblockx.command.SCommandRequirements
 import net.savagelabs.skyblockx.command.SCommandRequirementsBuilder
 import net.savagelabs.skyblockx.core.Permission
 import net.savagelabs.skyblockx.core.getIPlayerByName
-import net.savagelabs.skyblockx.core.getIPlayerByUUID
 import net.savagelabs.skyblockx.persist.Message
 
 class CmdSbKick : Command<SCommandInfo, SCommandRequirements>() {
@@ -31,7 +30,7 @@ class CmdSbKick : Command<SCommandInfo, SCommandRequirements>() {
 
         // They're not the owner so we process removing the member.
         val island = iPlayerByName.getIsland()!!
-        if (island.getOwnerIPlayer() != iPlayerByName) {
+        if (island.getLeader() != iPlayerByName) {
             if (!island.getIslandMembers(false).contains(iPlayerByName)) {
                 info.message(Message.instance.commandMemberKickNotFound)
                 return
@@ -41,19 +40,17 @@ class CmdSbKick : Command<SCommandInfo, SCommandRequirements>() {
         } else {
             // Theyre an island owner if we're here.
             iPlayerByName.unassignIsland()
-            if (island.getAllMemberUUIDs().isEmpty()) {
+            if (island.members.isEmpty()) {
                 island.delete()
                 info.message(Message.instance.commandSkyblockKickIslandDeleted)
                 return
             }
-            val firstMember = island.getAllMemberUUIDs().toList()[0]
+            val firstMember = island.getIslandMembers(false).first()
 
             // just in case
-            val iPlayerByUUID = getIPlayerByUUID(firstMember)
-            iPlayerByUUID!!.assignIsland(island)
-            island.ownerTag = iPlayerByUUID.name
-            island.ownerUUID = iPlayerByUUID.uuid
-            info.message(String.format(Message.instance.commandSkyblockKickMemberKickedOwner, iPlayerByUUID.name))
+            firstMember.assignIsland(island)
+            island.leaderUUID = firstMember.uuid
+            info.message(String.format(Message.instance.commandSkyblockKickMemberKickedOwner, firstMember.name))
         }
         info.message(String.format(Message.instance.commandSkyblockKickMemberKicked, iPlayerByName.name))
 

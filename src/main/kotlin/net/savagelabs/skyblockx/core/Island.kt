@@ -29,7 +29,6 @@ import org.bukkit.inventory.Inventory
 import java.lang.reflect.InvocationTargetException
 import java.text.DecimalFormat
 import java.util.*
-import java.util.concurrent.ConcurrentSkipListSet
 import java.util.stream.Collectors
 import kotlin.collections.HashMap
 import kotlin.collections.HashSet
@@ -44,13 +43,12 @@ import kotlin.time.measureTimedValue
 @Suppress("UNCHECKED_CAST")
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class Island(
-    val islandID: Int,
-    val point: Point,
-    var ownerUUID: String,
-    var ownerTag: String,
-    var islandSize: Int
+        val islandID: Int,
+        val point: Point,
+        var leaderUUID: UUID?,
+        var islandSize: Int
 ) {
-    var islandName = ownerTag
+    var islandName = getLeader()?.name ?: "SYSTEM_OWNED"
 
     var inventory: Inventory? = Bukkit.createInventory(null, (Config.instance.chestRows[1] ?: 3) * 9)
         get() {
@@ -68,6 +66,7 @@ data class Island(
             point.getLocation().z + (Config.instance.islandMaxSizeInBlocks / 2)
         )
     }
+
 
     @JsonIgnore
     var syncIsland = false
@@ -129,19 +128,18 @@ data class Island(
 
 
     // UUIDS
-    val members = mutableSetOf<String>()
+    val members = mutableSetOf<UUID>()
 
     var currentQuestOrderIndex: Int? = 0
 
     fun isOneTimeQuestAlreadyCompleted(id: String): Boolean {
-        return oneTimeQuestsCompleted != null && oneTimeQuestsCompleted.isNotEmpty() && oneTimeQuestsCompleted.contains(
+        return oneTimeQuestsCompleted.isNotEmpty() && oneTimeQuestsCompleted.contains(
             id
         )
     }
 
     fun assignNewOwner(ownerIPlayer: IPlayer) {
-        ownerUUID = ownerIPlayer.uuid
-        ownerTag = ownerTag
+        leaderUUID = ownerIPlayer.uuid
     }
 
     val isPaper13OrHigher = PaperLib.isPaper() && XMaterial.isNewVersion()
@@ -269,21 +267,13 @@ data class Island(
 
     fun getIslandMembers(withLeader: Boolean = true): Set<IPlayer> {
         val collect = members.stream().map { uuid -> getIPlayerByUUID(uuid)!! }?.collect(Collectors.toList())!!
-        if (withLeader) collect.add(getOwnerIPlayer())
+        if (withLeader) collect.add(getLeader())
         return collect.toSet();
-    }
-
-    fun getAllMemberUUIDs(): Set<String> {
-        if (members == null || members.size == 0) return emptySet()
-        return members
     }
 
     fun inviteMember(iPlayer: IPlayer) {
         if (maxMembers <= members.size) {
             return
-        }
-        if (iPlayer.islandsInvitedTo == null) {
-            iPlayer.islandsInvitedTo = HashSet()
         }
         iPlayer.islandsInvitedTo.add(islandID)
     }
@@ -326,7 +316,7 @@ data class Island(
         // Can only check if they online tho :/, so we gotta cache it in maxCoopPlayers
 
         // If the instance is null, the player is offline.
-        val owner = Bukkit.getOfflinePlayer(UUID.fromString(ownerUUID)).player
+        val owner = if (leaderUUID != null) Bukkit.getOfflinePlayer(leaderUUID!!).player else null
         if (owner != null) {
             maxCoopPlayers = getMaxPermission(owner, "skyblockx.limits.coop-players")
             if (maxCoopPlayers == 0) {
@@ -344,7 +334,7 @@ data class Island(
 
     fun canHaveMoreHomes(): Boolean {
         // If the instance is null, the player is offline.
-        val owner = Bukkit.getOfflinePlayer(UUID.fromString(ownerUUID)).player
+        val owner = if (leaderUUID != null) Bukkit.getOfflinePlayer(leaderUUID!!).player else null
         if (owner != null) {
             maxIslandHomes = getMaxPermission(owner, "skyblockx.limits.island-homes")
             if (maxIslandHomes == 0) {
@@ -370,9 +360,6 @@ data class Island(
         // Set it to complete amount just to prevent confusion
         questData[quest.id] = 0
         if (quest.oneTime) {
-            if (oneTimeQuestsCompleted == null) {
-                oneTimeQuestsCompleted = mutableSetOf<String>()
-            }
             oneTimeQuestsCompleted.add(quest.id)
         }
         // Check for quest ordering system.
@@ -450,9 +437,6 @@ data class Island(
 
     fun coopPlayer(authorizer: IPlayer?, iPlayer: IPlayer, notify: Boolean = true) {
         if (authorizer != null) {
-            if (authorizer.coopedPlayersAuthorized == null) {
-                authorizer.coopedPlayersAuthorized = HashSet()
-            }
             authorizer.coopedPlayersAuthorized.add(iPlayer)
             if (notify) {
                 authorizer.message(
@@ -466,20 +450,17 @@ data class Island(
         }
 
         // the iplayer needs an island for this.
-        if (iPlayer.coopedIslandIds == null) {
-            iPlayer.coopedIslandIds = java.util.HashSet<Int>()
-        }
-        currentCoopPlayers.add(UUID.fromString(iPlayer.uuid))
+        currentCoopPlayers.add(iPlayer.uuid)
         iPlayer.coopedIslandIds.add(islandID)
     }
 
     fun hasCoopPlayer(iPlayer: IPlayer): Boolean {
-        return currentCoopPlayers != null && currentCoopPlayers.contains(UUID.fromString(iPlayer.uuid))
+        return currentCoopPlayers.contains(iPlayer.uuid)
     }
 
     fun removeCoopPlayer(iPlayer: IPlayer, notify: Boolean = true) {
         iPlayer.coopedIslandIds.remove(islandID)
-        currentCoopPlayers.remove(UUID.fromString(iPlayer.uuid))
+        currentCoopPlayers.remove(iPlayer.uuid)
         if (notify) {
             iPlayer.message(String.format(Message.instance.commandCoopLoggedOut))
         }
@@ -487,8 +468,8 @@ data class Island(
 
 
     @JsonIgnore
-    fun getOwnerIPlayer(): IPlayer? {
-        return Data.instance.IPlayers[ownerUUID]
+    fun getLeader(): IPlayer? {
+        return Data.instance.IPlayers[leaderUUID]
     }
 
 
@@ -517,22 +498,22 @@ data class Island(
      * Delete the players island by removing the whole team, Deleting the actual blocks is too intensive.
      */
     fun delete() {
-        val ownerIPlayer = getIPlayerByUUID(ownerUUID)
+        val ownerIPlayer = leaderUUID?.let { getIPlayerByUUID(it) }
         ownerIPlayer?.unassignIsland()
         val player = ownerIPlayer?.getPlayer()
         teleportAsync(player, Bukkit.getWorld(Config.instance.defaultWorld)!!.spawnLocation, Runnable { })
         if (Config.instance.islandDeleteClearInventory) player?.inventory?.clear()
         if (Config.instance.islandDeleteClearEnderChest) player?.enderChest?.clear()
-        getAllMemberUUIDs().forEach { memberUUID ->
+        members.forEach { memberUUID ->
             val iplayer = getIPlayerByUUID(memberUUID)
             iplayer?.unassignIsland()
-            val player = iplayer?.getPlayer()
+            val memberPlayer = iplayer?.getPlayer()
             teleportAsync(
-                player,
+                memberPlayer,
                 Bukkit.getWorld(Config.instance.defaultWorld)!!.spawnLocation.add(0.0, 1.0, 0.0),
                 Runnable { })
-            if (Config.instance.islandDeleteClearInventory) player?.inventory?.clear()
-            if (Config.instance.islandDeleteClearEnderChest) player?.enderChest?.clear()
+            if (Config.instance.islandDeleteClearInventory) memberPlayer?.inventory?.clear()
+            if (Config.instance.islandDeleteClearEnderChest) memberPlayer?.enderChest?.clear()
         }
         Data.instance.islands.remove(islandID)
         // Delete island from value map.
@@ -560,7 +541,7 @@ data class Island(
             inviter.message(String.format(Message.instance.commandMemberInviteLimit, maxMembers))
             return
         }
-        if (members.contains(target.name)) {
+        if (members.contains(target.uuid)) {
             inviter.message(Message.instance.commandMemberAlreadyPartOfIsland)
             return
         }
@@ -576,19 +557,16 @@ data class Island(
 
     }
 
-    fun promoteNewLeader(name: String) {
-        // Get new leader.
-        val newLeader = getIPlayerByName(name)!!
+    fun promoteNewLeader(newLeader: IPlayer) {
         // remove new leader from member list.
-        members.remove(Bukkit.getPlayer(name)?.uniqueId.toString())
+        members.remove(newLeader.uuid)
         // Make old leader a member
-        val oldleader = getIPlayerByName(ownerTag)!!
+        val oldleader = getLeader()!!
         members.add(oldleader.uuid)
         // Assign again just in case :P
         oldleader.assignIsland(this)
         // Actually make the leader the leader of the island
-        ownerUUID = newLeader.uuid
-        ownerTag = newLeader.name
+        leaderUUID = newLeader.uuid
     }
 
 }
@@ -606,16 +584,6 @@ fun getIslandFromLocation(location: Location): Island? {
     return null
 }
 
-fun getIslandByOwnerTag(ownerTag: String): Island? {
-    val lowerCaseOwnerTag = ownerTag.toLowerCase()
-    for (island in Data.instance.islands.values) {
-        if (island.ownerTag.toLowerCase() == lowerCaseOwnerTag) {
-            return island
-        }
-    }
-
-    return null
-}
 
 fun createIsland(player: Player?, schematic: String, teleport: Boolean = true, systemOwnedName: String = "SYSTEM_OWNED"): Island {
     var size =
@@ -627,9 +595,8 @@ fun createIsland(player: Player?, schematic: String, teleport: Boolean = true, s
         Island(
             Data.instance.nextIslandID,
             spiral(Data.instance.nextIslandID),
-            player?.uniqueId.toString(),
-            player?.name ?: systemOwnedName,
-            size
+            player?.uniqueId,
+                size
         )
     Data.instance.islands[Data.instance.nextIslandID] = island
     Data.instance.nextIslandID++

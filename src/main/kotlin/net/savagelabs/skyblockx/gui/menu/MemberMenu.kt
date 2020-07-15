@@ -51,7 +51,7 @@ class MemberMenu(val player: Player, val island: Island) : PagedMenu(PagedMenuCo
         val iPlayer = player.getIPlayer()
         return iPlayer.getIsland()!!.getIslandMembers(false).map { islandMember ->
           ClickableItem.of(
-                ItemBuilder(SkullCreator.itemFromUuid(UUID.fromString(islandMember.uuid)))
+                ItemBuilder(SkullCreator.itemFromUuid(islandMember.uuid))
                     .name(memberMenuConfig.memberNameFormat.replace("{player}", islandMember.name))
                     .lore(memberMenuConfig.memberLoreFormat)
                     .build()

@@ -47,14 +47,14 @@ class CoopManageMenu(val player: Player) : PagedMenu(
     )
 ) {
     override fun getPageItems(): List<ClickableItem> {
-        return player.getIPlayer().getIsland()!!.currentCoopPlayers.map { uuid -> getIPlayerByUUID(uuid.toString()) }
+        return player.getIPlayer().getIsland()!!.currentCoopPlayers.map { uuid -> getIPlayerByUUID(uuid) }
             .filter { iPlayer -> !player.getIPlayer().getIsland()!!.getIslandMembers().contains(iPlayer) }
             .map { iPlayer ->
             ClickableItem.of(SkullCreator.itemWithUuid(
                 ItemBuilder(XMaterial.PLAYER_HEAD.parseItem()!!)
                     .name(GUIConfig.instance.coopMenu.coopItemNameFormat.replace("{player}", iPlayer!!.name))
                     .lore(GUIConfig.instance.coopMenu.coopItemLoreFormat)
-                    .build(), UUID.fromString(iPlayer.uuid)
+                    .build(), iPlayer.uuid
             )) {
                 player.getIPlayer().attemptExpel(iPlayer)
                 buildMenu(this).open(player)

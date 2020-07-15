@@ -38,7 +38,7 @@ class SCommandRequirements(
     }
 
     private fun checkIslandLeaderRequirement(info: SCommandInfo, informIfNot: Boolean = true): Boolean {
-        if (asLeader && info.iPlayer!!.getIsland()!!.getOwnerIPlayer() != info.iPlayer) {
+        if (asLeader && info.iPlayer!!.getIsland()!!.getLeader() != info.iPlayer) {
             if (informIfNot) {
                 info.message(Message.instance.commandRequirementsNotAnIslandLeader)
             }

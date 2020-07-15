@@ -70,7 +70,8 @@ class CmdVisit : Command<SCommandInfo, SCommandRequirements>() {
             return
         }
         // Location was specified, so we can teleport to it.
-        val targetLocation = getIslandByOwnerTag(info.args[0])
+        val target = getIPlayerByName(info.args[0])
+        val targetLocation = target?.getIsland()
         if (targetLocation == null) {
             info.message(String.format(Message.instance.commandVisitThisIslandIsNotValid, info.args[0]))
             return
@@ -87,7 +88,7 @@ class CmdVisit : Command<SCommandInfo, SCommandRequirements>() {
         teleportAsync(
             info.player!!,
             targetLocation.islandGoPoint!!.getLocation(),
-            Runnable { info.message(String.format(Message.instance.commandVisitTeleporting, targetLocation.ownerTag)) })
+            Runnable { info.message(String.format(Message.instance.commandVisitTeleporting, targetLocation.islandName)) })
     }
 
     override fun getHelpInfo(): String {

@@ -89,8 +89,8 @@ class SkyblockX : SavagePluginX() {
     private fun migrateData() {
         Data.instance.islands.forEach { (_, island) ->
             if (island.islandName == null) {
-                logInfo("Island Names Update: Migrated ${island.ownerTag}'s Island Data.instance.")
-                island.islandName = island.ownerTag
+                logInfo("Island Names Update: Migrated ${island.islandName}'s Island Data.instance.")
+                island.islandName = island.islandName
             }
         }
     }

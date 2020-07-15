@@ -28,13 +28,13 @@ class CmdSbOwner : Command<SCommandInfo, SCommandRequirements>() {
         val newOwner = info.getArgAsIPlayer(1, cannotReferenceYourSelf = false) ?: return
         val iPlayerByName = getIPlayerByName(info.args[0])
         val island = iPlayerByName?.getIsland()
-        if (island == null || island.getOwnerIPlayer() != iPlayerByName) {
+        if (island == null || island.getLeader() != iPlayerByName) {
             info.message(Message.instance.commandSkyblockRemoveNotAnIslandOwner)
             return
         }
 
         island.assignNewOwner(newOwner)
-        island.getOwnerIPlayer()?.unassignIsland()
+        island.getLeader()?.unassignIsland()
 
 
         info.message(Message.instance.commandSkyblockNewOwnerSuccess)

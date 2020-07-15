@@ -68,7 +68,7 @@ class CmdTop : Command<SCommandInfo, SCommandRequirements>() {
                 var lineBasicParsed = line
                     .replace("{name}", island.islandName)
                     .replace("{rank}", counter.toString())
-                    .replace("{leader}", island.ownerTag)
+                    .replace("{leader}", island.getLeader()?.name ?: "SYSTEM")
                     .replace("{amount}", decimalFormat.format(entry.worth))
                 entry.matAmt.forEach { xmat ->
                     lineBasicParsed = lineBasicParsed.replace("{${xmat.key.name}}", decimalFormat.format(xmat.value))
@@ -81,7 +81,7 @@ class CmdTop : Command<SCommandInfo, SCommandRequirements>() {
                 Config.instance.islandTopLineFormat
                     .replace("{name}", island.islandName)
                     .replace("{rank}", counter.toString())
-                    .replace("{leader}", island.ownerTag)
+                    .replace("{leader}", island.getLeader()?.name ?: "SYSTEM")
                     .replace("{amount}", decimalFormat.format(entry.worth))
             )
             if (info.isPlayer()) {

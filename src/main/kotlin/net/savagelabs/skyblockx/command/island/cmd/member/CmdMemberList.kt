@@ -25,10 +25,6 @@ class CmdMemberList : Command<SCommandInfo, SCommandRequirements>() {
     override fun perform(info: SCommandInfo) {
         info.message(Message.instance.commandMemberListHeader)
 
-        JSONMessage.create(color(String.format(Message.instance.commandMemberListFormat, 1, info.island!!.ownerTag)))
-            .tooltip(color(Message.instance.commandMemberListRemoveTooltip))
-            .runCommand("/is member kick ${info.island!!.ownerTag}")
-            .send(info.player!!)
 
         for ((index, member) in info.iPlayer!!.getIsland()!!.getIslandMembers().filter { member -> member.isLeader().not() }.withIndex()) {
             JSONMessage.create(color(String.format(Message.instance.commandMemberListFormat, index + 2, member.name)))
