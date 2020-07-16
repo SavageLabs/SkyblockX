@@ -40,7 +40,7 @@ class CmdHomeSet : Command<SCommandInfo, SCommandRequirements>() {
 			return
 		}
 		info.iPlayer!!.getIsland()!!.addHome(homeName, getSLocation(playerLocation))
-		info.message(String.format(Message.instance.commandHomeHomeSet, homeName))
+		info.message(Message.instance.commandHomeHomeSet, homeName)
 	}
 
 	override fun getHelpInfo(): String {

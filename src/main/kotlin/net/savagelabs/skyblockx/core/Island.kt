@@ -8,6 +8,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import me.rayzr522.jsonmessage.JSONMessage
 import net.savagelabs.skyblockx.SkyblockX
+import net.savagelabs.skyblockx.event.IslandCreateEvent
 import net.savagelabs.skyblockx.event.IslandPostLevelCalcEvent
 import net.savagelabs.skyblockx.event.IslandPreLevelCalcEvent
 import net.savagelabs.skyblockx.persist.*
@@ -49,9 +50,9 @@ data class Island(
 	val islandID: Int,
 	val point: Point,
 	var leaderUUID: UUID?,
-	var islandSize: Int
+	var islandSize: Int,
+	var islandName: String
 ) {
-	var islandName = getLeader()?.name ?: "SYSTEM_OWNED"
 
 	var inventory: Inventory? = Bukkit.createInventory(null, (Config.instance.chestRows[1] ?: 3) * 9)
 		get() {
@@ -613,7 +614,8 @@ fun createIsland(
 			Data.instance.nextIslandID,
 			spiral(Data.instance.nextIslandID),
 			player?.uniqueId,
-			size
+			size,
+			player?.name ?: "SYSTEM_OWNED"
 		)
 	Data.instance.islands[Data.instance.nextIslandID] = island
 	Data.instance.nextIslandID++
@@ -637,6 +639,7 @@ fun createIsland(
 	)
 	if (player != null) updateWorldBorder(player, player.location, 10L)
 	island.islandGoPoint = getSLocation(island.getIslandCenter())
+	Bukkit.getPluginManager().callEvent(IslandCreateEvent(island))
 	return island
 }
 

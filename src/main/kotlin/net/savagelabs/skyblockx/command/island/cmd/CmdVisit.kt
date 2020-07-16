@@ -73,7 +73,7 @@ class CmdVisit : Command<SCommandInfo, SCommandRequirements>() {
 		val target = getIPlayerByName(info.args[0])
 		val targetLocation = target?.getIsland()
 		if (targetLocation == null) {
-			info.message(String.format(Message.instance.commandVisitThisIslandIsNotValid, info.args[0]))
+			info.message(Message.instance.commandVisitThisIslandIsNotValid, info.args[0])
 			return
 		}
 
@@ -90,10 +90,8 @@ class CmdVisit : Command<SCommandInfo, SCommandRequirements>() {
 			targetLocation.islandGoPoint!!.getLocation(),
 			Runnable {
 				info.message(
-					String.format(
-						Message.instance.commandVisitTeleporting,
-						targetLocation.islandName
-					)
+					Message.instance.commandVisitTeleporting,
+					targetLocation.islandName
 				)
 			})
 	}

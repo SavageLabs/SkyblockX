@@ -4,10 +4,7 @@ import net.savagelabs.skyblockx.core.Island
 import org.bukkit.event.Event
 import org.bukkit.event.HandlerList
 
-class IslandRenameEvent(val island: Island, var newName: String, val oldName: String) : Event(false) {
-
-
-	private var isCancelled = false
+class IslandCreateEvent(val island: Island) : Event(false) {
 
 	companion object {
 		@JvmStatic

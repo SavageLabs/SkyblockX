@@ -72,7 +72,7 @@ class MemberMenu(val player: Player, val island: Island) : PagedMenu(
 							iPlayer.message(Message.instance.commandRequirementsNotAnIslandLeader)
 							return@of
 						}
-						island.promoteNewLeader(islandMember.name)
+						island.promoteNewLeader(islandMember)
 						Bukkit.getPlayer(islandMember.name)
 							?.sendMessage(color(Message.instance.commandMemberPromoteYouHaveBeenPromoted))
 						buildMenu(this).open(player)

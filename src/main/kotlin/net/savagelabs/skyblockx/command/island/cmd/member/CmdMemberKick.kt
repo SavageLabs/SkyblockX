@@ -43,7 +43,7 @@ class CmdMemberKick : Command<SCommandInfo, SCommandRequirements>() {
 
 
 		info.island!!.kickMember(playerNameToRemove)
-		info.message(String.format(Message.instance.commandMemberKicked, playerNameToRemove))
+		info.message(Message.instance.commandMemberKicked, playerNameToRemove)
 	}
 
 	override fun getHelpInfo(): String {

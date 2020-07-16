@@ -21,10 +21,8 @@ class CmdSbBypass : Command<SCommandInfo, SCommandRequirements>() {
 	override fun perform(info: SCommandInfo) {
 		info.iPlayer!!.inBypass = !info.isBypassing()
 		info.message(
-			String.format(
 				Message.instance.commandBypassToggle,
 				if (info.iPlayer!!.inBypass) "in" else "out of"
-			)
 		)
 	}
 

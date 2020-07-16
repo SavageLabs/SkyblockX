@@ -28,7 +28,7 @@ class CmdHomeRemove : Command<SCommandInfo, SCommandRequirements>() {
 		}
 
 		info.island!!.removeHome(info.args[0])
-		info.message(String.format(Message.instance.commandHomeRemoveSuccess, info.args[0]))
+		info.message(Message.instance.commandHomeRemoveSuccess, info.args[0])
 	}
 
 	override fun getHelpInfo(): String {

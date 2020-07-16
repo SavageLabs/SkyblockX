@@ -38,12 +38,16 @@ class CmdMemberPromote : Command<SCommandInfo, SCommandRequirements>() {
 			return
 		}
 
-		if (!info.island!!.getIslandMembers(false).contains(getIPlayerByName(playerNameToPromote))) {
+		val iPlayerByName = getIPlayerByName(playerNameToPromote) ?: run {
+			info.message(Message.instance.commandParsingPlayerDoesNotExist)
+			return
+		}
+		if (!info.island!!.getIslandMembers(false).contains(iPlayerByName)) {
 			info.message(Message.instance.commandMemberPromoteNotFound)
 			return
 		}
 
-		island.promoteNewLeader(playerNameToPromote)
+		island.promoteNewLeader(iPlayerByName)
 		island.messageAllOnlineIslandMembers(
 			String.format(
 				Message.instance.commandMemberPromotedSuccess,

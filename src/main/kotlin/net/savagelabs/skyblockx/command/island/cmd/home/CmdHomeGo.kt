@@ -29,7 +29,7 @@ class CmdHomeGo : Command<SCommandInfo, SCommandRequirements>() {
 		teleportAsync(
 			info.player!!,
 			info.island!!.getHome(home)!!.getLocation(),
-			Runnable { info.message(String.format(Message.instance.commandHomeGoSuccess, home)) })
+			Runnable { info.message(Message.instance.commandHomeGoSuccess, home) })
 	}
 
 	override fun getHelpInfo(): String {

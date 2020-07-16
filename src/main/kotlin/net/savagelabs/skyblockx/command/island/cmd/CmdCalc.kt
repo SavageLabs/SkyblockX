@@ -26,10 +26,8 @@ class CmdCalc : Command<SCommandInfo, SCommandRequirements>() {
 		if (!info.island!!.canManualCalc()) {
 			val cooldown = (System.currentTimeMillis() - info.island!!.lastManualCalc) / 1000
 			info.message(
-				String.format(
 					Message.instance.commandCalcCooldown,
-					(Config.instance.islandTopManualCalcCooldownMiliseconds / 1000) - cooldown
-				)
+				((Config.instance.islandTopManualCalcCooldownMiliseconds / 1000) - cooldown).toString()
 			)
 			return
 		}

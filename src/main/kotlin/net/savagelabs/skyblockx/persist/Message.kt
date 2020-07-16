@@ -122,6 +122,7 @@ class Message : ConfigContainer {
 	var commandSkyblockHelpHelp = "&7View other admin command info."
 
 	var commandRemoveHelp = "&7Removes island/co-op member."
+	var commandRemoveAlreadyInIsland = "&7This member is part of your island."
 	var commandRemoveInvokerSuccess = "&7You have removed %1\$s from your island."
 	var commandRemoveInvokerCoopRemoved = "&7%1\$s's co-op status has been removed."
 	var commandRemoveInvokerPlayerNotOnIsland = "&7The specified player's location is currently not on your island."

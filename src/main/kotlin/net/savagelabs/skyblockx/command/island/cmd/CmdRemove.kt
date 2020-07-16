@@ -24,6 +24,10 @@ class CmdRemove : Command<SCommandInfo, SCommandRequirements>() {
 
 	override fun perform(info: SCommandInfo) {
 		val target = info.getArgAsIPlayer(0) ?: return
+		if (info.island!!.getIslandMembers().contains(target)) {
+			info.message(Message.instance.commandRemoveAlreadyInIsland)
+			return
+		}
 		info.iPlayer!!.attemptExpel(target)
 	}
 

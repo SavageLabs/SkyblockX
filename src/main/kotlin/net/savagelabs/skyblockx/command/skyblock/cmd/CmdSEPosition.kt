@@ -37,10 +37,8 @@ class CmdSEPosition : Command<SCommandInfo, SCommandRequirements>() {
 		info.iPlayer!!.chosenPosition = positionChosen
 		info.iPlayer!!.choosingPosition = true
 		info.message(
-			String.format(
 				Message.instance.commandSEPosition,
 				if (positionChosen == Position.POSITION1) "1" else "2"
-			)
 		)
 	}
 

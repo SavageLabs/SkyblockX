@@ -24,10 +24,8 @@ class CmdValue : Command<SCommandInfo, SCommandRequirements>() {
 		val xmat = XMaterial.matchXMaterial(blockMaterial)
 		val value = BlockValues.instance.blockValues[xmat] ?: 0.0
 		info.message(
-			String.format(
-				Message.instance.commandValueInfo,
-				NumberFormat.getInstance(Config.instance.numberFormatLocale).format(value)
-			)
+			Message.instance.commandValueInfo,
+			NumberFormat.getInstance(Config.instance.numberFormatLocale).format(value)
 		)
 	}
 

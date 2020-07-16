@@ -7,15 +7,16 @@ import org.bukkit.event.HandlerList
 
 class IslandPreLevelCalcEvent(val island: Island, val levelBeforeCalc: Double) : Event(true), Cancellable {
 
-	private val HANDLERS = HandlerList()
+
 	private var isCancelled = false
 
-	override fun getHandlers(): HandlerList {
-		return HANDLERS
+	companion object {
+		@JvmStatic
+		val handlerList = HandlerList()
 	}
 
-	fun getHandlerList(): HandlerList? {
-		return HANDLERS
+	override fun getHandlers(): HandlerList {
+		return handlerList
 	}
 
 	override fun setCancelled(cancel: Boolean) {

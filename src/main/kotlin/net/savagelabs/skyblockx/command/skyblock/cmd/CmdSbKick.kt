@@ -50,9 +50,9 @@ class CmdSbKick : Command<SCommandInfo, SCommandRequirements>() {
 			// just in case
 			firstMember.assignIsland(island)
 			island.leaderUUID = firstMember.uuid
-			info.message(String.format(Message.instance.commandSkyblockKickMemberKickedOwner, firstMember.name))
+			info.message(Message.instance.commandSkyblockKickMemberKickedOwner, firstMember.name)
 		}
-		info.message(String.format(Message.instance.commandSkyblockKickMemberKicked, iPlayerByName.name))
+		info.message(Message.instance.commandSkyblockKickMemberKicked, iPlayerByName.name)
 
 
 	}

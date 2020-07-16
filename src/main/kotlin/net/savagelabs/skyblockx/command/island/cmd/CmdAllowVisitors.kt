@@ -38,7 +38,7 @@ class CmdAllowVisitors : Command<SCommandInfo, SCommandRequirements>() {
 			info.island!!.allowVisitors = !info.island!!.allowVisitors
 		}
 
-		info.message(String.format(Message.instance.commandAllowVisitorsStatus, info.island!!.allowVisitors))
+		info.message(Message.instance.commandAllowVisitorsStatus, info.island!!.allowVisitors)
 	}
 
 	override fun getHelpInfo(): String {
