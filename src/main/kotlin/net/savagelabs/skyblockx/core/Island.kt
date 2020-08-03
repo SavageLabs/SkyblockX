@@ -54,12 +54,7 @@ data class Island(
 	var islandName: String
 ) {
 
-	var inventory: Inventory? = Bukkit.createInventory(null, (Config.instance.chestRows[1] ?: 3) * 9)
-		get() {
-			if (field == null) field = Bukkit.createInventory(null, (Config.instance.chestRows[1] ?: 3) * 9)
-			return field
-		}
-
+	var inventory: Inventory = Bukkit.createInventory(null, 27)
 
 	@JsonIgnore
 	fun getIslandCenter(): Location {
@@ -70,7 +65,6 @@ data class Island(
 			point.getLocation().z + (Config.instance.islandMaxSizeInBlocks / 2)
 		)
 	}
-
 
 	@JsonIgnore
 	var syncIsland = false
@@ -83,6 +77,12 @@ data class Island(
 	var netherFilePath = "nether-island.structure"
 
 	var islandGoPoint: SLocation? = null
+	get() {
+		if (field == null) {
+			return getSLocation(getIslandCenter())
+		}
+		return field
+	}
 
 	val minLocation: SLocation
 		get() = getSLocation(getIslandCenter().subtract(islandSize.toDouble() / 2, 101.0, islandSize.toDouble() / 2))

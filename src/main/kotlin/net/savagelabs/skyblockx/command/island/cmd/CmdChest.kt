@@ -21,8 +21,8 @@ class CmdChest : Command<SCommandInfo, SCommandRequirements>() {
 
 
 	override fun perform(info: SCommandInfo) {
-		var inventory = info.island?.inventory
-		info.player?.openInventory(inventory!!)
+		val inventory = info.island!!.inventory
+		info.player?.openInventory(inventory)
 		info.message(Message.instance.commandChestOpening)
 	}
 
