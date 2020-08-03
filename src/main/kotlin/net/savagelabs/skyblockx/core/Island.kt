@@ -8,9 +8,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import me.rayzr522.jsonmessage.JSONMessage
 import net.savagelabs.skyblockx.SkyblockX
-import net.savagelabs.skyblockx.event.IslandCreateEvent
-import net.savagelabs.skyblockx.event.IslandPostLevelCalcEvent
-import net.savagelabs.skyblockx.event.IslandPreLevelCalcEvent
+import net.savagelabs.skyblockx.event.*
 import net.savagelabs.skyblockx.persist.*
 import net.savagelabs.skyblockx.persist.data.SLocation
 import net.savagelabs.skyblockx.persist.data.getSLocation
