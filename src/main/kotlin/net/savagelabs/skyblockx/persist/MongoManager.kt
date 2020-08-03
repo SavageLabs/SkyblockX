@@ -4,6 +4,7 @@ import net.savagelabs.savagepluginx.persist.parser.JSONJacksonParser
 import net.savagelabs.skyblockx.SkyblockX
 import net.savagelabs.skyblockx.core.IPlayer
 import net.savagelabs.skyblockx.core.Island
+import org.bson.Document
 import org.litote.kmongo.coroutine.CoroutineClient
 import org.litote.kmongo.coroutine.CoroutineDatabase
 import org.litote.kmongo.coroutine.coroutine
@@ -20,6 +21,7 @@ object MongoManager {
 
 	const val PLAYERS_COLLECTION_NAME = "players"
 	const val ISLANDS_COLLECTION_NAME = "islands"
+	const val MISC_COLLECTION_NAME = "misc"
 
 
 	fun initialize() {
@@ -45,7 +47,11 @@ object MongoManager {
 		val islands = database.getCollection<Island>(ISLANDS_COLLECTION_NAME).find().toList()
 		val data = Data()
 		players.forEach { player -> data.IPlayers[player.uuid] = player }
-		islands.forEach { island -> data.islands[island.islandID] = island }
+		var islandCounter = 0
+		islands.forEach { island ->
+			if (island.islandID > islandCounter) islandCounter = island.islandID
+			data.islands[island.islandID] = island
+		}
 		return data
 	}
 

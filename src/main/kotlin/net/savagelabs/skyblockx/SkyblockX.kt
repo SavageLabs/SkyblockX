@@ -1,6 +1,9 @@
 package net.savagelabs.skyblockx
 
 import com.cryptomorin.xseries.XMaterial
+import com.fasterxml.jackson.core.JsonFactory
+import com.fasterxml.jackson.core.JsonParser
+import com.fasterxml.jackson.core.JsonToken
 import fr.minuskube.inv.InventoryManager
 import io.papermc.lib.PaperLib
 import kotlinx.coroutines.runBlocking
@@ -22,6 +25,9 @@ import org.bukkit.ChatColor
 import org.bukkit.World
 import org.bukkit.WorldCreator
 import org.bukkit.generator.ChunkGenerator
+import org.litote.kmongo.json
+import java.io.File
+import java.lang.StringBuilder
 import java.util.concurrent.Callable
 import kotlin.system.measureTimeMillis
 import kotlin.time.Duration
@@ -67,7 +73,6 @@ class SkyblockX : SavagePluginX() {
 			startInventoryManager()
 			logInfo("Loaded ${Data.instance.IPlayers.size} players.")
 			logInfo("Loaded ${Data.instance.islands.size} islands.")
-			migrateData()
 		}
 		logInfo("Startup Finished (${startupTime}ms)")
 		logInfo("If you need help with the plugin check out our wiki: https://wiki.savagelabs.net")
@@ -82,15 +87,6 @@ class SkyblockX : SavagePluginX() {
 	private fun startInventoryManager() {
 		inventoryManager = InventoryManager(this)
 		inventoryManager.init()
-	}
-
-	private fun migrateData() {
-		Data.instance.islands.forEach { (_, island) ->
-			if (island.islandName == null) {
-				logInfo("Island Names Update: Migrated ${island.islandName}'s Island Data.instance.")
-				island.islandName = island.islandName
-			}
-		}
 	}
 
 	private fun loadMetrics() {
