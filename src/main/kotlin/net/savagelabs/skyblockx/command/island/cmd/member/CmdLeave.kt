@@ -5,7 +5,10 @@ import net.savagelabs.skyblockx.command.SCommandInfo
 import net.savagelabs.skyblockx.command.SCommandRequirements
 import net.savagelabs.skyblockx.command.SCommandRequirementsBuilder
 import net.savagelabs.skyblockx.core.Permission
+import net.savagelabs.skyblockx.core.getIPlayer
+import net.savagelabs.skyblockx.event.IslandLeaveEvent
 import net.savagelabs.skyblockx.persist.Message
+import org.bukkit.Bukkit
 
 class CmdLeave : Command<SCommandInfo, SCommandRequirements>() {
 
@@ -34,7 +37,7 @@ class CmdLeave : Command<SCommandInfo, SCommandRequirements>() {
 			)
 		)
 		info.island!!.kickMember(info.player!!.name)
-
+		Bukkit.getPluginManager().callEvent(IslandLeaveEvent(info.island!!, getIPlayer(info.player!!)))
 
 	}
 

@@ -8,7 +8,11 @@ import net.savagelabs.skyblockx.command.SCommandRequirementsBuilder
 import net.savagelabs.skyblockx.command.argument.MemberArgument
 import net.savagelabs.skyblockx.command.island.IslandBaseCommand
 import net.savagelabs.skyblockx.core.Permission
+import net.savagelabs.skyblockx.core.getIPlayer
+import net.savagelabs.skyblockx.core.getIPlayerByName
+import net.savagelabs.skyblockx.event.IslandKickEvent
 import net.savagelabs.skyblockx.persist.Message
+import org.bukkit.Bukkit
 
 class CmdMemberKick : Command<SCommandInfo, SCommandRequirements>() {
 
@@ -44,6 +48,8 @@ class CmdMemberKick : Command<SCommandInfo, SCommandRequirements>() {
 
 		info.island!!.kickMember(playerNameToRemove)
 		info.message(Message.instance.commandMemberKicked, playerNameToRemove)
+
+		Bukkit.getPluginManager().callEvent(IslandKickEvent(island, getIPlayer(info.player!!), getIPlayerByName(playerNameToRemove)!!))
 	}
 
 	override fun getHelpInfo(): String {

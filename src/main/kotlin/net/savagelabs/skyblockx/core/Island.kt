@@ -109,6 +109,8 @@ data class Island(
 				}
 			}
 		}
+
+		Bukkit.getPluginManager().callEvent(IslandBiomeChangeEvent(this, biome))
 	}
 
 
@@ -300,6 +302,7 @@ data class Island(
 		}
 
 		iPlayer.assignIsland(this)
+		Bukkit.getPluginManager().callEvent(IslandJoinEvent(this, iPlayer))
 	}
 
 
@@ -568,6 +571,7 @@ data class Island(
 				.send(target.getPlayer())
 		}
 
+		Bukkit.getPluginManager().callEvent(IslandInviteEvent(this, inviter, target))
 	}
 
 	fun promoteNewLeader(newLeader: IPlayer) {

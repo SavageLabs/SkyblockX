@@ -7,8 +7,11 @@ import net.savagelabs.skyblockx.command.SCommandInfo
 import net.savagelabs.skyblockx.command.SCommandRequirements
 import net.savagelabs.skyblockx.command.SCommandRequirementsBuilder
 import net.savagelabs.skyblockx.core.Permission
+import net.savagelabs.skyblockx.core.getIPlayer
 import net.savagelabs.skyblockx.core.getIPlayerByName
+import net.savagelabs.skyblockx.event.IslandKickEvent
 import net.savagelabs.skyblockx.persist.Message
+import org.bukkit.Bukkit
 
 class CmdSbKick : Command<SCommandInfo, SCommandRequirements>() {
 
@@ -37,6 +40,7 @@ class CmdSbKick : Command<SCommandInfo, SCommandRequirements>() {
 			}
 
 			island.kickMember(iPlayerByName.name)
+			Bukkit.getPluginManager().callEvent(IslandKickEvent(island, getIPlayer(info.player!!), iPlayerByName))
 		} else {
 			// Theyre an island owner if we're here.
 			iPlayerByName.unassignIsland()

@@ -8,7 +8,9 @@ import net.savagelabs.skyblockx.command.SCommandRequirements
 import net.savagelabs.skyblockx.command.SCommandRequirementsBuilder
 import net.savagelabs.skyblockx.core.Permission
 import net.savagelabs.skyblockx.core.getIPlayerByName
+import net.savagelabs.skyblockx.event.IslandTransferEvent
 import net.savagelabs.skyblockx.persist.Message
+import org.bukkit.Bukkit
 
 class CmdSbOwner : Command<SCommandInfo, SCommandRequirements>() {
 
@@ -33,12 +35,13 @@ class CmdSbOwner : Command<SCommandInfo, SCommandRequirements>() {
 			return
 		}
 
+		Bukkit.getPluginManager().callEvent(IslandTransferEvent(island, island.getLeader()!!, newOwner))
+
 		island.assignNewOwner(newOwner)
 		island.getLeader()?.unassignIsland()
 
 
 		info.message(Message.instance.commandSkyblockNewOwnerSuccess)
-
 	}
 
 	override fun getHelpInfo(): String {

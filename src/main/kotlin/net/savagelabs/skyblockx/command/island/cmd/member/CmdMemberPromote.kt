@@ -9,7 +9,9 @@ import net.savagelabs.skyblockx.command.argument.MemberArgument
 import net.savagelabs.skyblockx.command.island.IslandBaseCommand
 import net.savagelabs.skyblockx.core.Permission
 import net.savagelabs.skyblockx.core.color
+import net.savagelabs.skyblockx.core.getIPlayer
 import net.savagelabs.skyblockx.core.getIPlayerByName
+import net.savagelabs.skyblockx.event.IslandTransferEvent
 import net.savagelabs.skyblockx.persist.Message
 import org.bukkit.Bukkit
 
@@ -56,6 +58,7 @@ class CmdMemberPromote : Command<SCommandInfo, SCommandRequirements>() {
 		)
 		Bukkit.getPlayer(playerNameToPromote)
 			?.sendMessage(color(Message.instance.commandMemberPromoteYouHaveBeenPromoted))
+		Bukkit.getPluginManager().callEvent(IslandTransferEvent(island, getIPlayer(info.player!!), iPlayerByName))
 	}
 
 	override fun getHelpInfo(): String {

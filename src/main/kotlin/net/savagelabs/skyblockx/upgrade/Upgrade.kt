@@ -3,7 +3,9 @@ package net.savagelabs.skyblockx.upgrade
 import net.savagelabs.skyblockx.SkyblockX
 import net.savagelabs.skyblockx.core.Island
 import net.savagelabs.skyblockx.core.updateWorldBorder
+import net.savagelabs.skyblockx.event.IslandUpgradeEvent
 import net.savagelabs.skyblockx.persist.Config
+import org.bukkit.Bukkit
 
 
 interface Upgrade {
@@ -15,6 +17,7 @@ interface Upgrade {
 object GeneratorUpgrade : Upgrade {
 	override fun runUpgradeEffect(island: Island, level: Int) {
 		island.upgrades[UpgradeType.GENERATOR] = level
+		Bukkit.getPluginManager().callEvent(IslandUpgradeEvent(island, UpgradeType.GENERATOR))
 	}
 }
 
@@ -46,8 +49,9 @@ object BorderUpgrade : Upgrade {
 				updateWorldBorder(player, player.location, 10L)
 			}
 		}
-	}
 
+		Bukkit.getPluginManager().callEvent(IslandUpgradeEvent(island, UpgradeType.BORDER))
+	}
 }
 
 object HomeUpgrade : Upgrade {
@@ -58,6 +62,8 @@ object HomeUpgrade : Upgrade {
 				SkyblockX.skyblockX.logger.info("Home Upgrade failed due to the param not being an integer")
 				return
 			}
+
+		Bukkit.getPluginManager().callEvent(IslandUpgradeEvent(island, UpgradeType.MAX_HOMES))
 	}
 }
 
@@ -69,5 +75,7 @@ object TeamUpgrade : Upgrade {
 				SkyblockX.skyblockX.logger.info("Team Upgrade failed due to the param not being an integer")
 				return
 			}
+
+		Bukkit.getPluginManager().callEvent(IslandUpgradeEvent(island, UpgradeType.TEAM_SIZE))
 	}
 }
