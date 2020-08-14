@@ -34,7 +34,7 @@ dependencies {
 
     compileOnly(kotlin("stdlib-jdk8"))
 
-    compileOnly("org.spigotmc:spigot-api:1.16.1-R0.1-SNAPSHOT")
+    compileOnly("org.spigotmc:spigot-api:1.16.2-R0.1-SNAPSHOT")
     compileOnly("me.clip:placeholderapi:2.9.2")
 
     // Present in XCore -- for IntelliJ indexing.
