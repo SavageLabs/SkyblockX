@@ -35,7 +35,7 @@ class EntityListener : Listener {
 			return
 		}
 
-		val iPlayer = getIPlayer(event.entity.killer as Player)
+		val iPlayer = (event.entity.killer as Player).getIPlayer()
 
 		// Check if they have an island and a quest activated.
 		if (iPlayer.hasIsland() && iPlayer.getIsland()!!.currentQuest != null) {
@@ -69,7 +69,7 @@ class EntityListener : Listener {
 		if (event.entity !is Player || isNotInSkyblockWorld(event.entity.world)) {
 			return
 		}
-		val iPlayer = getIPlayer(event.entity as Player)
+		val iPlayer = (event.entity as Player).getIPlayer()
 		if (Config.instance.disableMobDamageWhenIslandVisitor && !iPlayer.isOnOwnIsland()) {
 			event.isCancelled = true
 		}
@@ -80,7 +80,7 @@ class EntityListener : Listener {
 		if (Config.instance.skyblockDeathTeleport || isNotInSkyblockWorld(event.entity.world))
 			return
 
-		val iPlayer = getIPlayer(event.entity)
+		val iPlayer = event.entity.getIPlayer()
 		iPlayer.teleportDeath = if (iPlayer.hasIsland()) {
 			iPlayer.getIsland()!!.islandGoPoint!!.getLocation()
 		} else {
@@ -91,7 +91,7 @@ class EntityListener : Listener {
 	@EventHandler
 	fun onPlayerRespawn(event: PlayerRespawnEvent) {
 		if (isNotInSkyblockWorld(event.player.world)) return
-		val iPlayer = getIPlayer(event.player)
+		val iPlayer = event.player.getIPlayer()
 		if (iPlayer.teleportDeath != null) {
 			Bukkit.getScheduler().runTask(SkyblockX.skyblockX, Runnable {
 				teleportAsync(event.player, iPlayer.teleportDeath!!, Runnable {
@@ -113,7 +113,7 @@ class EntityListener : Listener {
 		}
 
 		val player = event.entity as Player
-		val iPlayer = getIPlayer(player)
+		val iPlayer = (player).getIPlayer()
 
 		// Triggers when they fall into the void.
 		if (event.cause == EntityDamageEvent.DamageCause.VOID && !iPlayer.falling && event.entity.location.y <= 0) {

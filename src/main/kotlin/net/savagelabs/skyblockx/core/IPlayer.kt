@@ -182,9 +182,8 @@ data class IPlayer(val uuid: UUID, var name: String) {
 
 }
 
-fun getIPlayer(player: Player): IPlayer {
-	// Check data, if not, The IPlayer instance does not exist, create it.
-	return Data.instance.IPlayers[player.uniqueId] ?: createIPlayer(player)
+fun Player.getIPlayer(): IPlayer {
+	return Data.instance.IPlayers[uniqueId] ?: createIPlayer(this)
 }
 
 fun getIPlayerByName(name: String): IPlayer? {

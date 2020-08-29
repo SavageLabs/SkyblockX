@@ -31,7 +31,7 @@ class PlayerListener : Listener {
 		if (isNotInSkyblockWorld(event.whoClicked.world)) {
 			return
 		}
-		val iplayer = getIPlayer(event.whoClicked as Player)
+		val iplayer = (event.whoClicked as Player).getIPlayer()
 		// Fail the checks if we dont have an island, or dont have a active quest, or if we arent on our own island.
 		val island = iplayer.getIsland()
 
@@ -78,7 +78,7 @@ class PlayerListener : Listener {
 		if (event.from.world?.name != Config.instance.skyblockWorldName || event.cause != PlayerTeleportEvent.TeleportCause.NETHER_PORTAL) {
 			return
 		}
-		val iPlayer = getIPlayer(event.player)
+		val iPlayer = (event.player).getIPlayer()
 		event.isCancelled = true
 		val islandFromLocation = getIslandFromLocation(event.from)
 		val newLoc = islandFromLocation?.getIslandCenter()?.clone() ?: return
@@ -99,7 +99,7 @@ class PlayerListener : Listener {
 			return
 		}
 
-		val iplayer = getIPlayer(event.player)
+		val iplayer = (event.player).getIPlayer()
 
 		val island = iplayer.getIsland()
 		// Check if we even have an island, have a quest, and check the HOOK's position instead of the player, since we dont want people fishing in others islands for edge cases.
@@ -138,7 +138,7 @@ class PlayerListener : Listener {
 
 		// Smelting Quests POG.
 		if (event.inventory.type == InventoryType.FURNACE && event.slot == 2 && (event.action == InventoryAction.MOVE_TO_OTHER_INVENTORY || event.action == InventoryAction.PICKUP_ALL || event.action == InventoryAction.PICKUP_ALL) && event.view.bottomInventory != event.clickedInventory) {
-			val iPlayer = getIPlayer(event.whoClicked as Player)
+			val iPlayer = (event.whoClicked as Player).getIPlayer()
 
 			val island = iPlayer.getIsland()
 
@@ -169,7 +169,7 @@ class PlayerListener : Listener {
 
 		// This means they repaired an item.
 		if (event.inventory.type == InventoryType.ANVIL && event.slot == 2 && event.view.bottomInventory != event.clickedInventory) {
-			val iPlayer = getIPlayer(event.whoClicked as Player)
+			val iPlayer = (event.whoClicked as Player).getIPlayer()
 
 			val island = iPlayer.getIsland()
 
@@ -205,7 +205,7 @@ class PlayerListener : Listener {
 			return
 		}
 
-		val iPlayer = getIPlayer(event.enchanter)
+		val iPlayer = (event.enchanter).getIPlayer()
 
 		val island = iPlayer.getIsland()
 
@@ -258,7 +258,7 @@ class PlayerListener : Listener {
 			return
 		}
 
-		val iPlayer = getIPlayer(event.player)
+		val iPlayer = (event.player).getIPlayer()
 
 		// Check if they have an island or co-op island, if not, deny.
 		if (!iPlayer.hasCoopIsland() && !iPlayer.hasIsland() && !iPlayer.inBypass) {

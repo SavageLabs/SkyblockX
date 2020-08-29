@@ -32,7 +32,7 @@ class BorderMenu : BaseMenu(
 	override fun fillContents(player: Player, contents: InventoryContents) {
 		GUIConfig.instance.borderMenuConfig.borderItems.forEach { (color, item) ->
 			contents.set(item.guiCoordinate.row, item.guiCoordinate.column, ClickableItem.of(item.item.buildItem()) {
-				getIPlayer(player).borderColor = color
+				player.getIPlayer().borderColor = color
 				updateWorldBorder(player, player.location, 0L)
 			})
 		}

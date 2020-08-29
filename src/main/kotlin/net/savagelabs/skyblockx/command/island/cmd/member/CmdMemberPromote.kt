@@ -58,7 +58,7 @@ class CmdMemberPromote : Command<SCommandInfo, SCommandRequirements>() {
 		)
 		Bukkit.getPlayer(playerNameToPromote)
 			?.sendMessage(color(Message.instance.commandMemberPromoteYouHaveBeenPromoted))
-		Bukkit.getPluginManager().callEvent(IslandTransferEvent(island, getIPlayer(info.player!!), iPlayerByName))
+		Bukkit.getPluginManager().callEvent(IslandTransferEvent(island, info.player!!.getIPlayer(), iPlayerByName))
 	}
 
 	override fun getHelpInfo(): String {

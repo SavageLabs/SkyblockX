@@ -37,7 +37,7 @@ class CmdLeave : Command<SCommandInfo, SCommandRequirements>() {
 			)
 		)
 		info.island!!.kickMember(info.player!!.name)
-		Bukkit.getPluginManager().callEvent(IslandLeaveEvent(info.island!!, getIPlayer(info.player!!)))
+		Bukkit.getPluginManager().callEvent(IslandLeaveEvent(info.island!!, info.player!!.getIPlayer()))
 
 	}
 

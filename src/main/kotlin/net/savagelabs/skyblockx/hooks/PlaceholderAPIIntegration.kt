@@ -30,7 +30,7 @@ class PlacholderAPIIntegration : PlaceholderExpansion() {
 	}
 
 	override fun onPlaceholderRequest(player: Player, s: String): String? {
-		val iPlayer = getIPlayer(player)
+		val iPlayer = player.getIPlayer()
 		return when (s) {
 			"island_owner" -> iPlayer.getIsland()?.getLeader()?.name ?: "N/A"
 			"island_member_amount", "island_member_count" -> (iPlayer.getIsland()

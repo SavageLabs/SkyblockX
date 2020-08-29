@@ -19,7 +19,7 @@ class SEditListener : Listener {
 		}
 
 
-		val iPlayer = getIPlayer(event.player)
+		val iPlayer = (event.player).getIPlayer()
 		if (!iPlayer.choosingPosition) {
 			return
 		}

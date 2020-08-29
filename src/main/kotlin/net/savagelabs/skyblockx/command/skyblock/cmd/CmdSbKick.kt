@@ -40,7 +40,7 @@ class CmdSbKick : Command<SCommandInfo, SCommandRequirements>() {
 			}
 
 			island.kickMember(iPlayerByName.name)
-			Bukkit.getPluginManager().callEvent(IslandKickEvent(island, getIPlayer(info.player!!), iPlayerByName))
+			Bukkit.getPluginManager().callEvent(IslandKickEvent(island, info.player!!.getIPlayer(), iPlayerByName))
 		} else {
 			// Theyre an island owner if we're here.
 			iPlayerByName.unassignIsland()

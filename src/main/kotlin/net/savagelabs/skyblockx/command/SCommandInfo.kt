@@ -16,7 +16,7 @@ class SCommandInfo(commandSender: CommandSender, args: ArrayList<String>, aliasU
 	commandSender, args,
 	aliasUsed
 ) {
-	var iPlayer: IPlayer? = if (commandSender is Player) getIPlayer(commandSender) else null
+	var iPlayer: IPlayer? = if (commandSender is Player) commandSender.getIPlayer() else null
 	var island: Island? = if (commandSender is Player && iPlayer != null) iPlayer!!.getIsland() else null
 
 	fun isBypassing(): Boolean {
@@ -55,6 +55,6 @@ class SCommandInfo(commandSender: CommandSender, args: ArrayList<String>, aliasU
 			}
 			return null
 		}
-		return getIPlayer(player)
+		return player.getIPlayer()
 	}
 }

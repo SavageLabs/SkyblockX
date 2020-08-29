@@ -61,7 +61,7 @@ fun updateWorldBorder(player: Player, location: Location, delay: Long) {
 				SkyblockX.skyblockX,
 				Runnable {
 					val islandFromLocation = getIslandFromLocation(location)
-					val iPlayer = getIPlayer(player)
+					val iPlayer = player.getIPlayer()
 					if (islandFromLocation != null) {
 						val wbCenter = islandFromLocation.getIslandCenter()
 						wbCenter.world = player.world
@@ -82,6 +82,3 @@ fun isPlaceholderAPIPresent(): Boolean {
 	return Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null
 }
 
-fun Player.getIPlayer(): IPlayer {
-	return getIPlayer(this)
-}

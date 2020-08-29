@@ -49,7 +49,7 @@ class CmdMemberKick : Command<SCommandInfo, SCommandRequirements>() {
 		info.island!!.kickMember(playerNameToRemove)
 		info.message(Message.instance.commandMemberKicked, playerNameToRemove)
 
-		Bukkit.getPluginManager().callEvent(IslandKickEvent(island, getIPlayer(info.player!!), getIPlayerByName(playerNameToRemove)!!))
+		Bukkit.getPluginManager().callEvent(IslandKickEvent(island, info.player!!.getIPlayer(), getIPlayerByName(playerNameToRemove)!!))
 	}
 
 	override fun getHelpInfo(): String {

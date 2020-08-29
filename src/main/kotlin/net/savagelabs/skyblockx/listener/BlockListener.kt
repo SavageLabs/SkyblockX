@@ -38,7 +38,7 @@ class BlockListener : Listener {
 		}
 
 		// We're gonna need this.
-		val iPlayer = getIPlayer(event.player)
+		val iPlayer = event.player.getIPlayer()
 
 
 		// Check if they dont have an island or a co-op island, if not, deny.
@@ -98,7 +98,7 @@ class BlockListener : Listener {
 
 
 		// Need this a lot.
-		val iPlayer = getIPlayer(event.player)
+		val iPlayer = event.player.getIPlayer()
 
 
 		// Check if they have an island or co-op island, if not, deny.

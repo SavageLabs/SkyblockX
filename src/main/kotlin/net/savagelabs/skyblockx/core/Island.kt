@@ -624,7 +624,7 @@ fun createIsland(
 	// Make player null because we dont want to send them the SkyblockEdit Engine's success upon pasting the island.
 	SkyblockEdit().pasteIsland(schematic, island.getIslandCenter(), null)
 	if (player != null) {
-		val iPlayer = getIPlayer(player)
+		val iPlayer = player.getIPlayer()
 		iPlayer.assignIsland(island)
 		if (teleport) teleportAsync(player, island.getIslandCenter(), Runnable { })
 		incrementQuestInOrder(island)
@@ -646,7 +646,7 @@ fun createIsland(
 }
 
 fun deleteIsland(player: Player) {
-	val iPlayer = getIPlayer(player)
+	val iPlayer = player.getIPlayer()
 	if (iPlayer.hasIsland()) {
 		Data.instance.islands.remove(iPlayer.getIsland()!!.islandID)
 		iPlayer.unassignIsland()

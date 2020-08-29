@@ -14,7 +14,7 @@ class DataListener : Listener {
 
 	@EventHandler
 	fun onPlayerConnect(event: PlayerJoinEvent) {
-		val iPlayer = getIPlayer(event.player)
+		val iPlayer = event.player.getIPlayer()
 		iPlayer.falling = false
 		iPlayer.name = event.player.name
 		// Update owner tag changes :)
@@ -27,7 +27,7 @@ class DataListener : Listener {
 
 	@EventHandler
 	fun onPlayerDisconnect(event: PlayerQuitEvent) {
-		val iPlayer = getIPlayer(event.player)
+		val iPlayer = event.player.getIPlayer()
 		for (authorizedUser in iPlayer.coopedPlayersAuthorized) {
 			val island = iPlayer.getIsland() ?: continue
 			island.removeCoopPlayer(authorizedUser)
