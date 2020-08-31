@@ -21,8 +21,6 @@ object MongoManager {
 
 	const val PLAYERS_COLLECTION_NAME = "players"
 	const val ISLANDS_COLLECTION_NAME = "islands"
-	const val MISC_COLLECTION_NAME = "misc"
-
 
 	fun initialize() {
 		val logger = SkyblockX.skyblockX.logger
@@ -43,19 +41,22 @@ object MongoManager {
 
 	suspend fun load(): Data {
 		if (!initialized) initialize()
+
 		val players = database.getCollection<IPlayer>(PLAYERS_COLLECTION_NAME).find().toList()
 		val islands = database.getCollection<Island>(ISLANDS_COLLECTION_NAME).find().toList()
 		val data = Data()
 		players.forEach { player -> data.IPlayers[player.uuid] = player }
-		var islandCounter = 0
+		var highestIslandIDFound = 0
 		islands.forEach { island ->
-			if (island.islandID > islandCounter) islandCounter = island.islandID
+			if (island.islandID > highestIslandIDFound)  highestIslandIDFound = island.islandID
 			data.islands[island.islandID] = island
 		}
+		data.nextIslandID = highestIslandIDFound + 1
 		return data
 	}
 
 	suspend fun save(data: Data) {
+
 		val playerCollection = database.getCollection<IPlayer>(PLAYERS_COLLECTION_NAME)
 		data.IPlayers.forEach { (uuid, iplayer) ->
 			// Find and replace throws a thicc boi error in kmongo
