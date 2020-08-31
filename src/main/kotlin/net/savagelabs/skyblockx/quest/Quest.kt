@@ -111,12 +111,12 @@ fun sendQuestOrderMessage(island: Island) {
 		Quests.instance.islandQuests.find { quest -> quest.id == Quests.instance.questOrder[island.currentQuestOrderIndex!!] }
 
 	if (quest == null) {
-		island.messageAllOnlineIslandMembers(Message.instance.messagePrefix + Message.instance.questOrderNoNextQuestWasFound)
+		island.messageAllOnlineIslandMembers(Message.instance.questOrderNoNextQuestWasFound)
 		return
 	}
 
 	island.messageAllOnlineIslandMembers(
-		Message.instance.messagePrefix + String.format(
+		String.format(
 			Message.instance.nextQuestMessage,
 			quest.name
 		)
