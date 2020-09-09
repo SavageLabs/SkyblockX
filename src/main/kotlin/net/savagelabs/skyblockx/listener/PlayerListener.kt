@@ -152,7 +152,7 @@ class PlayerListener : Listener {
 					?: return
 
 			val materialSmelted =
-                XMaterial.matchXMaterial(event.currentItem!!.type).name
+				XMaterial.matchXMaterial(event.currentItem!!.type).name
 
 
 			if (materialSmelted != targetQuest.goalParameter) {
