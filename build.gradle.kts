@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "net.savagelabs"
-version = "v1.5"
+version = "v1.5.1"
 
 repositories {
     mavenCentral()
