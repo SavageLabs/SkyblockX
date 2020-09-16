@@ -617,10 +617,12 @@ fun createIsland(
 			spiral(Data.instance.nextIslandID),
 			player?.uniqueId,
 			size,
-			player?.name ?: "SYSTEM_OWNED"
+			player?.name ?: systemOwnedName
 		)
 	Data.instance.islands[Data.instance.nextIslandID] = island
 	Data.instance.nextIslandID++
+	// clear items?
+	island.getIslandCenter().chunk.entities.forEach { entity -> entity.remove() }
 	// Make player null because we dont want to send them the SkyblockEdit Engine's success upon pasting the island.
 	SkyblockEdit().pasteIsland(schematic, island.getIslandCenter(), null)
 	if (player != null) {
