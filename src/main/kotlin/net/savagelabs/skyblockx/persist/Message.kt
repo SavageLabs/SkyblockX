@@ -28,6 +28,8 @@ class Message : ConfigContainer {
 	var genericActionRequiresPermission = "&cThis action requires the permission %1\$s"
 	var genericCannotReferenceYourSelf = "&cYou cannot reference yourself."
 	var genericPlayerNotAnIslandMember = "&cThis player is not an island member."
+	var genericPlayerPaid = "&7You have paid %1\$s."
+	var genericPlayerDidntPay = "&7You dont have %1\$s."
 
 
 	var commandBaseHelp = "&7The base command for skyblock."

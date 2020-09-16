@@ -3,6 +3,7 @@ package net.savagelabs.skyblockx.gui.menu
 import fr.minuskube.inv.ClickableItem
 import fr.minuskube.inv.content.InventoryContents
 import net.savagelabs.skyblockx.core.Island
+import net.savagelabs.skyblockx.core.getIPlayer
 import net.savagelabs.skyblockx.gui.BaseMenu
 import net.savagelabs.skyblockx.gui.MenuConfig
 import net.savagelabs.skyblockx.gui.buildMenu
@@ -41,19 +42,20 @@ class UpgradeMenu(val island: Island) : BaseMenu(
 					if (upgradeItem == upgradeTypeInfo.maxLevelItem) {
 						return@of
 					}
+					val iplayer = player.getIPlayer()
 
 					when (type) {
 						UpgradeType.GENERATOR -> {
-							GeneratorUpgrade.runUpgradeEffect(island, upgradeLevel)
+							GeneratorUpgrade.runUpgradeEffect(iplayer, island, upgradeLevel)
 						}
 						UpgradeType.BORDER -> {
-							BorderUpgrade.runUpgradeEffect(island, upgradeLevel)
+							BorderUpgrade.runUpgradeEffect(iplayer, island, upgradeLevel)
 						}
 						UpgradeType.MAX_HOMES -> {
-							HomeUpgrade.runUpgradeEffect(island, upgradeLevel)
+							HomeUpgrade.runUpgradeEffect(iplayer, island, upgradeLevel)
 						}
 						UpgradeType.TEAM_SIZE -> {
-							TeamUpgrade.runUpgradeEffect(island, upgradeLevel)
+							TeamUpgrade.runUpgradeEffect(iplayer, island, upgradeLevel)
 						}
 					}
 					buildMenu(this).open(player)

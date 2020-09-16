@@ -36,6 +36,7 @@ dependencies {
 
     compileOnly("org.spigotmc:spigot-api:1.16.2-R0.1-SNAPSHOT")
     compileOnly("me.clip:placeholderapi:2.9.2")
+    compileOnly("com.github.MilkBowl:VaultAPI:1.7")
 
     // Present in XCore -- for IntelliJ indexing.
     compileOnly("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.7")

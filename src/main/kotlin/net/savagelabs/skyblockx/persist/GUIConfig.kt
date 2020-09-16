@@ -103,7 +103,7 @@ class GUIConfig(@JsonIgnore override val name: String = "GUIConfig") : ConfigCon
 			),
 			MenuItem(
 				SerializableItem(
-					XMaterial.GREEN_BANNER,
+					XMaterial.PLAYER_HEAD,
 					"&eMember Manager",
 					listOf("&e&l→&a &aInvite or Kick Island Members."),
 					1
@@ -112,6 +112,18 @@ class GUIConfig(@JsonIgnore override val name: String = "GUIConfig") : ConfigCon
 					"is member"
 				),
 				GUICoordinate(2, 3)
+			),
+			MenuItem(
+				SerializableItem(
+					XMaterial.DIAMOND,
+					"&bUpgrade Manager",
+					listOf("&e&l→&a &aUpgrade your island."),
+					1
+				),
+				listOf(
+					"is ugpgrade"
+				),
+				GUICoordinate(4, 1)
 			)
 		)
 	)

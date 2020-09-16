@@ -11,6 +11,7 @@ import net.savagelabs.skyblockx.command.island.IslandBaseCommand
 import net.savagelabs.skyblockx.command.skyblock.SkyblockBaseCommand
 import net.savagelabs.skyblockx.core.*
 import net.savagelabs.skyblockx.hooks.PlacholderAPIIntegration
+import net.savagelabs.skyblockx.hooks.VaultHook
 import net.savagelabs.skyblockx.listener.*
 import net.savagelabs.skyblockx.persist.*
 import net.savagelabs.skyblockx.persist.data.Items
@@ -54,6 +55,7 @@ class SkyblockX : SavagePluginX() {
 			setupAdminCommands()
 			setupOreGeneratorAlgorithm()
 			loadPlaceholderAPIHook()
+			VaultHook.load()
 			startIslandTopTask()
 			startAutoSaveTask()
 			loadMetrics()

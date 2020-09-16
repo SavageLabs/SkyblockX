@@ -1,41 +1,38 @@
 package net.savagelabs.skyblockx.upgrade
 
 import net.savagelabs.skyblockx.SkyblockX
+import net.savagelabs.skyblockx.core.IPlayer
 import net.savagelabs.skyblockx.core.Island
 import net.savagelabs.skyblockx.core.updateWorldBorder
 import net.savagelabs.skyblockx.event.IslandUpgradeEvent
+import net.savagelabs.skyblockx.hooks.VaultHook
 import net.savagelabs.skyblockx.persist.Config
 import org.bukkit.Bukkit
 
 
 interface Upgrade {
 
-	fun runUpgradeEffect(island: Island, level: Int)
+	fun runUpgradeEffect(upgradingPlayer: IPlayer, island: Island, level: Int)
+
+	fun getPrice(level: Int): Double? {
+		return Config.instance.upgrades[UpgradeType.GENERATOR]?.upgradeInfoPerLevel?.get(level)?.price
+	}
 }
 
 
 object GeneratorUpgrade : Upgrade {
-	override fun runUpgradeEffect(island: Island, level: Int) {
+	override fun runUpgradeEffect(upgradingPlayer: IPlayer, island: Island, level: Int) {
+		if (!upgradingPlayer.takeMoney(getPrice(level)!!)) return
+		
 		island.upgrades[UpgradeType.GENERATOR] = level
 		Bukkit.getPluginManager().callEvent(IslandUpgradeEvent(island, UpgradeType.GENERATOR))
 	}
 }
 
-//class CoopUpgrade(
-//    name: String,
-//    item: SerializableItem
-//) : Upgrade(
-//    name,
-//    item
-//) {
-//    override fun runUpgradeEffect(island: Island, level: Int) {
-//        island.upgrades[UpgradeType.COOP_SIZE] = level
-//        island.coopBoost = Config.instance.upgrades[UpgradeType.COOP_SIZE]?.get(level)?.toInt() ?: 0
-//    }
-//}
-
 object BorderUpgrade : Upgrade {
-	override fun runUpgradeEffect(island: Island, level: Int) {
+	override fun runUpgradeEffect(upgradingPlayer: IPlayer, island: Island, level: Int) {
+		if (!upgradingPlayer.takeMoney(getPrice(level)!!)) return
+
 		island.upgrades[UpgradeType.BORDER] = level
 		island.islandSize =
 			Config.instance.upgrades[UpgradeType.BORDER]?.upgradeInfoPerLevel?.get(level)?.parameter?.toIntOrNull()
@@ -55,7 +52,9 @@ object BorderUpgrade : Upgrade {
 }
 
 object HomeUpgrade : Upgrade {
-	override fun runUpgradeEffect(island: Island, level: Int) {
+	override fun runUpgradeEffect(upgradingPlayer: IPlayer, island: Island, level: Int) {
+		if (!upgradingPlayer.takeMoney(getPrice(level)!!)) return
+
 		island.upgrades[UpgradeType.MAX_HOMES] = level
 		island.homeBoost += Config.instance.upgrades[UpgradeType.MAX_HOMES]?.upgradeInfoPerLevel?.get(level)?.parameter?.toIntOrNull()
 			?: run {
@@ -68,7 +67,9 @@ object HomeUpgrade : Upgrade {
 }
 
 object TeamUpgrade : Upgrade {
-	override fun runUpgradeEffect(island: Island, level: Int) {
+	override fun runUpgradeEffect(upgradingPlayer: IPlayer, island: Island, level: Int) {
+		if (!upgradingPlayer.takeMoney(getPrice(level)!!)) return
+
 		island.upgrades[UpgradeType.TEAM_SIZE] = level
 		island.memberBoost += Config.instance.upgrades[UpgradeType.TEAM_SIZE]?.upgradeInfoPerLevel?.get(level)?.parameter?.toIntOrNull()
 			?: run {

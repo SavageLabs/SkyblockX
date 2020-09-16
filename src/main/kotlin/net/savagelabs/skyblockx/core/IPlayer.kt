@@ -1,6 +1,7 @@
 package net.savagelabs.skyblockx.core
 
 import com.fasterxml.jackson.annotation.JsonIgnore
+import net.savagelabs.skyblockx.hooks.VaultHook
 import net.savagelabs.skyblockx.persist.Config
 import net.savagelabs.skyblockx.persist.Data
 import net.savagelabs.skyblockx.persist.Message
@@ -111,6 +112,16 @@ data class IPlayer(val uuid: UUID, var name: String) {
 			islands.add(getIslandById(id) ?: continue)
 		}
 		return islands
+	}
+
+	fun takeMoney(price: Double): Boolean {
+		val success = !VaultHook.takeFrom(this, price)!!.transactionSuccess()
+		if (success) {
+			message(Message.instance.genericPlayerPaid, price.toString())
+		} else {
+			message(Message.instance.genericPlayerDidntPay, price.toString())
+		}
+		return success
 	}
 
 	fun attemptExpel(target: IPlayer) {
