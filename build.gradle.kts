@@ -83,8 +83,8 @@ tasks {
     }
 
     val copyToDebug by registering(Copy::class) {
-        dependsOn(jar)
-        from(jar.get().archiveFile.get())
+        dependsOn(shadowJar)
+        from(shadowJar.get().archiveFile.get())
         into(projectDir.resolve("debug/plugins"))
     }
 
