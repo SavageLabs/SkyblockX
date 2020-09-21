@@ -229,6 +229,7 @@ class SkyblockX : SavagePluginX() {
 
 		// Don't load this as people shouldn't be touching this file anyways.
 		runBlocking {
+			logInfo("Saving to ${if (Config.instance.useDatabase) "database" else "flatfile..."}")
 			if (Config.instance.useDatabase) MongoManager.save(Data.instance) else FlatDataManager.save(Data.instance)
 		}
 
