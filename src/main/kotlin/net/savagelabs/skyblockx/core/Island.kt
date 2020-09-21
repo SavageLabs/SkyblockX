@@ -621,7 +621,7 @@ fun createIsland(
     Data.instance.islands[Data.instance.nextIslandID] = island
     Data.instance.nextIslandID++
     // clear items?
-    island.getIslandCenter().chunk.entities.filterIsInstance<Player>().forEach { entity -> entity.remove() }
+    island.getIslandCenter().chunk.entities.filterNot { entity -> entity is Player }.forEach { entity -> entity.remove() }
     // Make player null because we dont want to send them the SkyblockEdit Engine's success upon pasting the island.
     SkyblockEdit().pasteIsland(schematic, island.getIslandCenter(), null)
     if (player != null) {
