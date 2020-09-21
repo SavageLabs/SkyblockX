@@ -480,7 +480,6 @@ data class Island(
 		}
 	}
 
-
 	@JsonIgnore
 	fun getLeader(): IPlayer? {
 		return Data.instance.IPlayers[leaderUUID]

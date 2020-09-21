@@ -115,7 +115,7 @@ data class IPlayer(val uuid: UUID, var name: String) {
 	}
 
 	fun takeMoney(price: Double): Boolean {
-		val success = !VaultHook.takeFrom(this, price)!!.transactionSuccess()
+		val success = VaultHook.takeFrom(this, price)!!.transactionSuccess()
 		if (success) {
 			message(Message.instance.genericPlayerPaid, price.toString())
 		} else {
