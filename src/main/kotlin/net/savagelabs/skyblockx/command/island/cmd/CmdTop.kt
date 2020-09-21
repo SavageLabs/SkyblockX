@@ -63,7 +63,7 @@ class CmdTop : Command<SCommandInfo, SCommandRequirements>() {
             val entry = sortedBy.getOrNull(islandindex) ?: break
             val builder = StringBuilder()
             entry.matAmt.forEach { xmat -> builder.append("${xmat.key.name}: ${xmat.value}\n") }
-            var tooltip = ""
+            var tooltip = arrayListOf<String>();
             val island = Data.instance.islands[entry.islandID]!!
             for (line in Config.instance.islandTopTooltip) {
                 var lineBasicParsed = line.parseContext(island, islandindex, entry)
@@ -75,13 +75,13 @@ class CmdTop : Command<SCommandInfo, SCommandRequirements>() {
                 }
                 XMaterial.values().toList()
                     .forEach { xmat -> lineBasicParsed = lineBasicParsed.replace("{${xmat.name}}", 0.toString()) }
-                tooltip += color("\n$lineBasicParsed")
+                tooltip.add(color(lineBasicParsed))
             }
             val line = color(
                 Config.instance.islandTopLineFormat.parseContext(island, islandindex, entry)
             )
             if (info.isPlayer()) {
-                JSONMessage.create(line).tooltip(tooltip).send(info.player)
+                JSONMessage.create(line).tooltip(tooltip.joinToString("\n")).send(info.player)
             } else {
                 info.message(line, false.toString())
             }
