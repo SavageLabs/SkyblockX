@@ -77,7 +77,7 @@ data class IPlayer(val uuid: UUID, var name: String) {
 	}
 
 	fun message(message: String) {
-		getPlayer()!!.sendMessage(color(Message.instance.messagePrefix + message))
+		getPlayer()?.sendMessage(color(Message.instance.messagePrefix + message))
 	}
 
 	fun isCoopedIsland(id: Int): Boolean {
