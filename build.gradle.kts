@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "net.savagelabs"
-version = "v1.5.1"
+version = "v1.5.2"
 
 repositories {
     mavenCentral()
@@ -83,8 +83,8 @@ tasks {
     }
 
     val copyToDebug by registering(Copy::class) {
-        dependsOn(jar)
-        from(jar.get().archiveFile.get())
+        dependsOn(shadowJar)
+        from(shadowJar.get().archiveFile.get())
         into(projectDir.resolve("debug/plugins"))
     }
 
