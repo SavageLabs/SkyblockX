@@ -2,7 +2,7 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import org.apache.tools.ant.filters.ReplaceTokens
 
 plugins {
-    kotlin("jvm") version "1.3.72"
+    kotlin("jvm") version "1.4.21"
     id("com.github.johnrengelman.shadow") version "5.1.0"
 }
 
@@ -39,7 +39,7 @@ dependencies {
     compileOnly("com.github.MilkBowl:VaultAPI:1.7")
 
     // Present in XCore -- for IntelliJ indexing.
-    compileOnly("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.7")
+    compileOnly("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.1")
     compileOnly("com.fasterxml.jackson.module:jackson-module-kotlin:2.11.0")
     compileOnly("com.fasterxml.jackson.core:jackson-databind:2.11.0")
     compileOnly("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.11.1")
