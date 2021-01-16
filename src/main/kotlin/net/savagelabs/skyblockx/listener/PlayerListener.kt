@@ -7,7 +7,7 @@ import net.savagelabs.skyblockx.persist.Message
 import net.savagelabs.skyblockx.persist.Quests
 import net.savagelabs.skyblockx.quest.QuestGoal
 import net.savagelabs.skyblockx.quest.failsQuestCheckingPreRequisites
-import net.savagelabs.skyblockx.sedit.SkyblockEdit
+import net.savagelabs.skyblockx.sedit.SkyBlockEdit
 import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.enchantments.Enchantment
@@ -23,8 +23,6 @@ import org.bukkit.event.inventory.InventoryType
 import org.bukkit.event.player.*
 
 class PlayerListener : Listener {
-
-
 	@EventHandler
 	fun onPlayerCraft(event: CraftItemEvent) {
 		// Exit if we aren't in skyblock world - since they cannot be on an island that way.
@@ -34,7 +32,6 @@ class PlayerListener : Listener {
 		val iplayer = (event.whoClicked as Player).getIPlayer()
 		// Fail the checks if we dont have an island, or dont have a active quest, or if we arent on our own island.
 		val island = iplayer.getIsland()
-
 
 		if (failsQuestCheckingPreRequisites(iplayer, island, event.whoClicked.location)) {
 			return
@@ -84,7 +81,7 @@ class PlayerListener : Listener {
 		val newLoc = islandFromLocation?.getIslandCenter()?.clone() ?: return
 		newLoc.world = Bukkit.getWorld(Config.instance.skyblockWorldNameNether)
 		if (!islandFromLocation.beenToNether) {
-			SkyblockEdit().pasteIsland(islandFromLocation.netherFilePath.replace(".structure", ""), newLoc, null)
+			SkyBlockEdit.pasteIsland(islandFromLocation.netherFilePath.replace(".structure", ""), newLoc, null)
 			islandFromLocation.beenToNether = true
 		}
 		event.player.teleport(newLoc, PlayerTeleportEvent.TeleportCause.PLUGIN)

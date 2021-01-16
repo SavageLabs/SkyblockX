@@ -8,35 +8,33 @@ import net.savagelabs.skyblockx.command.SCommandRequirements
 import net.savagelabs.skyblockx.command.SCommandRequirementsBuilder
 import net.savagelabs.skyblockx.core.Permission
 import net.savagelabs.skyblockx.persist.Message
-import net.savagelabs.skyblockx.sedit.SkyblockEdit
+import net.savagelabs.skyblockx.sedit.SkyBlockEdit
 
 class CmdSESaveStructure : Command<SCommandInfo, SCommandRequirements>() {
-
 	init {
 		aliases.add("save-struct")
 		aliases.add("savestruct")
 
 		requiredArgs.add(Argument("filename", 0, StringArgument()))
 
-		commandRequirements =
-			SCommandRequirementsBuilder()
-				.asPlayer(true)
-				.withPermission(Permission.SE_SAVESTUCT)
-				.build()
+		commandRequirements = SCommandRequirementsBuilder()
+			.asPlayer(true)
+			.withPermission(Permission.SE_SAVESTUCT)
+			.build()
 	}
 
-
 	override fun perform(info: SCommandInfo) {
-		if (info.iPlayer!!.pos1 == null || info.iPlayer!!.pos2 == null) {
+		val islandPlayer = info.iPlayer ?: return
+		val positionOne = islandPlayer.pos1
+		val positionTwo = islandPlayer.pos2
+
+		if (positionOne == null || positionTwo == null) {
 			info.message(Message.instance.commandSESaveStructurePositionsNotSet)
 			return
 		}
-		SkyblockEdit().saveStructure(info.iPlayer!!.pos1!!, info.iPlayer!!.pos2!!, info.player!!, info.args[0])
+
+		SkyBlockEdit.saveStructure(positionOne, positionTwo, info.player ?: return, info.args[0])
 	}
 
-
-	override fun getHelpInfo(): String {
-		return Message.instance.commandSESaveStructureHelp
-	}
-
+	override fun getHelpInfo(): String = Message.instance.commandSESaveStructureHelp
 }

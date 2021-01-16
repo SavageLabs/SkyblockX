@@ -31,9 +31,7 @@ import kotlin.time.TimedValue
 import kotlin.time.measureTimedValue
 import net.savagelabs.skyblockx.persist.MongoManager
 
-
 class SkyblockX : SavagePluginX() {
-
 	companion object {
 		lateinit var skyblockX: SkyblockX
 		lateinit var worldBorderUtil: WorldBorderUtil
@@ -41,7 +39,6 @@ class SkyblockX : SavagePluginX() {
 		var islandValues: IslandTopInfo? = null
 		lateinit var inventoryManager: InventoryManager
 	}
-
 
 	@ExperimentalTime
 	override fun enable() {
@@ -251,6 +248,4 @@ class SkyblockX : SavagePluginX() {
 			, ChatColor.AQUA
 		)
 	}
-
-
 }

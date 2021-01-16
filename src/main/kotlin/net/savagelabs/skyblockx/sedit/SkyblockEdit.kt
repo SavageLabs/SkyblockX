@@ -1,6 +1,5 @@
 package net.savagelabs.skyblockx.sedit
 
-
 import com.cryptomorin.xseries.XMaterial
 import net.savagelabs.savagepluginx.item.ItemBuilder
 import net.savagelabs.skyblockx.SkyblockX
@@ -15,12 +14,10 @@ import org.bukkit.entity.Player
 import java.io.File
 import java.util.*
 
-
 /**
  * This class is dog shit right now, I need to rewrite it to actually support more operations :P
  */
-class SkyblockEdit {
-
+object SkyBlockEdit {
 	fun normalizeBlockName(xmaterialDefaultName: String): String {
 		/*
 		* This function is returning the right syntax of item names
@@ -28,16 +25,14 @@ class SkyblockEdit {
 		* @inputName string that need to be translated
 		* */
 		val regex = """(Optional|optional)\[(\w+\s*)+]""".toRegex()
-		if (regex.matches(xmaterialDefaultName)) {
-			return xmaterialDefaultName
+		return if (regex.matches(xmaterialDefaultName)) {
+			xmaterialDefaultName
 				.toUpperCase()
 				.replace("OPTIONAL", "")
 				.replace(" ", "_")
 				.replace("[", "")
 				.replace("]", "")
-		} else {
-			return xmaterialDefaultName
-		}
+		} else xmaterialDefaultName
 	}
 
 	fun saveStructure(pos1: Location, pos2: Location, player: Player, name: String, skipAir: Boolean = false) {
@@ -124,18 +119,28 @@ class SkyblockEdit {
 	}
 
 	fun pasteIsland(name: String, location: Location, player: Player?) {
-		var file = File(File(SkyblockX.skyblockX.dataFolder, "structures"), "$name.structure")
+		val dataFolder = SkyblockX.skyblockX.dataFolder
+		val file = File(File(dataFolder, "structures"), "$name.structure")
 
 		if (!file.exists()) {
 			player?.sendMessage("$name does not exist, using default file: island.structure")
-			val fileIsland = File(SkyblockX.skyblockX.dataFolder, "island.structure")
-			val fileNether = File(SkyblockX.skyblockX.dataFolder, "nether-island.structure")
-			SkyblockX.skyblockX.saveResource("island.structure", false)
-			SkyblockX.skyblockX.saveResource("nether-island.structure", false)
-			val copytoStruct = File(File(SkyblockX.skyblockX.dataFolder, "structures"), "island.structure")
-			if (!copytoStruct.exists()) fileIsland.copyTo(copytoStruct, false)
-			val copyToNetherStruct = File(File(SkyblockX.skyblockX.dataFolder, "structures"), "nether-island.structure")
-			if (!copyToNetherStruct.exists()) fileNether.copyTo(copyToNetherStruct, false)
+
+			val fileIsland = File(dataFolder, "island.structure")
+			val fileNether = File(dataFolder, "nether-island.structure")
+
+			with (SkyblockX.skyblockX) {
+				saveResource("island.structure", false)
+				saveResource("nether-island.structure", false)
+			}
+
+			with (dataFolder.resolve("structures")) {
+				val copyToStruct = File(this, "island.structure")
+				if (!copyToStruct.exists()) fileIsland.copyTo(copyToStruct, false)
+
+				val copyToNetherStruct = File(this, "nether-island.structure")
+				if (!copyToNetherStruct.exists()) fileNether.copyTo(copyToNetherStruct, false)
+			}
+
 			fileNether.delete()
 			fileIsland.delete()
 		}
@@ -143,9 +148,9 @@ class SkyblockEdit {
 		pasteStructure(file, location, player)
 	}
 
-
 	fun pasteStructure(file: File, relativeLocation: Location, player: Player?) {
 		val reader = SbfReader().read(file)
+
 		for (block in reader.blocks) {
 			relativeLocation.world!!.getBlockAt(
 				block.x.toInt() + relativeLocation.x.toInt() + reader.offsetx,
@@ -153,6 +158,7 @@ class SkyblockEdit {
 				block.z.toInt() + relativeLocation.z.toInt() + reader.offsetz
 			).type = enumValueOrNull<XMaterial>(block.type)?.parseMaterial() ?: Material.AIR
 		}
+
 		for (chest in reader.chests) {
 			val blockAt = relativeLocation.world!!.getBlockAt(
 				chest.x.toInt() + relativeLocation.x.toInt() + reader.offsetx,
@@ -179,5 +185,4 @@ class SkyblockEdit {
 		}
 		player?.sendMessage(Message.instance.commandSEPasteStructurePasted)
 	}
-
 }

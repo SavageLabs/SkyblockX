@@ -69,6 +69,7 @@ class EntityListener : Listener {
 		if (event.entity !is Player || isNotInSkyblockWorld(event.entity.world)) {
 			return
 		}
+
 		val iPlayer = (event.entity as Player).getIPlayer()
 		if (Config.instance.disableMobDamageWhenIslandVisitor && !iPlayer.isOnOwnIsland()) {
 			event.isCancelled = true

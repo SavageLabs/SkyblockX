@@ -14,7 +14,7 @@ import net.savagelabs.skyblockx.persist.data.SLocation
 import net.savagelabs.skyblockx.persist.data.getSLocation
 import net.savagelabs.skyblockx.quest.Quest
 import net.savagelabs.skyblockx.quest.incrementQuestInOrder
-import net.savagelabs.skyblockx.sedit.SkyblockEdit
+import net.savagelabs.skyblockx.sedit.SkyBlockEdit
 import net.savagelabs.skyblockx.upgrade.UpgradeType
 import net.savagelabs.skyblockx.world.Point
 import net.savagelabs.skyblockx.world.spiral
@@ -41,7 +41,6 @@ import kotlin.time.ExperimentalTime
 import kotlin.time.TimedValue
 import kotlin.time.measureTimedValue
 
-
 @Suppress("UNCHECKED_CAST")
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class Island(
@@ -51,7 +50,6 @@ data class Island(
     var islandSize: Int,
     var islandName: String
 ) {
-
     var inventory: Inventory = Bukkit.createInventory(null, 27)
 
     @JsonIgnore
@@ -623,11 +621,11 @@ fun createIsland(
     // clear items?
     island.getIslandCenter().chunk.entities.filterNot { entity -> entity is Player }.forEach { entity -> entity.remove() }
     // Make player null because we dont want to send them the SkyblockEdit Engine's success upon pasting the island.
-    SkyblockEdit().pasteIsland(schematic, island.getIslandCenter(), null)
+    SkyBlockEdit.pasteIsland(schematic, island.getIslandCenter(), null)
     if (player != null) {
         val iPlayer = player.getIPlayer()
         iPlayer.assignIsland(island)
-        if (teleport) teleportAsync(player, island.getIslandCenter(), Runnable { })
+        if (teleport) teleportAsync(player, island.getIslandCenter(), { })
         incrementQuestInOrder(island)
     }
     // Use deprecated method for 1.8 support.
@@ -658,10 +656,10 @@ fun deleteIsland(player: Player) {
 
 data class IslandTopInfo(val map: HashMap<Int, Island.CalcInfo>, val time: Long)
 
+/**
+ * CALL THIS ASYNC OR WHOLE SERVER WILL SLEEP :).
+ */
 @ExperimentalTime
-        /**
-         * CALL THIS ASYNC OR WHOLE SERVER WILL SLEEP :).
-         */
 fun calculateAllIslands() {
     val islandVals = hashMapOf<Int, Island.CalcInfo>()
     val pluginManager = Bukkit.getPluginManager()
@@ -674,13 +672,12 @@ fun calculateAllIslands() {
         Bukkit.getScheduler().callSyncMethod(SkyblockX.skyblockX) { pluginManager.callEvent(islandPostCalcEvent) }
         worth.worth = islandPostCalcEvent.levelAfterCalc ?: worth.worth
         islandVals[key] = worth
-//        SkyblockX.skyblockX.logger.info("Finished Island ${island.ownerTag} ${worth.timeDuration}")
     }
     SkyblockX.islandValues = IslandTopInfo(islandVals, System.nanoTime())
 }
 
 fun isIslandNameTaken(tag: String): Boolean {
-    for ((id, island) in Data.instance.islands) {
+    for ((_, island) in Data.instance.islands) {
         if (tag == island.islandName) return true
     }
     return false
