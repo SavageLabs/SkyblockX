@@ -11,6 +11,7 @@ import net.savagelabs.skyblockx.persist.Quests
 import net.savagelabs.skyblockx.quest.QuestGoal
 import org.bukkit.Bukkit
 import org.bukkit.Location
+import org.bukkit.entity.EntityType
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
@@ -66,7 +67,8 @@ class EntityListener : Listener {
 	@EventHandler
 	fun onPlayerTakingDamage(event: EntityDamageByEntityEvent) {
 		// If they're not a player or if the entity is not in the skyblock world, we do not care.
-		if (event.entity !is Player || isNotInSkyblockWorld(event.entity.world)) {
+		val type = event.entityType
+		if (type != EntityType.PLAYER || event.damager.type == EntityType.PLAYER || isNotInSkyblockWorld(event.entity.world)) {
 			return
 		}
 

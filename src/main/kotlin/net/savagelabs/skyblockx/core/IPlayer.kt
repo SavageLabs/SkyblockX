@@ -73,7 +73,7 @@ data class IPlayer(val uuid: UUID, var name: String) {
 
 	@JsonIgnore
 	fun isOnOwnIsland(): Boolean {
-		return !(this.hasIsland() && this.getIsland()!!.containsBlock(getPlayer()!!.location))
+		return this.hasIsland() && this.getIsland()?.containsBlock(getPlayer()!!.location) == true
 	}
 
 	fun message(message: String) {
