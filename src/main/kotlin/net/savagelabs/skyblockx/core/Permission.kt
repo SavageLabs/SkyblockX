@@ -79,8 +79,7 @@ fun registerAllPermissions(pluginManager: PluginManager) {
 }
 
 fun hasPermission(humanEntity: HumanEntity, permission: Permission): Boolean {
-	if (humanEntity.isOp) return true
-	return humanEntity.hasPermission(permission.getFullPermissionNode())
+	return hasPermission(humanEntity, permission.getFullPermissionNode())
 }
 
 fun hasPermission(humanEntity: HumanEntity, permission: String): Boolean {
@@ -95,35 +94,26 @@ fun getMaxPermission(permissable: Permissible, permission: String): Int {
 	// Atomic cuz values need to be final to be accessed from lambda.
 	val max = AtomicInteger()
 
-	permissable.effectivePermissions.stream()
-		.map(PermissionAttachmentInfo::getPermission)
-		.map { perm -> perm.toString().toLowerCase() }
-		.filter { permString -> permString.startsWith(permission) }
-		.map { permString -> permString.replace("$permission.", "") }
-		.forEach { value ->
-			// If the value is *, then its basically infinity
-			if (value.equals("*", true)) {
-				max.set(-1)
-				return@forEach
-			}
+	// simple for loop rather than 5 different loops in a stream by mapping & filtering
+	for (attachment in permissable.effectivePermissions) {
+		val attachedPermission = attachment.permission.toLowerCase()
+		if (!attachedPermission.startsWith(permission)) continue
 
-			// Other foreach set it to -1.
-			if (max.get() == -1) {
-				return@forEach
-			}
-
-			try {
-				// Get the int from name
-				val amount = Integer.parseInt(value)
-
-				// Check if our value is bigger than the one we have.
-				if (amount > max.get()) {
-					max.set(amount)
-				}
-			} catch (exception: NumberFormatException) {
-				// hehe you got ignored like women ignore me
-			}
+		val processedPermission = attachedPermission.replace("$permission.", "")
+		if (processedPermission.equals("*", ignoreCase = true)) {
+			max.set(-1)
+			continue
 		}
 
+		val latestMax = max.get()
+		if (latestMax == -1) {
+			continue
+		}
+
+		val amount = processedPermission.toIntOrNull() ?: continue
+		if (amount > latestMax) max.set(amount)
+	}
+
+	// return the latest max
 	return max.get()
 }
