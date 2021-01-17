@@ -603,11 +603,9 @@ fun createIsland(
     teleport: Boolean = true,
     systemOwnedName: String = "SYSTEM_OWNED"
 ): Island {
-    var size =
-        if (player == null) Config.instance.islandStartSizeInBlocks else getMaxPermission(player, "skyblockx.size")
-    if (size == -1) size = Config.instance.islandStartSizeInBlocks
-    size =
-        if (size <= 0 || size > Config.instance.islandMaxSizeInBlocks) Config.instance.islandMaxSizeInBlocks else size
+    var size = if (player == null) Config.instance.islandStartSizeInBlocks else getMaxPermission(player, "skyblockx.size")
+    if (size <= 0) size = Config.instance.islandStartSizeInBlocks
+    size = if (size > Config.instance.islandMaxSizeInBlocks) Config.instance.islandMaxSizeInBlocks else size
     val island =
         Island(
             Data.instance.nextIslandID,
