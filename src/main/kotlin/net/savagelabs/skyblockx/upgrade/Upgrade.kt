@@ -9,20 +9,18 @@ import net.savagelabs.skyblockx.hooks.VaultHook
 import net.savagelabs.skyblockx.persist.Config
 import org.bukkit.Bukkit
 
-
 interface Upgrade {
-
 	fun runUpgradeEffect(upgradingPlayer: IPlayer, island: Island, level: Int)
 
-	fun getPrice(level: Int): Double? {
-		return Config.instance.upgrades[UpgradeType.GENERATOR]?.upgradeInfoPerLevel?.get(level)?.price
+	fun getPrice(type: UpgradeType, level: Int): Double? {
+		return Config.instance.upgrades[type]?.upgradeInfoPerLevel?.get(level)?.price
 	}
 }
 
 
 object GeneratorUpgrade : Upgrade {
 	override fun runUpgradeEffect(upgradingPlayer: IPlayer, island: Island, level: Int) {
-		if (!upgradingPlayer.takeMoney(getPrice(level)!!)) return
+		if (!upgradingPlayer.takeMoney(getPrice(UpgradeType.GENERATOR, level)!!)) return
 		
 		island.upgrades[UpgradeType.GENERATOR] = level
 		Bukkit.getPluginManager().callEvent(IslandUpgradeEvent(island, UpgradeType.GENERATOR))
@@ -31,7 +29,7 @@ object GeneratorUpgrade : Upgrade {
 
 object BorderUpgrade : Upgrade {
 	override fun runUpgradeEffect(upgradingPlayer: IPlayer, island: Island, level: Int) {
-		if (!upgradingPlayer.takeMoney(getPrice(level)!!)) return
+		if (!upgradingPlayer.takeMoney(getPrice(UpgradeType.BORDER, level)!!)) return
 
 		island.upgrades[UpgradeType.BORDER] = level
 		island.islandSize =
@@ -53,7 +51,7 @@ object BorderUpgrade : Upgrade {
 
 object HomeUpgrade : Upgrade {
 	override fun runUpgradeEffect(upgradingPlayer: IPlayer, island: Island, level: Int) {
-		if (!upgradingPlayer.takeMoney(getPrice(level)!!)) return
+		if (!upgradingPlayer.takeMoney(getPrice(UpgradeType.MAX_HOMES, level)!!)) return
 
 		island.upgrades[UpgradeType.MAX_HOMES] = level
 		island.homeBoost += Config.instance.upgrades[UpgradeType.MAX_HOMES]?.upgradeInfoPerLevel?.get(level)?.parameter?.toIntOrNull()
@@ -68,7 +66,7 @@ object HomeUpgrade : Upgrade {
 
 object TeamUpgrade : Upgrade {
 	override fun runUpgradeEffect(upgradingPlayer: IPlayer, island: Island, level: Int) {
-		if (!upgradingPlayer.takeMoney(getPrice(level)!!)) return
+		if (!upgradingPlayer.takeMoney(getPrice(UpgradeType.TEAM_SIZE, level)!!)) return
 
 		island.upgrades[UpgradeType.TEAM_SIZE] = level
 		island.memberBoost += Config.instance.upgrades[UpgradeType.TEAM_SIZE]?.upgradeInfoPerLevel?.get(level)?.parameter?.toIntOrNull()
