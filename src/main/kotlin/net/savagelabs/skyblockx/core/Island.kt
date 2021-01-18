@@ -28,6 +28,7 @@ import org.bukkit.block.CreatureSpawner
 import org.bukkit.entity.EntityType
 import org.bukkit.entity.Player
 import org.bukkit.inventory.Inventory
+import java.lang.IllegalArgumentException
 import java.lang.reflect.InvocationTargetException
 import java.text.DecimalFormat
 import java.util.*
@@ -210,7 +211,12 @@ data class Island(
                                     z
                                 )!!
                             if (blockType == Material.AIR) continue
-                            val xmat = XMaterial.matchXMaterial(blockType)
+                            var xmat: XMaterial = try {
+                                XMaterial.matchXMaterial(blockType)
+                            } catch (ex: IllegalArgumentException) {
+                                XMaterial.AIR
+                            }
+
                             price += BlockValues.instance.blockValues[xmat] ?: 0.0
                             mapAmt[xmat] = mapAmt.getOrDefault(xmat, 0) + 1
                         }
