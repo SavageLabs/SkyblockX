@@ -8,7 +8,7 @@ import net.savagelabs.skyblockx.gui.BaseMenu
 import net.savagelabs.skyblockx.gui.MenuConfig
 import net.savagelabs.skyblockx.gui.buildMenu
 import net.savagelabs.skyblockx.gui.wrapper.MenuItem
-import net.savagelabs.skyblockx.persist.Config
+import net.savagelabs.skyblockx.manager.UpgradeManager
 import net.savagelabs.skyblockx.persist.GUIConfig
 import net.savagelabs.skyblockx.persist.data.SerializableItem
 import net.savagelabs.skyblockx.upgrade.*
@@ -31,38 +31,27 @@ class UpgradeMenu(val island: Island) : BaseMenu(
 	)
 ) {
 	override fun fillContents(player: Player, contents: InventoryContents) {
-		Config.instance.upgrades.forEach { (type, upgradeTypeInfo) ->
-			val upgradeLevel = (island.upgrades[type]?.plus(1) ?: 1)
-			val upgradeLevelInfo = upgradeTypeInfo.upgradeInfoPerLevel[upgradeLevel]
-			val upgradeItem = upgradeLevelInfo?.itemAtLevel ?: upgradeTypeInfo.maxLevelItem
-			contents.set(
-				upgradeItem.guiCoordinate.row,
-				upgradeItem.guiCoordinate.column,
-				ClickableItem.of(upgradeItem.item.buildItem()) {
-					if (upgradeItem == upgradeTypeInfo.maxLevelItem) {
-						return@of
-					}
-					val iplayer = player.getIPlayer()
+		for (upgrade in UpgradeManager.getAll().values) {
+			val level = island.upgrades[upgrade.id]?.plus(1) ?: 1
+			val info = upgrade.preview[level]
 
-					when (type) {
-						UpgradeType.GENERATOR -> {
-							GeneratorUpgrade.runUpgradeEffect(iplayer, island, upgradeLevel)
-						}
-						UpgradeType.BORDER -> {
-							BorderUpgrade.runUpgradeEffect(iplayer, island, upgradeLevel)
-						}
-						UpgradeType.MAX_HOMES -> {
-							HomeUpgrade.runUpgradeEffect(iplayer, island, upgradeLevel)
-						}
-						UpgradeType.TEAM_SIZE -> {
-							TeamUpgrade.runUpgradeEffect(iplayer, island, upgradeLevel)
-						}
-					}
-					buildMenu(this).open(player)
-				})
+			val guiItem = info?.itemAtLevel ?: upgrade.maxLevelItem
+			val (column, row) = guiItem.guiCoordinate
 
+			val item = guiItem.item
+			contents.set(row, column, ClickableItem.of(item.buildItem()) {
+				// if their level is max, ignore clicks
+				if (guiItem == upgrade.maxLevelItem) {
+					return@of
+				}
 
+				// commence upgrade
+				val islandPlayer = player.getIPlayer()
+				upgrade.commence(islandPlayer, island, level)
+
+				// reopen menu to update items
+				buildMenu(this).open(player)
+			})
 		}
 	}
-
 }

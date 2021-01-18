@@ -13,6 +13,7 @@ import net.savagelabs.skyblockx.core.*
 import net.savagelabs.skyblockx.hooks.PlacholderAPIIntegration
 import net.savagelabs.skyblockx.hooks.VaultHook
 import net.savagelabs.skyblockx.listener.*
+import net.savagelabs.skyblockx.manager.UpgradeManager
 import net.savagelabs.skyblockx.persist.*
 import net.savagelabs.skyblockx.persist.data.Items
 import net.savagelabs.skyblockx.world.VoidWorldGenerator
@@ -29,7 +30,6 @@ import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
 import kotlin.time.TimedValue
 import kotlin.time.measureTimedValue
-import net.savagelabs.skyblockx.persist.MongoManager
 
 class SkyblockX : SavagePluginX() {
 	companion object {
@@ -64,6 +64,7 @@ class SkyblockX : SavagePluginX() {
 				EntityListener(),
 				GlideListener()
 			)
+			UpgradeManager.defaults()
 			startInventoryManager()
 			logInfo("Loaded ${Data.instance.IPlayers.size} players.")
 			logInfo("Loaded ${Data.instance.islands.size} islands.")
