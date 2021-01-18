@@ -6,7 +6,7 @@ load: POSTWORLD
 depend: [XCore]
 softdepend: [PlaceholderAPI]
 loadbefore: [Multiverse-Core]
-authors: [ProSavage]
+authors: [ProSavage, Zed]
 description: 'The Ultimate Skyblock Core'
 commands:
   skyblockx:
