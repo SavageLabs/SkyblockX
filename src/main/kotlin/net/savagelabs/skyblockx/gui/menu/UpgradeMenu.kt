@@ -31,7 +31,7 @@ class UpgradeMenu(val island: Island) : BaseMenu(
 	)
 ) {
 	override fun fillContents(player: Player, contents: InventoryContents) {
-		for (upgrade in UpgradeManager.getAll().values) {
+		for (upgrade in UpgradeManager.getAll()) {
 			val level = island.upgrades[upgrade.id]?.plus(1) ?: 1
 			val info = upgrade.preview[level]
 

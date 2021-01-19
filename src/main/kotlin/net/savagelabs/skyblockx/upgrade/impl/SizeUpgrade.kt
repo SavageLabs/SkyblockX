@@ -12,16 +12,16 @@ import net.savagelabs.skyblockx.upgrade.UpgradeLevelInfo
 import net.savagelabs.skyblockx.upgrade.levelItemsOrErrorByPreview
 import net.savagelabs.skyblockx.upgrade.maxLevelItemOrErrorByPreview
 import org.bukkit.Bukkit
+import org.bukkit.event.Event
 import org.bukkit.event.Listener
 
 /**
  * This upgrade increases the size of an Island.
  */
-object SizeUpgrade : Upgrade {
-    override val id: String = "ISLAND_SIZE"
+object SizeUpgrade : Upgrade<Event>(id = "ISLAND_SIZE") {
     override val preview: Map<Int, UpgradeLevelInfo> by lazy { this.levelItemsOrErrorByPreview() }
     override val maxLevelItem: GUIItem by lazy { this.maxLevelItemOrErrorByPreview() }
-    override val listener: Listener? = null
+    override var listener: Listener? = null
 
     override fun commence(player: IPlayer, island: Island, level: Int) {
         if (!player.takeMoney(this.priceOf(level))) {

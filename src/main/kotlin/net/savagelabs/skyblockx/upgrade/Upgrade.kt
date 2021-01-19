@@ -4,6 +4,7 @@ import net.savagelabs.skyblockx.core.IPlayer
 import net.savagelabs.skyblockx.core.Island
 import net.savagelabs.skyblockx.gui.wrapper.GUIItem
 import net.savagelabs.skyblockx.persist.Config.Companion.instance
+import org.bukkit.event.Event
 import org.bukkit.event.Listener
 
 /**
@@ -14,7 +15,7 @@ import org.bukkit.event.Listener
  * @return [Nothing]
  * @throws IllegalStateException
  */
-internal fun Upgrade.errorByPreview(type: String): Nothing =
+internal fun Upgrade<*>.errorByPreview(type: String): Nothing =
 		error("The internal upgrade '$id' failed to load $type from config.")
 
 /**
@@ -24,7 +25,7 @@ internal fun Upgrade.errorByPreview(type: String): Nothing =
  * @return [Map]
  * @throws IllegalStateException
  */
-internal fun Upgrade.levelItemsOrErrorByPreview(): Map<Int, UpgradeLevelInfo> =
+internal fun Upgrade<*>.levelItemsOrErrorByPreview(): Map<Int, UpgradeLevelInfo> =
 		instance.upgrades[id]?.upgradeInfoPerLevel ?: errorByPreview("preview items")
 
 /**
@@ -34,43 +35,54 @@ internal fun Upgrade.levelItemsOrErrorByPreview(): Map<Int, UpgradeLevelInfo> =
  * @return [GUIItem]
  * @throws IllegalStateException
  */
-internal fun Upgrade.maxLevelItemOrErrorByPreview(): GUIItem =
+internal fun Upgrade<*>.maxLevelItemOrErrorByPreview(): GUIItem =
 		instance.upgrades[id]?.maxLevelItem ?: errorByPreview("max level item")
 
 /**
- * This interface is used to create both internal and external upgrades.
+ * This abstraction class is used to create both internal and external upgrades
+ * to later register them.
+ *
+ * Please note that this ID will be used for registration, with that said..
+ * choose wisely to avoid registration collisions.
+ *
+ * @param id [String] the id of this upgrade.
  */
-interface Upgrade {
-	/**
-	 * [String] the id of this upgrade.
-	 * Please note that this ID will be used for registration, with that said..
-	 * choose wisely to avoid registration collisions.
-	 */
-	val id: String
-
+abstract class Upgrade<EventType : Event> constructor(val id: String) {
 	/**
 	 * [Map] this map contains all levels and their information.
 	 */
-	val preview: Map<Int, UpgradeLevelInfo>
+	abstract val preview: Map<Int, UpgradeLevelInfo>
 
 	/**
 	 * [GUIItem] this gui item is the max level item shown in the upgrade GUI.
 	 */
-	val maxLevelItem: GUIItem
+	abstract val maxLevelItem: GUIItem
 
 	/**
-	 * [Listener] this listener can either be assigned with null or an instance of
-	 * a class that implements Listener. The assigned listener will be registered
-	 * during the same period the whole upgrade is. This property is merely for upgrade
-	 * functionality with a clean base.
+	 * [Listener] this listener will be reassigned with the Upgrade's own
+	 * instance of an EventExecutor & Listener to register custom events
+	 * based on this Upgrade without any issues whatsoever. Do yourself a favour
+	 * and don't reassign this.
 	 */
-	val listener: Listener?
+	@PublishedApi internal open var listener: Listener? = null
 
 	/**
 	 * This function is invoked during the time of a player leveling up this upgrade.
 	 * So use this function to handle data etc. for your upgrade.
+	 *
+	 * @param player [IPlayer] the IPlayer instance of the player whom is commencing this levelup.
+	 * @param island [Island] the Island instance of the player whom is commencing this levelup.
+	 * @param level [Int] the level that this Island will be leveling up to for this Upgrade.
 	 */
-	fun commence(player: IPlayer, island: Island, level: Int)
+	abstract fun commence(player: IPlayer, island: Island, level: Int)
+
+	/**
+	 * This function will be invoked when anything triggers the corresponding event.
+	 * Triggered only if the event type is not "Event", and of course not abstract.
+	 *
+	 * @param event [EventType] the type of event that this Upgrade has specified.
+	 */
+	open fun onEvent(event: EventType) {}
 
 	/**
 	 * Get the price of a level for this upgrade by the level's input.

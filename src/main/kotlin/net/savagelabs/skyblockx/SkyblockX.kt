@@ -167,6 +167,7 @@ class SkyblockX : SavagePluginX() {
 
 	override fun disable() {
 		saveDataFiles()
+		UpgradeManager.unregisterAll()
 	}
 
 	fun loadDataFiles() {

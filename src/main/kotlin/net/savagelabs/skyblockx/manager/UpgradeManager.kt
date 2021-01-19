@@ -1,15 +1,15 @@
 package net.savagelabs.skyblockx.manager
 
-import com.google.common.collect.ImmutableMap
-import net.savagelabs.skyblockx.SkyblockX
 import net.savagelabs.skyblockx.exception.UpgradeException
 import net.savagelabs.skyblockx.upgrade.Upgrade
 import net.savagelabs.skyblockx.upgrade.impl.GeneratorUpgrade
 import net.savagelabs.skyblockx.upgrade.impl.HomeUpgrade
 import net.savagelabs.skyblockx.upgrade.impl.SizeUpgrade
 import net.savagelabs.skyblockx.upgrade.impl.TeamUpgrade
-import org.bukkit.Bukkit
+import net.savagelabs.skyblockx.upgrade.listenTo
+import org.bukkit.event.Event
 import org.bukkit.event.HandlerList
+import org.bukkit.event.block.BlockFromToEvent
 
 /**
  * This object is used to manage all incoming and outgoing upgrades
@@ -19,33 +19,52 @@ object UpgradeManager {
     /**
      * [HashMap] map containing all upgrades.
      */
-    private val cached: HashMap<String, Upgrade> = hashMapOf()
+    @PublishedApi internal val cached: HashMap<String, Upgrade<Event>> = hashMapOf()
 
     /**
      * Register default upgrades.
      */
     internal fun defaults() {
-        register(GeneratorUpgrade)
-        register(HomeUpgrade)
-        register(SizeUpgrade)
-        register(TeamUpgrade)
+        register(BlockFromToEvent::class.java, GeneratorUpgrade)
+        with (Event::class.java) {
+            register(this, HomeUpgrade)
+            register(this, SizeUpgrade)
+            register(this, TeamUpgrade)
+        }
+    }
+
+    /**
+     * Unregister all upgrades.
+     */
+    internal fun unregisterAll() {
+        val keys = cached.keys.toTypedArray()
+        for (key in keys) this.unregister(key)
     }
 
     /**
      * Register a new Upgrade by instance.
      *
      * @param upgrade [Upgrade] the new Upgrade instance to register.
-     * @throws UpgradeException this exception is thrown if the Upgrade is already existent.
+     * @throws UpgradeException this exception is thrown if the Upgrade is already existent or the event type is abstract.
      */
+    @Suppress("UNCHECKED_CAST")
     @Throws(UpgradeException::class)
-    fun register(upgrade: Upgrade) = upgrade.run {
+    inline fun <reified Type : Event> register(eventClass: Class<Type>, upgrade: Upgrade<Type>) = upgrade.run {
         // throw exception if an Upgrade already exists by this id
-        if (cached.putIfAbsent(this.id, this) != null) {
+        if (cached.putIfAbsent(this.id, this as Upgrade<Event>) != null) {
             throw UpgradeException("The upgrade '$id' has already been registered")
         }
 
-        // register the Upgrade's listener
-        Bukkit.getPluginManager().registerEvents(upgrade.listener ?: return@run, SkyblockX.skyblockX)
+        // make sure the event type is NOT abstract
+        val isNameEvent = eventClass.simpleName == "Event"
+        if (eventClass::class.isAbstract && !isNameEvent) {
+            throw UpgradeException("The upgrade '$id' has specified an abstract event as Type, please fix")
+        }
+
+        // register the Upgrade's listener if it's not based off of "Event" because then we'll ignore
+        if (!isNameEvent) {
+            this.listener = listenTo<Type> { upgrade.onEvent(this) }
+        }
     }
 
     /**
@@ -69,12 +88,12 @@ object UpgradeManager {
      * @param id [String] identifier of the Upgrade to fetch.
      * @return [Upgrade] - null if non-existent.
      */
-    fun byId(id: String): Upgrade? = cached[id]
+    fun byId(id: String): Upgrade<Event>? = cached[id]
 
     /**
-     * Get a copy of all upgrades in an immutable map.
+     * Get all upgrades in a read only set.
      *
-     * @return [ImmutableMap]
+     * @return [Set]
      */
-    fun getAll() = ImmutableMap.copyOf(cached)
+    fun getAll() = cached.values.toSet()
 }
