@@ -9,7 +9,6 @@ import net.savagelabs.skyblockx.upgrade.impl.TeamUpgrade
 import net.savagelabs.skyblockx.upgrade.listenTo
 import org.bukkit.event.Event
 import org.bukkit.event.HandlerList
-import org.bukkit.event.block.BlockFromToEvent
 
 /**
  * This object is used to manage all incoming and outgoing upgrades
@@ -25,12 +24,10 @@ object UpgradeManager {
      * Register default upgrades.
      */
     internal fun defaults() {
-        register(BlockFromToEvent::class.java, GeneratorUpgrade)
-        with (Event::class.java) {
-            register(this, HomeUpgrade)
-            register(this, SizeUpgrade)
-            register(this, TeamUpgrade)
-        }
+        register(GeneratorUpgrade)
+        register(HomeUpgrade)
+        register(SizeUpgrade)
+        register(TeamUpgrade)
     }
 
     /**
@@ -49,15 +46,15 @@ object UpgradeManager {
      */
     @Suppress("UNCHECKED_CAST")
     @Throws(UpgradeException::class)
-    inline fun <reified Type : Event> register(eventClass: Class<Type>, upgrade: Upgrade<Type>) = upgrade.run {
+    inline fun <reified Type : Event> register(upgrade: Upgrade<Type>) = upgrade.run {
         // throw exception if an Upgrade already exists by this id
         if (cached.putIfAbsent(this.id, this as Upgrade<Event>) != null) {
             throw UpgradeException("The upgrade '$id' has already been registered")
         }
 
         // make sure the event type is NOT abstract
-        val isNameEvent = eventClass.simpleName == "Event"
-        if (eventClass::class.isAbstract && !isNameEvent) {
+        val isNameEvent = Type::class.java.simpleName == "Event"
+        if (Type::class.isAbstract && !isNameEvent) {
             throw UpgradeException("The upgrade '$id' has specified an abstract event as Type, please fix")
         }
 
