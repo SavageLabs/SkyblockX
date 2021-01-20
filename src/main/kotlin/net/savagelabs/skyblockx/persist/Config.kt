@@ -7,7 +7,7 @@ import net.savagelabs.skyblockx.gui.wrapper.GUICoordinate
 import net.savagelabs.skyblockx.gui.wrapper.GUIItem
 import net.savagelabs.skyblockx.persist.data.SerializableItem
 import net.savagelabs.skyblockx.persist.data.WeightedItem
-import net.savagelabs.skyblockx.upgrade.UpgradeType
+import net.savagelabs.skyblockx.upgrade.UpgradeLevelInfo
 import org.bukkit.Bukkit
 import org.bukkit.block.Biome
 import java.util.*
@@ -35,12 +35,10 @@ class Config(@JsonIgnore override val name: String = "config") :
 
 	var islandPaddingSizeInBlocks = 50
 
-	data class UpgradeLevelInfo(val price: Double, val parameter: String, val itemAtLevel: GUIItem)
 	data class UpgradeTypeInfo(val upgradeInfoPerLevel: Map<Int, UpgradeLevelInfo>, val maxLevelItem: GUIItem)
 
-
 	var upgrades = mapOf(
-		UpgradeType.GENERATOR to UpgradeTypeInfo(
+		"GENERATOR" to UpgradeTypeInfo(
 			mapOf(
 				1 to UpgradeLevelInfo(
 					10000.0,
@@ -122,7 +120,7 @@ class Config(@JsonIgnore override val name: String = "config") :
 				GUICoordinate(1, 1)
 			)
 		),
-		UpgradeType.BORDER to UpgradeTypeInfo(
+		"ISLAND_SIZE" to UpgradeTypeInfo(
 			mapOf(
 				1 to UpgradeLevelInfo(
 					10000.0,
@@ -209,7 +207,7 @@ class Config(@JsonIgnore override val name: String = "config") :
 				GUICoordinate(3, 1)
 			)
 		),
-		UpgradeType.MAX_HOMES to UpgradeTypeInfo(
+		"MAX_HOMES" to UpgradeTypeInfo(
 			mapOf(
 				1 to UpgradeLevelInfo(
 					10000.0,
@@ -278,7 +276,7 @@ class Config(@JsonIgnore override val name: String = "config") :
 				GUICoordinate(5, 1)
 			)
 		),
-		UpgradeType.TEAM_SIZE to UpgradeTypeInfo(
+		"TEAM_SIZE" to UpgradeTypeInfo(
 			mapOf(
 				1 to UpgradeLevelInfo(
 					10000.0,

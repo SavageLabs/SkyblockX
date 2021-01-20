@@ -1,80 +1,96 @@
 package net.savagelabs.skyblockx.upgrade
 
-import net.savagelabs.skyblockx.SkyblockX
 import net.savagelabs.skyblockx.core.IPlayer
 import net.savagelabs.skyblockx.core.Island
-import net.savagelabs.skyblockx.core.updateWorldBorder
-import net.savagelabs.skyblockx.event.IslandUpgradeEvent
-import net.savagelabs.skyblockx.hooks.VaultHook
-import net.savagelabs.skyblockx.persist.Config
-import org.bukkit.Bukkit
+import net.savagelabs.skyblockx.gui.wrapper.GUIItem
+import net.savagelabs.skyblockx.persist.Config.Companion.instance
+import org.bukkit.event.Event
+import org.bukkit.event.Listener
 
-interface Upgrade {
-	fun runUpgradeEffect(upgradingPlayer: IPlayer, island: Island, level: Int)
+/**
+ * This function is used to throw an exception if, and ONLY if the preview items
+ * of an internal Upgrade is absent in the configuration fetched from.
+ *
+ * @param type [String] the type of loading that was attempted but failed.
+ * @return [Nothing]
+ * @throws IllegalStateException
+ */
+internal fun Upgrade<*>.errorByPreview(type: String): Nothing =
+		error("The internal upgrade '$id' failed to load $type from config.")
 
-	fun getPrice(type: UpgradeType, level: Int): Double? {
-		return Config.instance.upgrades[type]?.upgradeInfoPerLevel?.get(level)?.price
-	}
-}
+/**
+ * Attempt to fetch preview items from corresponding upgrade section in the configuration.
+ * If the upgrade's info per level base is absent, this function will throw an exception.
+ *
+ * @return [Map]
+ * @throws IllegalStateException
+ */
+internal fun Upgrade<*>.levelItemsOrErrorByPreview(): Map<Int, UpgradeLevelInfo> =
+		instance.upgrades[id]?.upgradeInfoPerLevel ?: errorByPreview("preview items")
 
+/**
+ * Attempt to fetch max level item from corresponding upgrade section in the configuration.
+ * If the upgrade's max level is absent, this function will throw an exception.
+ *
+ * @return [GUIItem]
+ * @throws IllegalStateException
+ */
+internal fun Upgrade<*>.maxLevelItemOrErrorByPreview(): GUIItem =
+		instance.upgrades[id]?.maxLevelItem ?: errorByPreview("max level item")
 
-object GeneratorUpgrade : Upgrade {
-	override fun runUpgradeEffect(upgradingPlayer: IPlayer, island: Island, level: Int) {
-		if (!upgradingPlayer.takeMoney(getPrice(UpgradeType.GENERATOR, level)!!)) return
-		
-		island.upgrades[UpgradeType.GENERATOR] = level
-		Bukkit.getPluginManager().callEvent(IslandUpgradeEvent(island, UpgradeType.GENERATOR))
-	}
-}
+/**
+ * This abstraction class is used to create both internal and external upgrades
+ * to later register them.
+ *
+ * Please note that this ID will be used for registration, with that said..
+ * choose wisely to avoid registration collisions.
+ *
+ * @param id [String] the id of this upgrade.
+ */
+abstract class Upgrade<EventType : Event> constructor(val id: String) {
+	/**
+	 * [Map] this map contains all levels and their information.
+	 */
+	abstract val preview: Map<Int, UpgradeLevelInfo>
 
-object BorderUpgrade : Upgrade {
-	override fun runUpgradeEffect(upgradingPlayer: IPlayer, island: Island, level: Int) {
-		if (!upgradingPlayer.takeMoney(getPrice(UpgradeType.BORDER, level)!!)) return
+	/**
+	 * [GUIItem] this gui item is the max level item shown in the upgrade GUI.
+	 */
+	abstract val maxLevelItem: GUIItem
 
-		island.upgrades[UpgradeType.BORDER] = level
-		island.islandSize =
-			Config.instance.upgrades[UpgradeType.BORDER]?.upgradeInfoPerLevel?.get(level)?.parameter?.toIntOrNull()
-				?: run {
-					SkyblockX.skyblockX.logger.info("Border Upgrade failed due to the param not being an integer")
-					return
-				}
-		island.getIslandMembers().forEach { iPlayer ->
-			val player = iPlayer.getPlayer()
-			if (player != null) {
-				updateWorldBorder(player, player.location, 10L)
-			}
-		}
+	/**
+	 * [Listener] this listener will be reassigned with the Upgrade's own
+	 * instance of an EventExecutor & Listener to register custom events
+	 * based on this Upgrade without any issues whatsoever. Do yourself a favour
+	 * and don't reassign this.
+	 */
+	@PublishedApi internal open var listener: Listener? = null
 
-		Bukkit.getPluginManager().callEvent(IslandUpgradeEvent(island, UpgradeType.BORDER))
-	}
-}
+	/**
+	 * This function is invoked during the time of a player leveling up this upgrade.
+	 * So use this function to handle data etc. for your upgrade.
+	 *
+	 * @param player [IPlayer] the IPlayer instance of the player whom is commencing this levelup.
+	 * @param island [Island] the Island instance of the player whom is commencing this levelup.
+	 * @param level [Int] the level that this Island will be leveling up to for this Upgrade.
+	 */
+	abstract fun commence(player: IPlayer, island: Island, level: Int)
 
-object HomeUpgrade : Upgrade {
-	override fun runUpgradeEffect(upgradingPlayer: IPlayer, island: Island, level: Int) {
-		if (!upgradingPlayer.takeMoney(getPrice(UpgradeType.MAX_HOMES, level)!!)) return
+	/**
+	 * This function will be invoked when anything triggers the corresponding event.
+	 * Triggered only if the event type is not "Event", and of course not abstract.
+	 *
+	 * @param event [EventType] the type of event that this Upgrade has specified.
+	 */
+	open fun onEvent(event: EventType) {}
 
-		island.upgrades[UpgradeType.MAX_HOMES] = level
-		island.homeBoost += Config.instance.upgrades[UpgradeType.MAX_HOMES]?.upgradeInfoPerLevel?.get(level)?.parameter?.toIntOrNull()
-			?: run {
-				SkyblockX.skyblockX.logger.info("Home Upgrade failed due to the param not being an integer")
-				return
-			}
-
-		Bukkit.getPluginManager().callEvent(IslandUpgradeEvent(island, UpgradeType.MAX_HOMES))
-	}
-}
-
-object TeamUpgrade : Upgrade {
-	override fun runUpgradeEffect(upgradingPlayer: IPlayer, island: Island, level: Int) {
-		if (!upgradingPlayer.takeMoney(getPrice(UpgradeType.TEAM_SIZE, level)!!)) return
-
-		island.upgrades[UpgradeType.TEAM_SIZE] = level
-		island.memberBoost += Config.instance.upgrades[UpgradeType.TEAM_SIZE]?.upgradeInfoPerLevel?.get(level)?.parameter?.toIntOrNull()
-			?: run {
-				SkyblockX.skyblockX.logger.info("Team Upgrade failed due to the param not being an integer")
-				return
-			}
-
-		Bukkit.getPluginManager().callEvent(IslandUpgradeEvent(island, UpgradeType.TEAM_SIZE))
-	}
+	/**
+	 * Get the price of a level for this upgrade by the level's input.
+	 *
+	 * @param level   [Int] the level to check price for.
+	 * @param default [Double] the default value to be used if a price is absent on a level.
+	 * @return [Double]
+	 */
+	fun priceOf(level: Int, default: Double = 0.0): Double =
+			instance.upgrades[this.id]?.upgradeInfoPerLevel?.get(level)?.price ?: default
 }

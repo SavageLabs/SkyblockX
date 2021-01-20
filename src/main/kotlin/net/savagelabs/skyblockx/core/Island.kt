@@ -15,7 +15,6 @@ import net.savagelabs.skyblockx.persist.data.getSLocation
 import net.savagelabs.skyblockx.quest.Quest
 import net.savagelabs.skyblockx.quest.incrementQuestInOrder
 import net.savagelabs.skyblockx.sedit.SkyBlockEdit
-import net.savagelabs.skyblockx.upgrade.UpgradeType
 import net.savagelabs.skyblockx.world.Point
 import net.savagelabs.skyblockx.world.spiral
 import org.bukkit.Bukkit
@@ -66,7 +65,7 @@ data class Island(
     @JsonIgnore
     var syncIsland = false
 
-    var upgrades = hashMapOf<UpgradeType, Int>()
+    var upgrades = hashMapOf<String, Int>()
 
     var lastLoginTime = Date()
 
