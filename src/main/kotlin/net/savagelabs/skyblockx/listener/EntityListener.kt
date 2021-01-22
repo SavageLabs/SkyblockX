@@ -22,9 +22,7 @@ import org.bukkit.event.entity.EntityDeathEvent
 import org.bukkit.event.entity.PlayerDeathEvent
 import org.bukkit.event.player.PlayerRespawnEvent
 
-class EntityListener : Listener {
-
-
+object EntityListener : Listener {
 	// This listener is primarily for mobs taking damage.
 	@EventHandler(priority = EventPriority.HIGH)
 	fun onEntityDamage(event: EntityDeathEvent) {
@@ -58,10 +56,7 @@ class EntityListener : Listener {
 					}
 				}
 			}
-
-
 		}
-
 	}
 
 	@EventHandler
@@ -145,6 +140,4 @@ class EntityListener : Listener {
 		}
 
 	}
-
-
 }

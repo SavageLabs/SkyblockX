@@ -13,16 +13,7 @@ import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.block.BlockPlaceEvent
 import org.bukkit.metadata.FixedMetadataValue
 
-
-class BlockListener : Listener {
-
-//
-//    @EventHandler
-//    fun onPlayerMove(event: PlayerMoveEvent) {
-//        println(event.player.itemInHand.serialize())
-//    }
-
-
+object BlockListener : Listener {
 	@EventHandler
 	fun onBlockPlace(event: BlockPlaceEvent) {
 		// FUTURE CONTRIBUTIONS: Attempt to split checks into small blocks.
@@ -33,14 +24,12 @@ class BlockListener : Listener {
 		// We're gonna need this.
 		val iPlayer = event.player.getIPlayer()
 
-
 		// Check if they dont have an island or a co-op island, if not, deny.
 		if (!iPlayer.hasCoopIsland() && !iPlayer.hasIsland() && !iPlayer.inBypass) {
 			iPlayer.message(Message.instance.listenerActionDeniedCreateAnIslandFirst)
 			event.isCancelled = true
 			return
 		}
-
 
 		// Check using the general #canUseBlockAtLocation, will actually check co-op and own island.
 		if (!canUseBlockAtLocation(iPlayer, event.block.location)) {
@@ -51,14 +40,17 @@ class BlockListener : Listener {
 
 		// We're gonna need this more than once here, store to prevent lookups.
 		val island = iPlayer.getIsland()
+
 		// Quest checking block.
 		if (iPlayer.hasIsland() && island!!.currentQuest != null) {
 			// Assert non-null because the if check for this block will trigger.
 			val currentQuest = island.currentQuest!!
+
 			// Find the quest that the island has activated.
-			val targetQuest =
-				Quests.instance.islandQuests.find { quest -> quest.type == QuestGoal.PLACE_BLOCKS && quest.id == currentQuest }
-					?: return
+			val targetQuest = Quests.instance.islandQuests.find { quest ->
+				quest.type == QuestGoal.PLACE_BLOCKS && quest.id == currentQuest
+			} ?: return
+
 			// Use XMaterial to parse the material, if null, try to use native material just in case.
 			val material = event.block.type.toString()
 
@@ -67,14 +59,13 @@ class BlockListener : Listener {
 				// Increment that quest data by 1 :)
 				island.addQuestData(targetQuest.id)
 				island.sendTeamQuestProgress(targetQuest, event.player)
+
 				// Check if quest is complete :D
 				if (targetQuest.isComplete(island.getQuestCompletedAmount(targetQuest.id))) {
 					island.completeQuest(iPlayer, targetQuest)
 				}
 			}
-
 		}
-
 
 		// Anti-abuse for skyblock.
 		event.block.setMetadata(
@@ -89,10 +80,8 @@ class BlockListener : Listener {
 			return
 		}
 
-
 		// Need this a lot.
 		val iPlayer = event.player.getIPlayer()
-
 
 		// Check if they have an island or co-op island, if not, deny.
 		if (!iPlayer.hasCoopIsland() && !iPlayer.hasIsland() && !iPlayer.inBypass) {
@@ -108,34 +97,37 @@ class BlockListener : Listener {
 			return
 		}
 
-
 		// We're gonna need this more than once here, store to prevent lookups.
-		val island = iPlayer.getIsland()
+		val island = iPlayer.getIsland() ?: return
 
-		// Quest checking block.
-		if (iPlayer.hasIsland() && island!!.currentQuest != null) {
-			// Assert non-null because the if check for this block will trigger.
-			val currentQuest = island.currentQuest!!
+		// make sure the player has an island and the quest ain't null
+		if (!iPlayer.hasIsland() || island.currentQuest == null) {
+			return
+		}
 
-			// Find the quest that the island has activated.
-			val targetQuest =
-				Quests.instance.islandQuests.find { quest -> quest.type == QuestGoal.BREAK_BLOCKS && quest.id == currentQuest }
-					?: return
+		// Assert non-null because the if check for this block will trigger.
+		val currentQuest = island.currentQuest
 
-			// Use XMaterial to parse the material, if null, try to use native material just in case.
-			val material = event.block.type.toString()
-			// Check if the material we just processed is the targetQuest's material instead of just checking if the quest is equal.
-			if (material == targetQuest.goalParameter && !event.block.hasMetadata("skyblock-placed-by-player")) {
-				// Increment that quest data by 1 :)
-				island.addQuestData(targetQuest.id, 1)
-				island.sendTeamQuestProgress(targetQuest, event.player)
+		// Find the quest that the island has activated.
+		val targetQuest = Quests.instance.islandQuests.find { quest ->
+			quest.type == QuestGoal.BREAK_BLOCKS && quest.id == currentQuest
+		} ?: return
 
-				// Check if quest is complete :D
-				if (targetQuest.isComplete(island.getQuestCompletedAmount(targetQuest.id))) {
-					island.completeQuest(iPlayer, targetQuest)
-				}
-			}
+		// Use XMaterial to parse the material, if null, try to use native material just in case.
+		val material = event.block.type.toString()
 
+		// Check if the material we just processed is the targetQuest's material instead of just checking if the quest is equal.
+		if (material != targetQuest.goalParameter || event.block.hasMetadata("skyblock-placed-by-player")) {
+			return
+		}
+
+		// Increment that quest data by 1 :)
+		island.addQuestData(targetQuest.id, 1)
+		island.sendTeamQuestProgress(targetQuest, event.player)
+
+		// Check if quest is complete :D
+		if (targetQuest.isComplete(island.getQuestCompletedAmount(targetQuest.id))) {
+			island.completeQuest(iPlayer, targetQuest)
 		}
 	}
 }

@@ -9,9 +9,7 @@ import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.event.player.PlayerQuitEvent
 import java.util.*
 
-class DataListener : Listener {
-
-
+object DataListener : Listener {
 	@EventHandler
 	fun onPlayerConnect(event: PlayerJoinEvent) {
 		val iPlayer = event.player.getIPlayer()
@@ -33,6 +31,4 @@ class DataListener : Listener {
 			island.removeCoopPlayer(authorizedUser)
 		}
 	}
-
-
 }

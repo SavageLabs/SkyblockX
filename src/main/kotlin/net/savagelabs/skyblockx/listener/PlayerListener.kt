@@ -22,7 +22,7 @@ import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.inventory.InventoryType
 import org.bukkit.event.player.*
 
-class PlayerListener : Listener {
+object PlayerListener : Listener {
 	@EventHandler
 	fun onPlayerCraft(event: CraftItemEvent) {
 		// Exit if we aren't in skyblock world - since they cannot be on an island that way.
@@ -292,7 +292,4 @@ class PlayerListener : Listener {
 			return
 		}
 	}
-
-
 }
-

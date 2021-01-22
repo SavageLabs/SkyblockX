@@ -9,57 +9,37 @@ import org.bukkit.event.Listener
 import org.bukkit.event.block.Action
 import org.bukkit.event.player.PlayerInteractEvent
 
-class SEditListener : Listener {
-
-
+object SEditListener : Listener {
 	@EventHandler
 	fun choosePosition(event: PlayerInteractEvent) {
-		if (event.clickedBlock == null || event.action != Action.RIGHT_CLICK_BLOCK) {
+		val clickedBlock = event.clickedBlock ?: return
+		if (event.action != Action.RIGHT_CLICK_BLOCK) {
 			return
 		}
-
 
 		val iPlayer = (event.player).getIPlayer()
 		if (!iPlayer.choosingPosition) {
 			return
 		}
 
-		if (iPlayer.chosenPosition == Position.POSITION1) {
-			iPlayer.pos1 = event.clickedBlock!!.location
-			event.player.sendMessage(
-				color(
-					Message.instance.messagePrefix +
-							color(
-								String.format(
-									Message.instance.skyblockEditPositionSet,
-									1.toString(),
-									"${iPlayer.pos1!!.x}, ${iPlayer.pos1!!.y}, ${iPlayer.pos1!!.z} in ${iPlayer.pos1!!.world!!.name}"
-								)
-							)
-				)
-			)
-			iPlayer.choosingPosition = false
-		} else {
-			iPlayer.pos2 = event.clickedBlock!!.location
+		val location = clickedBlock.location
+		val isOne = iPlayer.chosenPosition == Position.POSITION1
+		if (isOne) iPlayer.pos1 = location else iPlayer.pos2 = location
 
-			event.player.sendMessage(
-				color(
-					Message.instance.messagePrefix +
-							color(
-								String.format(
-									Message.instance.skyblockEditPositionSet,
-									2.toString(),
-									"${iPlayer.pos2!!.x}, ${iPlayer.pos2!!.y}, ${iPlayer.pos2!!.z} in ${iPlayer.pos2!!.world!!.name}"
-								)
-							)
-				)
+		event.player.sendMessage(
+			color(
+				Message.instance.messagePrefix +
+					color(
+						String.format(
+							Message.instance.skyblockEditPositionSet,
+							(if (isOne) 1 else 2).toString(),
+							"${location.x}, ${location.y}, ${location.z} in ${location.world?.name ?: "Unknown"}"
+						)
+					)
 			)
-			iPlayer.choosingPosition = false
-		}
+		)
+
+		iPlayer.choosingPosition = false
 		event.isCancelled = true
-
-
 	}
-
-
 }

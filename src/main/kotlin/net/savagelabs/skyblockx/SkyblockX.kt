@@ -57,11 +57,11 @@ class SkyblockX : SavagePluginX() {
 			startAutoSaveTask()
 			loadMetrics()
 			registerListeners(
-				DataListener(),
-				SEditListener(),
-				BlockListener(),
-				PlayerListener(),
-				EntityListener(),
+				DataListener,
+				SEditListener,
+				BlockListener,
+				PlayerListener,
+				EntityListener,
 				GlideListener()
 			)
 			UpgradeManager.defaults()
