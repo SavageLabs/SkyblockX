@@ -2,6 +2,7 @@ package net.savagelabs.skyblockx.core
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import net.savagelabs.skyblockx.hooks.VaultHook
+import net.savagelabs.skyblockx.manager.IslandShopManager
 import net.savagelabs.skyblockx.persist.Config
 import net.savagelabs.skyblockx.persist.Data
 import net.savagelabs.skyblockx.persist.Message
@@ -42,6 +43,9 @@ data class IPlayer(val uuid: UUID, var name: String) {
 
 	var isUsingIslandChat = false
 
+	var chestShopNotification = true
+	var chestShopNotificationSound = true
+
 	// This is for the coop players that this iplayer instance has authorized.
 	// So that we can remove the co-op status of these players when this guy logs out.
 	@JsonIgnore
@@ -76,8 +80,10 @@ data class IPlayer(val uuid: UUID, var name: String) {
 		return this.hasIsland() && this.getIsland()?.containsBlock(getPlayer()!!.location) == true
 	}
 
-	fun message(message: String) {
-		getPlayer()?.sendMessage(color(Message.instance.messagePrefix + message))
+	fun message(message: String, noPrefix: Boolean = false) {
+		getPlayer()?.sendMessage(color(
+				(if (noPrefix) "" else Message.instance.messagePrefix) + message
+		))
 	}
 
 	fun isCoopedIsland(id: Int): Boolean {
@@ -216,6 +222,11 @@ fun canUseBlockAtLocation(iPlayer: IPlayer, location: Location): Boolean {
 	// If the world is not the skyblock world, we will not interfere.
 	if (location.world!!.name != Config.instance.skyblockWorldName) return true
 	if (iPlayer.inBypass) return true
+	// if there is a shop, they we allowed to right click
+	with (getIslandFromLocation(location)) {
+		if (this == null) return@with
+		if (this.chestShops.containsKey(IslandShopManager.encode(location))) return true
+	}
 	// If they dont have any co-op island or an island of their own, then they cannot do anything.
 	if (!iPlayer.hasIsland() && !iPlayer.hasCoopIsland()) return false
 	// Check our own island.

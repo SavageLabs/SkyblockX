@@ -30,6 +30,7 @@ dependencies {
     implementation("io.papermc:paperlib:1.0.2")
     implementation(project(":SavagePluginX"))
     implementation(project(":WorldBorderUtil"))
+    implementation(files("lib/HologramLib-1.0.1.jar"))
 
 
     compileOnly(kotlin("stdlib-jdk8"))

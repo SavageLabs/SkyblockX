@@ -249,12 +249,13 @@ object PlayerListener : Listener {
 	@EventHandler
 	fun onPlayerInteract(event: PlayerInteractEvent) {
 		// FUTURE CONTRIBUTORS: TRY TO SPLIT CHECKS INTO SMALLER BLOCKS.
-		if (event.clickedBlock == null
-			|| isNotInSkyblockWorld(event.clickedBlock!!.world)
-		) {
+		val block = event.clickedBlock
+		if (block == null || isNotInSkyblockWorld(block.world)) {
 			return
 		}
 
+		// necessity
+		val location = block.location
 		val iPlayer = (event.player).getIPlayer()
 
 		// Check if they have an island or co-op island, if not, deny.
@@ -265,16 +266,14 @@ object PlayerListener : Listener {
 		}
 
 		// Check if they can use the block on the island, or co-op island.
-		if (!canUseBlockAtLocation(iPlayer, event.clickedBlock!!.location)) {
+		if (!canUseBlockAtLocation(iPlayer, location)) {
 			iPlayer.message(Message.instance.listenerPlayerCannotInteract)
 			event.isCancelled = true
 			return
 		}
 
 		// Obsidian to Lava Bucket Check
-		if (event.clickedBlock?.type == XMaterial.OBSIDIAN.parseMaterial()
-			&& event.item?.type == XMaterial.BUCKET.parseMaterial()
-		) {
+		if (block.type == XMaterial.OBSIDIAN.parseMaterial() && event.item?.type == XMaterial.BUCKET.parseMaterial()) {
 			if (!hasPermission(event.player, Permission.OBSIDIANTOLAVA)) {
 				iPlayer.message(
 					String.format(

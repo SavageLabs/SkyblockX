@@ -4,6 +4,7 @@ import com.cryptomorin.xseries.XMaterial
 import fr.minuskube.inv.InventoryManager
 import io.papermc.lib.PaperLib
 import kotlinx.coroutines.runBlocking
+import me.rarlab.hologramlib.internal.HologramWorker
 import net.savagelabs.savagepluginx.SavagePluginX
 import net.savagelabs.savagepluginx.persist.engine.ConfigManager
 import net.savagelabs.savagepluginx.persist.engine.FlatDataManager
@@ -13,6 +14,7 @@ import net.savagelabs.skyblockx.core.*
 import net.savagelabs.skyblockx.hooks.PlacholderAPIIntegration
 import net.savagelabs.skyblockx.hooks.VaultHook
 import net.savagelabs.skyblockx.listener.*
+import net.savagelabs.skyblockx.listener.ShopListener.handleHologram
 import net.savagelabs.skyblockx.manager.UpgradeManager
 import net.savagelabs.skyblockx.persist.*
 import net.savagelabs.skyblockx.persist.data.Items
@@ -62,7 +64,9 @@ class SkyblockX : SavagePluginX() {
 				BlockListener,
 				PlayerListener,
 				EntityListener,
-				GlideListener()
+				ShopListener,
+				GlideListener(),
+				HologramWorker.INSTANCE
 			)
 			UpgradeManager.defaults()
 			startInventoryManager()
@@ -77,6 +81,22 @@ class SkyblockX : SavagePluginX() {
 		logInfo("\t- Review the plugin on Spigot: https://www.spigotmc.org/resources/73135/", ChatColor.GREEN)
 		loadWorlds()
 		PaperLib.suggestPaper(this)
+		// temporary fix
+		Bukkit.getScheduler().runTaskLaterAsynchronously(this, Runnable {
+			Data.instance.islands.values.forEach {
+				for (shop in it.chestShops.values) {
+					val world = Bukkit.getWorld(if (shop.environment == World.Environment.NORMAL) {
+						Config.instance.skyblockWorldName
+					} else {
+						Config.instance.skyblockWorldNameNether
+					})
+
+					shop.location.world = world
+					shop.chestLocation.world = world
+					shop.handleHologram()
+				}
+			}
+		}, 20L)
 	}
 
 	private fun startInventoryManager() {

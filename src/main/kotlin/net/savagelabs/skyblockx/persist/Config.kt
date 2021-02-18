@@ -427,7 +427,6 @@ class Config(@JsonIgnore override val name: String = "config") :
 
 	var useIslandTopHeaderBar = true
 
-
 	var barLength = 50
 
 	var islandTopbarElement = "&8&m="
@@ -449,7 +448,6 @@ class Config(@JsonIgnore override val name: String = "config") :
 	var islandNameMinLength = 4
 	var islandNameMaxLength = 12
 	var islandNameEnforceAlphaNumeric = true
-
 
 	var disableMobDamageWhenIslandVisitor = true
 
@@ -481,13 +479,22 @@ class Config(@JsonIgnore override val name: String = "config") :
 
 	var numberFormatLocale: Locale = Locale.US
 
-
 	val showMemberManagerGUI = true
 
 	var removeBlocksOnIslandDelete = false
 
-
 	var chatFormat = "&bIsland Chat &r{player}: {message}"
 
-
+	var chestShopMaximumAmount = 64
+	var chestShopSignFormat = listOf("", "{player}", "Right Click", "")
+	var chestShopUseHologram = true
+	var chestShopHologramYOffset = 1.0
+	var chestShopHologramViewDistance = 10.0
+	var chestShopHologramFormat = listOf(
+			"&6{player}",
+			"&7Material: &e{material}",
+			"&7Price: &e\${price}",
+			"&7Amount: &e{amount}",
+			"&7Type: &e{type}"
+	)
 }

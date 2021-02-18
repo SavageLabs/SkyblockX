@@ -6,9 +6,11 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import io.papermc.lib.PaperLib
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
+import me.rarlab.hologramlib.external.HologramManager
 import me.rayzr522.jsonmessage.JSONMessage
 import net.savagelabs.skyblockx.SkyblockX
 import net.savagelabs.skyblockx.event.*
+import net.savagelabs.skyblockx.manager.IslandShopManager
 import net.savagelabs.skyblockx.persist.*
 import net.savagelabs.skyblockx.persist.data.SLocation
 import net.savagelabs.skyblockx.persist.data.getSLocation
@@ -17,17 +19,13 @@ import net.savagelabs.skyblockx.quest.incrementQuestInOrder
 import net.savagelabs.skyblockx.sedit.SkyBlockEdit
 import net.savagelabs.skyblockx.world.Point
 import net.savagelabs.skyblockx.world.spiral
-import org.bukkit.Bukkit
-import org.bukkit.ChunkSnapshot
-import org.bukkit.Location
-import org.bukkit.Material
+import org.bukkit.*
 import org.bukkit.block.Biome
 import org.bukkit.block.BlockState
 import org.bukkit.block.CreatureSpawner
 import org.bukkit.entity.EntityType
 import org.bukkit.entity.Player
 import org.bukkit.inventory.Inventory
-import java.lang.IllegalArgumentException
 import java.lang.reflect.InvocationTargetException
 import java.text.DecimalFormat
 import java.util.*
@@ -109,7 +107,6 @@ data class Island(
         Bukkit.getPluginManager().callEvent(IslandBiomeChangeEvent(this, biome))
     }
 
-
     var questData = HashMap<String, Int>()
     var currentQuest: String? = null
 
@@ -133,6 +130,31 @@ data class Island(
     val members = mutableSetOf<UUID>()
 
     var currentQuestOrderIndex: Int? = 0
+
+    data class ChestShop(
+            val environment: World.Environment,
+            val location: Location,
+            val chestLocation: Location,
+            val owner: UUID,
+            val type: String,
+            val material: XMaterial,
+            val amount: Short,
+            val price: Int,
+            val hologramId: UUID = UUID.randomUUID()
+    ) {
+        val islandPlayerOfOwner: IPlayer?
+            get() = getIPlayerByUUID(owner)
+
+        fun destroy() {
+            if (!Config.instance.chestShopUseHologram) {
+                return
+            }
+
+            IslandShopManager.holograms.remove(this.hologramId)?.destroy()
+            HologramManager.INSTANCE.remove(this.hologramId.toString())
+        }
+    }
+    var chestShops = hashMapOf<Long, ChestShop>()
 
     fun isOneTimeQuestAlreadyCompleted(id: String): Boolean {
         return oneTimeQuestsCompleted.isNotEmpty() && oneTimeQuestsCompleted.contains(

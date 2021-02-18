@@ -227,14 +227,12 @@ class Message : ConfigContainer {
 	var commandSkyblockOpenChestNotAnIslandMember = "&7This player is &cnot&7 an island member."
 	var commandSkyblockOpenChestOpening = "&7Opening target island's chest..."
 
-
 	var listenerVoidDeathPrevented = "&eYou fell into the void, teleporting you back."
 	var listenerDeathTeleport = "&eYou've been teleported to your island."
 	var listenerBlockPlacementDenied = "&cYou can only place blocks inside of your island."
 	var listenerActionDeniedCreateAnIslandFirst = "&cThis action has been denied, please create an island first."
 	var listenerObsidianBucketLava = "&6The obsidian has been turned back to lava, be careful!"
 	var listenerPlayerCannotInteract = "&cYou cannot interact with this block."
-
 
 	var questActivationTrigger = "&7You have activated the quest &a{quest}&7."
 	var questIsOneTimeAndAlreadyCompleted = "&7This quest is a onetime quest and is already completed."
@@ -252,15 +250,34 @@ class Message : ConfigContainer {
 	var commandCreateNonAlphaNumeric = "&7This island tag is not &calphanumeric&7."
 	var commandCreateLength = "&7Island tag must be between &c%1\$s&7 and &c%2\$s&7 characters long."
 
+	var chestShopSpecifyMaterial = "&cPlease specify a valid Material for your shop."
+	var chestShopSpecifyAmount = "&cPlease specify a valid amount for your shop."
+	var chestShopSpecifyPrice = "&cPlease specify a valid price for your shop."
+	var chestShopAmountTooHigh = "&cYou have exceeded the maximum amount to sell. Please choose between 1-%s."
+	var chestShopCreationAtOtherIsland = "&cYou can only create shops on your own island!"
+	var chestShopAlreadyExist = "&cThere already is a shop related to this chest!"
+	var chestShopInteractingIsOwner = "&cYou cannot buy/sell from your own shop!"
+	var chestShopCreationSuccess = listOf(
+			"&7You have created a new shop with the settings:",
+			"&6 &6&l* &7Material: &6%1\$s",
+			"&6 &6&l* &7Amount: &6%2\$s",
+			"&6 &6&l* &7Price: &6%3\$s",
+			"&6 &6&l* &7Type: &6%4\$s"
+	)
+	var chestShopNotInStock = "&cThis shop is out of stock!"
+	var chestShopPlayerInsufficientFunds = "&cYou do not have &n$%s&c to spend on this shop!"
+	val chestShopPlayerNotInStock = "&cYou do not have enough items to sell here!"
+	val chestShopNoSpace = "&cThis shop is currently full, notify the owner and try again later!"
+	val chestShopInsufficientFunds = "&cThis shop's owner does not have enough funds to sell, try notifying them!"
+	var chestShopPurchased = "&7You have purchased &ax%s &7of &a%s &7from &a&n%s&7 for &a\$%s&7."
+	var chestShopPurchasedSeller = "&7You have sold &ax%s &7of &a%s &7to &a&n%s&7 for &a\$%s&7."
+	var chestShopSold = "&7You have sold &ax%s &7of &a%s &7to &a&n%s&7 for &a\$%s&7."
+	var chestShopSoldSeller = "&a&n%s&7 has sold &ax%s &7of &a%s &7to you for &a\$%s&7."
+
 	var islandCreatedTitle = "&9SkyblockX"
 	var islandCreatedSubtitle = "&7By: ProSavage"
-
 
 	override fun toString(): String {
 		return color(super.toString())
 	}
-
-
 }
-
-
