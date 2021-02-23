@@ -9,14 +9,13 @@ import kotlinx.coroutines.runBlocking
 import me.rayzr522.jsonmessage.JSONMessage
 import net.savagelabs.skyblockx.SkyblockX
 import net.savagelabs.skyblockx.event.*
-import net.savagelabs.skyblockx.registry.HologramIdentifier
-import net.savagelabs.skyblockx.registry.HologramRegistry
-import net.savagelabs.skyblockx.manager.IslandShopManager
 import net.savagelabs.skyblockx.persist.*
 import net.savagelabs.skyblockx.persist.data.SLocation
 import net.savagelabs.skyblockx.persist.data.getSLocation
 import net.savagelabs.skyblockx.quest.Quest
 import net.savagelabs.skyblockx.quest.incrementQuestInOrder
+import net.savagelabs.skyblockx.registry.Identifier
+import net.savagelabs.skyblockx.registry.impl.HologramRegistry
 import net.savagelabs.skyblockx.sedit.SkyBlockEdit
 import net.savagelabs.skyblockx.world.Point
 import net.savagelabs.skyblockx.world.spiral
@@ -150,7 +149,7 @@ data class Island(
             if (!Config.instance.chestShopUseHologram) {
                 return
             }
-            HologramRegistry.unregister(HologramIdentifier(this.hologramId.toString()))
+            HologramRegistry.unregister(Identifier(this.hologramId.toString()))
         }
     }
     var chestShops = hashMapOf<Long, ChestShop>()

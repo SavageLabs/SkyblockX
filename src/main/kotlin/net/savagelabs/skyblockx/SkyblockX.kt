@@ -1,6 +1,7 @@
 package net.savagelabs.skyblockx
 
 import com.cryptomorin.xseries.XMaterial
+import com.oop.inteliframework.hologram.Hologram
 import fr.minuskube.inv.InventoryManager
 import io.papermc.lib.PaperLib
 import kotlinx.coroutines.runBlocking
@@ -14,10 +15,12 @@ import net.savagelabs.skyblockx.hooks.PlacholderAPIIntegration
 import net.savagelabs.skyblockx.hooks.VaultHook
 import net.savagelabs.skyblockx.listener.*
 import net.savagelabs.skyblockx.listener.ShopListener.handleHologram
-import net.savagelabs.skyblockx.registry.HologramRegistry
 import net.savagelabs.skyblockx.manager.UpgradeManager
 import net.savagelabs.skyblockx.persist.*
 import net.savagelabs.skyblockx.persist.data.Items
+import net.savagelabs.skyblockx.placeholder.impl.ChestShopPlaceholder
+import net.savagelabs.skyblockx.registry.impl.HologramRegistry
+import net.savagelabs.skyblockx.registry.impl.PlaceholderRegistry
 import net.savagelabs.skyblockx.world.VoidWorldGenerator
 import net.savagelabs.worldborder.WorldBorderUtil
 import org.bstats.bukkit.Metrics
@@ -40,6 +43,12 @@ class SkyblockX : SavagePluginX() {
 		lateinit var generatorAlgorithm: Map<Int, Items<XMaterial>>
 		var islandValues: IslandTopInfo? = null
 		lateinit var inventoryManager: InventoryManager
+	}
+
+	override fun onLoad() {
+		with (PlaceholderRegistry) {
+			register(ChestShopPlaceholder::class.java, ChestShopPlaceholder())
+		}
 	}
 
 	@ExperimentalTime
@@ -186,7 +195,8 @@ class SkyblockX : SavagePluginX() {
 
 	override fun disable() {
 		saveDataFiles()
-		HologramRegistry.unregisterAll()
+		HologramRegistry.unregisterAll(Hologram::remove)
+		PlaceholderRegistry.unregisterAll()
 		UpgradeManager.unregisterAll()
 	}
 

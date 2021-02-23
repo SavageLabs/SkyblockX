@@ -11,6 +11,8 @@ import net.savagelabs.skyblockx.core.getIPlayerByUUID
 import net.savagelabs.skyblockx.exception.ShopException
 import net.savagelabs.skyblockx.hooks.VaultHook
 import net.savagelabs.skyblockx.persist.Config
+import net.savagelabs.skyblockx.placeholder.impl.ChestShopPlaceholder
+import net.savagelabs.skyblockx.registry.impl.PlaceholderRegistry
 import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.block.*
@@ -322,13 +324,13 @@ object IslandShopManager {
      */
     internal fun buildHologram(location: Location, shop: ChestShop): Hologram {
         val hologram = HologramBuilder().refreshRate(Config.instance.chestShopHologramRefreshRate)
-        val player = shop.islandPlayerOfOwner ?: return hologram.build().also { it.location = location }
 
-        val material = shop.material.toString()
-        val price = shop.price.toString()
-        val amount = shop.amount.toString()
-        val type = shop.type
+        // if the shop owner is null, let's return before building.
+        if (shop.islandPlayerOfOwner == null) {
+            return hologram.build().also { it.location = location }
+        }
 
+        // add the view
         hologram.addView {
             // add all lines
             it.addLines { lines ->
@@ -338,14 +340,10 @@ object IslandShopManager {
                 }
 
                 // provide all text
-                val formatToUse = if (type == "BUY") Config.instance.chestShopHologramFormatBuy else Config.instance.chestShopHologramFormatSell
+                val formatToUse = if (shop.type == "BUY") Config.instance.chestShopHologramFormatBuy else Config.instance.chestShopHologramFormatSell
                 for (line in formatToUse) {
-                    lines.displayText(color(line
-                        .replace("{player}", player.name)
-                        .replace("{material}", material)
-                        .replace("{price}", price)
-                        .replace("{amount}", amount)
-                        .replace("{type}", type)
+                    lines.displayText(color(
+                            PlaceholderRegistry.work(ChestShopPlaceholder::class.java, line, shop)
                     ))
                 }
             }

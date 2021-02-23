@@ -6,8 +6,6 @@ import net.savagelabs.skyblockx.core.color
 import net.savagelabs.skyblockx.core.getIPlayer
 import net.savagelabs.skyblockx.core.getIslandFromLocation
 import net.savagelabs.skyblockx.manager.ChestShopResponse
-import net.savagelabs.skyblockx.registry.HologramIdentifier
-import net.savagelabs.skyblockx.registry.HologramRegistry
 import net.savagelabs.skyblockx.manager.IslandShopManager
 import net.savagelabs.skyblockx.manager.IslandShopManager.buildHologram
 import net.savagelabs.skyblockx.manager.IslandShopManager.chestHasShop
@@ -15,6 +13,8 @@ import net.savagelabs.skyblockx.manager.IslandShopManager.encode
 import net.savagelabs.skyblockx.manager.IslandShopManager.getSignDirectionalBlock
 import net.savagelabs.skyblockx.persist.Config
 import net.savagelabs.skyblockx.persist.Message
+import net.savagelabs.skyblockx.registry.Identifier
+import net.savagelabs.skyblockx.registry.impl.HologramRegistry
 import org.bukkit.Material
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
@@ -230,7 +230,7 @@ object ShopListener : Listener {
         }
 
         HologramRegistry.register(
-            HologramIdentifier(this.hologramId.toString()),
+            Identifier(this.hologramId.toString()),
             buildHologram(chestLocation.clone().add(0.5, Config.instance.chestShopHologramYOffset, 0.5), this)
         )
     }
