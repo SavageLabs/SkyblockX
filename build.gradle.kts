@@ -1,3 +1,4 @@
+
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import org.apache.tools.ant.filters.ReplaceTokens
 
@@ -30,7 +31,8 @@ dependencies {
     implementation("io.papermc:paperlib:1.0.2")
     implementation(project(":SavagePluginX"))
     implementation(project(":WorldBorderUtil"))
-    implementation(files("lib/HologramLib-1.0.1.jar"))
+    implementation(files("lib/hologram-1.0.jar"))
+    //implementation(files("lib/HologramLib-1.0.2.jar"))
 
 
     compileOnly(kotlin("stdlib-jdk8"))
@@ -54,6 +56,7 @@ dependencies {
 tasks {
     compileKotlin {
         kotlinOptions.jvmTarget = "1.8"
+        kotlinOptions.freeCompilerArgs = listOf("-Xinline-classes")
     }
 
     processResources {

@@ -6,10 +6,11 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import io.papermc.lib.PaperLib
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
-import me.rarlab.hologramlib.external.HologramManager
 import me.rayzr522.jsonmessage.JSONMessage
 import net.savagelabs.skyblockx.SkyblockX
 import net.savagelabs.skyblockx.event.*
+import net.savagelabs.skyblockx.registry.HologramIdentifier
+import net.savagelabs.skyblockx.registry.HologramRegistry
 import net.savagelabs.skyblockx.manager.IslandShopManager
 import net.savagelabs.skyblockx.persist.*
 import net.savagelabs.skyblockx.persist.data.SLocation
@@ -149,9 +150,7 @@ data class Island(
             if (!Config.instance.chestShopUseHologram) {
                 return
             }
-
-            IslandShopManager.holograms.remove(this.hologramId)?.destroy()
-            HologramManager.INSTANCE.remove(this.hologramId.toString())
+            HologramRegistry.unregister(HologramIdentifier(this.hologramId.toString()))
         }
     }
     var chestShops = hashMapOf<Long, ChestShop>()

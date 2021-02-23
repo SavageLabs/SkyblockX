@@ -1,12 +1,13 @@
 package net.savagelabs.skyblockx.listener
 
 import com.cryptomorin.xseries.XMaterial
-import me.rarlab.hologramlib.external.HologramManager
 import net.savagelabs.skyblockx.core.Island
 import net.savagelabs.skyblockx.core.color
 import net.savagelabs.skyblockx.core.getIPlayer
 import net.savagelabs.skyblockx.core.getIslandFromLocation
 import net.savagelabs.skyblockx.manager.ChestShopResponse
+import net.savagelabs.skyblockx.registry.HologramIdentifier
+import net.savagelabs.skyblockx.registry.HologramRegistry
 import net.savagelabs.skyblockx.manager.IslandShopManager
 import net.savagelabs.skyblockx.manager.IslandShopManager.buildHologram
 import net.savagelabs.skyblockx.manager.IslandShopManager.chestHasShop
@@ -228,8 +229,9 @@ object ShopListener : Listener {
             return
         }
 
-        IslandShopManager.holograms[this.hologramId] = buildHologram(chestLocation.clone().add(0.5, Config.instance.chestShopHologramYOffset, 0.5), this).let {
-            HologramManager.INSTANCE.add(this.hologramId.toString(), it); it
-        }
+        HologramRegistry.register(
+            HologramIdentifier(this.hologramId.toString()),
+            buildHologram(chestLocation.clone().add(0.5, Config.instance.chestShopHologramYOffset, 0.5), this)
+        )
     }
 }

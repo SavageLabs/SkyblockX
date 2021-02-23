@@ -489,12 +489,25 @@ class Config(@JsonIgnore override val name: String = "config") :
 	var chestShopSignFormat = listOf("", "{player}", "Right Click", "")
 	var chestShopUseHologram = true
 	var chestShopHologramYOffset = 1.0
+	var chestShopHologramRefreshRate = 20L
 	var chestShopHologramViewDistance = 10.0
-	var chestShopHologramFormat = listOf(
+	var chestShopHologramShowPreviewItem = true
+	var chestShopHologramFormatBuy = listOf(
 			"&6{player}",
+			"&f",
 			"&7Material: &e{material}",
 			"&7Price: &e\${price}",
 			"&7Amount: &e{amount}",
-			"&7Type: &e{type}"
+			"&f",
+			"&7&oRight click the sign to &6&l&oBUY"
+	)
+	var chestShopHologramFormatSell = listOf(
+			"&6{player}",
+			"&f",
+			"&7Material: &e{material}",
+			"&7Price: &e\${price}",
+			"&7Amount: &e{amount}",
+			"&f",
+			"&7&oRight click the sign to &6&l&oSELL"
 	)
 }

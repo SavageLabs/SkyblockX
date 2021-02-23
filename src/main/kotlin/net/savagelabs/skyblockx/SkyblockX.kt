@@ -4,7 +4,6 @@ import com.cryptomorin.xseries.XMaterial
 import fr.minuskube.inv.InventoryManager
 import io.papermc.lib.PaperLib
 import kotlinx.coroutines.runBlocking
-import me.rarlab.hologramlib.internal.HologramWorker
 import net.savagelabs.savagepluginx.SavagePluginX
 import net.savagelabs.savagepluginx.persist.engine.ConfigManager
 import net.savagelabs.savagepluginx.persist.engine.FlatDataManager
@@ -15,6 +14,7 @@ import net.savagelabs.skyblockx.hooks.PlacholderAPIIntegration
 import net.savagelabs.skyblockx.hooks.VaultHook
 import net.savagelabs.skyblockx.listener.*
 import net.savagelabs.skyblockx.listener.ShopListener.handleHologram
+import net.savagelabs.skyblockx.registry.HologramRegistry
 import net.savagelabs.skyblockx.manager.UpgradeManager
 import net.savagelabs.skyblockx.persist.*
 import net.savagelabs.skyblockx.persist.data.Items
@@ -65,8 +65,7 @@ class SkyblockX : SavagePluginX() {
 				PlayerListener,
 				EntityListener,
 				ShopListener,
-				GlideListener(),
-				HologramWorker.INSTANCE
+				GlideListener()
 			)
 			UpgradeManager.defaults()
 			startInventoryManager()
@@ -187,6 +186,7 @@ class SkyblockX : SavagePluginX() {
 
 	override fun disable() {
 		saveDataFiles()
+		HologramRegistry.unregisterAll()
 		UpgradeManager.unregisterAll()
 	}
 

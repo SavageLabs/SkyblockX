@@ -1,7 +1,8 @@
 package net.savagelabs.skyblockx.manager
 
-import me.rarlab.hologramlib.external.Hologram
-import me.rarlab.hologramlib.external.SimpleHologram
+import com.oop.inteliframework.hologram.Hologram
+import com.oop.inteliframework.hologram.builder.HologramBuilder
+import com.oop.inteliframework.hologram.rule.RadiusRule
 import net.savagelabs.skyblockx.core.IPlayer
 import net.savagelabs.skyblockx.core.Island
 import net.savagelabs.skyblockx.core.Island.ChestShop
@@ -39,11 +40,6 @@ object IslandShopManager {
      * [Int] the packing size of the locations.
      */
     private const val LOCATION_PACK_SIZE: Long = 65536
-
-    /**
-     * [HashMap] the existing holograms.
-     */
-    val holograms: HashMap<UUID, Hologram> by lazyOf(hashMapOf())
 
     /**
      * Encode a location for chest shop storage.
@@ -325,25 +321,43 @@ object IslandShopManager {
      * @return [Hologram]
      */
     internal fun buildHologram(location: Location, shop: ChestShop): Hologram {
-        val hologram = SimpleHologram.create(location, Config.instance.chestShopHologramViewDistance)
-        val player = shop.islandPlayerOfOwner ?: return hologram
+        val hologram = HologramBuilder().refreshRate(Config.instance.chestShopHologramRefreshRate)
+        val player = shop.islandPlayerOfOwner ?: return hologram.build().also { it.location = location }
 
         val material = shop.material.toString()
         val price = shop.price.toString()
         val amount = shop.amount.toString()
         val type = shop.type
 
-        for (line in Config.instance.chestShopHologramFormat) {
-            hologram.line(color(line
-                .replace("{player}", player.name)
-                .replace("{material}", material)
-                .replace("{price}", price)
-                .replace("{amount}", amount)
-                .replace("{type}", type)
-            ))
+        hologram.addView {
+            // add all lines
+            it.addLines { lines ->
+                // provide item if enabled
+                if (Config.instance.chestShopHologramShowPreviewItem) {
+                    lines.displayItem { shop.material.parseItem() }
+                }
+
+                // provide all text
+                val formatToUse = if (type == "BUY") Config.instance.chestShopHologramFormatBuy else Config.instance.chestShopHologramFormatSell
+                for (line in formatToUse) {
+                    lines.displayText(color(line
+                        .replace("{player}", player.name)
+                        .replace("{material}", material)
+                        .replace("{price}", price)
+                        .replace("{amount}", amount)
+                        .replace("{type}", type)
+                    ))
+                }
+            }
+
+            // add the view distance rule if enabled
+            val viewDistance = Config.instance.chestShopHologramViewDistance
+            if (viewDistance != -1.0) {
+                it.addRule(RadiusRule(Config.instance.chestShopHologramViewDistance))
+            }
         }
 
-        return hologram
+        return hologram.build().also { it.location = location }
     }
 
     /**
@@ -351,7 +365,7 @@ object IslandShopManager {
      */
     private fun checkForVault() {
         if (!VaultHook.isHooked()) {
-            throw ShopException("Vault could not be found, install and restart.")
+            throw ShopException("Vault/Economy provider could not be found, install and restart.")
         }
     }
 }
