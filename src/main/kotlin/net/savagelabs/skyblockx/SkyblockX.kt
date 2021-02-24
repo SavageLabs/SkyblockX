@@ -19,6 +19,7 @@ import net.savagelabs.skyblockx.manager.UpgradeManager
 import net.savagelabs.skyblockx.persist.*
 import net.savagelabs.skyblockx.persist.data.Items
 import net.savagelabs.skyblockx.placeholder.impl.ChestShopPlaceholder
+import net.savagelabs.skyblockx.placeholder.impl.QuestPlaceholder
 import net.savagelabs.skyblockx.registry.impl.HologramRegistry
 import net.savagelabs.skyblockx.registry.impl.PlaceholderRegistry
 import net.savagelabs.skyblockx.world.VoidWorldGenerator
@@ -47,6 +48,7 @@ class SkyblockX : SavagePluginX() {
 
 	override fun onLoad() {
 		with (PlaceholderRegistry) {
+			register(QuestPlaceholder::class.java, QuestPlaceholder())
 			register(ChestShopPlaceholder::class.java, ChestShopPlaceholder())
 		}
 	}

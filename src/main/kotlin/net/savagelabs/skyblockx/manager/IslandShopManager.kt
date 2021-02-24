@@ -6,13 +6,13 @@ import com.oop.inteliframework.hologram.rule.RadiusRule
 import net.savagelabs.skyblockx.core.IPlayer
 import net.savagelabs.skyblockx.core.Island
 import net.savagelabs.skyblockx.core.Island.ChestShop
-import net.savagelabs.skyblockx.core.color
 import net.savagelabs.skyblockx.core.getIPlayerByUUID
 import net.savagelabs.skyblockx.exception.ShopException
 import net.savagelabs.skyblockx.hooks.VaultHook
 import net.savagelabs.skyblockx.persist.Config
 import net.savagelabs.skyblockx.placeholder.impl.ChestShopPlaceholder
-import net.savagelabs.skyblockx.registry.impl.PlaceholderRegistry
+import net.savagelabs.skyblockx.util.colored
+import net.savagelabs.skyblockx.util.withPlaceholders
 import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.block.*
@@ -342,9 +342,7 @@ object IslandShopManager {
                 // provide all text
                 val formatToUse = if (shop.type == "BUY") Config.instance.chestShopHologramFormatBuy else Config.instance.chestShopHologramFormatSell
                 for (line in formatToUse) {
-                    lines.displayText(color(
-                            PlaceholderRegistry.work(ChestShopPlaceholder::class.java, line, shop)
-                    ))
+                    lines.displayText(line.withPlaceholders(ChestShopPlaceholder::class.java, shop).colored)
                 }
             }
 

@@ -7,6 +7,9 @@ import net.savagelabs.skyblockx.core.color
 import net.savagelabs.skyblockx.persist.Message
 import net.savagelabs.skyblockx.persist.Quests
 import net.savagelabs.skyblockx.persist.data.SerializableItem
+import net.savagelabs.skyblockx.placeholder.impl.QuestPlaceholder
+import net.savagelabs.skyblockx.util.colored
+import net.savagelabs.skyblockx.util.withPlaceholders
 import org.bukkit.Bukkit
 import org.bukkit.Location
 
@@ -21,8 +24,6 @@ data class Quest(
 	val actionsOnActivation: QuestActions,
 	val actionsOnCompletion: QuestActions
 ) {
-
-
 	fun isComplete(amount: Int): Boolean {
 		return amountTillComplete <= amount
 	}
@@ -31,11 +32,9 @@ data class Quest(
 		actionsOnActivation.executeActions(QuestActions.QuestContext(iPlayer, iPlayer.getIsland()!!, this))
 	}
 
-
 	fun giveRewards(iPlayer: IPlayer) {
 		actionsOnCompletion.executeActions(QuestActions.QuestContext(iPlayer, iPlayer.getIsland()!!, this))
 	}
-
 }
 
 class QuestActions(val actions: List<String>) {
@@ -78,18 +77,11 @@ class QuestActions(val actions: List<String>) {
 		}
 	}
 
-
 	fun parseQuestPlaceholders(context: QuestContext, line: String): String {
-		return line
-			.replace("{player}", context.contextIPlayer.name)
-			.replace("{uuid}", context.contextIPlayer.uuid.toString())
-			.replace("{quest-name}", context.quest.name)
-			.replace("{quest-amount-till-complete}", "${context.quest.amountTillComplete}")
-
+		return line.withPlaceholders(QuestPlaceholder::class.java, context).colored
 	}
 
 	class QuestContext(val contextIPlayer: IPlayer, val contextIsland: Island, val quest: Quest)
-
 }
 
 fun failsQuestCheckingPreRequisites(iPlayer: IPlayer, island: Island?, location: Location): Boolean {
