@@ -127,10 +127,12 @@ object SkyBlockEdit {
 
 			val fileIsland = File(dataFolder, "island.structure")
 			val fileNether = File(dataFolder, "nether-island.structure")
+			val fileEnd = File(dataFolder, "end-island.structure")
 
 			with (SkyblockX.skyblockX) {
 				saveResource("island.structure", false)
 				saveResource("nether-island.structure", false)
+				saveResource("end-island.structure", false)
 			}
 
 			with (dataFolder.resolve("structures")) {
@@ -139,8 +141,12 @@ object SkyBlockEdit {
 
 				val copyToNetherStruct = File(this, "nether-island.structure")
 				if (!copyToNetherStruct.exists()) fileNether.copyTo(copyToNetherStruct, false)
+
+				val copyToEndStruct = File(this, "end-island.structure")
+				if (!copyToEndStruct.exists()) fileEnd.copyTo(copyToEndStruct, false)
 			}
 
+			fileEnd.delete()
 			fileNether.delete()
 			fileIsland.delete()
 		}
