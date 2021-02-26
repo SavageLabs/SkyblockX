@@ -183,10 +183,18 @@ class SkyblockX : SavagePluginX() {
 		WorldCreator(Config.instance.skyblockWorldName)
 			.generator(VoidWorldGenerator())
 			.createWorld()
+
 		logInfo("Loading World: ${Config.instance.skyblockWorldNameNether}")
 		WorldCreator(Config.instance.skyblockWorldNameNether)
 			.generator(VoidWorldGenerator())
 			.environment(World.Environment.NETHER)
+			.generateStructures(false)
+			.createWorld()
+
+		logInfo("Loading World: ${Config.instance.skyblockWorldNameEnd}")
+		WorldCreator(Config.instance.skyblockWorldNameEnd)
+			.generator(VoidWorldGenerator())
+			.environment(World.Environment.THE_END)
 			.generateStructures(false)
 			.createWorld()
 	}

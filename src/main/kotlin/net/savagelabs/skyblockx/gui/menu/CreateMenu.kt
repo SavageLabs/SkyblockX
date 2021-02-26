@@ -53,6 +53,7 @@ class CreateMenu(
 					}
 					val createdIsland = createIsland(player, islandCreateInfo.structureFile.replace(".structure", ""))
 					createdIsland.netherFilePath = islandCreateInfo.netherFile
+					createdIsland.endFilePath = islandCreateInfo.endFile
 					player.sendMessage(color(Message.instance.messagePrefix + Message.instance.commandCreateSuccess))
 					player.getIPlayer().lastIslandResetTime = System.currentTimeMillis() / 1000
 				}

@@ -7,7 +7,7 @@ import net.savagelabs.skyblockx.persist.Message
 import net.savagelabs.skyblockx.persist.Quests
 import net.savagelabs.skyblockx.quest.QuestGoal
 import net.savagelabs.skyblockx.quest.failsQuestCheckingPreRequisites
-import net.savagelabs.skyblockx.sedit.SkyBlockEdit
+import net.savagelabs.skyblockx.sedit.SkyBlockEdit.pasteIsland
 import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.enchantments.Enchantment
@@ -21,6 +21,7 @@ import org.bukkit.event.inventory.InventoryAction
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.inventory.InventoryType
 import org.bukkit.event.player.*
+import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause.*
 
 object PlayerListener : Listener {
 	@EventHandler
@@ -62,7 +63,7 @@ object PlayerListener : Listener {
 	@EventHandler
 	fun onPlayerTeleport(event: PlayerTeleportEvent) {
 		updateWorldBorder(event.player, event.to!!, 10L)
-		if (event.cause == PlayerTeleportEvent.TeleportCause.ENDER_PEARL && event.to != null && !isNotInSkyblockWorld(
+		if (event.cause == ENDER_PEARL && event.to != null && !isNotInSkyblockWorld(
 				event.from.world!!
 			) && getIslandFromLocation(event.from) != getIslandFromLocation(event.to!!)
 		) {
@@ -71,23 +72,46 @@ object PlayerListener : Listener {
 	}
 
 	@EventHandler
-	fun onPlayerChangeWorldEvent(event: PlayerPortalEvent) {
-		if (event.from.world?.name != Config.instance.skyblockWorldName || event.cause != PlayerTeleportEvent.TeleportCause.NETHER_PORTAL) {
+	fun PlayerPortalEvent.onPlayerChangeWorldEvent() {
+		// make sure the from world is the overworld and it's either an end or nether portal
+		val isNetherPortal = cause == NETHER_PORTAL
+		if (from.world?.name != Config.instance.skyblockWorldName || (!isNetherPortal && cause != END_PORTAL)) {
 			return
 		}
-		val iPlayer = (event.player).getIPlayer()
-		event.isCancelled = true
-		val islandFromLocation = getIslandFromLocation(event.from)
-		val newLoc = islandFromLocation?.getIslandCenter()?.clone() ?: return
-		newLoc.world = Bukkit.getWorld(Config.instance.skyblockWorldNameNether)
-		if (!islandFromLocation.beenToNether) {
-			SkyBlockEdit.pasteIsland(islandFromLocation.netherFilePath.replace(".structure", ""), newLoc, null)
-			islandFromLocation.beenToNether = true
-		}
-		event.player.teleport(newLoc, PlayerTeleportEvent.TeleportCause.PLUGIN)
-		iPlayer.message(Message.instance.islandNetherTeleported)
-	}
 
+		// necessary
+		val islandPlayer = player.getIPlayer()
+
+		// cancel
+		isCancelled = true
+
+		// prepare
+		val islandFromLocation = getIslandFromLocation(from)
+		val clonedFromCenter = islandFromLocation?.getIslandCenter()?.clone()?.apply {
+			this.world = Bukkit.getWorld(if (isNetherPortal) {
+				Config.instance.skyblockWorldNameNether
+			} else {
+				Config.instance.skyblockWorldNameEnd
+			})
+		} ?: return
+
+		// make sure to paste island if the `island` is not created already
+		when {
+			isNetherPortal && !islandFromLocation.beenToNether -> {
+				pasteIsland(islandFromLocation.netherFilePath.replace(".structure", ""), clonedFromCenter, null)
+				islandFromLocation.beenToNether = true
+			}
+
+			!isNetherPortal && !islandFromLocation.beenToEnd -> {
+				pasteIsland(islandFromLocation.endFilePath.replace(".structure", ""), clonedFromCenter, null)
+				islandFromLocation.beenToEnd = true
+			}
+		}
+
+		// teleport player to new location and send message
+		player.teleport(clonedFromCenter, PLUGIN)
+		islandPlayer.message(if (isNetherPortal) Message.instance.islandNetherTeleported else Message.instance.islandEndTeleported)
+	}
 
 	@EventHandler
 	fun onPlayerFish(event: PlayerFishEvent) {

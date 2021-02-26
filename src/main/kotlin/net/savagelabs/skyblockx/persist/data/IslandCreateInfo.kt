@@ -8,5 +8,6 @@ data class IslandCreateInfo(
 	val guiCoordinate: GUICoordinate,
 	val item: SerializableItem,
 	val structureFile: String,
-	val netherFile: String
+	val netherFile: String,
+	val endFile: String
 )

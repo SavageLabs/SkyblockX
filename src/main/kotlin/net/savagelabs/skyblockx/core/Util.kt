@@ -28,7 +28,7 @@ fun broadcastDebug(message: String) {
 }
 
 fun isNotInSkyblockWorld(world: World): Boolean {
-	return world.name != Config.instance.skyblockWorldName && world.name != Config.instance.skyblockWorldNameNether
+	return world.name != Config.instance.skyblockWorldName && world.name != Config.instance.skyblockWorldNameNether && world.name != Config.instance.skyblockWorldNameEnd
 }
 
 fun teleportAsync(player: Player?, location: Location, runnable: Runnable) {

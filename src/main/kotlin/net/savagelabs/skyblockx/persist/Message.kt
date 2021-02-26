@@ -246,6 +246,7 @@ class Message : ConfigContainer {
 	var questProgressBarMessage = "&a&l{quest-name} {progress-bar} &a{percentage}%"
 
 	var islandNetherTeleported = "&7You have been teleported to your nether island."
+	var islandEndTeleported = "&7You have been teleported to your end island."
 
 	var commandCreateNonAlphaNumeric = "&7This island tag is not &calphanumeric&7."
 	var commandCreateLength = "&7Island tag must be between &c%1\$s&7 and &c%2\$s&7 characters long."

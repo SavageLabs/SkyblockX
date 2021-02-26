@@ -70,6 +70,9 @@ data class Island(
     var beenToNether = false
     var netherFilePath = "nether-island.structure"
 
+    var beenToEnd = false
+    var endFilePath = "end-island.structure"
+
     var islandGoPoint: SLocation? = null
         get() {
             if (field == null) {

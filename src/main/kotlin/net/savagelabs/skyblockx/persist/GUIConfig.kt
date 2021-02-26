@@ -389,8 +389,10 @@ class GUIConfig(@JsonIgnore override val name: String = "GUIConfig") : ConfigCon
 					"&aBasic Island",
 					listOf("&aThis is the basic starter island", "&aComes with everything you need to get started."),
 					1
-				), "island.structure",
-				"nether-island.structure"
+				),
+				"island.structure",
+				"nether-island.structure",
+				"end-island.structure"
 			),
 			IslandCreateInfo(
 				"bedrock",
@@ -401,8 +403,10 @@ class GUIConfig(@JsonIgnore override val name: String = "GUIConfig") : ConfigCon
 					"&aBedrock Island",
 					listOf("&aThis is the basic starter island", "&aComes with everything you need to get started."),
 					1
-				), "island.structure",
-				"nether-island.structure"
+				),
+				"island.structure",
+				"nether-island.structure",
+				"end-island.structure"
 			)
 		),
 		emptyList()

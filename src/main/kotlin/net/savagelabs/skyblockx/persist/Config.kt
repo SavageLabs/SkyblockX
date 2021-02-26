@@ -381,8 +381,8 @@ class Config(@JsonIgnore override val name: String = "config") :
 	var openIslandMenuOnBaseCommand = true
 
 	var skyblockWorldName = "skyblockx"
-
 	var skyblockWorldNameNether = "skyblockx_nether"
+	var skyblockWorldNameEnd = "skyblockx_end"
 
 	var preventFallingDeaths = true
 
