@@ -8,7 +8,7 @@ import net.savagelabs.skyblockx.registry.Registry
 import java.util.concurrent.Executors.newScheduledThreadPool
 
 /**
- * This implementation is the registry for present holograms.
+ * This implementation is the [Registry] for present holograms.
  */
 object HologramRegistry : Registry<Identifier, Hologram>() {
     /**

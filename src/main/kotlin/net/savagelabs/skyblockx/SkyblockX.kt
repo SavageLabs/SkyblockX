@@ -1,7 +1,6 @@
 package net.savagelabs.skyblockx
 
 import com.cryptomorin.xseries.XMaterial
-import com.oop.inteliframework.hologram.Hologram
 import fr.minuskube.inv.InventoryManager
 import io.papermc.lib.PaperLib
 import kotlinx.coroutines.runBlocking
@@ -22,6 +21,7 @@ import net.savagelabs.skyblockx.placeholder.impl.ChestShopPlaceholder
 import net.savagelabs.skyblockx.placeholder.impl.QuestPlaceholder
 import net.savagelabs.skyblockx.registry.impl.HologramRegistry
 import net.savagelabs.skyblockx.registry.impl.PlaceholderRegistry
+import net.savagelabs.skyblockx.registry.impl.QuestGoalRegistry
 import net.savagelabs.skyblockx.world.VoidWorldGenerator
 import net.savagelabs.worldborder.WorldBorderUtil
 import org.bstats.bukkit.Metrics
@@ -29,6 +29,7 @@ import org.bukkit.Bukkit
 import org.bukkit.ChatColor
 import org.bukkit.World
 import org.bukkit.WorldCreator
+import org.bukkit.event.HandlerList
 import org.bukkit.generator.ChunkGenerator
 import java.util.concurrent.Callable
 import kotlin.system.measureTimeMillis
@@ -79,6 +80,7 @@ class SkyblockX : SavagePluginX() {
 				GlideListener()
 			)
 			UpgradeManager.defaults()
+			QuestGoalRegistry.defaults()
 			startInventoryManager()
 			logInfo("Loaded ${Data.instance.IPlayers.size} players.")
 			logInfo("Loaded ${Data.instance.islands.size} islands.")
@@ -197,7 +199,8 @@ class SkyblockX : SavagePluginX() {
 
 	override fun disable() {
 		saveDataFiles()
-		HologramRegistry.unregisterAll(Hologram::remove)
+		QuestGoalRegistry.unregisterAll(HandlerList::unregisterAll)
+		HologramRegistry.unregisterAll()
 		PlaceholderRegistry.unregisterAll()
 		UpgradeManager.unregisterAll()
 	}

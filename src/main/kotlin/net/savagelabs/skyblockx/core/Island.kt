@@ -13,7 +13,6 @@ import net.savagelabs.skyblockx.persist.*
 import net.savagelabs.skyblockx.persist.data.SLocation
 import net.savagelabs.skyblockx.persist.data.getSLocation
 import net.savagelabs.skyblockx.quest.Quest
-import net.savagelabs.skyblockx.quest.incrementQuestInOrder
 import net.savagelabs.skyblockx.registry.Identifier
 import net.savagelabs.skyblockx.registry.impl.HologramRegistry
 import net.savagelabs.skyblockx.sedit.SkyBlockEdit
@@ -394,22 +393,20 @@ data class Island(
 
     fun completeQuest(completingPlayer: IPlayer, quest: Quest) {
         currentQuest = null
+
         // Set it to complete amount just to prevent confusion
         questData[quest.id] = 0
         if (quest.oneTime) {
             oneTimeQuestsCompleted.add(quest.id)
         }
+
         // Check for quest ordering system.
         if (Quests.instance.useQuestOrder && Quests.instance.questOrder.contains(quest.id)) {
-            val indexOfQuest = Quests.instance.questOrder.indexOf(quest.id) + 1
-            currentQuestOrderIndex = if (Quests.instance.questOrder.size > indexOfQuest) {
-                indexOfQuest
-            } else {
-                null
-            }
-            incrementQuestInOrder(this)
+            handleQuestInOrder(this, quest.id)
         }
-        quest.giveRewards(completingPlayer)
+
+        // give rewards
+        quest.trigger(false, completingPlayer)
     }
 
     fun sendTeamQuestProgress(quest: Quest, vararg players: Player) {
@@ -649,7 +646,7 @@ fun createIsland(
         val iPlayer = player.getIPlayer()
         iPlayer.assignIsland(island)
         if (teleport) teleportAsync(player, island.getIslandCenter(), { })
-        incrementQuestInOrder(island)
+        handleQuestInOrder(island, null)
     }
     // Use deprecated method for 1.8 support.
     player?.sendTitle(color(Message.instance.islandCreatedTitle), color(Message.instance.islandCreatedSubtitle))
@@ -667,6 +664,26 @@ fun createIsland(
     island.islandGoPoint = getSLocation(island.getIslandCenter())
     Bukkit.getPluginManager().callEvent(IslandCreateEvent(island))
     return island
+}
+
+fun handleQuestInOrder(island: Island, oldQuestId: String?) = with (island) {
+    val indexOfQuest = Quests.instance.questOrder.indexOf(oldQuestId) + 1
+    island.currentQuestOrderIndex = if (Quests.instance.questOrder.size > indexOfQuest) indexOfQuest else null
+
+    // handle in-order quest
+    with (island.currentQuestOrderIndex) {
+        if (this == null) {
+            return
+        }
+
+        val orderQuest = Quests.instance.islandQuests.find { oQuest -> oQuest.id == Quests.instance.questOrder[this] }
+        if (Quests.instance.sendNextQuestInOrderMessages) when (orderQuest) {
+            null -> messageAllOnlineIslandMembers(Message.instance.questOrderNoNextQuestWasFound)
+            else -> messageAllOnlineIslandMembers(Message.instance.nextQuestMessage.format(orderQuest.name))
+        }
+
+        changeCurrentQuest(orderQuest?.id)
+    }
 }
 
 fun deleteIsland(player: Player) {

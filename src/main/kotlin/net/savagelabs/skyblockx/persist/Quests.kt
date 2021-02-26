@@ -8,8 +8,6 @@ import net.savagelabs.skyblockx.gui.wrapper.GUIItem
 import net.savagelabs.skyblockx.gui.wrapper.MenuItem
 import net.savagelabs.skyblockx.persist.data.SerializableItem
 import net.savagelabs.skyblockx.quest.Quest
-import net.savagelabs.skyblockx.quest.QuestActions
-import net.savagelabs.skyblockx.quest.QuestGoal
 import org.bukkit.entity.EntityType
 
 class Quests : ConfigContainer {
@@ -108,22 +106,18 @@ class Quests : ConfigContainer {
 				),
 				1
 			),
-			QuestGoal.BREAK_BLOCKS,
+			"BREAK_BLOCKS",
 			XMaterial.OAK_LOG.parseMaterial().toString(),
 			1,
 			true,
-			QuestActions(
-				listOf(
-					"message(&7You have started the {quest-name}:::&7Your current progress is 0/{quest-amount-till-complete})",
-					"actionbar(&7Your quest progress is 0/{quest-amount-till-complete})"
-				)
+			listOf(
+				"message(&7You have started the {quest-name}:::&7Your current progress is 0/{quest-amount-till-complete})",
+				"actionbar(&7Your quest progress is 0/{quest-amount-till-complete})"
 			),
-			QuestActions(
-				listOf(
-					"message(&7You have finished the {quest-name}:::&7Your current progress {quest-amount-till-complete}/{quest-amount-till-complete})",
-					"title(&7{quest-name}:::&b&lQuest Completed)",
-					"command(give {player} oak_sapling 1:::give {player} apple 1)"
-				)
+			listOf(
+				"message(&7You have finished the {quest-name}:::&7Your current progress {quest-amount-till-complete}/{quest-amount-till-complete})",
+				"title(&7{quest-name}:::&b&lQuest Completed)",
+				"command(give {player} oak_sapling 1:::give {player} apple 1)"
 			)
 		),
 		Quest(
@@ -138,21 +132,17 @@ class Quests : ConfigContainer {
 				),
 				1
 			),
-			QuestGoal.CRAFT,
+			"CRAFT",
 			XMaterial.WOODEN_PICKAXE.parseMaterial().toString(),
 			1,
 			true,
-			QuestActions(
-				listOf(
-					"message(&7You have started the {quest-name}:::&7Your current progress 0/0/{quest-amount-till-complete})",
-					"actionbar(&7Your quest progress is 0/{quest-amount-till-complete})"
-				)
+			listOf(
+				"message(&7You have started the {quest-name}:::&7Your current progress 0/0/{quest-amount-till-complete})",
+				"actionbar(&7Your quest progress is 0/{quest-amount-till-complete})"
 			),
-			QuestActions(
-				listOf(
-					"message(&7You have finished the {quest-name}:::&7Your current progress {quest-amount-till-complete}/{quest-amount-till-complete})",
-					"title(&7{quest-name}:::&b&lQuest Completed)"
-				)
+			listOf(
+				"message(&7You have finished the {quest-name}:::&7Your current progress {quest-amount-till-complete}/{quest-amount-till-complete})",
+				"title(&7{quest-name}:::&b&lQuest Completed)"
 			)
 		),
 		Quest(
@@ -167,21 +157,17 @@ class Quests : ConfigContainer {
 				),
 				1
 			),
-			QuestGoal.BREAK_BLOCKS,
+			"BREAK_BLOCKS",
 			XMaterial.COBBLESTONE.parseMaterial().toString(),
 			3,
 			true,
-			QuestActions(
-				listOf(
-					"message(&7You have started the {quest-name}:::&7Your current progress is 0/{quest-amount-till-complete})",
-					"actionbar(&7Your quest progress is 0/{quest-amount-till-complete})"
-				)
+			listOf(
+				"message(&7You have started the {quest-name}:::&7Your current progress is 0/{quest-amount-till-complete})",
+				"actionbar(&7Your quest progress is 0/{quest-amount-till-complete})"
 			),
-			QuestActions(
-				listOf(
-					"message(&7You have finished the {quest-name}:::&7Your current progress is {quest-amount-till-complete}/{quest-amount-till-complete})",
-					"title(&7{quest-name}:::&b&lQuest Completed)"
-				)
+			listOf(
+				"message(&7You have finished the {quest-name}:::&7Your current progress is {quest-amount-till-complete}/{quest-amount-till-complete})",
+				"title(&7{quest-name}:::&b&lQuest Completed)"
 			)
 		),
 		Quest(
@@ -193,21 +179,17 @@ class Quests : ConfigContainer {
 				listOf("&7Craft a Stone Pickaxe", "&7Completion: &b{currentAmount}&7/&b{finalAmount}"),
 				1
 			),
-			QuestGoal.CRAFT,
+			"CRAFT",
 			XMaterial.STONE_PICKAXE.parseMaterial().toString(),
 			1,
 			true,
-			QuestActions(
-				listOf(
-					"message(&7You have started the {quest-name}:::&7Your current progress is 0/{quest-amount-till-complete})",
-					"actionbar(&7Your quest progress is 0/{quest-amount-till-complete})"
-				)
+			listOf(
+				"message(&7You have started the {quest-name}:::&7Your current progress is 0/{quest-amount-till-complete})",
+				"actionbar(&7Your quest progress is 0/{quest-amount-till-complete})"
 			),
-			QuestActions(
-				listOf(
-					"message(&7You have finished the {quest-name}:::&7Your current progress is {quest-amount-till-complete}/{quest-amount-till-complete})",
-					"title(&7{quest-name}:::&b&lQuest Completed)"
-				)
+			listOf(
+				"message(&7You have finished the {quest-name}:::&7Your current progress is {quest-amount-till-complete}/{quest-amount-till-complete})",
+				"title(&7{quest-name}:::&b&lQuest Completed)"
 			)
 		),
 		Quest(
@@ -219,21 +201,17 @@ class Quests : ConfigContainer {
 				listOf("&7Mine &b3 Iron Ore.", "&7Completion: &b{currentAmount}&7/&b{finalAmount}"),
 				1
 			),
-			QuestGoal.BREAK_BLOCKS,
+			"BREAK_BLOCKS",
 			XMaterial.IRON_ORE.parseMaterial().toString(),
 			3,
 			true,
-			QuestActions(
-				listOf(
-					"message(&7You have started the {quest-name}:::&7Your current progress is 0/{quest-amount-till-complete})",
-					"actionbar(&7Your quest progress is 0/{quest-amount-till-complete})"
-				)
+			listOf(
+				"message(&7You have started the {quest-name}:::&7Your current progress is 0/{quest-amount-till-complete})",
+				"actionbar(&7Your quest progress is 0/{quest-amount-till-complete})"
 			),
-			QuestActions(
-				listOf(
-					"message(&7You have finished the {quest-name}:::&7Your current progress is {quest-amount-till-complete}/{quest-amount-till-complete})",
-					"title(&7{quest-name}:::&b&lQuest Completed)"
-				)
+			listOf(
+				"message(&7You have finished the {quest-name}:::&7Your current progress is {quest-amount-till-complete}/{quest-amount-till-complete})",
+				"title(&7{quest-name}:::&b&lQuest Completed)"
 			)
 		),
 		Quest(
@@ -248,22 +226,18 @@ class Quests : ConfigContainer {
 				),
 				1
 			),
-			QuestGoal.CRAFT,
+			"CRAFT",
 			XMaterial.FURNACE.parseMaterial().toString(),
 			1,
 			true,
-			QuestActions(
-				listOf(
-					"message(&7You have started the {quest-name}:::&7Your current progress is 0/{quest-amount-till-complete})",
-					"actionbar(&7Your quest progress is 0/{quest-amount-till-complete})"
-				)
+			listOf(
+				"message(&7You have started the {quest-name}:::&7Your current progress is 0/{quest-amount-till-complete})",
+				"actionbar(&7Your quest progress is 0/{quest-amount-till-complete})"
 			),
-			QuestActions(
-				listOf(
-					"message(&7You have finished the {quest-name}:::&7Your current progress is {quest-amount-till-complete}/{quest-amount-till-complete})",
-					"title(&7{quest-name}:::&b&lQuest Completed)",
-					"command(give {player} coal 1)"
-				)
+			listOf(
+				"message(&7You have finished the {quest-name}:::&7Your current progress is {quest-amount-till-complete}/{quest-amount-till-complete})",
+				"title(&7{quest-name}:::&b&lQuest Completed)",
+				"command(give {player} coal 1)"
 			)
 		),
 		Quest(
@@ -275,21 +249,17 @@ class Quests : ConfigContainer {
 				listOf("&7Smelt 3 Iron Ingots in a furnace.", "&7Completion: &b{currentAmount}&7/&b{finalAmount}"),
 				1
 			),
-			QuestGoal.SMELT,
+			"SMELT",
 			XMaterial.IRON_INGOT.parseMaterial().toString(),
 			3,
 			true,
-			QuestActions(
-				listOf(
-					"message(&7You have started the {quest-name}:::&7Your current progress is 0/{quest-amount-till-complete})",
-					"actionbar(&7Your quest progress is 0/{quest-amount-till-complete})"
-				)
+			listOf(
+				"message(&7You have started the {quest-name}:::&7Your current progress is 0/{quest-amount-till-complete})",
+				"actionbar(&7Your quest progress is 0/{quest-amount-till-complete})"
 			),
-			QuestActions(
-				listOf(
-					"message(&7You have finished the {quest-name}:::&7Your current progress is {quest-amount-till-complete}/{quest-amount-till-complete})",
-					"title(&7{quest-name}:::&b&lQuest Completed)"
-				)
+			listOf(
+				"message(&7You have finished the {quest-name}:::&7Your current progress is {quest-amount-till-complete}/{quest-amount-till-complete})",
+				"title(&7{quest-name}:::&b&lQuest Completed)"
 			)
 		),
 		Quest(
@@ -304,21 +274,17 @@ class Quests : ConfigContainer {
 				),
 				1
 			),
-			QuestGoal.CRAFT,
+			"CRAFT",
 			XMaterial.IRON_PICKAXE.parseMaterial().toString(),
 			1,
 			true,
-			QuestActions(
-				listOf(
-					"message(&7You have started the {quest-name}:::&7Your current progress is 0/{quest-amount-till-complete})",
-					"actionbar(&7Your quest progress is 0/{quest-amount-till-complete})"
-				)
+			listOf(
+				"message(&7You have started the {quest-name}:::&7Your current progress is 0/{quest-amount-till-complete})",
+				"actionbar(&7Your quest progress is 0/{quest-amount-till-complete})"
 			),
-			QuestActions(
-				listOf(
-					"message(&7You have finished the {quest-name}:::&7Your current progress is {quest-amount-till-complete}/{quest-amount-till-complete})",
-					"title(&7{quest-name}:::&b&lQuest Completed)"
-				)
+			listOf(
+				"message(&7You have finished the {quest-name}:::&7Your current progress is {quest-amount-till-complete}/{quest-amount-till-complete})",
+				"title(&7{quest-name}:::&b&lQuest Completed)"
 			)
 		),
 		Quest(
@@ -333,21 +299,17 @@ class Quests : ConfigContainer {
 				),
 				1
 			),
-			QuestGoal.PLACE_BLOCKS,
+			"PLACE_BLOCKS",
 			XMaterial.OAK_SAPLING.parseMaterial().toString(),
 			1,
 			true,
-			QuestActions(
-				listOf(
-					"message(&7You have started the {quest-name}:::&7Your current progress is 0/{quest-amount-till-complete})",
-					"actionbar(&7Your quest progress is 0/{quest-amount-till-complete})"
-				)
+			listOf(
+				"message(&7You have started the {quest-name}:::&7Your current progress is 0/{quest-amount-till-complete})",
+				"actionbar(&7Your quest progress is 0/{quest-amount-till-complete})"
 			),
-			QuestActions(
-				listOf(
-					"message(&7You have finished the {quest-name}:::&7Your current progress is {quest-amount-till-complete}/{quest-amount-till-complete})",
-					"title(&7{quest-name}:::&b&lQuest Completed)"
-				)
+			listOf(
+				"message(&7You have finished the {quest-name}:::&7Your current progress is {quest-amount-till-complete}/{quest-amount-till-complete})",
+				"title(&7{quest-name}:::&b&lQuest Completed)"
 			)
 		),
 		Quest(
@@ -362,21 +324,17 @@ class Quests : ConfigContainer {
 				),
 				1
 			),
-			QuestGoal.BREAK_BLOCKS,
+			"BREAK_BLOCKS",
 			XMaterial.SAND.parseMaterial().toString(),
 			3,
 			true,
-			QuestActions(
-				listOf(
-					"message(&7You have started the {quest-name}:::&7Your current progress is 0/{quest-amount-till-complete})",
-					"actionbar(&7Your quest progress is 0/{quest-amount-till-complete})"
-				)
+			listOf(
+				"message(&7You have started the {quest-name}:::&7Your current progress is 0/{quest-amount-till-complete})",
+				"actionbar(&7Your quest progress is 0/{quest-amount-till-complete})"
 			),
-			QuestActions(
-				listOf(
-					"message(&7You have finished the {quest-name}:::&7Your current progress is {quest-amount-till-complete}/{quest-amount-till-complete})",
-					"title(&7{quest-name}:::&b&lQuest Completed)"
-				)
+			listOf(
+				"message(&7You have finished the {quest-name}:::&7Your current progress is {quest-amount-till-complete}/{quest-amount-till-complete})",
+				"title(&7{quest-name}:::&b&lQuest Completed)"
 			)
 		),
 		Quest(
@@ -392,21 +350,17 @@ class Quests : ConfigContainer {
 				),
 				1
 			),
-			QuestGoal.PLACE_BLOCKS,
+			"PLACE_BLOCKS",
 			XMaterial.CACTUS.parseMaterial().toString(),
 			1,
 			true,
-			QuestActions(
-				listOf(
-					"message(&7You have started the {quest-name}:::&7Your current progress is 0/{quest-amount-till-complete})",
-					"actionbar(&7Your quest progress is 0/{quest-amount-till-complete})"
-				)
+			listOf(
+				"message(&7You have started the {quest-name}:::&7Your current progress is 0/{quest-amount-till-complete})",
+				"actionbar(&7Your quest progress is 0/{quest-amount-till-complete})"
 			),
-			QuestActions(
-				listOf(
-					"message(&7You have finished the {quest-name}:::&7Your current progress is {quest-amount-till-complete}/{quest-amount-till-complete})",
-					"title(&7{quest-name}:::&b&lQuest Completed)"
-				)
+			listOf(
+				"message(&7You have finished the {quest-name}:::&7Your current progress is {quest-amount-till-complete}/{quest-amount-till-complete})",
+				"title(&7{quest-name}:::&b&lQuest Completed)"
 			)
 		),
 		Quest(
@@ -422,21 +376,17 @@ class Quests : ConfigContainer {
 				),
 				1
 			),
-			QuestGoal.PLACE_BLOCKS,
+			"PLACE_BLOCKS",
 			if (XMaterial.isNewVersion()) XMaterial.SUGAR_CANE.parseMaterial().toString() else "SUGAR_CANE_BLOCK",
 			1,
 			true,
-			QuestActions(
-				listOf(
-					"message(&7You have started the {quest-name}:::&7Your current progress is 0/{quest-amount-till-complete})",
-					"actionbar(&7Your quest progress is 0/{quest-amount-till-complete})"
-				)
+			listOf(
+				"message(&7You have started the {quest-name}:::&7Your current progress is 0/{quest-amount-till-complete})",
+				"actionbar(&7Your quest progress is 0/{quest-amount-till-complete})"
 			),
-			QuestActions(
-				listOf(
-					"message(&7You have finished the {quest-name}:::&7Your current progress is {quest-amount-till-complete}/{quest-amount-till-complete})",
-					"title(&7{quest-name}:::&b&lQuest Completed)"
-				)
+			listOf(
+				"message(&7You have finished the {quest-name}:::&7Your current progress is {quest-amount-till-complete}/{quest-amount-till-complete})",
+				"title(&7{quest-name}:::&b&lQuest Completed)"
 			)
 		),
 		Quest(
@@ -452,21 +402,17 @@ class Quests : ConfigContainer {
 				),
 				1
 			),
-			QuestGoal.BREAK_BLOCKS,
+			"BREAK_BLOCKS",
 			XMaterial.MELON.parseMaterial().toString(),
 			1,
 			true,
-			QuestActions(
-				listOf(
-					"message(&7You have started the {quest-name}:::&7Your current progress is 0/{quest-amount-till-complete})",
-					"actionbar(&7Your quest progress is 0/{quest-amount-till-complete})"
-				)
+			listOf(
+				"message(&7You have started the {quest-name}:::&7Your current progress is 0/{quest-amount-till-complete})",
+				"actionbar(&7Your quest progress is 0/{quest-amount-till-complete})"
 			),
-			QuestActions(
-				listOf(
-					"message(&7You have finished the {quest-name}:::&7Your current progress is {quest-amount-till-complete}/{quest-amount-till-complete})",
-					"title(&7{quest-name}:::&b&lQuest Completed)"
-				)
+			listOf(
+				"message(&7You have finished the {quest-name}:::&7Your current progress is {quest-amount-till-complete}/{quest-amount-till-complete})",
+				"title(&7{quest-name}:::&b&lQuest Completed)"
 			)
 		),
 		Quest(
@@ -482,21 +428,17 @@ class Quests : ConfigContainer {
 				),
 				1
 			),
-			QuestGoal.PLACE_BLOCKS,
+			"PLACE_BLOCKS",
 			XMaterial.CACTUS.parseMaterial().toString(),
 			20,
 			true,
-			QuestActions(
-				listOf(
-					"message(&7You have started the {quest-name}:::&7Your current progress is 0/{quest-amount-till-complete})",
-					"actionbar(&7Your quest progress is 0/{quest-amount-till-complete})"
-				)
+			listOf(
+				"message(&7You have started the {quest-name}:::&7Your current progress is 0/{quest-amount-till-complete})",
+				"actionbar(&7Your quest progress is 0/{quest-amount-till-complete})"
 			),
-			QuestActions(
-				listOf(
-					"message(&7You have finished the {quest-name}:::&7Your current progress is {quest-amount-till-complete}/{quest-amount-till-complete})",
-					"title(&7{quest-name}:::&b&lQuest Completed)"
-				)
+			listOf(
+				"message(&7You have finished the {quest-name}:::&7Your current progress is {quest-amount-till-complete}/{quest-amount-till-complete})",
+				"title(&7{quest-name}:::&b&lQuest Completed)"
 			)
 		),
 		Quest(
@@ -512,21 +454,17 @@ class Quests : ConfigContainer {
 				),
 				1
 			),
-			QuestGoal.BREAK_BLOCKS,
+			"BREAK_BLOCKS",
 			if (XMaterial.isNewVersion()) XMaterial.WHEAT.parseMaterial().toString() else "CROPS",
 			30,
 			true,
-			QuestActions(
-				listOf(
-					"message(&7You have started the {quest-name}:::&7Your current progress is 0/{quest-amount-till-complete})",
-					"actionbar(&7Your quest progress is 0/{quest-amount-till-complete})"
-				)
+			listOf(
+				"message(&7You have started the {quest-name}:::&7Your current progress is 0/{quest-amount-till-complete})",
+				"actionbar(&7Your quest progress is 0/{quest-amount-till-complete})"
 			),
-			QuestActions(
-				listOf(
-					"message(&7You have finished the {quest-name}:::&7Your current progress is {quest-amount-till-complete}/{quest-amount-till-complete})",
-					"title(&7{quest-name}:::&b&lQuest Completed)"
-				)
+			listOf(
+				"message(&7You have finished the {quest-name}:::&7Your current progress is {quest-amount-till-complete}/{quest-amount-till-complete})",
+				"title(&7{quest-name}:::&b&lQuest Completed)"
 			)
 		),
 		Quest(
@@ -542,21 +480,17 @@ class Quests : ConfigContainer {
 				),
 				1
 			),
-			QuestGoal.BREAK_BLOCKS,
+			"BREAK_BLOCKS",
 			XMaterial.PUMPKIN.parseMaterial().toString(),
 			1,
 			true,
-			QuestActions(
-				listOf(
-					"message(&7You have started the {quest-name}:::&7Your current progress is 0/{quest-amount-till-complete})",
-					"actionbar(&7Your quest progress is 0/{quest-amount-till-complete})"
-				)
+			listOf(
+				"message(&7You have started the {quest-name}:::&7Your current progress is 0/{quest-amount-till-complete})",
+				"actionbar(&7Your quest progress is 0/{quest-amount-till-complete})"
 			),
-			QuestActions(
-				listOf(
-					"message(&7You have finished the {quest-name}:::&7Your current progress is {quest-amount-till-complete}/{quest-amount-till-complete})",
-					"title(&7{quest-name}:::&b&lQuest Completed)"
-				)
+			listOf(
+				"message(&7You have finished the {quest-name}:::&7Your current progress is {quest-amount-till-complete}/{quest-amount-till-complete})",
+				"title(&7{quest-name}:::&b&lQuest Completed)"
 			)
 		),
 		Quest(
@@ -572,21 +506,17 @@ class Quests : ConfigContainer {
 				),
 				1
 			),
-			QuestGoal.KILL_MOBS,
+			"KILL_MOBS",
 			EntityType.ZOMBIE.toString(),
 			100,
 			true,
-			QuestActions(
-				listOf(
-					"message(&7You have started the {quest-name}:::&7Your current progress is 0/{quest-amount-till-complete})",
-					"actionbar(&7Your quest progress is 0/{quest-amount-till-complete})"
-				)
+			listOf(
+				"message(&7You have started the {quest-name}:::&7Your current progress is 0/{quest-amount-till-complete})",
+				"actionbar(&7Your quest progress is 0/{quest-amount-till-complete})"
 			),
-			QuestActions(
-				listOf(
-					"message(&7You have finished the {quest-name}:::&7Your current progress is {quest-amount-till-complete}/{quest-amount-till-complete})",
-					"title(&7{quest-name}:::&b&lQuest Completed)"
-				)
+			listOf(
+				"message(&7You have finished the {quest-name}:::&7Your current progress is {quest-amount-till-complete}/{quest-amount-till-complete})",
+				"title(&7{quest-name}:::&b&lQuest Completed)"
 			)
 		),
 		Quest(
@@ -602,21 +532,17 @@ class Quests : ConfigContainer {
 				),
 				1
 			),
-			QuestGoal.KILL_MOBS,
+			"KILL_MOBS",
 			EntityType.SKELETON.toString(),
 			100,
 			true,
-			QuestActions(
-				listOf(
-					"message(&7You have started the {quest-name}:::&7Your current progress is 0/{quest-amount-till-complete})",
-					"actionbar(&7Your quest progress is 0/{quest-amount-till-complete})"
-				)
+			listOf(
+				"message(&7You have started the {quest-name}:::&7Your current progress is 0/{quest-amount-till-complete})",
+				"actionbar(&7Your quest progress is 0/{quest-amount-till-complete})"
 			),
-			QuestActions(
-				listOf(
-					"message(&7You have finished the {quest-name}:::&7Your current progress is {quest-amount-till-complete}/{quest-amount-till-complete})",
-					"title(&7{quest-name}:::&b&lQuest Completed)"
-				)
+			listOf(
+				"message(&7You have finished the {quest-name}:::&7Your current progress is {quest-amount-till-complete}/{quest-amount-till-complete})",
+				"title(&7{quest-name}:::&b&lQuest Completed)"
 			)
 		),
 		Quest(
@@ -632,21 +558,17 @@ class Quests : ConfigContainer {
 				),
 				1
 			),
-			QuestGoal.KILL_MOBS,
+			"KILL_MOBS",
 			EntityType.CREEPER.toString(),
 			100,
 			true,
-			QuestActions(
-				listOf(
-					"message(&7You have started the {quest-name}:::&7Your current progress is 0/{quest-amount-till-complete})",
-					"actionbar(&7Your quest progress is 0/{quest-amount-till-complete})"
-				)
+			listOf(
+				"message(&7You have started the {quest-name}:::&7Your current progress is 0/{quest-amount-till-complete})",
+				"actionbar(&7Your quest progress is 0/{quest-amount-till-complete})"
 			),
-			QuestActions(
-				listOf(
-					"message(&7You have finished the {quest-name}:::&7Your current progress is {quest-amount-till-complete}/{quest-amount-till-complete})",
-					"title(&7{quest-name}:::&b&lQuest Completed)"
-				)
+			listOf(
+				"message(&7You have finished the {quest-name}:::&7Your current progress is {quest-amount-till-complete}/{quest-amount-till-complete})",
+				"title(&7{quest-name}:::&b&lQuest Completed)"
 			)
 		)
 	)

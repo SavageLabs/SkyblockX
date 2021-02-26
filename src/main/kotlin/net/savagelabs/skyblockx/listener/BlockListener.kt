@@ -5,8 +5,6 @@ import net.savagelabs.skyblockx.core.canUseBlockAtLocation
 import net.savagelabs.skyblockx.core.getIPlayer
 import net.savagelabs.skyblockx.core.isNotInSkyblockWorld
 import net.savagelabs.skyblockx.persist.Message
-import net.savagelabs.skyblockx.persist.Quests
-import net.savagelabs.skyblockx.quest.QuestGoal
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.block.BlockBreakEvent
@@ -38,39 +36,8 @@ object BlockListener : Listener {
 			return
 		}
 
-		// We're gonna need this more than once here, store to prevent lookups.
-		val island = iPlayer.getIsland()
-
-		// Quest checking block.
-		if (iPlayer.hasIsland() && island!!.currentQuest != null) {
-			// Assert non-null because the if check for this block will trigger.
-			val currentQuest = island.currentQuest!!
-
-			// Find the quest that the island has activated.
-			val targetQuest = Quests.instance.islandQuests.find { quest ->
-				quest.type == QuestGoal.PLACE_BLOCKS && quest.id == currentQuest
-			} ?: return
-
-			// Use XMaterial to parse the material, if null, try to use native material just in case.
-			val material = event.block.type.toString()
-
-			// Check if the material we just processed is the targetQuest's material instead of just checking if the quest is equal.
-			if (material == targetQuest.goalParameter) {
-				// Increment that quest data by 1 :)
-				island.addQuestData(targetQuest.id)
-				island.sendTeamQuestProgress(targetQuest, event.player)
-
-				// Check if quest is complete :D
-				if (targetQuest.isComplete(island.getQuestCompletedAmount(targetQuest.id))) {
-					island.completeQuest(iPlayer, targetQuest)
-				}
-			}
-		}
-
 		// Anti-abuse for skyblock.
-		event.block.setMetadata(
-			"skyblock-placed-by-player", FixedMetadataValue(SkyblockX.skyblockX, true)
-		)
+		event.block.setMetadata("skyblock-placed-by-player", FixedMetadataValue(SkyblockX.skyblockX, true))
 	}
 
 	@EventHandler
@@ -94,40 +61,6 @@ object BlockListener : Listener {
 		if (!canUseBlockAtLocation(iPlayer, event.block.location)) {
 			iPlayer.message(Message.instance.listenerBlockPlacementDenied)
 			event.isCancelled = true
-			return
-		}
-
-		// We're gonna need this more than once here, store to prevent lookups.
-		val island = iPlayer.getIsland() ?: return
-
-		// make sure the player has an island and the quest ain't null
-		if (!iPlayer.hasIsland() || island.currentQuest == null) {
-			return
-		}
-
-		// Assert non-null because the if check for this block will trigger.
-		val currentQuest = island.currentQuest
-
-		// Find the quest that the island has activated.
-		val targetQuest = Quests.instance.islandQuests.find { quest ->
-			quest.type == QuestGoal.BREAK_BLOCKS && quest.id == currentQuest
-		} ?: return
-
-		// Use XMaterial to parse the material, if null, try to use native material just in case.
-		val material = event.block.type.toString()
-
-		// Check if the material we just processed is the targetQuest's material instead of just checking if the quest is equal.
-		if (material != targetQuest.goalParameter || event.block.hasMetadata("skyblock-placed-by-player")) {
-			return
-		}
-
-		// Increment that quest data by 1 :)
-		island.addQuestData(targetQuest.id, 1)
-		island.sendTeamQuestProgress(targetQuest, event.player)
-
-		// Check if quest is complete :D
-		if (targetQuest.isComplete(island.getQuestCompletedAmount(targetQuest.id))) {
-			island.completeQuest(iPlayer, targetQuest)
 		}
 	}
 }

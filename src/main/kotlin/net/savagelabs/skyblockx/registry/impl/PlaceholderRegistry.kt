@@ -4,7 +4,7 @@ import net.savagelabs.skyblockx.placeholder.Placeholder
 import net.savagelabs.skyblockx.registry.Registry
 
 /**
- * This implementation is the registry for present placeholders.
+ * This implementation is the [Registry] for present placeholders.
  */
 object PlaceholderRegistry : Registry<Class<out Placeholder<*>>, Placeholder<*>>() {
     /**

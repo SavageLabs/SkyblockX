@@ -47,7 +47,7 @@ class QuestMenu(val iPlayer: IPlayer, val island: Island) : PagedMenu(
 					)
 				).open(iPlayer.getPlayer())
 				player.sendMessage(color(Message.instance.questActivationTrigger.replace("{quest}", quest.id)))
-				quest.executeActivationTrigger(iPlayer)
+				quest.trigger(true, iPlayer)
 			}
 		}
 	}
@@ -61,10 +61,15 @@ class QuestMenu(val iPlayer: IPlayer, val island: Island) : PagedMenu(
 		for (line in serializableItem.lore) {
 			lore.add(
 				line
-					.replace(
-						"{currentAmount}",
-						DecimalFormat.getInstance().format(island.getQuestCompletedAmount(quest.id))
-					)
+					.replace("{currentAmount}", with (quest.id) {
+						DecimalFormat.getInstance().format(
+							if (island.isOneTimeQuestAlreadyCompleted(this)) {
+								quest.amountTillComplete
+							} else {
+								island.getQuestCompletedAmount(this)
+							}
+						)
+					})
 					.replace("{finalAmount}", DecimalFormat.getInstance().format(quest.amountTillComplete))
 					.replace("{progress}", getProgressPlaceholder(island, quest))
 			)

@@ -1,7 +1,7 @@
 package net.savagelabs.skyblockx.placeholder.impl
 
 import net.savagelabs.skyblockx.placeholder.Placeholder
-import net.savagelabs.skyblockx.quest.QuestActions.QuestContext
+import net.savagelabs.skyblockx.quest.QuestContext
 
 /**
  * This class is the [QuestContext] implementation of [Placeholder].
