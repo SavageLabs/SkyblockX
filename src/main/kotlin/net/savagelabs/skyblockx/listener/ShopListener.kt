@@ -222,7 +222,7 @@ object ShopListener : Listener {
     }
 
     /**
-     * Handle a shop's hologram.
+     * Handle a shop's hologram..
      */
     internal fun Island.ChestShop.handleHologram() {
         if (!Config.instance.chestShopUseHologram) {
