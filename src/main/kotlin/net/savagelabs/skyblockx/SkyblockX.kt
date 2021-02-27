@@ -95,10 +95,10 @@ class SkyblockX : SavagePluginX() {
 		Bukkit.getScheduler().runTaskLaterAsynchronously(this, Runnable {
 			Data.instance.islands.values.forEach {
 				for (shop in it.chestShops.values) {
-					val world = Bukkit.getWorld(if (shop.environment == World.Environment.NORMAL) {
-						Config.instance.skyblockWorldName
-					} else {
-						Config.instance.skyblockWorldNameNether
+					val world = Bukkit.getWorld(when (shop.environment) {
+						World.Environment.NORMAL -> Config.instance.skyblockWorldName
+						World.Environment.NETHER -> Config.instance.skyblockWorldNameNether
+						World.Environment.THE_END -> Config.instance.skyblockWorldNameEnd
 					})
 
 					shop.location.world = world
