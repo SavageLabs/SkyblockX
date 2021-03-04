@@ -121,7 +121,7 @@ class GUIConfig(@JsonIgnore override val name: String = "GUIConfig") : ConfigCon
 					1
 				),
 				listOf(
-					"is ugpgrade"
+					"is upgrade"
 				),
 				GUICoordinate(4, 1)
 			)
