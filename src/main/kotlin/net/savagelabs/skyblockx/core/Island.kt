@@ -9,6 +9,7 @@ import kotlinx.coroutines.runBlocking
 import me.rayzr522.jsonmessage.JSONMessage
 import net.savagelabs.skyblockx.SkyblockX
 import net.savagelabs.skyblockx.event.*
+import net.savagelabs.skyblockx.hooks.ShopGuiHook
 import net.savagelabs.skyblockx.persist.*
 import net.savagelabs.skyblockx.persist.data.SLocation
 import net.savagelabs.skyblockx.persist.data.getSLocation
@@ -233,13 +234,17 @@ data class Island(
                                     z
                                 )!!
                             if (blockType == Material.AIR) continue
-                            var xmat: XMaterial = try {
+                            val xmat: XMaterial = try {
                                 XMaterial.matchXMaterial(blockType)
                             } catch (ex: IllegalArgumentException) {
                                 XMaterial.AIR
                             }
 
-                            price += BlockValues.instance.blockValues[xmat] ?: 0.0
+                            val originalPrice: Double by lazyOf(BlockValues.instance.blockValues[xmat] ?: 0.0)
+                            price += if (Config.instance.useShopGuiPlusHookOnCalcIfPresent) {
+                                ShopGuiHook.priceOf(xmat.parseItem()!!) ?: originalPrice
+                            } else originalPrice
+
                             mapAmt[xmat] = mapAmt.getOrDefault(xmat, 0) + 1
                         }
                     }

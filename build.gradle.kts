@@ -32,6 +32,7 @@ dependencies {
     implementation(project(":SavagePluginX"))
     implementation(project(":WorldBorderUtil"))
     implementation(files("lib/hologram-1.1.jar"))
+    implementation("com.github.brcdev-minecraft:shopgui-api:2.1.1")
     //implementation(files("lib/HologramLib-1.0.2.jar"))
 
 

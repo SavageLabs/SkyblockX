@@ -462,6 +462,8 @@ class Config(@JsonIgnore override val name: String = "config") :
 
 	var autoCalcIslands = true
 
+	var useShopGuiPlusHookOnCalcIfPresent = true
+
 	var islandTopBroadcastMessage = true
 
 	var islandTopBroadcastMessageStart = "&7Starting IslandTOP Calculation."
