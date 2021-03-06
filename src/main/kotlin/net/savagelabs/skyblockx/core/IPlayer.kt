@@ -17,7 +17,9 @@ import java.util.*
 
 data class IPlayer(val uuid: UUID, var name: String) {
 	companion object {
-		internal val PRICE_FORMAT: NumberFormat = DecimalFormat("#,###")
+		internal val PRICE_FORMAT: NumberFormat by lazyOf(
+			DecimalFormat.getNumberInstance(Config.instance.numberFormatLocale)
+		)
 	}
 
 	var lastIslandResetTime = -1L
