@@ -11,9 +11,14 @@ import net.savagelabs.worldborder.WorldBorderUtil
 import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.entity.Player
+import java.text.DecimalFormat
+import java.text.NumberFormat
 import java.util.*
 
 data class IPlayer(val uuid: UUID, var name: String) {
+	companion object {
+		internal val PRICE_FORMAT: NumberFormat = DecimalFormat("#,###")
+	}
 
 	var lastIslandResetTime = -1L
 
@@ -122,11 +127,7 @@ data class IPlayer(val uuid: UUID, var name: String) {
 
 	fun takeMoney(price: Double): Boolean {
 		val success = VaultHook.takeFrom(this, price)!!.transactionSuccess()
-		if (success) {
-			message(Message.instance.genericPlayerPaid, price.toString())
-		} else {
-			message(Message.instance.genericPlayerDidntPay, price.toString())
-		}
+		message(if (success) Message.instance.genericPlayerPaid else Message.instance.genericPlayerDidntPay, PRICE_FORMAT.format(price))
 		return success
 	}
 
