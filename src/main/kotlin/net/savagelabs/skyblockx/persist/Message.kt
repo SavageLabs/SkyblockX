@@ -275,6 +275,8 @@ class Message : ConfigContainer {
 	var chestShopSold = "&7You have sold &ax%s &7of &a%s &7to &a&n%s&7 for &a\$%s&7."
 	var chestShopSoldSeller = "&a&n%s&7 has sold &ax%s &7of &a%s &7to you for &a\$%s&7."
 
+	var placementLimitReached = "&7Your island has reached the placement limit for &a%s&7!"
+
 	var islandCreatedTitle = "&9SkyblockX"
 	var islandCreatedSubtitle = "&7By: ProSavage"
 

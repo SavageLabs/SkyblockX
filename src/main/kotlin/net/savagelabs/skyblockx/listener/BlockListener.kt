@@ -1,9 +1,11 @@
 package net.savagelabs.skyblockx.listener
 
+import com.cryptomorin.xseries.XMaterial
 import net.savagelabs.skyblockx.SkyblockX
 import net.savagelabs.skyblockx.core.canUseBlockAtLocation
 import net.savagelabs.skyblockx.core.getIPlayer
 import net.savagelabs.skyblockx.core.isNotInSkyblockWorld
+import net.savagelabs.skyblockx.persist.Config
 import net.savagelabs.skyblockx.persist.Message
 import net.savagelabs.skyblockx.persist.Quests
 import net.savagelabs.skyblockx.quest.QuestGoal
@@ -40,9 +42,25 @@ object BlockListener : Listener {
 
 		// We're gonna need this more than once here, store to prevent lookups.
 		val island = iPlayer.getIsland()
+		val xMaterial = XMaterial.matchXMaterial(event.block.type)
+		val placementLimit = Config.instance.blockPlacementLimit.getOrDefault(xMaterial, -1)
+
+		// Make sure the island has not met the placement limit of the corresponding material.
+		if (island != null && placementLimit != -1) {
+			val boost = island.placementLimitBoost.getOrDefault(xMaterial, 0)
+			val placementCount = island.blocksPlaced.getOrDefault(xMaterial, -1)
+
+			if (placementCount != -1 && placementCount >= (placementLimit + boost)) {
+				iPlayer.message(Message.instance.placementLimitReached, xMaterial.toString())
+				event.isCancelled = true
+				return
+			}
+
+			island.blocksPlaced[xMaterial] = placementCount + 1
+		}
 
 		// Quest checking block.
-		if (iPlayer.hasIsland() && island!!.currentQuest != null) {
+		if (island != null && island.currentQuest != null) {
 			// Assert non-null because the if check for this block will trigger.
 			val currentQuest = island.currentQuest!!
 
@@ -100,8 +118,17 @@ object BlockListener : Listener {
 		// We're gonna need this more than once here, store to prevent lookups.
 		val island = iPlayer.getIsland() ?: return
 
+		// Remove from placement
+		val xMaterial = XMaterial.matchXMaterial(event.block.type)
+		val old = island.blocksPlaced.getOrDefault(xMaterial, -1)
+
+		if (old != -1) when (old) {
+			1 -> island.blocksPlaced.remove(xMaterial)
+			else -> island.blocksPlaced[xMaterial] = old - 1
+		}
+
 		// make sure the player has an island and the quest ain't null
-		if (!iPlayer.hasIsland() || island.currentQuest == null) {
+		if (island.currentQuest == null) {
 			return
 		}
 

@@ -4,6 +4,7 @@ import com.cryptomorin.xseries.XMaterial
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import io.papermc.lib.PaperLib
+import io.papermc.lib.PaperLib.getChunkAtAsync
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import me.rayzr522.jsonmessage.JSONMessage
@@ -18,6 +19,7 @@ import net.savagelabs.skyblockx.quest.incrementQuestInOrder
 import net.savagelabs.skyblockx.registry.Identifier
 import net.savagelabs.skyblockx.registry.impl.HologramRegistry
 import net.savagelabs.skyblockx.sedit.SkyBlockEdit
+import net.savagelabs.skyblockx.util.forEachAsync
 import net.savagelabs.skyblockx.world.Point
 import net.savagelabs.skyblockx.world.spiral
 import org.bukkit.*
@@ -109,6 +111,56 @@ data class Island(
         }
 
         Bukkit.getPluginManager().callEvent(IslandBiomeChangeEvent(this, biome))
+    }
+
+    var placementLimitBoost: EnumMap<XMaterial, Int> = EnumMap(XMaterial::class.java)
+    @JsonIgnore var blocksPlaced: EnumMap<XMaterial, Int> = EnumMap(XMaterial::class.java)
+
+    fun scanPlacedBlocks(world: World) {
+        // clear old if the world is loading due to another third-party plugin
+        blocksPlaced.clear()
+
+        // necessity
+        var finishSize = 0
+        val chunks = hashSetOf<Chunk>()
+
+        // work
+        runBlocking {
+            for (x in minLocation.x.toInt()..maxLocation.x.toInt() step 16) {
+                for (z in minLocation.z.toInt()..maxLocation.z.toInt() step 16) {
+                    finishSize++
+                    getChunkAtAsync(world, x shr 4, z shr 4).thenAccept(chunks::add)
+                }
+            }
+
+            while (finishSize > chunks.size) {
+                delay(1)
+            }
+        }
+
+        chunks.forEachAsync {
+            // necessity
+            val isNewVersion = XMaterial.getVersion() >= 12
+
+            // scan chunk
+            for (sy in 0 until 16) {
+                // make sure the section is not empty
+                if (chunkSnapshot.isSectionEmpty(sy)) {
+                    continue
+                }
+
+                // loop through x, y and z
+                val calculatedSy = sy * 16
+                for (x in 0 until 16) for (y in 0 until 16) for (z in 0 until 16) {
+                    val material = getChunkSnapshotBlockType(isNewVersion, chunkSnapshot, x, calculatedSy + y, z)
+                    if (material == Material.AIR) {
+                        continue
+                    }
+                    blocksPlaced.merge(XMaterial.matchXMaterial(material ?: continue), 1) { old, new -> old + new }
+                }
+            }
+            // ->
+        }
     }
 
     var questData = HashMap<String, Int>()

@@ -2,10 +2,7 @@ package net.savagelabs.skyblockx.manager
 
 import net.savagelabs.skyblockx.exception.UpgradeException
 import net.savagelabs.skyblockx.upgrade.Upgrade
-import net.savagelabs.skyblockx.upgrade.impl.GeneratorUpgrade
-import net.savagelabs.skyblockx.upgrade.impl.HomeUpgrade
-import net.savagelabs.skyblockx.upgrade.impl.SizeUpgrade
-import net.savagelabs.skyblockx.upgrade.impl.TeamUpgrade
+import net.savagelabs.skyblockx.upgrade.impl.*
 import net.savagelabs.skyblockx.upgrade.listenTo
 import org.bukkit.event.Event
 import org.bukkit.event.HandlerList
@@ -28,6 +25,7 @@ object UpgradeManager {
         register(HomeUpgrade)
         register(SizeUpgrade)
         register(TeamUpgrade)
+        register(PlacementLimitUpgrade)
     }
 
     /**

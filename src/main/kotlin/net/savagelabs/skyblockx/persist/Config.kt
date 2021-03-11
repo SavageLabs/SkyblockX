@@ -137,7 +137,7 @@ class Config(@JsonIgnore override val name: String = "config") :
 							),
 							1
 						),
-						GUICoordinate(3, 1)
+						GUICoordinate(2, 1)
 					)
 				),
 				2 to UpgradeLevelInfo(
@@ -155,7 +155,7 @@ class Config(@JsonIgnore override val name: String = "config") :
 							),
 							2
 						),
-						GUICoordinate(3, 1)
+						GUICoordinate(2, 1)
 					)
 				),
 				3 to UpgradeLevelInfo(
@@ -173,7 +173,7 @@ class Config(@JsonIgnore override val name: String = "config") :
 							),
 							3
 						),
-						GUICoordinate(3, 1)
+						GUICoordinate(2, 1)
 					)
 				),
 				4 to UpgradeLevelInfo(
@@ -191,7 +191,7 @@ class Config(@JsonIgnore override val name: String = "config") :
 							),
 							4
 						),
-						GUICoordinate(3, 1)
+						GUICoordinate(2, 1)
 					)
 				)
 			),
@@ -204,7 +204,7 @@ class Config(@JsonIgnore override val name: String = "config") :
 					),
 					1
 				),
-				GUICoordinate(3, 1)
+				GUICoordinate(2, 1)
 			)
 		),
 		"MAX_HOMES" to UpgradeTypeInfo(
@@ -224,7 +224,7 @@ class Config(@JsonIgnore override val name: String = "config") :
 							),
 							1
 						),
-						GUICoordinate(5, 1)
+						GUICoordinate(3, 1)
 					)
 				),
 				2 to UpgradeLevelInfo(
@@ -242,7 +242,7 @@ class Config(@JsonIgnore override val name: String = "config") :
 							),
 							2
 						),
-						GUICoordinate(5, 1)
+						GUICoordinate(3, 1)
 					)
 				),
 				3 to UpgradeLevelInfo(
@@ -260,7 +260,7 @@ class Config(@JsonIgnore override val name: String = "config") :
 							),
 							3
 						),
-						GUICoordinate(5, 1)
+						GUICoordinate(3, 1)
 					)
 				)
 			),
@@ -273,7 +273,7 @@ class Config(@JsonIgnore override val name: String = "config") :
 					),
 					1
 				),
-				GUICoordinate(5, 1)
+				GUICoordinate(3, 1)
 			)
 		),
 		"TEAM_SIZE" to UpgradeTypeInfo(
@@ -293,7 +293,7 @@ class Config(@JsonIgnore override val name: String = "config") :
 							),
 							1
 						),
-						GUICoordinate(7, 1)
+						GUICoordinate(4, 1)
 					)
 				),
 				2 to UpgradeLevelInfo(
@@ -311,7 +311,7 @@ class Config(@JsonIgnore override val name: String = "config") :
 							),
 							2
 						),
-						GUICoordinate(7, 1)
+						GUICoordinate(4, 1)
 					)
 				),
 				3 to UpgradeLevelInfo(
@@ -329,7 +329,7 @@ class Config(@JsonIgnore override val name: String = "config") :
 							),
 							3
 						),
-						GUICoordinate(7, 1)
+						GUICoordinate(4, 1)
 					)
 				)
 			),
@@ -342,7 +342,37 @@ class Config(@JsonIgnore override val name: String = "config") :
 					),
 					1
 				),
-				GUICoordinate(7, 1)
+				GUICoordinate(4, 1)
+			)
+		),
+		"PLACEMENT_LIMIT" to UpgradeTypeInfo(
+			mapOf(
+				1 to UpgradeLevelInfo(
+					15000.0,
+					"SPAWNER;5",
+					GUIItem(
+						SerializableItem(
+							XMaterial.SPAWNER,
+							"&f&lSpawner Upgrade",
+							listOf(
+								"&7Boost: &a5",
+								"",
+								"&7Upgrade To Lv. 1",
+								"&7Cost: &a&l$15,000"
+							),
+							1
+						),
+						GUICoordinate(5, 1)
+					)
+				)
+			),
+			GUIItem(
+				SerializableItem(
+					XMaterial.SPAWNER,
+					"&f&lMax Spawner Upgrade",
+					listOf("&7Max Level Reached"), 1
+				),
+				GUICoordinate(5, 1)
 			)
 		)
 	)
@@ -484,6 +514,10 @@ class Config(@JsonIgnore override val name: String = "config") :
 	val showMemberManagerGUI = true
 
 	var removeBlocksOnIslandDelete = false
+
+	var blockPlacementLimit = mapOf(
+		XMaterial.SPAWNER to 5
+	)
 
 	var chatFormat = "&bIsland Chat &r{player}: {message}"
 
