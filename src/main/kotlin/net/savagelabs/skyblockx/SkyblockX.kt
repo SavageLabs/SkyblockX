@@ -1,7 +1,6 @@
 package net.savagelabs.skyblockx
 
 import com.cryptomorin.xseries.XMaterial
-import com.oop.inteliframework.hologram.Hologram
 import fr.minuskube.inv.InventoryManager
 import io.papermc.lib.PaperLib
 import kotlinx.coroutines.runBlocking
@@ -76,7 +75,8 @@ class SkyblockX : SavagePluginX() {
 				PlayerListener,
 				EntityListener,
 				ShopListener,
-				GlideListener()
+				GlideListener(),
+				WorldListener
 			)
 			UpgradeManager.defaults()
 			startInventoryManager()
@@ -205,7 +205,7 @@ class SkyblockX : SavagePluginX() {
 
 	override fun disable() {
 		saveDataFiles()
-		HologramRegistry.unregisterAll(Hologram::remove)
+		HologramRegistry.unregisterAll()
 		PlaceholderRegistry.unregisterAll()
 		UpgradeManager.unregisterAll()
 	}
