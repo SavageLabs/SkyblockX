@@ -48,4 +48,9 @@ object HologramRegistry : Registry<Identifier, Hologram>() {
      */
     override fun unregister(identifier: Identifier): Hologram? =
             super.unregister(identifier)?.also(Hologram::remove)
+
+    /**
+     * Avoid issues such as exceptions...
+     */
+    init { SkyblockX.wasHologramActive = true }
 }

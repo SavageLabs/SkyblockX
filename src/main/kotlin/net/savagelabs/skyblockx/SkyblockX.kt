@@ -43,6 +43,7 @@ class SkyblockX : SavagePluginX() {
 		lateinit var generatorAlgorithm: Map<Int, Items<XMaterial>>
 		var islandValues: IslandTopInfo? = null
 		lateinit var inventoryManager: InventoryManager
+		internal var wasHologramActive: Boolean = false
 	}
 
 	override fun onLoad() {
@@ -205,7 +206,7 @@ class SkyblockX : SavagePluginX() {
 
 	override fun disable() {
 		saveDataFiles()
-		HologramRegistry.unregisterAll()
+		if (wasHologramActive) HologramRegistry.unregisterAll()
 		PlaceholderRegistry.unregisterAll()
 		UpgradeManager.unregisterAll()
 	}
