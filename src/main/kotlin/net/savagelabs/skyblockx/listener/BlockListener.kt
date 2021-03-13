@@ -48,9 +48,9 @@ object BlockListener : Listener {
 		// Make sure the island has not met the placement limit of the corresponding material.
 		if (island != null && placementLimit != -1) {
 			val boost = island.placementLimitBoost.getOrDefault(xMaterial, 0)
-			val placementCount = island.blocksPlaced.getOrDefault(xMaterial, -1)
+			val placementCount = island.blocksPlaced.getOrDefault(xMaterial, 0)
 
-			if (placementCount != -1 && placementCount >= (placementLimit + boost)) {
+			if (placementCount >= (placementLimit + boost)) {
 				iPlayer.message(Message.instance.placementLimitReached, xMaterial.toString())
 				event.isCancelled = true
 				return
