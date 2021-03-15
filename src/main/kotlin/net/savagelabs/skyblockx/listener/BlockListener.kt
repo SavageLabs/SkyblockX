@@ -2,24 +2,25 @@ package net.savagelabs.skyblockx.listener
 
 import com.cryptomorin.xseries.XMaterial
 import net.savagelabs.skyblockx.SkyblockX
-import net.savagelabs.skyblockx.core.canUseBlockAtLocation
-import net.savagelabs.skyblockx.core.getIPlayer
-import net.savagelabs.skyblockx.core.isNotInSkyblockWorld
+import net.savagelabs.skyblockx.core.*
 import net.savagelabs.skyblockx.persist.Config
 import net.savagelabs.skyblockx.persist.Message
 import net.savagelabs.skyblockx.persist.Quests
 import net.savagelabs.skyblockx.quest.QuestGoal
+import org.bukkit.event.Cancellable
 import org.bukkit.event.EventHandler
+import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.block.BlockPlaceEvent
 import org.bukkit.metadata.FixedMetadataValue
 
 object BlockListener : Listener {
-	@EventHandler
+	@EventHandler(priority = EventPriority.HIGHEST)
 	fun onBlockPlace(event: BlockPlaceEvent) {
+		// make sure it's not already cancelled for plugin support
 		// FUTURE CONTRIBUTIONS: Attempt to split checks into small blocks.
-		if (isNotInSkyblockWorld(event.blockPlaced.world)) {
+		if (event.isCancelled || isNotInSkyblockWorld(event.blockPlaced.world)) {
 			return
 		}
 
@@ -43,20 +44,10 @@ object BlockListener : Listener {
 		// We're gonna need this more than once here, store to prevent lookups.
 		val island = iPlayer.getIsland()
 		val xMaterial = XMaterial.matchXMaterial(event.block.type)
-		val placementLimit = Config.instance.blockPlacementLimit.getOrDefault(xMaterial, -1)
 
-		// Make sure the island has not met the placement limit of the corresponding material.
-		if (island != null && placementLimit != -1) {
-			val boost = island.placementLimitBoost.getOrDefault(xMaterial, 0)
-			val placementCount = island.blocksPlaced.getOrDefault(xMaterial, 0)
-
-			if (placementCount >= (placementLimit + boost)) {
-				iPlayer.message(Message.instance.placementLimitReached, xMaterial.toString())
-				event.isCancelled = true
-				return
-			}
-
-			island.blocksPlaced[xMaterial] = placementCount + 1
+		// Work the placement limit.
+		if (!(SkyblockX.isWildStackerPresent && xMaterial === XMaterial.SPAWNER)) {
+			workPlacement(xMaterial, island, iPlayer, event)
 		}
 
 		// Quest checking block.
@@ -91,10 +82,11 @@ object BlockListener : Listener {
 		)
 	}
 
-	@EventHandler
+	@EventHandler(priority = EventPriority.HIGHEST)
 	fun onBlockBreak(event: BlockBreakEvent) {
+		// make sure it's not already cancelled for plugin support
 		// FUTURE CONTRIBUTIONS: Attempt to split checks into small blocks.
-		if (isNotInSkyblockWorld(event.block.world)) {
+		if (event.isCancelled || isNotInSkyblockWorld(event.block.world)) {
 			return
 		}
 
@@ -156,5 +148,27 @@ object BlockListener : Listener {
 		if (targetQuest.isComplete(island.getQuestCompletedAmount(targetQuest.id))) {
 			island.completeQuest(iPlayer, targetQuest)
 		}
+	}
+
+	internal fun workPlacement(material: XMaterial, island: Island?, islandPlayer: IPlayer, event: Cancellable) {
+		// Necessity.
+		val placementLimit = Config.instance.blockPlacementLimit.getOrDefault(material, -1)
+
+		// Make sure the island is not null and the placement limit is present.
+		if (island == null || placementLimit == -1) {
+			return
+		}
+
+		// Work placement.
+		val boost = island.placementLimitBoost.getOrDefault(material, 0)
+		val placementCount = island.blocksPlaced.getOrDefault(material, 0)
+
+		if (placementCount >= (placementLimit + boost)) {
+			islandPlayer.message(Message.instance.placementLimitReached, material.toString())
+			event.isCancelled = true
+			return
+		}
+
+		island.blocksPlaced[material] = placementCount + 1
 	}
 }

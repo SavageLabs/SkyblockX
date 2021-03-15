@@ -4,7 +4,7 @@ version: 1.5.2
 api-version: '1.13'
 load: POSTWORLD
 depend: [XCore]
-softdepend: [PlaceholderAPI, ShopGUIPlus]
+softdepend: [PlaceholderAPI, ShopGUIPlus, WildStacker]
 loadbefore: [Multiverse-Core]
 authors: [ProSavage, Zed]
 description: 'The Ultimate Skyblock Core'

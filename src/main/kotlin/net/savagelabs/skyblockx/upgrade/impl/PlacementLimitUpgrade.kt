@@ -33,8 +33,10 @@ object PlacementLimitUpgrade : Upgrade<Event>(id = "PLACEMENT_LIMIT") {
 
         // update boost
         val (type, amount) = preview[level]?.parameter?.split(";") ?: throw UpgradeException("Failed to fetch preview")
-        val material = XMaterial.matchXMaterial(type).orElseThrow { UpgradeException("Material on placement limit (level=$level) is not valid") }
-        island.placementLimitBoost[material] = amount.toIntOrNull() ?: throw UpgradeException("Amount on placement limit (level=$level) is not valid")
+        val material = XMaterial.matchXMaterial(type)
+            .orElseThrow { UpgradeException("Material on placement limit (level=$level) is not valid") }
+        island.placementLimitBoost[material] =
+            amount.toIntOrNull() ?: throw UpgradeException("Amount on placement limit (level=$level) is not valid")
 
         // call event
         Bukkit.getPluginManager().callEvent(IslandUpgradeEvent(island, this.id))

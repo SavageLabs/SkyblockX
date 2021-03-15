@@ -14,6 +14,7 @@ import net.savagelabs.skyblockx.hooks.PlacholderAPIIntegration
 import net.savagelabs.skyblockx.hooks.VaultHook
 import net.savagelabs.skyblockx.listener.*
 import net.savagelabs.skyblockx.listener.ShopListener.handleHologram
+import net.savagelabs.skyblockx.listener.hooks.WildStackerListener
 import net.savagelabs.skyblockx.manager.UpgradeManager
 import net.savagelabs.skyblockx.persist.*
 import net.savagelabs.skyblockx.persist.data.Items
@@ -44,6 +45,7 @@ class SkyblockX : SavagePluginX() {
 		var islandValues: IslandTopInfo? = null
 		lateinit var inventoryManager: InventoryManager
 		internal var wasHologramActive: Boolean = false
+		internal val isWildStackerPresent: Boolean by lazyOf(Bukkit.getPluginManager().getPlugin("WildStacker") != null)
 	}
 
 	override fun onLoad() {
@@ -77,7 +79,8 @@ class SkyblockX : SavagePluginX() {
 				EntityListener,
 				ShopListener,
 				GlideListener(),
-				WorldListener
+				WorldListener,
+				if (isWildStackerPresent) WildStackerListener else null
 			)
 			UpgradeManager.defaults()
 			startInventoryManager()
