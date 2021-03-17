@@ -7,6 +7,7 @@ import net.savagelabs.skyblockx.gui.wrapper.GUICoordinate
 import net.savagelabs.skyblockx.gui.wrapper.GUIItem
 import net.savagelabs.skyblockx.persist.data.SerializableItem
 import net.savagelabs.skyblockx.persist.data.WeightedItem
+import net.savagelabs.skyblockx.upgrade.Upgrade
 import net.savagelabs.skyblockx.upgrade.UpgradeLevelInfo
 import org.bukkit.Bukkit
 import org.bukkit.block.Biome
@@ -35,10 +36,11 @@ class Config(@JsonIgnore override val name: String = "config") :
 
 	var islandPaddingSizeInBlocks = 50
 
-	data class UpgradeTypeInfo(val upgradeInfoPerLevel: Map<Int, UpgradeLevelInfo>, val maxLevelItem: GUIItem)
-
-	var upgrades = mapOf(
-		"GENERATOR" to UpgradeTypeInfo(
+	var upgrades = setOf(
+		Upgrade(
+			"GENERATOR_ONE",
+			"GENERATOR",
+			"",
 			mapOf(
 				1 to UpgradeLevelInfo(
 					10000.0,
@@ -120,7 +122,10 @@ class Config(@JsonIgnore override val name: String = "config") :
 				GUICoordinate(1, 1)
 			)
 		),
-		"ISLAND_SIZE" to UpgradeTypeInfo(
+		Upgrade(
+			"ISLAND_SIZE_ONE",
+			"ISLAND_SIZE",
+			"",
 			mapOf(
 				1 to UpgradeLevelInfo(
 					10000.0,
@@ -207,7 +212,10 @@ class Config(@JsonIgnore override val name: String = "config") :
 				GUICoordinate(2, 1)
 			)
 		),
-		"MAX_HOMES" to UpgradeTypeInfo(
+		Upgrade(
+			"MAX_HOMES_ONE",
+			"MAX_HOMES",
+			"",
 			mapOf(
 				1 to UpgradeLevelInfo(
 					10000.0,
@@ -276,7 +284,10 @@ class Config(@JsonIgnore override val name: String = "config") :
 				GUICoordinate(3, 1)
 			)
 		),
-		"TEAM_SIZE" to UpgradeTypeInfo(
+		Upgrade(
+			"TEAM_SIZE_ONE",
+			"TEAM_SIZE",
+			"",
 			mapOf(
 				1 to UpgradeLevelInfo(
 					10000.0,
@@ -345,11 +356,14 @@ class Config(@JsonIgnore override val name: String = "config") :
 				GUICoordinate(4, 1)
 			)
 		),
-		"PLACEMENT_LIMIT" to UpgradeTypeInfo(
+		Upgrade(
+			"PLACEMENT_LIMIT_SPAWNER",
+			"PLACEMENT_LIMIT",
+			"SPAWNER",
 			mapOf(
 				1 to UpgradeLevelInfo(
 					15000.0,
-					"SPAWNER;5",
+					"5",
 					GUIItem(
 						SerializableItem(
 							XMaterial.SPAWNER,

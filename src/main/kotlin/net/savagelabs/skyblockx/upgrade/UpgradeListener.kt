@@ -12,7 +12,7 @@ import org.bukkit.plugin.EventExecutor
  */
 @PublishedApi
 internal class UpgradeListener constructor(
-        private val listener: Event.() -> Unit
+    private val listener: Event.() -> Unit
 ) : EventExecutor, Listener {
     override fun execute(fromListener: Listener, event: Event) = this.listener(event)
 }
@@ -27,8 +27,8 @@ internal class UpgradeListener constructor(
 @Suppress("UNCHECKED_CAST")
 @PublishedApi
 internal inline fun <reified Type : Event> listenTo(
-        priority: EventPriority = EventPriority.NORMAL,
-        noinline onExecution: Type.() -> Unit
+    priority: EventPriority = EventPriority.NORMAL,
+    noinline onExecution: Type.() -> Unit
 ) = UpgradeListener(onExecution as Event.() -> Unit).apply {
     Bukkit.getPluginManager().registerEvent(Type::class.java, this, priority, this, SkyblockX.skyblockX)
 }

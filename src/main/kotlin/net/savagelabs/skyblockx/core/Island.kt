@@ -65,7 +65,7 @@ data class Island(
     @JsonIgnore
     var syncIsland = false
 
-    var upgrades = hashMapOf<String, Int>()
+    var upgrades = hashMapOf<String, Any>()
 
     var lastLoginTime = Date()
 

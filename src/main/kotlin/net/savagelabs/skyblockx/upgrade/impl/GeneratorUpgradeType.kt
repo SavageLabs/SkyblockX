@@ -6,12 +6,9 @@ import net.savagelabs.skyblockx.core.Island
 import net.savagelabs.skyblockx.core.getIslandFromLocation
 import net.savagelabs.skyblockx.core.isNotInSkyblockWorld
 import net.savagelabs.skyblockx.event.IslandUpgradeEvent
-import net.savagelabs.skyblockx.gui.wrapper.GUIItem
 import net.savagelabs.skyblockx.persist.Config
 import net.savagelabs.skyblockx.upgrade.Upgrade
-import net.savagelabs.skyblockx.upgrade.UpgradeLevelInfo
-import net.savagelabs.skyblockx.upgrade.levelItemsOrErrorByPreview
-import net.savagelabs.skyblockx.upgrade.maxLevelItemOrErrorByPreview
+import net.savagelabs.skyblockx.upgrade.UpgradeType
 import org.bukkit.Bukkit
 import org.bukkit.block.BlockFace
 import org.bukkit.event.Listener
@@ -20,9 +17,7 @@ import org.bukkit.event.block.BlockFromToEvent
 /**
  * This upgrade increases the Generator level of an Island.
  */
-object GeneratorUpgrade : Upgrade<BlockFromToEvent>(id = "GENERATOR") {
-    override val preview: Map<Int, UpgradeLevelInfo> by lazy { this.levelItemsOrErrorByPreview() }
-    override val maxLevelItem: GUIItem by lazy { this.maxLevelItemOrErrorByPreview() }
+object GeneratorUpgradeType : UpgradeType<BlockFromToEvent>(id = "GENERATOR") {
     override var listener: Listener? = null
 
     /**
@@ -30,8 +25,8 @@ object GeneratorUpgrade : Upgrade<BlockFromToEvent>(id = "GENERATOR") {
      */
     private val relatives: Array<out BlockFace> = arrayOf(BlockFace.WEST, BlockFace.SOUTH, BlockFace.EAST, BlockFace.NORTH)
 
-    override fun commence(player: IPlayer, island: Island, level: Int) {
-        if (!player.takeMoney(this.priceOf(level))) {
+    override fun commence(player: IPlayer, island: Island, level: Int, upgrade: Upgrade) {
+        if (!player.takeMoney(this.priceOf(level, upgrade))) {
             return
         }
 

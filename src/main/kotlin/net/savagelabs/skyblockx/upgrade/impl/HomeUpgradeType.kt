@@ -4,12 +4,8 @@ import net.savagelabs.skyblockx.SkyblockX
 import net.savagelabs.skyblockx.core.IPlayer
 import net.savagelabs.skyblockx.core.Island
 import net.savagelabs.skyblockx.event.IslandUpgradeEvent
-import net.savagelabs.skyblockx.gui.wrapper.GUIItem
-import net.savagelabs.skyblockx.persist.Config
 import net.savagelabs.skyblockx.upgrade.Upgrade
-import net.savagelabs.skyblockx.upgrade.UpgradeLevelInfo
-import net.savagelabs.skyblockx.upgrade.levelItemsOrErrorByPreview
-import net.savagelabs.skyblockx.upgrade.maxLevelItemOrErrorByPreview
+import net.savagelabs.skyblockx.upgrade.UpgradeType
 import org.bukkit.Bukkit
 import org.bukkit.event.Event
 import org.bukkit.event.Listener
@@ -17,13 +13,11 @@ import org.bukkit.event.Listener
 /**
  * This upgrade increases the amount of max homes an Island has.
  */
-object HomeUpgrade : Upgrade<Event>(id = "MAX_HOMES") {
-    override val preview: Map<Int, UpgradeLevelInfo> by lazy { this.levelItemsOrErrorByPreview() }
-    override val maxLevelItem: GUIItem by lazy { this.maxLevelItemOrErrorByPreview() }
+object HomeUpgradeType : UpgradeType<Event>(id = "MAX_HOMES") {
     override var listener: Listener? = null
 
-    override fun commence(player: IPlayer, island: Island, level: Int) {
-        if (!player.takeMoney(this.priceOf(level))) {
+    override fun commence(player: IPlayer, island: Island, level: Int, upgrade: Upgrade) {
+        if (!player.takeMoney(this.priceOf(level, upgrade))) {
             return
         }
 
@@ -31,7 +25,7 @@ object HomeUpgrade : Upgrade<Event>(id = "MAX_HOMES") {
         island.upgrades[this.id] = level
 
         // assign home boost & make sure the parameter is an integer otherwise log failure and break out of the function
-        island.homeBoost += Config.instance.upgrades[this.id]?.upgradeInfoPerLevel?.get(level)?.parameter?.toIntOrNull() ?: run {
+        island.homeBoost += upgrade.levels[level]?.parameter?.toIntOrNull() ?: run {
             SkyblockX.skyblockX.logger.info("Home Upgrade failed due to the param not being an integer")
             return
         }
