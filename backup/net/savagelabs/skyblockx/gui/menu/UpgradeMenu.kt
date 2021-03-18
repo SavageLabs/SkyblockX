@@ -1,5 +1,6 @@
 package net.savagelabs.skyblockx.gui.menu
 
+import com.cryptomorin.xseries.XMaterial
 import fr.minuskube.inv.ClickableItem
 import fr.minuskube.inv.content.InventoryContents
 import net.savagelabs.skyblockx.core.Island
@@ -47,7 +48,7 @@ class UpgradeMenu(val island: Island) : BaseMenu(
 
             for (upgrade in registry) {
                 val level = (if (!isPlacementLimit) (levels?.toString()?.toIntOrNull() ?: 0)
-					else (levels as? HashMap<String, Int>)?.get(upgrade.parameter) ?: 0) + 1
+					else (levels as? HashMap<XMaterial, Int>)?.get(XMaterial.matchXMaterial(upgrade.parameter).get()) ?: 0) + 1
 				val info = upgrade.levels[level]
 
 				val maxLevelItem = upgrade.maxLevelItem
