@@ -1,10 +1,7 @@
 package net.savagelabs.skyblockx.listener
 
 import net.savagelabs.skyblockx.SkyblockX
-import net.savagelabs.skyblockx.core.color
-import net.savagelabs.skyblockx.core.getIPlayer
-import net.savagelabs.skyblockx.core.isNotInSkyblockWorld
-import net.savagelabs.skyblockx.core.teleportAsync
+import net.savagelabs.skyblockx.core.*
 import net.savagelabs.skyblockx.persist.Config
 import net.savagelabs.skyblockx.persist.Message
 import net.savagelabs.skyblockx.persist.Quests
@@ -61,9 +58,34 @@ object EntityListener : Listener {
 
 	@EventHandler
 	fun onPlayerTakingDamage(event: EntityDamageByEntityEvent) {
-		// If they're not a player or if the entity is not in the skyblock world, we do not care.
+		if (event.isCancelled || isNotInSkyblockWorld(event.entity.world)) {
+			return
+		}
+
 		val type = event.entityType
-		if (type != EntityType.PLAYER || event.damager.type == EntityType.PLAYER || isNotInSkyblockWorld(event.entity.world)) {
+		val damager = event.damager
+		val isDamagerPlayer = damager.type == EntityType.PLAYER
+
+		if (type == EntityType.ARMOR_STAND && isDamagerPlayer) {
+			val iPlayer = (damager as Player).getIPlayer()
+
+			// Check if they have an island or co-op island, if not, deny.
+			if (!iPlayer.hasCoopIsland() && !iPlayer.hasIsland() && !iPlayer.inBypass) {
+				iPlayer.message(Message.instance.listenerActionDeniedCreateAnIslandFirst)
+				event.isCancelled = true
+				return
+			}
+
+			// Check if they can use the block on the island, or co-op island.
+			if (!canUseBlockAtLocation(iPlayer, event.entity.location)) {
+				iPlayer.message(Message.instance.listenerBlockPlacementDenied)
+				event.isCancelled = true
+				return
+			}
+		}
+
+		// If they're not a player or if the entity is not in the skyblock world, we do not care.
+		if (type != EntityType.PLAYER || isDamagerPlayer) {
 			return
 		}
 

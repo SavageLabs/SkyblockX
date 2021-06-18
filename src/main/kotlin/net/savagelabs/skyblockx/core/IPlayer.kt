@@ -222,9 +222,15 @@ fun createIPlayer(player: Player): IPlayer {
 
 
 fun canUseBlockAtLocation(iPlayer: IPlayer, location: Location): Boolean {
-	// If the world is not the skyblock world, we will not interfere.
-	if (location.world!!.name != Config.instance.skyblockWorldName) return true
-	if (iPlayer.inBypass) return true
+	// If the world is not the skyblock world or player in bypass
+	val worldName = location.world!!.name
+	if (
+		iPlayer.inBypass || (
+			worldName != Config.instance.skyblockWorldName
+			&& worldName != Config.instance.skyblockWorldNameNether
+			&& worldName != Config.instance.skyblockWorldNameEnd
+		)
+	) return true
 	// if there is a shop, they we allowed to right click
 	with (getIslandFromLocation(location)) {
 		if (this == null) return@with

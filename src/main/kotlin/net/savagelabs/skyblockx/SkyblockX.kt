@@ -103,6 +103,7 @@ class SkyblockX : SavagePluginX() {
 						World.Environment.NORMAL -> Config.instance.skyblockWorldName
 						World.Environment.NETHER -> Config.instance.skyblockWorldNameNether
 						World.Environment.THE_END -> Config.instance.skyblockWorldNameEnd
+						else -> continue
 					})
 
 					shop.location.world = world

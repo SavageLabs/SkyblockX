@@ -7,12 +7,16 @@ import net.savagelabs.skyblockx.persist.Config
 import net.savagelabs.skyblockx.persist.Message
 import net.savagelabs.skyblockx.persist.Quests
 import net.savagelabs.skyblockx.quest.QuestGoal
+import org.bukkit.entity.EntityType
+import org.bukkit.entity.Player
 import org.bukkit.event.Cancellable
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.block.BlockPlaceEvent
+import org.bukkit.event.hanging.HangingBreakByEntityEvent
+import org.bukkit.event.hanging.HangingBreakEvent
 import org.bukkit.metadata.FixedMetadataValue
 
 object BlockListener : Listener {
@@ -147,6 +151,33 @@ object BlockListener : Listener {
 		// Check if quest is complete :D
 		if (targetQuest.isComplete(island.getQuestCompletedAmount(targetQuest.id))) {
 			island.completeQuest(iPlayer, targetQuest)
+		}
+	}
+
+	@EventHandler
+	private fun HangingBreakByEntityEvent.onHangingBreak() {
+		if (this.remover?.type != EntityType.PLAYER) {
+			return
+		}
+
+		val player = this.remover as Player
+		val iPlayer = player.getIPlayer()
+
+		if (this.isCancelled || isNotInSkyblockWorld(this.entity.world)) {
+			return
+		}
+
+		// Check if they have an island or co-op island, if not, deny.
+		if (!iPlayer.hasCoopIsland() && !iPlayer.hasIsland() && !iPlayer.inBypass) {
+			iPlayer.message(Message.instance.listenerActionDeniedCreateAnIslandFirst)
+			this.isCancelled = true
+			return
+		}
+
+		// Check if they can use the block on the island, or co-op island.
+		if (!canUseBlockAtLocation(iPlayer, this.entity.location)) {
+			iPlayer.message(Message.instance.listenerBlockPlacementDenied)
+			this.isCancelled = true
 		}
 	}
 

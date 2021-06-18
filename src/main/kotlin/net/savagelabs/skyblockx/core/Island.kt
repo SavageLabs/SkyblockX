@@ -558,7 +558,7 @@ data class Island(
 
 
     fun containsBlock(v: Location): Boolean {
-        if (v.world !== minLocation.getLocation().world) return false
+        //if (v.world !== minLocation.getLocation().world) return false
         val x = v.x
         val y = v.y
         val z = v.z
